@@ -1,0 +1,61 @@
+/* ============================================================================
+   40-cycle-timeline.less — animated teaching diagrams
+   ----------------------------------------------------------------------------
+   Two pedagogical patterns, token-driven and animated:
+     .ab-cycle     — a 4-stage loop; arcs draw on in sequence, then a runner
+                     dot travels the loop continuously (the "it repeats" signal).
+     .ab-timeline  — a spine that draws down; milestones rise in turn.
+   Both read correctly at rest. Draw-on runs under an ancestor .playing (set on
+   reveal / Trickle / a replay control); the cycle's runner loops on its own.
+   Honour reduced motion.
+
+   WHEN TO USE WHICH
+     Cycle    → order repeats, no real end (water cycle, feedback, design loop).
+     Timeline → the order itself is the point (process, history, before/after).
+   Map each stage/milestone to one Adapt block; let Trickle reveal them in turn.
+   ============================================================================ */
+
+/* ---- CYCLE ---------------------------------------------------------------- */
+.ab-cycle { max-width: 320px; margin-inline: auto; }
+.ab-cycle svg { width: 100%; height: auto; overflow: visible; }
+.ab-cycle .arc {
+  fill: none; stroke: var(--accent); stroke-width: 4; stroke-linecap: round;
+  stroke-dasharray: 1; stroke-dashoffset: 0; opacity: 0.55;
+}
+.playing .ab-cycle .arc { animation: ab-scribble-draw calc(0.6s / var(--flow-rate, 1)) ease var(--d, 0s) both; }
+.ab-cycle .node  { fill: var(--surface-1); stroke: var(--accent); stroke-width: 2.5; }
+.ab-cycle .node.key { fill: color-mix(in srgb, var(--accent) 16%, var(--surface-1)); }
+.ab-cycle .nlabel { fill: var(--ink); font-family: var(--font-ui); font-weight: 700; font-size: 13px; text-anchor: middle; }
+.ab-cycle .runner { fill: var(--accent); }
+/* runner travels the loop — path matches a 4-node circle at r=80, centre 120,120 */
+.ab-cycle.flow .runner {
+  offset-path: path('M120 40 A80 80 0 0 1 200 120 A80 80 0 0 1 120 200 A80 80 0 0 1 40 120 A80 80 0 0 1 120 40');
+  animation: ab-run calc(7s / var(--flow-rate, 1)) linear infinite;
+}
+@keyframes ab-run { to { offset-distance: 100%; } }
+
+/* ---- TIMELINE ------------------------------------------------------------- */
+.ab-timeline { position: relative; display: grid; gap: var(--space-sm); padding-left: 2rem; }
+.ab-timeline::before {
+  content: ""; position: absolute; left: 0.65rem; top: 0.4rem; bottom: 0.4rem;
+  width: 3px; border-radius: 3px; background: var(--line);
+  transform-origin: top; transform: scaleY(1);
+}
+.playing .ab-timeline::before { animation: ab-tl-grow calc(0.9s / var(--flow-rate, 1)) ease both; }
+@keyframes ab-tl-grow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+
+.ab-timeline .tl-item { position: relative; }
+.ab-timeline .tl-item::before {
+  content: ""; position: absolute; left: calc(-2rem + 0.4rem); top: 0.25rem;
+  width: 1rem; height: 1rem; border-radius: 50%;
+  background: var(--accent); box-shadow: 0 0 0 4px var(--page-bg);
+}
+.ab-timeline .when { font-family: var(--font-mono); font-size: var(--fs-2xs); color: var(--ink-soft); letter-spacing: var(--tracking-wide); }
+.ab-timeline .tl-item h4 { margin: 0.1rem 0 0.2rem; }
+.playing .ab-timeline .tl-item { animation: ab-tl-rise calc(0.5s / var(--flow-rate, 1)) ease var(--d, 0s) both; }
+@keyframes ab-tl-rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .playing :is(.ab-cycle .arc, .ab-timeline::before, .ab-timeline .tl-item) { animation: none !important; }
+  .ab-cycle.flow .runner { animation: none !important; offset-distance: 25%; }
+}

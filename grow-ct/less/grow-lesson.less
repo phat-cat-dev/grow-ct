@@ -1,0 +1,119 @@
+// ============================================================================
+//  grow-lesson.less — the ONE frontmatter BLOCK (BEM) + lesson objects
+//  ----------------------------------------------------------------------------
+//  .frontmatter is a single BEM block reused at every level. Consistency
+//  comes from the block + its __elements; variation comes from the --role
+//  modifier (lesson / phase / section / learning-step / item). The DATA layer
+//  (data-grow-role / -depth / -type / data-fm-*) is stamped on the object
+//  element by growMeta.js and is invisible unless you choose to surface it.
+// ============================================================================
+
+// ---- the frontmatter block (shared everywhere) ---------------------------
+.frontmatter {
+  --fm-accent: var(--accent);               // per-role tint, overridden below
+  border-left: 3px solid var(--fm-accent);
+  background: color-mix(in srgb, var(--fm-accent) 7%, var(--surface-1));
+  border-radius: 0 12px 12px 0;
+  padding: var(--space-sm) var(--space-sm) var(--space-sm) var(--space-md);
+  color: var(--ink);
+}
+.frontmatter__eyebrow {
+  margin: 0 0 .3rem;
+  font-family: var(--font-mono);
+  font-size: var(--fs-2xs);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--accent-ink);
+}
+.frontmatter__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  gap: .5rem var(--space-sm);
+  margin: .4rem 0;
+  padding: 0;
+}
+.frontmatter__item { margin: 0; }
+.frontmatter__label {
+  font-family: var(--font-mono);
+  font-size: var(--fs-3xs);
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.frontmatter__value { margin: 0; font-weight: 600; }
+.frontmatter__group { margin-top: var(--space-sm); }
+.frontmatter__group-title {
+  margin: 0 0 .4rem;
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+.frontmatter__items { list-style: none; margin: 0; padding: 0; display: grid; gap: .4rem; }
+.frontmatter__item--outcome,
+.frontmatter__item--objective { position: relative; padding-left: 1.6rem; }
+.frontmatter__item--outcome::before,
+.frontmatter__item--objective::before {
+  content: "";
+  position: absolute; left: 0; top: .4em;
+  width: .8rem; height: .8rem; border-radius: 50%;
+  background: color-mix(in srgb, var(--fm-accent) 30%, transparent);
+  box-shadow: inset 0 0 0 2px var(--fm-accent);
+}
+.frontmatter__body { color: var(--ink-soft); margin-top: .4rem; }
+
+// ---- role modifiers (same block, different function/tint) ----------------
+.frontmatter--lesson        { --fm-accent: var(--accent); }
+.frontmatter--phase         { --fm-accent: hsl(calc(var(--h) + 150) 45% 46%); }
+.frontmatter--section       { --fm-accent: hsl(calc(var(--h) + 60) 55% 48%); }
+.frontmatter--learning-step { --fm-accent: hsl(calc(var(--h) - 40) 60% 50%); }
+.frontmatter--item          { --fm-accent: var(--ink-soft); }
+
+// the lesson-level frontmatter reads as the hero
+.lesson-hero {
+  max-width: 72ch;
+  margin: 0 auto;
+}
+.lesson-hero .frontmatter--lesson {
+  border-left: 0;
+  border-radius: 16px;
+  background: linear-gradient(135deg, color-mix(in srgb, var(--accent) 12%, var(--surface-1)), var(--surface-1) 70%);
+  border: 1px solid var(--line);
+  padding: var(--space-md);
+}
+
+// ---- frontmatter sits in the body flow; empty wrappers collapse ----------
+.article__frontmatter:empty,
+.block__frontmatter:empty { display: none; }
+.article__frontmatter,
+.block__frontmatter { margin-top: var(--space-sm); }
+
+// ---- PHASE (article) = a card of its own --------------------------------
+// Scoped by the data layer, so only lesson phases card up — not every article.
+.article[data-grow-role="phase"] > .article__inner {
+  background: var(--surface-1);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: var(--space-md);
+  box-shadow: 0 1px 2px var(--shadow), 0 18px 40px -26px var(--shadow);
+}
+// sections inside a phase card read as lighter sub-panels (avoid card-in-card)
+.article[data-grow-role="phase"] .block__inner {
+  background: color-mix(in srgb, var(--surface-2) 45%, transparent);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  box-shadow: none;
+}
+
+// ---- block "kind" variants (summary / checkpoint / callout) --------------
+.block--summary {
+  background: color-mix(in srgb, var(--accent) 6%, var(--surface-1));
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, var(--line));
+}
+.block--summary .block__title::before { content: "✦ "; color: var(--accent); }
+.block--callout { border-left: 5px solid var(--accent); background: color-mix(in srgb, var(--accent) 5%, var(--surface-1)); }
+
+// ---- metadata-only frontmatter never shows ------------------------------
+[data-fm-display="off"] > .article__frontmatter,
+[data-fm-display="off"] > .block__frontmatter { display: none; }

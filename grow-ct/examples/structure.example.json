@@ -1,0 +1,73 @@
+{
+  "_comment": "Illustrative fragments showing how the grow-base structural fields are authored. In a real course these live in src/course/<lang>/articles.json, blocks.json and components.json. All custom data sits under the theme target attribute _grow, so it never collides with core/component fields.",
+
+  "articles.json": [
+    {
+      "_id": "a-05",
+      "_parentId": "co-05",
+      "_type": "article",
+      "title": "Designing for depth",
+      "displayTitle": "Designing for depth",
+      "body": "The standard Adapt article title and description.",
+      "_grow": {
+        "_frontmatter": {
+          "_isEnabled": true,
+          "eyebrow": "Frontmatter",
+          "body": "An additional HTML section the grow-article template generates from this field, the same way title/body get theirs."
+        }
+      }
+    }
+  ],
+
+  "blocks.json": [
+    {
+      "_id": "b-05",
+      "_parentId": "a-05",
+      "_type": "block",
+      "title": "Two sides of the same idea",
+      "displayTitle": "Two sides of the same idea",
+      "body": "The block keeps its ordinary Adapt title and description.",
+      "_grow": {
+        "_columns": [
+          {
+            "title": "Column one",
+            "body": "Each column has its own title and description.",
+            "frontmatter": "col frontmatter · a per-column authored note",
+            "_components": ["c-05"]
+          },
+          {
+            "title": "Column two",
+            "body": "A different component type sits here.",
+            "frontmatter": "col frontmatter · a second per-column note",
+            "_components": ["c-10"]
+          }
+        ]
+      }
+    }
+  ],
+
+  "components.json": [
+    {
+      "_id": "c-05",
+      "_parentId": "b-05",
+      "_type": "component",
+      "_component": "text",
+      "_layout": "full",
+      "title": "What depth buys you",
+      "body": "A text component, routed into column one by themeBlockView."
+    },
+    {
+      "_id": "c-10",
+      "_parentId": "b-05",
+      "_type": "component",
+      "_component": "mcq",
+      "_layout": "full",
+      "title": "Which layer owns colour?",
+      "_items": [
+        { "text": "adapt-contrib-core", "_shouldBeSelected": false },
+        { "text": "the theme (grow-base)", "_shouldBeSelected": true },
+        { "text": "the component", "_shouldBeSelected": false }
+      ]
+    }
+  ]
+}

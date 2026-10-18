@@ -1,0 +1,235 @@
+// =============================================================================
+//  THEME OVERRIDES — adapt-contrib-vanilla
+//  Drop this in:  src/theme/adapt-contrib-vanilla/less/zzz-overrides.less
+//  The `zzz-` prefix makes it compile LAST, so it wins specificity ties
+//  without !important. Rebuild with `grunt build` (or `grunt dev` to watch).
+//
+//  Organised by web-design aspect:
+//    1. COLOR          — palette + semantic tokens
+//    2. TYPOGRAPHY     — families, scale, rhythm
+//    3. LAYOUT         — widths, the article>block>component spacing scale
+//    4. SURFACES       — backgrounds, bands, cards
+//    5. DEPTH          — elevation / shadow system
+//    6. SHAPE          — radius, borders
+//    7. MOTION         — transitions
+//    8. DARK MODE      — token swaps (depth strategy changes here)
+// =============================================================================
+
+
+// =============================================================================
+//  1. COLOR
+//  Define RAW brand colours once, then map them to SEMANTIC tokens.
+//  Only ever reference the semantic tokens below this point — never the raw
+//  ones — so a rebrand is a handful of edits up top.
+// =============================================================================
+
+// --- raw palette ------------------------------------------------------------
+@brand-500:      #2f6fed;   // primary
+@brand-600:      #2458c8;   // primary, pressed
+@brand-050:      #eef3fe;   // primary tint
+@accent-500:     #e8663a;   // secondary / calls-to-action
+@ink-900:        #1a1d21;   // near-black text
+@ink-600:        #5a6069;   // muted text
+@paper-000:      #ffffff;
+@paper-050:      #f4f5f7;   // subtle surface
+@paper-100:      #e7e9ee;   // hairline / divider
+@positive:       #2e7d50;
+@negative:       #c0392b;
+
+// --- semantic tokens (reference THESE everywhere) ---------------------------
+@text:           @ink-900;
+@text-muted:     @ink-600;
+@text-inverse:   @paper-000;
+@link:           @brand-500;
+@link-hover:     @brand-600;
+@primary:        @brand-500;
+@primary-hover:  @brand-600;
+@accent:         @accent-500;
+@divider:        @paper-100;
+
+
+// =============================================================================
+//  2. TYPOGRAPHY
+//  Families, a modular scale, and line-length control. A consistent scale is
+//  what makes headings feel like a system instead of random sizes.
+// =============================================================================
+
+@font-base:      "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+@font-heading:    @font-base;   // swap for a display face if you want contrast
+@font-mono:       ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+// modular scale (~1.25 major-third). Adjust the ratio by editing the steps.
+@fs-root:        16px;
+@fs-xs:          0.8rem;
+@fs-sm:          0.9rem;
+@fs-base:        1rem;
+@fs-lg:          1.25rem;
+@fs-h3:          1.5rem;
+@fs-h2:          1.95rem;
+@fs-h1:          2.45rem;
+
+@lh-tight:       1.2;    // headings
+@lh-body:        1.6;    // body copy — generous for on-screen reading
+@measure:        68ch;   // max line length for readability
+
+html { font-size: @fs-root; }
+
+body,
+.component {
+  font-family: @font-base;
+  color: @text;
+  line-height: @lh-body;
+}
+
+h1, h2, h3, h4, .component__title {
+  font-family: @font-heading;
+  line-height: @lh-tight;
+  color: @text;
+}
+h1 { font-size: @fs-h1; }
+h2 { font-size: @fs-h2; }
+h3 { font-size: @fs-h3; }
+
+// keep prose readable; title + body share the measure
+.component__title-inner,
+.component__body-inner { max-width: @measure; }
+
+a { color: @link; }
+a:hover { color: @link-hover; }
+
+
+// =============================================================================
+//  3. LAYOUT
+//  Max width, and the core of your DEPTH: an UNEQUAL spacing scale across the
+//  three nesting levels. Article gets the most air, component the least.
+//  NOTE: full-width things target the outer element; constrained things the
+//  __inner wrapper.
+// =============================================================================
+
+@layout-max:        1200px;   // content cap on wide screens
+@gutter:            24px;     // side gutter on small screens
+
+// the 3-step rhythm — the single biggest lever for hierarchy
+@space-component:   20px;
+@space-block:       40px;     // ~2x component
+@space-article:     72px;     // ~3.5x component
+
+.article__inner,
+.block__inner {
+  max-width: @layout-max;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left:  @gutter;
+  padding-right: @gutter;
+}
+
+.article__inner { padding-top: @space-article; padding-bottom: @space-article; }
+.block__inner   { padding-top: @space-block;   padding-bottom: @space-block; }
+.component       { margin-bottom: @space-component; }
+
+
+// =============================================================================
+//  4. SURFACES
+//  Backgrounds live here. Alternating article bands are the strongest
+//  "these are separate sections" cue and cost nothing in markup.
+// =============================================================================
+
+@surface:         @paper-000;   // card / raised
+@surface-page:    @paper-000;   // default page
+@surface-subtle:  @paper-050;   // banded sections
+
+body,
+#wrapper { background: @surface-page; }
+
+// full-width tonal bands — keep the shift SMALL (depth, not zebra stripes)
+.article:nth-of-type(even) { background: @surface-subtle; }
+
+
+// =============================================================================
+//  5. DEPTH  (elevation system)
+//  Two-part shadows (tight contact + soft ambient) read as real elevation.
+//  Pick ONE level to be the card — here, the component. Reserve higher
+//  elevation for INTERACTIVE components so it signals "do something".
+// =============================================================================
+
+@shadow-contact:  rgba(0,0,0,0.06);
+@shadow-ambient:  rgba(0,0,0,0.08);
+
+@elev-1: 0 1px 2px @shadow-contact, 0 8px 24px @shadow-ambient;   // resting card
+@elev-2: 0 2px 4px @shadow-contact, 0 16px 40px @shadow-ambient;  // raised / active
+
+.component__inner {
+  background: @surface;
+  box-shadow: @elev-1;
+}
+
+// opt-in modifiers — authors add these via the component's `_classes` field
+// in the JSON, and Adapt prints them on the component wrapper.
+.is-raised .component__inner { box-shadow: @elev-2; }
+.is-flush  .component__inner { box-shadow: none; background: transparent; }
+
+
+// =============================================================================
+//  6. SHAPE  (radius + borders)
+// =============================================================================
+
+@radius-sm:   6px;
+@radius-md:   12px;
+@radius-lg:   20px;
+
+.component__inner { border-radius: @radius-md; }
+.btn,
+button { border-radius: @radius-sm; }
+
+hr,
+.divider { border: 0; border-top: 1px solid @divider; }
+
+
+// =============================================================================
+//  7. MOTION
+//  One shared easing + duration so interactions feel consistent. Respect
+//  users who ask for less motion.
+// =============================================================================
+
+@ease:      cubic-bezier(0.2, 0.0, 0.2, 1);
+@dur:       180ms;
+
+.component__inner,
+.btn, button, a {
+  transition: box-shadow @dur @ease, background-color @dur @ease, color @dur @ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}
+
+
+// =============================================================================
+//  8. DARK MODE
+//  Shadows nearly vanish on dark surfaces, so depth switches from SHADOW to
+//  SURFACE-LIGHTNESS + a subtle border. Swap the tokens AND the strategy.
+//  Trigger however your course does it — a body class is the simplest.
+// =============================================================================
+
+.theme-dark {
+  @surface:        #1e2024;
+  @surface-page:   #141619;
+  @surface-subtle: #16181b;
+  @text:           #e7e9ee;
+  @text-muted:     #a0a6b0;
+  @divider:        rgba(255,255,255,0.10);
+
+  background: @surface-page;
+  color: @text;
+
+  .article:nth-of-type(even) { background: @surface-subtle; }
+
+  .component__inner {
+    background: @surface;
+    box-shadow: none;                           // shadows don't read here
+    border: 1px solid rgba(255,255,255,0.08);   // use a border instead
+  }
+  .is-raised .component__inner {
+    border-color: rgba(255,255,255,0.16);       // lift = brighter edge
+  }
+}

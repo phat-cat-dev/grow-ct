@@ -1,0 +1,26 @@
+{
+  "name": "grow-core-base",
+  "version": "1.0.0",
+  "framework": ">=5.31.3",
+  "description": "GROW core-base assembly — the 'adab' style-tier scaffold and a buildable Adapt course config that wires the grow-ct theme over adapt-contrib-core plus the contrib component/extension/menu set. Pairs with the grow-ct theme.",
+  "keywords": [
+    "adapt-plugin",
+    "grow"
+  ],
+  "license": "GPL-3.0",
+  "homepage": "https://github.com/phat-cat-dev/grow-ct/tree/main/packages/grow-core-base",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/phat-cat-dev/grow-ct.git",
+    "directory": "packages/grow-core-base"
+  },
+  "bugs": {
+    "url": "https://github.com/phat-cat-dev/grow-ct/issues"
+  },
+  "files": [
+    "grow",
+    "src",
+    "adapt.json",
+    "README.md"
+  ]
+}

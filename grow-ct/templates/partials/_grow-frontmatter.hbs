@@ -1,0 +1,47 @@
+{{! ============================================================================
+    _grow-frontmatter  —  the ONE frontmatter BLOCK (BEM), reused everywhere
+    ----------------------------------------------------------------------------
+    Context = a frontmatter object (_grow._frontmatter). Include with the
+    object as context and pass the level's default role:
+        {{> _grow-frontmatter _grow._frontmatter role="lesson"}}
+    Author can override with _role in JSON. Consistency comes from the BLOCK
+    (.frontmatter + __elements); variation comes from the --role MODIFIER.
+    Data lives as data-fm-* on the object element (stamped by growMeta.js);
+    this renders the VISIBLE form only, and only when _display.
+    ============================================================================ }}
+{{#if _isEnabled}}{{#if _display}}
+<div class="frontmatter frontmatter--{{#if _role}}{{_role}}{{else}}{{role}}{{/if}}">
+  {{#if eyebrow}}<p class="frontmatter__eyebrow">{{{compile eyebrow}}}</p>{{/if}}
+
+  {{#if _fields}}
+  <dl class="frontmatter__list">
+    {{#each _fields}}{{#if _display}}
+    <div class="frontmatter__item frontmatter__item--{{_key}}" data-fm-key="{{_key}}">
+      {{#if label}}<dt class="frontmatter__label">{{label}}</dt>{{/if}}
+      <dd class="frontmatter__value">{{{compile value}}}</dd>
+    </div>
+    {{/if}}{{/each}}
+  </dl>
+  {{/if}}
+
+  {{#if _outcomes}}
+  <div class="frontmatter__group frontmatter__group--outcomes">
+    {{#if outcomesTitle}}<p class="frontmatter__group-title">{{outcomesTitle}}</p>{{/if}}
+    <ul class="frontmatter__items">
+      {{#each _outcomes}}<li class="frontmatter__item frontmatter__item--outcome">{{{compile this}}}</li>{{/each}}
+    </ul>
+  </div>
+  {{/if}}
+
+  {{#if _objectives}}
+  <div class="frontmatter__group frontmatter__group--objectives">
+    {{#if objectivesTitle}}<p class="frontmatter__group-title">{{objectivesTitle}}</p>{{/if}}
+    <ul class="frontmatter__items">
+      {{#each _objectives}}<li class="frontmatter__item frontmatter__item--objective">{{{compile this}}}</li>{{/each}}
+    </ul>
+  </div>
+  {{/if}}
+
+  {{#if body}}<div class="frontmatter__body">{{{compile body}}}</div>{{/if}}
+</div>
+{{/if}}{{/if}}

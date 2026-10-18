@@ -1,0 +1,164 @@
+<title>Abbott Hero Headers</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap">
+<style>
+/* Ready-made hero/section headers that layer an ambient animated background +
+   a subtle transparent-to-colour wash + legible content, on the Abbott theme.
+   Token-driven (retint with hue), theme-aware, paused under reduced motion or
+   the Pause toggle. Copy a .hero block and drop your own content in. */
+:root{
+  --h:202;--s:72%;--gs:12%;
+  --page-bg:hsl(var(--h) 30% 96%);--surface-1:hsl(var(--h) 24% 98%);--surface-2:hsl(var(--h) 20% 93%);
+  --ink:hsl(var(--h) 25% 16%);--ink-soft:hsl(var(--h) 14% 40%);--line:hsl(var(--h) 18% 86%);
+  --accent:hsl(var(--h) var(--s) 44%);--accent-ink:hsl(var(--h) var(--s) 34%);--shadow:hsl(var(--h) 40% 20% / .16);
+  --font-ui:"Inter",ui-sans-serif,system-ui,sans-serif;--font-mono:ui-monospace,Menlo,Consolas,monospace;
+  --fs-3xs:.72rem;--fs-xs:.88rem;--radius:18px;--sp:clamp(1rem,.85rem + .6vw,1.5rem);color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--page-bg:hsl(var(--h) 32% 8%);--surface-1:hsl(var(--h) 26% 13%);--surface-2:hsl(var(--h) 24% 17%);--ink:hsl(var(--h) 20% 92%);--ink-soft:hsl(var(--h) 14% 66%);--line:hsl(var(--h) 22% 24%);--accent:hsl(var(--h) var(--s) 64%);--accent-ink:hsl(var(--h) var(--s) 78%);--shadow:hsl(var(--h) 60% 2% / .5);color-scheme:dark}}
+:root[data-theme="dark"]{--page-bg:hsl(var(--h) 32% 8%);--surface-1:hsl(var(--h) 26% 13%);--surface-2:hsl(var(--h) 24% 17%);--ink:hsl(var(--h) 20% 92%);--ink-soft:hsl(var(--h) 14% 66%);--line:hsl(var(--h) 22% 24%);--accent:hsl(var(--h) var(--s) 64%);--accent-ink:hsl(var(--h) var(--s) 78%);--shadow:hsl(var(--h) 60% 2% / .5);color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page-bg);color:var(--ink);font-family:var(--font-ui);line-height:1.6}
+.wrap{max-width:68rem;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:var(--sp)}
+.bar{display:flex;flex-wrap:wrap;gap:14px;align-items:center;background:color-mix(in srgb,var(--surface-1) 92%,transparent);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:var(--sp);position:sticky;top:env(safe-area-inset-top,0px);z-index:9}
+.bar .grow{flex:1 1 auto}.bar label{font-size:var(--fs-xs);color:var(--ink-soft);display:flex;gap:8px;align-items:center}
+input[type=range]{accent-color:var(--accent)}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}.seg button{font:inherit;font-size:var(--fs-xs);font-weight:600;padding:6px 11px;border:0;background:var(--surface-2);color:var(--ink-soft);cursor:pointer}.seg button[aria-pressed="true"]{background:var(--accent);color:#fff}
+.cap{font-family:var(--font-mono);font-size:var(--fs-3xs);color:var(--ink-soft);margin:var(--sp) 0 .5rem}
+
+/* ---- hero shell ---- */
+.hero{position:relative;overflow:hidden;border:1px solid var(--line);border-radius:var(--radius);min-height:300px;display:flex;align-items:center;padding:clamp(24px,4.5vw,60px);box-shadow:0 20px 50px -30px var(--shadow)}
+.hero.center{justify-content:center;text-align:center}
+.layer,.wash,.scrim{position:absolute;inset:0;pointer-events:none}
+.layer{z-index:0}.wash{z-index:1}.scrim{z-index:1}
+.hero__inner{position:relative;z-index:3;max-width:48ch}
+.center .hero__inner{max-width:40ch}
+.kicker{display:inline-block;font-family:var(--font-mono);font-size:var(--fs-3xs);letter-spacing:.14em;text-transform:uppercase;color:var(--accent-ink);margin-bottom:.6rem}
+.hero h1{font-size:clamp(1.9rem,1.2rem + 3vw,3.3rem);line-height:1.05;letter-spacing:-.02em;margin:0 0 .5rem;text-wrap:balance;font-weight:800}
+.hero .sub{margin:0;color:var(--ink-soft);font-size:clamp(1rem,.95rem + .3vw,1.2rem);max-width:46ch}
+.center .sub{margin-inline:auto}
+.meta{margin-top:.9rem;font-family:var(--font-mono);font-size:var(--fs-xs);color:var(--ink-soft)}
+.cta-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:1.3rem}
+.center .cta-row{justify-content:center}
+.cta{display:inline-flex;align-items:center;gap:.4em;font:inherit;font-weight:600;font-size:var(--fs-sm,.95rem);padding:.6rem 1.2rem;border-radius:10px;border:1px solid var(--accent);background:var(--accent);color:#fff;cursor:pointer;text-decoration:none}
+.cta.ghost{background:transparent;color:var(--accent-ink)}
+
+/* ---- animated background layers (reused) ---- */
+.aurora{background:var(--surface-2)}
+.aurora::before,.aurora::after{content:"";position:absolute;inset:-45%;filter:blur(30px);animation:aur 12s ease-in-out infinite}
+.aurora::before{background:radial-gradient(closest-side,color-mix(in srgb,var(--accent) 60%,transparent),transparent)}
+.aurora::after{background:radial-gradient(closest-side,color-mix(in srgb,hsl(calc(var(--h)+70) var(--s) 56%) 55%,transparent),transparent);animation-duration:15s;animation-direction:reverse}
+@keyframes aur{0%{transform:translate(-18%,-10%) scale(1)}50%{transform:translate(20%,12%) scale(1.3)}100%{transform:translate(-18%,-10%) scale(1)}}
+.mesh{background:var(--surface-1)}
+.mesh::before{content:"";position:absolute;inset:-55%;filter:blur(38px);background:conic-gradient(from 0deg,color-mix(in srgb,var(--accent) 50%,transparent),color-mix(in srgb,hsl(calc(var(--h)+90) var(--s) 56%) 50%,transparent),color-mix(in srgb,hsl(calc(var(--h)-40) var(--s) 52%) 50%,transparent),color-mix(in srgb,var(--accent) 50%,transparent));animation:spin 18s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.grad{background:linear-gradient(120deg,hsl(var(--h) var(--s) 56%),hsl(calc(var(--h)+55) var(--s) 56%),hsl(calc(var(--h)-35) var(--s) 48%));background-size:220% 220%;animation:gradmove 10s ease-in-out infinite}
+@keyframes gradmove{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
+.dots{background-color:var(--surface-1);background-image:radial-gradient(color-mix(in srgb,var(--accent) 30%,transparent) 2px,transparent 2px);background-size:24px 24px;animation:pan 7s linear infinite}
+@keyframes pan{to{background-position:24px 24px}}
+.waves{background:linear-gradient(var(--surface-1),var(--surface-2))}
+.waves svg{position:absolute;bottom:-2px;left:0;width:200%;height:55%;color:var(--accent)}
+.waves path{fill:color-mix(in srgb,var(--accent) 26%,transparent);animation:wavemove 7s linear infinite}
+.waves path.b{fill:color-mix(in srgb,var(--accent) 15%,transparent);animation-duration:11s}
+@keyframes wavemove{to{transform:translateX(-50%)}}
+.night{background:linear-gradient(hsl(var(--h) 45% 16%),hsl(var(--h) 55% 9%))}
+.night span{position:absolute;bottom:-20px;border-radius:50%;background:color-mix(in srgb,var(--accent) 70%,#fff);opacity:.3;animation:rise 8s linear infinite}
+@keyframes rise{0%{transform:translateY(0) scale(.7);opacity:0}15%{opacity:.4}100%{transform:translateY(-320px) scale(1.1);opacity:0}}
+
+/* ---- wash overlays (transparent → colour) ---- */
+.w-top{background:linear-gradient(to top,transparent 45%,color-mix(in srgb,var(--accent) 14%,transparent))}
+.w-bottom{background:linear-gradient(to bottom,transparent 40%,color-mix(in srgb,var(--surface-1) 85%,transparent))}
+.w-vignette{background:radial-gradient(130% 130% at 50% 50%,transparent 50%,color-mix(in srgb,var(--accent) 14%,transparent))}
+.w-corner{background:radial-gradient(120% 120% at 0% 100%,color-mix(in srgb,var(--accent) 16%,transparent),transparent 60%)}
+.w-centre-dark{background:radial-gradient(circle at 50% 40%,color-mix(in srgb,var(--accent) 36%,transparent),transparent 60%)}
+/* legibility scrims — surface fading in from the content side */
+.scrim-left{background:linear-gradient(to right,color-mix(in srgb,var(--surface-1) 86%,transparent),transparent 70%)}
+.scrim-soft{background:linear-gradient(to top,color-mix(in srgb,var(--surface-1) 75%,transparent),transparent 65%)}
+.night .sub{color:color-mix(in srgb,#fff 78%,transparent)}.night .kicker{color:color-mix(in srgb,#fff 80%,transparent)}.night h1{color:#fff}
+
+.paused .layer,.paused .layer::before,.paused .layer::after,.paused .layer *{animation-play-state:paused!important}
+@media (prefers-reduced-motion:reduce){.layer,.layer::before,.layer::after,.layer *{animation:none!important}}
+</style>
+
+<div class="wrap">
+  <div class="bar"><strong>Abbott Hero Headers</strong><span class="grow"></span>
+    <label>Hue <input id="hue" type="range" min="0" max="360" value="202"></label>
+    <div class="seg"><button id="pause" aria-pressed="false">Pause motion</button></div>
+    <div class="seg" id="theme"><button data-set="light" aria-pressed="false">Light</button><button data-set="dark" aria-pressed="false">Dark</button><button data-set="system" aria-pressed="true">System</button></div>
+  </div>
+
+  <div class="cap">aurora + left scrim</div>
+  <section class="hero">
+    <div class="layer aurora"></div><div class="wash scrim-left"></div>
+    <div class="hero__inner">
+      <span class="kicker">Module 03 · Colour</span>
+      <h1>Seeing depth in colour</h1>
+      <p class="sub">How warm and cool, light and dark pull shapes forward or push them back.</p>
+      <div class="cta-row"><a class="cta" href="#">Start lesson</a><a class="cta ghost" href="#">Syllabus</a></div>
+    </div>
+  </section>
+
+  <div class="cap">mesh rotate + vignette</div>
+  <section class="hero">
+    <div class="layer mesh"></div><div class="wash w-vignette"></div><div class="scrim scrim-left"></div>
+    <div class="hero__inner">
+      <span class="kicker">Maker lab</span>
+      <h1>Learn by taking it apart</h1>
+      <p class="sub">Inspect a model, make something of your own, then compare the result.</p>
+      <div class="cta-row"><a class="cta" href="#">Enter the lab</a></div>
+    </div>
+  </section>
+
+  <div class="cap">gradient drift + bottom scrim · centred</div>
+  <section class="hero center" style="color:#fff">
+    <div class="layer grad"></div><div class="wash scrim-soft"></div>
+    <div class="hero__inner">
+      <span class="kicker" style="color:color-mix(in srgb,#fff 85%,transparent)">New course</span>
+      <h1 style="color:#fff">Draw to think</h1>
+      <p class="sub" style="color:color-mix(in srgb,#fff 82%,transparent)">A sketchbook approach to ideas — observe, mark up, revise.</p>
+      <div class="cta-row"><a class="cta" href="#" style="background:#fff;color:var(--accent-ink);border-color:#fff">Start</a><a class="cta ghost" href="#" style="color:#fff;border-color:color-mix(in srgb,#fff 60%,transparent)">Preview</a></div>
+    </div>
+  </section>
+
+  <div class="cap">dot drift + corner glow</div>
+  <section class="hero">
+    <div class="layer dots"></div><div class="wash w-corner"></div>
+    <div class="hero__inner">
+      <span class="kicker">Workshop</span>
+      <h1>A quiet place to practise</h1>
+      <p class="sub">Short, low-stakes exercises you can return to any time.</p>
+      <p class="meta">15 min · 3 stages · no prerequisites</p>
+    </div>
+  </section>
+
+  <div class="cap">waves + top wash</div>
+  <section class="hero">
+    <div class="layer waves"><svg viewBox="0 0 400 100" preserveAspectRatio="none" aria-hidden="true"><path class="b" d="M0 60 q 50 -24 100 0 t 100 0 t 100 0 t 100 0 V100 H0 Z"/><path d="M0 72 q 50 -20 100 0 t 100 0 t 100 0 t 100 0 V100 H0 Z"/></svg></div>
+    <div class="wash w-top"></div>
+    <div class="hero__inner">
+      <span class="kicker">Science · Unit 2</span>
+      <h1>The water cycle</h1>
+      <p class="sub">Follow a drop of water as it evaporates, gathers into cloud, and falls again.</p>
+      <div class="cta-row"><a class="cta" href="#">Begin</a></div>
+    </div>
+  </section>
+
+  <div class="cap">night · bokeh + centre glow (fixed dark)</div>
+  <section class="hero center">
+    <div class="layer night"><span style="width:16px;height:16px;left:18%;animation-delay:0s"></span><span style="width:26px;height:26px;left:38%;animation-delay:-2s"></span><span style="width:12px;height:12px;left:58%;animation-delay:-4s"></span><span style="width:22px;height:22px;left:76%;animation-delay:-1s"></span><span style="width:18px;height:18px;left:88%;animation-delay:-5s"></span></div>
+    <div class="wash w-centre-dark"></div>
+    <div class="hero__inner">
+      <span class="kicker">Capstone</span>
+      <h1>Put it all together</h1>
+      <p class="sub">One project that draws on everything from the course.</p>
+      <div class="cta-row"><a class="cta" href="#">Open the brief</a></div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  const root=document.documentElement,$=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+  $('#hue').addEventListener('input',e=>root.style.setProperty('--h',e.target.value));
+  const pb=$('#pause');pb.addEventListener('click',()=>{const on=!root.classList.contains('paused');root.classList.toggle('paused',on);pb.setAttribute('aria-pressed',String(on));pb.textContent=on?'Resume motion':'Pause motion';});
+  $('#theme').addEventListener('click',e=>{const b=e.target.closest('[data-set]');if(!b)return;const m=b.dataset.set;m==='system'?root.removeAttribute('data-theme'):root.setAttribute('data-theme',m);$$('#theme button').forEach(x=>x.setAttribute('aria-pressed',x===b));});
+</script>

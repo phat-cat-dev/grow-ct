@@ -1,0 +1,56 @@
+// ============================================================================
+//  grow-theme-template  —  the painting (meets the course shape)
+//  ----------------------------------------------------------------------------
+//  Dresses the emitted course shape (Adapt's structure + grow-core-structure)
+//  from the interface tokens. RULE: this layer references only --grow-* tokens
+//  and Adapt's class contract — never a raw colour, never a profile var. So a
+//  profile swap reskins everything through here untouched.
+//  Representative slice; the full build fans this out per structural object.
+// ============================================================================
+
+body {
+  background: var(--grow-color-surface-1);
+  color: var(--grow-color-ink);
+  font-family: var(--grow-type-family-ui);
+  font-size: calc(var(--grow-type-size-base) * var(--growp-type-scale));
+  line-height: var(--grow-type-lh-body);
+}
+
+// Adapt structure
+.article__inner,
+.block__inner {
+  width: 100%;
+  max-width: var(--grow-layout-max);
+  margin-inline: auto;
+  padding-inline: var(--grow-space-md);
+}
+.article__inner { padding-block: var(--grow-pad-article); }
+.block__inner {
+  padding-block: var(--grow-pad-block);
+  background: var(--grow-color-surface-1);
+  border: 1px solid var(--grow-color-line);
+  border-radius: 14px;
+}
+
+h1 { font-size: calc(var(--grow-type-size-h1) * var(--growp-type-scale)); line-height: var(--grow-type-lh-heading); font-weight: var(--grow-type-weight-bold); color: var(--grow-color-ink); }
+h2 { font-size: calc(var(--grow-type-size-h2) * var(--growp-type-scale)); line-height: var(--grow-type-lh-heading); font-weight: var(--grow-type-weight-bold); }
+
+a { color: var(--grow-color-accent); text-underline-offset: .18em; }
+a:hover { color: var(--grow-color-accent-hover); }
+a:active { color: var(--grow-color-accent-active); }
+
+// grow-core-structure (the custom objects — e.g. the two-column block)
+.cols { display: grid; grid-template-columns: 1fr; gap: var(--grow-gap-grid); }
+@media (min-width: 46rem) { .cols { grid-template-columns: repeat(var(--grow-cols, 2), 1fr); } }
+.col {
+  border: 1px dashed var(--grow-color-line);
+  border-radius: 12px;
+  padding: var(--grow-space-sm);
+  background: color-mix(in srgb, var(--grow-color-surface-2) 40%, transparent);
+}
+.article__frontmatter {
+  border-left: 3px solid var(--grow-color-accent);
+  background: color-mix(in srgb, var(--grow-color-accent) 7%, var(--grow-color-surface-1));
+  border-radius: 0 12px 12px 0;
+  padding: var(--grow-space-sm) var(--grow-space-sm) var(--grow-space-sm) var(--grow-space-md);
+}

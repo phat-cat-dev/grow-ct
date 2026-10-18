@@ -1,0 +1,35 @@
+// ============================================================================
+//  grow-<customer>-theme-profile  —  THE DIALS  (generator output)
+//  ----------------------------------------------------------------------------
+//  The ONE file the theme/layout generator writes. Raw dials + formula seeds for
+//  one customer/brand. Swap this file (or its values) to reskin the whole course
+//  — nothing above it changes. Here: customer "acme".
+//  Everything is a runtime custom property, so a swap retints live + dark-mode.
+// ============================================================================
+:root {
+  // colour dials
+  --growp-h: 202; --growp-s: 72%; --growp-gs: 12%;
+  --growp-accent-l: 42%;
+  --growp-ink-l: 16%;
+  --growp-surface1-l: 99%;
+  --growp-surface2-l: 94%;
+  --growp-line-l: 86%;
+  --growp-hover-d: 8%;     // lightness delta for :hover   (replaces darken())
+  --growp-active-d: 14%;   // lightness delta for :active/selected
+
+  // type + space dials
+  --growp-type-scale: 1;
+  --growp-space-scale: 1;
+}
+
+// A dark profile is the same formulas with flipped lightness seeds.
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --growp-accent-l: 64%; --growp-ink-l: 92%; --growp-surface1-l: 12%;
+    --growp-surface2-l: 16%; --growp-line-l: 24%;
+  }
+}
+:root[data-theme="dark"] {
+  --growp-accent-l: 64%; --growp-ink-l: 92%; --growp-surface1-l: 12%;
+  --growp-surface2-l: 16%; --growp-line-l: 24%;
+}

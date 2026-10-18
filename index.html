@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en" data-theme="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Abbott Kit — e-learning assets</title>
+<style>
+:root{
+  --h:202;--s:72%;--gs:12%;
+  --page-bg:hsl(var(--h) 30% 96%);--surface-1:hsl(var(--h) 24% 99%);--surface-2:hsl(var(--h) 20% 94%);
+  --ink:hsl(var(--h) 25% 16%);--ink-soft:hsl(var(--h) 14% 40%);--line:hsl(var(--h) 18% 86%);
+  --accent:hsl(var(--h) var(--s) 42%);--shadow:hsl(var(--h) 40% 20% / .16);
+  --font-ui:"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --maxw:70rem;--radius:16px;color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--page-bg:hsl(var(--h) 32% 8%);--surface-1:hsl(var(--h) 26% 12%);--surface-2:hsl(var(--h) 24% 16%);--ink:hsl(var(--h) 20% 92%);--ink-soft:hsl(var(--h) 14% 66%);--line:hsl(var(--h) 22% 22%);--accent:hsl(var(--h) var(--s) 64%);--shadow:hsl(var(--h) 60% 2% / .5);color-scheme:dark}}
+:root[data-theme="dark"]{--page-bg:hsl(var(--h) 32% 8%);--surface-1:hsl(var(--h) 26% 12%);--surface-2:hsl(var(--h) 24% 16%);--ink:hsl(var(--h) 20% 92%);--ink-soft:hsl(var(--h) 14% 66%);--line:hsl(var(--h) 22% 22%);--accent:hsl(var(--h) var(--s) 64%);--shadow:hsl(var(--h) 60% 2% / .5);color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page-bg);color:var(--ink);font-family:var(--font-ui);line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:clamp(1.5rem,1rem + 3vw,3.5rem)}
+.wrap{max-width:var(--maxw);margin-inline:auto}
+header{margin-bottom:clamp(1.5rem,1rem + 2vw,2.5rem)}
+.kicker{font-family:var(--font-mono);font-size:.74rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft)}
+h1{font-size:clamp(2rem,1.3rem + 3vw,3.2rem);line-height:1.1;letter-spacing:-.02em;margin:.2rem 0 .4rem;text-wrap:balance}
+.lede{color:var(--ink-soft);max-width:60ch;margin:0}
+.controls{display:flex;gap:16px;align-items:center;flex-wrap:wrap;margin:1.2rem 0 0}
+.controls label{font-size:.74rem;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-soft);display:flex;align-items:center;gap:8px}
+input[type=range]{accent-color:var(--accent)}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.seg button{font:inherit;font-size:.8rem;font-weight:600;padding:6px 12px;border:0;background:var(--surface-2);color:var(--ink-soft);cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent);color:#fff}
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(min(260px,100%),1fr));margin-top:clamp(1.5rem,1rem + 2vw,2.5rem)}
+.card{display:flex;flex-direction:column;gap:.4rem;min-width:0;text-decoration:none;color:inherit;
+  background:var(--surface-1);border:1px solid var(--line);border-radius:var(--radius);padding:18px;
+  box-shadow:0 1px 2px var(--shadow),0 10px 28px -16px var(--shadow);
+  transition:transform .15s ease,border-color .15s ease,box-shadow .15s ease}
+.card:hover{transform:translateY(-3px);border-color:var(--accent);box-shadow:0 2px 4px var(--shadow),0 16px 36px -14px var(--shadow)}
+.card:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.card .swatch{height:52px;border-radius:10px;margin-bottom:.5rem;position:relative;overflow:hidden;background:var(--surface-2);border:1px solid var(--line)}
+.card .swatch::before{content:"";position:absolute;inset:0;background:
+  linear-gradient(90deg,hsl(var(--h) var(--s) 48%),hsl(calc(var(--h) + var(--off,40)) var(--s) 54%))}
+.card .t{font-weight:700;font-size:1.02rem}
+.card .d{font-size:.85rem;color:var(--ink-soft)}
+.card .tagrow{margin-top:auto;font-family:var(--font-mono);font-size:.68rem;color:var(--ink-soft);padding-top:.5rem}
+.sec{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);
+  border-bottom:1px solid var(--line);padding-bottom:8px;margin:clamp(2rem,1.4rem + 2vw,3rem) 0 0}
+footer{margin-top:clamp(2rem,1.4rem + 2vw,3rem);padding-top:1rem;border-top:1px solid var(--line);color:var(--ink-soft);font-size:.85rem}
+footer a{color:var(--accent)}
+code{font-family:var(--font-mono);font-size:.85em;background:color-mix(in srgb,var(--accent) 10%,transparent);padding:.08em .4em;border-radius:5px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="kicker">Abbott kit · e-learning assets</div>
+    <h1>Hand-drawn animation &amp; a fluid Adapt theme</h1>
+    <p class="lede">One hue drives the colour; two dials drive type and space; every animation runs off one speed variable and respects reduced motion. Drag the hue to retint the whole page — it uses the same tokens as the kit.</p>
+    <div class="controls">
+      <label>Hue <input id="hue" type="range" min="0" max="360" value="202"></label>
+      <div class="seg" id="theme"><button data-set="light" aria-pressed="false">Light</button><button data-set="dark" aria-pressed="false">Dark</button><button data-set="system" aria-pressed="true">System</button></div>
+    </div>
+  </header>
+
+  <div class="sec">Theme &amp; templates</div>
+  <div class="grid" id="g1"></div>
+
+  <div class="sec">Ink &amp; marks</div>
+  <div class="grid" id="g2"></div>
+
+  <div class="sec">Diagrams, process &amp; reveals</div>
+  <div class="grid" id="g3"></div>
+
+  <div class="sec">Interaction patterns</div>
+  <div class="grid" id="g4"></div>
+
+  <div class="sec">Backgrounds</div>
+  <div class="grid" id="g5"></div>
+
+  <div class="sec">Washes &amp; textures</div>
+  <div class="grid" id="g6"></div>
+
+  <div class="sec">Hero headers</div>
+  <div class="grid" id="g7"></div>
+
+  <div class="sec">Note-taking</div>
+  <div class="grid" id="g8"></div>
+
+  <div class="sec">Bullets &amp; markers</div>
+  <div class="grid" id="g9"></div>
+
+  <footer>
+    Theme plugin in <code>theme/adapt-abbott/</code> · foundation tokens in <code>foundation/</code> · guides in <code>docs/</code>. See the <a href="README.md">README</a>. MIT licensed.
+  </footer>
+</div>
+
+<script>
+  const cards={
+    g1:[
+      ["preview","Theme preview","The Abbott theme on sample lesson markup, with live hue / type / space / motion knobs.",0],
+      ["templates","Lesson templates","Six lesson-page layouts on one theme, with a show-structure toggle.",30],
+      ["lesson-kit","Lesson kit","Starter page structure, scribble assets, animated cycle & timeline.",60],
+      ["grow-structure","Custom structure","A render of the grow-base template overrides — article frontmatter + a two-column block, each column with its own fields & component.",15],
+      ["grow-stacks","GROW stacks","The GROW build stacks as layered interfaces: mechanical structure tier → style/token tier with a swappable base.",-45],
+      ["grow-lesson","Core lesson","A full lesson from the four GROW objects — hero + objectives, article frontmatter, summary block, columns — with a reveal for the data-fm-* metadata layer.",75]
+    ],
+    g2:[
+      ["ink","Ink animations","Tick, cross, scribble, circled exclamation, and a reversible hierarchy.",20],
+      ["marks","Marks & handwriting","Underline/oval/box/strike, highlighters, arrows, shapes, dotted lines, punctuation, notes.",45],
+      ["connectors","Ink connectors","Hand-drawn code-structure / indent connectors and scribble-over-a-box.",90]
+    ],
+    g3:[
+      ["flows","Flow diagrams","Circle, triangle, square, vertical and horizontal — with a travelling runner.",120],
+      ["process","Process & flow","Flowchart with a decision, fork/join, loop+counter, pipeline, worked example.",150],
+      ["reveals","Note & reveal","Sticky notes peeling away, teacher marking, deal-in & stagger reveals.",-30]
+    ],
+    g4:[
+      ["patterns-1","Patterns · Vol 1","Step process, flip card, peek, progress ring, count-up, bars, hotspots, step-through, branch.",200],
+      ["patterns-2","Patterns · Vol 2","Tabs, slide sequence, before/after, MCQ, match, sort, scale, Venn, spotlight.",230],
+      ["patterns-3","Patterns · Vol 3","Reorder, memory, cloze, glossary, gauge, success tick, accordion, stars, wizard.",260]
+    ],
+    g5:[
+      ["backgrounds","Ambient backgrounds","Gradient drift, aurora, blobs, dots, grid, stripes, bokeh, waves, spotlight, mesh.",300]
+    ],
+    g6:[
+      ["washes","Washes & textures","Subtle transparent-to-colour gradients and fine textures, with an intensity dial.",330]
+    ],
+    g7:[
+      ["heroes","Hero headers","Ready-made section headers layering an animated background + a wash + legible content.",360]
+    ],
+    g8:[
+      ["notetaking","Note-taking","Pen writing, page fills, checkbox tick, highlight, bullets, margin note, sticky, page turn, typed text.",390]
+    ],
+    g9:[
+      ["bullets","Bullets & markers","Lots of simple draw-on bullet shapes — dots, rings, squares, diamonds, stars, arrows, chevrons, ticks, signs.",-60]
+    ]
+  };
+  for(const [gid,items] of Object.entries(cards)){
+    const g=document.getElementById(gid);
+    g.innerHTML=items.map(([file,t,d,off])=>
+      `<a class="card" href="gallery/${file}.html" style="--off:${off}"><div class="swatch"></div><div class="t">${t}</div><div class="d">${d}</div><div class="tagrow">gallery/${file}.html</div></a>`
+    ).join("");
+  }
+  const root=document.documentElement;
+  document.getElementById('hue').addEventListener('input',e=>root.style.setProperty('--h',e.target.value));
+  document.getElementById('theme').addEventListener('click',e=>{const b=e.target.closest('[data-set]');if(!b)return;const m=b.dataset.set;m==='system'?root.removeAttribute('data-theme'):root.setAttribute('data-theme',m);document.querySelectorAll('#theme button').forEach(x=>x.setAttribute('aria-pressed',x===b));});
+</script>
+</body>
+</html>

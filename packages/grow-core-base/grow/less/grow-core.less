@@ -1,0 +1,24 @@
+// ============================================================================
+//  grow-core-less  —  the ONE interface entry point
+//  ----------------------------------------------------------------------------
+//  End of mechanical build → start of styles. This is the single file that
+//  assembles the grow style tier, in the order:
+//      grow-base-<grouping>   (token groupings — the swappable BASE)
+//      grow-theme-template    (painting that dresses the course shape)
+//      grow-<customer>-theme-profile  (the dials — generator output)
+//
+//  All tokens are runtime CSS custom properties, so @import order does not
+//  affect var() resolution — but we keep the model's order for clarity.
+//
+//  NOTE for a real Adapt build: Adapt's grunt task globs + @imports every .less
+//  in the theme itself, so inside a theme you let the numeric file-sort set the
+//  order instead of these explicit @imports (which would double-emit). This
+//  explicit chain is how the scaffold compiles stand-alone and documents the
+//  intended layering; see README.md.
+// ============================================================================
+
+@import "grow-base-color.less";
+@import "grow-base-typography.less";
+@import "grow-base-space.less";
+@import "grow-theme-template.less";
+@import "grow-acme-theme-profile.less";

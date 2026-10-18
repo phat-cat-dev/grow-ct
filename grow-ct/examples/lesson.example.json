@@ -1,0 +1,62 @@
+{
+  "_comment": "A full core lesson authored with grow-base structural objects. Shows the universal _frontmatter metadata layer at every level: page (hero + objectives, displayed), article (displayed), block (summary kind), and a component with metadata-only frontmatter (stamped as data-fm-* but not rendered). In a real course these split across contentObjects.json / articles.json / blocks.json / components.json.",
+
+  "page (lesson)": {
+    "_id": "co-05", "_type": "page", "title": "Designing for depth", "displayTitle": "Designing for depth",
+    "_grow": {
+      "_frontmatter": {
+        "_isEnabled": true, "_display": true, "eyebrow": "Module 2 · Lesson 3",
+        "objectivesTitle": "By the end of this lesson you will",
+        "_objectives": [
+          "Explain where colour, type and space come from in a token system",
+          "Build a two-column block with per-column metadata",
+          "Toggle a frontmatter section between visible and metadata-only"
+        ],
+        "_fields": [
+          { "_key": "duration", "label": "Duration", "value": "12 min", "_display": true },
+          { "_key": "level", "label": "Level", "value": "Intermediate", "_display": true },
+          { "_key": "owner", "label": "Author", "value": "stuart", "_display": false }
+        ]
+      }
+    }
+  },
+
+  "article": {
+    "_id": "a-05", "_parentId": "co-05", "_type": "article", "title": "Two sides of the same idea", "displayTitle": "Two sides of the same idea",
+    "_grow": {
+      "_frontmatter": {
+        "_isEnabled": true, "_display": true,
+        "body": "<p>An article-level frontmatter section, rendered because <code>_display</code> is true.</p>",
+        "_fields": [ { "_key": "est", "label": "Reading", "value": "4 min", "_display": true } ]
+      }
+    }
+  },
+
+  "block (summary / checkpoint)": {
+    "_id": "b-05", "_parentId": "a-05", "_type": "block", "title": "Checkpoint", "displayTitle": "Checkpoint",
+    "_grow": {
+      "_kind": "summary",
+      "_frontmatter": {
+        "_isEnabled": true, "_display": true, "eyebrow": "Recap",
+        "body": "<p>Key points before you move on.</p>"
+      },
+      "_columns": [
+        { "title": "You learned", "body": "<p>Tokens drive the look.</p>", "frontmatter": "recap", "_components": ["c-05"] },
+        { "title": "Check yourself", "body": "<p>One question.</p>", "frontmatter": "checkpoint", "_components": ["c-10"] }
+      ]
+    }
+  },
+
+  "component (metadata-only frontmatter)": {
+    "_id": "c-05", "_parentId": "b-05", "_type": "component", "_component": "text", "title": "What depth buys you",
+    "_grow": {
+      "_frontmatter": {
+        "_isEnabled": true, "_display": false,
+        "_fields": [
+          { "_key": "concept", "label": "Concept", "value": "depth", "_display": true },
+          { "_key": "reviewed", "label": "Reviewed", "value": "2026-10", "_display": true }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,116 @@
+/* ============================================================================
+   25-motion.less — Abbott motion layer
+   ----------------------------------------------------------------------------
+   PHILOSOPHY: motion is a SIGNAL, not decoration. Use it sparingly, to
+   indicate or highlight — a reveal as content appears, a nudge on error, a
+   pop on success. Nothing moves unless a component opts in.
+
+   THREE RULES BUILT IN:
+   1. OPT-IN   — nothing animates by default. You add a `motion-*` class (via a
+                 component's `_classes`), or configure Adapt core `_onScreen`
+                 to stamp a reveal class. No blanket page animation.
+   2. OFF-ABLE — the learner can switch motion off, two ways:
+                   • OS setting  → @media (prefers-reduced-motion: reduce)
+                   • In-course   → <html class="no-motion"> (a toggle button)
+                 Either one removes decorative + entrance motion. (Toggle
+                 snippet at the bottom of this file.)
+   3. REVEAL rides Adapt's built-in onscreen hook + Trickle — no custom JS.
+      Core adds `{name}-before` then `{name}-after` when a block scrolls in;
+      Trickle reveals + scrolls, so trickled blocks animate for free.
+   ============================================================================ */
+
+:root {
+  /* durations — keep short; signals, not performances */
+  --motion-fast:  140ms;
+  --motion-base:  240ms;
+  --motion-slow:  420ms;
+  /* easings */
+  --motion-ease:        cubic-bezier(0.2, 0, 0.2, 1);   /* standard         */
+  --motion-ease-out:    cubic-bezier(0.16, 1, 0.3, 1);  /* entrance / reveal */
+  --motion-ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1); /* pop / bounce   */
+}
+
+/* ============================================================================
+   ENTRANCE / REVEAL  — for Adapt core `_onScreen._classes` + Trickle reveals
+   Element starts in the `-before` state; core adds `-after` on screen, which
+   carries the transition, so it animates from hidden → shown exactly once.
+   Configure per article/block/component, e.g.  "_onScreen": { "_classes": "fade-in" }
+   ============================================================================ */
+.fade-in-before      { opacity: 0; }
+.fade-in-after       { opacity: 1; transition: opacity var(--motion-slow) var(--motion-ease-out); }
+
+.fade-up-before      { opacity: 0; transform: translateY(1.25rem); }
+.fade-up-after       { opacity: 1; transform: none;
+                       transition: opacity var(--motion-slow) var(--motion-ease-out),
+                                   transform var(--motion-slow) var(--motion-ease-out); }
+
+.scale-in-before     { opacity: 0; transform: scale(0.96); }
+.scale-in-after      { opacity: 1; transform: none;
+                       transition: opacity var(--motion-base) var(--motion-ease-out),
+                                   transform var(--motion-base) var(--motion-ease-spring); }
+
+.reveal-before       { opacity: 0; clip-path: inset(0 0 100% 0); }
+.reveal-after        { opacity: 1; clip-path: inset(0 0 0 0);
+                       transition: opacity var(--motion-slow) var(--motion-ease-out),
+                                   clip-path var(--motion-slow) var(--motion-ease-out); }
+
+/* ============================================================================
+   INDICATORS  — opt-in attention utilities (add via a component's _classes)
+   Curated to signalling jobs, not a zoo of effects. Transform-only so they
+   never shift surrounding layout.
+   ============================================================================ */
+.motion-pulse  { animation: ab-pulse  1800ms var(--motion-ease) infinite; }           /* ongoing: "live / active" */
+.motion-float  { animation: ab-float  5000ms ease-in-out infinite; }                  /* ongoing: gentle idle     */
+.motion-spin   { animation: ab-spin   900ms  linear infinite; }                       /* ongoing: busy / loading  */
+.motion-nudge  { animation: ab-nudge  600ms  var(--motion-ease) 2; }                  /* once-ish: "look here / error" */
+.motion-pop    { animation: ab-pop    420ms  var(--motion-ease-spring) 1; }           /* once: success / confirm  */
+.motion-bounce { animation: ab-bounce 1400ms var(--motion-ease) infinite; }           /* ongoing: "continue ↑"    */
+
+@keyframes ab-pulse  { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: .75; transform: scale(1.06); } }
+@keyframes ab-float  { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+@keyframes ab-spin   { to { transform: rotate(360deg); } }
+@keyframes ab-nudge  { 0%,100% { transform: translateX(0); } 20% { transform: translateX(-3px); } 60% { transform: translateX(3px); } }
+@keyframes ab-pop    { 0% { transform: scale(0.8); } 60% { transform: scale(1.08); } 100% { transform: scale(1); } }
+@keyframes ab-bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+
+/* ============================================================================
+   THE OFF-SWITCH  — scoped to motion only, so functional UI transitions
+   (accordion open, focus rings) are left intact.
+   Fires for BOTH the OS setting and the in-course .no-motion class.
+   ============================================================================ */
+.no-motion :is(.motion-pulse,.motion-float,.motion-spin,.motion-nudge,.motion-pop,.motion-bounce),
+.no-motion :is(.motion-art) {
+  animation: none !important;
+}
+.no-motion :is(.fade-in-before,.fade-up-before,.scale-in-before,.reveal-before),
+.no-motion :is(.fade-in-after,.fade-up-after,.scale-in-after,.reveal-after) {
+  opacity: 1 !important; transform: none !important; clip-path: none !important; transition: none !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :is(.motion-pulse,.motion-float,.motion-spin,.motion-nudge,.motion-pop,.motion-bounce), .motion-art {
+    animation: none !important;
+  }
+  :is(.fade-in-before,.fade-up-before,.scale-in-before,.reveal-before),
+  :is(.fade-in-after,.fade-up-after,.scale-in-after,.reveal-after) {
+    opacity: 1 !important; transform: none !important; clip-path: none !important; transition: none !important;
+  }
+}
+
+/* ============================================================================
+   LEARNER TOGGLE — drop this anywhere (e.g. in js/theme.js, or a course button
+   with [data-motion-toggle]) to let the user turn motion off and remember it:
+
+     const KEY = 'abbott-motion';
+     const apply = off => document.documentElement.classList.toggle('no-motion', off);
+     try { apply(localStorage.getItem(KEY) === 'off'); } catch (e) {}
+     document.addEventListener('click', e => {
+       if (!e.target.closest('[data-motion-toggle]')) return;
+       const off = !document.documentElement.classList.contains('no-motion');
+       apply(off);
+       try { localStorage.setItem(KEY, off ? 'off' : 'on'); } catch (e) {}
+     });
+
+   Then a button anywhere:  <button data-motion-toggle>Reduce motion</button>
+   (OS "reduce motion" always wins regardless of this toggle.)
+   ============================================================================ */

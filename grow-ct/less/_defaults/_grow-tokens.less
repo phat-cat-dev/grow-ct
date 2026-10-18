@@ -1,0 +1,119 @@
+// ============================================================================
+//  _grow-tokens.less — THE DIALS  (the one file the generator tool writes)
+//  ----------------------------------------------------------------------------
+//  grow-ct occupies vanilla's slot in Adapt's compile order (theme is
+//  @import'd LAST), so what we define here wins globally. This file is the
+//  single source of truth — the `@grow-*` namespace and the `--grow-*` runtime
+//  tokens — that both (a) feeds the Adapt/vanilla variable contract in
+//  _colors.less / _spacing-config.less, and (b) drives our own Grow content
+//  components and decoration layers.
+//
+//  TWO LAYERS, on purpose:
+//   • @grow-* LESS vars  — COMPILE-TIME real colours (via LESS hsl()), so the
+//     darken()/fade() maths vanilla runs across core/nav/drawer/btn still works.
+//     These colour the page chrome at the build's chosen default hue.
+//   • --grow-* CSS tokens    — RUNTIME custom properties (hue/type/space dials),
+//     so content + decoration retint live and flip for dark mode.
+//
+//  Sorts first in _defaults/ (…/_grow-tokens < _animations < _colors), so the
+//  @grow-* values exist before the files that consume them.
+// ============================================================================
+
+// ── THE DIALS (compile-time) ────────────────────────────────────────────────
+@grow-h:  202;    // brand hue 0–360  (the generator's main colour dial)
+@grow-s:  72%;    // brand saturation
+@grow-gs: 12%;    // blue-grey saturation
+
+// ── COMPILE-TIME PALETTE — real LESS colours (safe for darken()/fade()) ──────
+// Fed into the Adapt/vanilla base palette in _colors.less. Light-mode values;
+// they set the chrome's baked colour at the build hue.
+@grow-page-bg:    hsl(@grow-h, 30%, 96%);
+@grow-surface-1:  hsl(@grow-h, 24%, 99%);
+@grow-surface-2:  hsl(@grow-h, 20%, 94%);
+@ink:        hsl(@grow-h, 25%, 16%);
+@ink-soft:   hsl(@grow-h, 14%, 38%);
+@grow-line:       hsl(@grow-h, 18%, 86%);
+@grow-accent:     hsl(@grow-h, @grow-s, 42%);
+@grow-accent-ink: hsl(@grow-h, @grow-s, 34%);
+@grow-white:      #ffffff;   // true white/black kept for plugin fade()/lighten()
+@grow-black:      #000000;
+
+// @white/@black are normally provided by adapt-contrib-core (imported before the
+// theme). Define them here too so this theme is self-sufficient and compiles in
+// isolation; the theme is imported last, so these win with no ill effect.
+@white: @grow-white;
+@black: @grow-black;
+
+// ── RUNTIME TOKENS — CSS custom properties (live hue / dark mode / dials) ─────
+// The same proven Grow engine as adapt-abbott/less/00-foundation.less. Our
+// content components and the decoration layers read these; they retint with --h
+// and flip under dark mode without a rebuild.
+:root {
+  --h: @grow-h; --s: @grow-s; --gs: @grow-gs;
+  --type-scale: 1; --space-scale: 1; --flow-rate: 1; --i: 1;
+
+  --page-bg:   hsl(var(--h) 30% 96%);
+  --surface-1: hsl(var(--h) 24% 99%);
+  --surface-2: hsl(var(--h) 20% 94%);
+  --ink:       hsl(var(--h) 25% 16%);
+  --ink-soft:  hsl(var(--h) 14% 38%);
+  --line:      hsl(var(--h) 18% 86%);
+  --accent:    hsl(var(--h) var(--s) 42%);
+  --accent-ink:hsl(var(--h) var(--s) 34%);
+  --shadow:    ~"hsl(var(--h) 40% 20% / .16)";
+
+  --sem-s: 55%; --sem-l: 38%; --sem-weak-s: 55%; --sem-weak-l: 92%;
+  --c-positive: hsl(150 var(--sem-s) var(--sem-l)); --c-positive-weak: hsl(150 var(--sem-weak-s) var(--sem-weak-l));
+  --c-neutral:  hsl(calc(var(--h) + 198) var(--sem-s) var(--sem-l));
+  --c-negative: hsl(5 var(--sem-s) var(--sem-l));
+  --c-comment:  hsl(270 var(--sem-s) var(--sem-l));
+
+  // families
+  --font-ui:      "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-heading: var(--font-ui);
+  --font-mono:    ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
+
+  // fluid type ramp (escaped so LESS keeps the `+` maths)
+  --fs-3xs:  ~"clamp(0.69rem, 0.66rem + 0.14vw, 0.78rem)";
+  --fs-2xs:  ~"clamp(0.75rem, 0.71rem + 0.20vw, 0.85rem)";
+  --fs-xs:   ~"clamp(0.80rem, 0.75rem + 0.25vw, 0.92rem)";
+  --fs-sm:   ~"clamp(0.90rem, 0.84rem + 0.30vw, 1.02rem)";
+  --fs-base: ~"clamp(1.00rem, 0.93rem + 0.35vw, 1.15rem)";
+  --fs-md:   ~"clamp(1.15rem, 1.03rem + 0.55vw, 1.35rem)";
+  --fs-lg:   ~"clamp(1.30rem, 1.12rem + 0.80vw, 1.60rem)";
+  --fs-xl:   ~"clamp(1.55rem, 1.28rem + 1.20vw, 2.05rem)";
+  --fs-2xl:  ~"clamp(1.85rem, 1.45rem + 1.80vw, 2.60rem)";
+  --fs-3xl:  ~"clamp(2.20rem, 1.60rem + 2.60vw, 3.30rem)";
+  --fs-4xl:  ~"clamp(2.60rem, 1.75rem + 3.80vw, 4.40rem)";
+  --fs-5xl:  ~"clamp(3.10rem, 1.90rem + 5.40vw, 5.80rem)";
+
+  // fluid space scale (calc() preserved by LESS; density dial baked in)
+  --space-3xs: calc(clamp(0.25rem, 0.23rem + 0.10vw, 0.35rem) * var(--space-scale));
+  --space-2xs: calc(clamp(0.50rem, 0.45rem + 0.20vw, 0.65rem) * var(--space-scale));
+  --space-xs:  calc(clamp(0.75rem, 0.65rem + 0.40vw, 1.05rem) * var(--space-scale));
+  --space-sm:  calc(clamp(1.00rem, 0.85rem + 0.60vw, 1.50rem) * var(--space-scale));
+  --space-md:  calc(clamp(1.50rem, 1.20rem + 1.20vw, 2.50rem) * var(--space-scale));
+  --space-lg:  calc(clamp(2.25rem, 1.70rem + 2.20vw, 4.00rem) * var(--space-scale));
+  --space-xl:  calc(clamp(3.00rem, 2.10rem + 3.60vw, 6.00rem) * var(--space-scale));
+
+  color-scheme: light;
+}
+
+// dark mode — runtime tokens flip (chrome keeps its baked compile-time palette;
+// see README for the optional live-chrome upgrade).
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --page-bg: hsl(var(--h) 32% 8%); --surface-1: hsl(var(--h) 26% 12%); --surface-2: hsl(var(--h) 24% 16%);
+    --ink: hsl(var(--h) 20% 92%); --ink-soft: hsl(var(--h) 14% 66%); --line: hsl(var(--h) 22% 22%);
+    --accent: hsl(var(--h) var(--s) 64%); --accent-ink: hsl(var(--h) var(--s) 78%); --shadow: ~"hsl(var(--h) 60% 2% / .5)";
+    --sem-l: 64%; --sem-weak-l: 18%;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --page-bg: hsl(var(--h) 32% 8%); --surface-1: hsl(var(--h) 26% 12%); --surface-2: hsl(var(--h) 24% 16%);
+  --ink: hsl(var(--h) 20% 92%); --ink-soft: hsl(var(--h) 14% 66%); --line: hsl(var(--h) 22% 22%);
+  --accent: hsl(var(--h) var(--s) 64%); --accent-ink: hsl(var(--h) var(--s) 78%); --shadow: ~"hsl(var(--h) 60% 2% / .5)";
+  --sem-l: 64%; --sem-weak-l: 18%;
+  color-scheme: dark;
+}

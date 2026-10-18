@@ -1,0 +1,80 @@
+{{! ============================================================================
+    grow-base OVERRIDE of core block.hbs
+    Keeps every core hook — .block__inner, .js-heading, and .component__container
+    (components MUST mount here; Adapt appends them). ADDS a two-column structure
+    from _grow._columns, each column carrying its own title / description /
+    frontmatter + an empty mount (.col__components). themeBlockView.js then
+    moves each component out of the staging .component__container into the column
+    that claims its _id. When _columns is absent the block behaves exactly like
+    core (components stay in .component__container).
+    ============================================================================ }}
+{{import_globals}}
+
+<div class="block__inner{{#if _grow._kind}} block--{{_grow._kind}}{{/if}}">
+
+  {{! ---- grow frontmatter (shared partial; visible when _display) ---- }}
+  <div class="block__frontmatter">
+    {{> _grow-frontmatter _grow._frontmatter role="section"}}
+  </div>
+
+  {{#any displayTitle body instruction}}
+  <div class="block__header">
+    <div class="block__header-inner">
+
+      {{#if priorityLabel}}
+      <div class="block__priority {{_priorityClass}}">
+        {{#if _priorityIconClass}}
+        <span class="icon {{_priorityIconClass}}" aria-hidden="true"></span>
+        {{/if}}
+        <div class="block__priority-label">
+          {{{compile priorityLabel}}}
+        </div>
+      </div>
+      {{/if}}
+
+      {{#if displayTitle}}
+      <div class="block__title">
+        <div class="block__title-inner js-heading"></div>
+      </div>
+      {{/if}}
+
+      {{#if body}}
+      <div class="block__body">
+        <div class="block__body-inner">
+          {{{compile body}}}
+        </div>
+      </div>
+      {{/if}}
+
+      {{#if instruction}}
+      <div class="block__instruction">
+        <div class="block__instruction-inner">
+          {{{compile instruction}}}
+        </div>
+      </div>
+      {{/if}}
+
+    </div>
+  </div>
+  {{/any}}
+
+  {{! ---- NEW: grow columns (authored under _grow._columns) ---- }}
+  {{#if _grow._columns}}
+  <div class="cols" data-grow-cols="{{_grow._columns.length}}">
+    {{#each _grow._columns}}
+    <div class="col" data-grow-col="{{@index}}">
+      {{#if title}}<h4 class="col__title">{{{compile title}}}</h4>{{/if}}
+      {{#if body}}<div class="col__body">{{{compile body}}}</div>{{/if}}
+      {{#if frontmatter}}<div class="col__frontmatter">{{{compile frontmatter}}}</div>{{/if}}
+      <div class="col__components" data-grow-col-components="{{@index}}"></div>
+    </div>
+    {{/each}}
+  </div>
+  {{/if}}
+
+  <div class="component__container">
+    {{!-- Components render here (core hook). With columns configured,
+          themeBlockView.js relocates them into .col__components. --}}
+  </div>
+
+</div>

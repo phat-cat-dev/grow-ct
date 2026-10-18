@@ -1,0 +1,126 @@
+// ============================================================================
+//  50-marks.less — Grow INK MARKS  (draw-on annotations & highlighters)
+//  ----------------------------------------------------------------------------
+//  The signature Grow layer: hand-drawn marks in one SVG stroke (currentColor),
+//  wobbled by the shared #ink filter (injected by theme.js), drawn on with
+//  stroke-dashoffset. Highlighters sweep in. One --flow-rate speed dial.
+//
+//  THE GEOMETRY lives in markup (an inline <svg><path class="ink" …/></svg>) —
+//  this layer owns the *look* and the *draw-on behaviour*. At rest a mark is
+//  fully drawn, so it degrades gracefully if nothing ever triggers it.
+//
+//  TRIGGER the draw-on by giving an ancestor the class `ink-play`. In Adapt,
+//  map it onto the onscreen hook:  "_onScreen": { "_classes": "ink-play" }
+//  so marks draw as the block scrolls into view. (`.playing` also triggers, so
+//  the gallery demo markup works unchanged.)
+//
+//  Copy the SVG path data for each mark (underline, oval, box, tick, cross,
+//  arrows, shapes, punctuation…) from gallery/marks.html.
+//  Requires the #ink filter (theme.js injects it; or add it to page markup).
+// ============================================================================
+
+// ---- the ink stroke ------------------------------------------------------
+.ink {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 0;       // at rest: fully drawn
+  filter: url(#ink);
+}
+:is(.ink-play, .playing) .ink {
+  animation: grow-draw calc(0.6s / var(--flow-rate)) ease var(--d, 0s) both;
+}
+@keyframes grow-draw { from { stroke-dashoffset: 1 } to { stroke-dashoffset: 0 } }
+
+// semantic mark colours (drive currentColor on the <svg>)
+.ink--ok    { color: var(--c-positive); }
+.ink--no    { color: var(--c-negative); }
+.ink--warn  { color: var(--c-neutral); }
+.ink--vio   { color: var(--c-comment); }
+.ink--brand { color: var(--accent); }
+
+// a dotted guide stroke (not drawn-on; a static dashed line)
+.dash { fill: none; stroke: currentColor; stroke-linecap: round; }
+
+// ---- marks that wrap a word (underline / strike / oval / box) ------------
+// Put the text in .mark and an absolutely-placed <svg> inside it.
+.mark {
+  position: relative;
+  display: inline-block;
+  font-weight: 700;
+  color: var(--ink);
+  padding: 0.12em 0.18em;
+  white-space: nowrap;
+}
+.mark svg { position: absolute; overflow: visible; pointer-events: none; color: var(--accent); }
+.mark--underline svg,
+.mark--wavy svg   { left: -4%; bottom: -0.22em; width: 108%; height: 0.5em; }
+.mark--strike svg { left: -4%; top: 42%; width: 108%; height: 0.4em; color: var(--c-negative); }
+.mark--oval svg   { left: -12%; top: -30%; width: 124%; height: 160%; }
+.mark--box svg    { left: -10%; top: -26%; width: 120%; height: 152%; }
+.mark--brackets svg { left: -14%; top: -20%; width: 128%; height: 140%; }
+
+// standalone glyph marks (tick, cross, arrow, star, shapes, punctuation…)
+.glyph { display: block; width: 52px; height: 52px; color: var(--accent); }
+
+// ---- highlighter (pure CSS, sweeps in) -----------------------------------
+.hl {
+  --c: var(--accent);
+  --hl-top: 52%;
+  --hl-h: 42%;
+  --hl-pad: 0.14em;
+  background: linear-gradient(to bottom,
+    transparent var(--hl-top),
+    color-mix(in srgb, var(--c) 40%, transparent) var(--hl-top),
+    color-mix(in srgb, var(--c) 40%, transparent) calc(var(--hl-top) + var(--hl-h)),
+    transparent calc(var(--hl-top) + var(--hl-h)));
+  background-repeat: no-repeat;
+  background-position: left center;
+  background-size: 100% 100%;
+  padding-inline: var(--hl-pad);
+  margin-inline: calc(var(--hl-pad) * -1);
+  border-radius: 3px;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  font-weight: 700;
+}
+:is(.ink-play, .playing) .hl { animation: grow-hlsweep calc(0.55s / var(--flow-rate)) ease both; }
+@keyframes grow-hlsweep { from { background-size: 0% 100% } to { background-size: 100% 100% } }
+
+// highlighter colours + shapes
+.hl--amber  { --c: var(--c-neutral); }
+.hl--violet { --c: var(--c-comment); }
+.hl--green  { --c: var(--c-positive); }
+.hl--grey   { --c: hsl(var(--h) var(--gs) 55%); }
+.hl--tall { --hl-top: 36%; --hl-h: 58%; }
+.hl--thin { --hl-top: 62%; --hl-h: 20%; }
+.hl--low  { --hl-top: 66%; --hl-h: 30%; }
+.hl--high { --hl-top: 28%; --hl-h: 32%; }
+
+// ---- entrance helpers reused by diagrams/reveals -------------------------
+.stretch { transform-origin: left center; }
+:is(.ink-play, .playing) .stretch { animation: grow-stretchx calc(0.8s / var(--flow-rate)) ease both; }
+@keyframes grow-stretchx { from { transform: scaleX(.12) } to { transform: scaleX(1) } }
+
+.wipe { transform-origin: left center; }
+:is(.ink-play, .playing) .wipe { animation: grow-wipex calc(0.6s / var(--flow-rate)) ease both; }
+@keyframes grow-wipex { from { transform: scaleX(0) } to { transform: scaleX(1) } }
+
+// stop motion — final (drawn) state shown
+.no-motion :is(.ink, .hl, .stretch, .wipe) {
+  animation: none !important;
+  stroke-dashoffset: 0;
+  background-size: 100% 100%;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  :is(.ink, .hl, .stretch, .wipe) {
+    animation: none !important;
+    stroke-dashoffset: 0;
+    background-size: 100% 100%;
+    transform: none;
+  }
+}

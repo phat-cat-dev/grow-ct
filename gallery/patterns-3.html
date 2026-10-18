@@ -1,0 +1,221 @@
+<title>Abbott Patterns Vol 3</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Material+Symbols+Outlined&display=swap">
+<style>
+/* Volume 3 — activity games, inputs and reveals, on the Abbott theme.
+   Token-driven, theme-aware, quiet under reduced motion. */
+:root{
+  --h:202;--s:72%;--gs:12%;
+  --page-bg:hsl(var(--h) 30% 96%);--surface-1:hsl(var(--h) 24% 99%);--surface-2:hsl(var(--h) 20% 94%);
+  --ink:hsl(var(--h) 25% 16%);--ink-soft:hsl(var(--h) 14% 38%);--line:hsl(var(--h) 18% 86%);
+  --accent:hsl(var(--h) var(--s) 42%);--shadow:hsl(var(--h) 40% 20% / .16);
+  --c-positive:hsl(150 55% 38%);--c-pos-weak:hsl(150 55% 92%);--c-negative:hsl(5 62% 48%);--c-neg-weak:hsl(5 62% 94%);--c-warning:hsl(42 90% 48%);
+  --font-ui:"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;--font-mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --fs-3xs:.72rem;--fs-2xs:.8rem;--fs-xs:.88rem;--fs-sm:.95rem;--radius:14px;--sp:clamp(1rem,.85rem + .6vw,1.5rem);color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--page-bg:hsl(var(--h) 32% 8%);--surface-1:hsl(var(--h) 26% 12%);--surface-2:hsl(var(--h) 24% 16%);--ink:hsl(var(--h) 20% 92%);--ink-soft:hsl(var(--h) 14% 66%);--line:hsl(var(--h) 22% 22%);--accent:hsl(var(--h) var(--s) 64%);--shadow:hsl(var(--h) 60% 2% / .5);--c-pos-weak:hsl(150 30% 18%);--c-neg-weak:hsl(5 35% 20%);color-scheme:dark}}
+:root[data-theme="dark"]{--page-bg:hsl(var(--h) 32% 8%);--surface-1:hsl(var(--h) 26% 12%);--surface-2:hsl(var(--h) 24% 16%);--ink:hsl(var(--h) 20% 92%);--ink-soft:hsl(var(--h) 14% 66%);--line:hsl(var(--h) 22% 22%);--accent:hsl(var(--h) var(--s) 64%);--shadow:hsl(var(--h) 60% 2% / .5);--c-pos-weak:hsl(150 30% 18%);--c-neg-weak:hsl(5 35% 20%);color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page-bg);color:var(--ink);font-family:var(--font-ui);line-height:1.6}
+h3{font-size:1.2rem;margin:0 0 .3rem}
+.material-symbol{font-family:'Material Symbols Outlined';line-height:1}
+.ab.btn{--_c:hsl(var(--h) var(--s) 44%);display:inline-flex;align-items:center;gap:.4em;font:inherit;font-weight:600;padding:.45rem .9rem;border:1px solid var(--_c);border-radius:9px;background:var(--_c);color:#fff;cursor:pointer;font-size:var(--fs-sm)}
+.ab.btn.outline{background:transparent;color:var(--_c)}.ab.btn.btn-sm{padding:.3rem .6rem;font-size:.8rem}.ab.btn:disabled{opacity:.5}
+.ab.btn .material-symbol{font-size:1.1em}
+.wrap{max-width:70rem;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:var(--sp)}
+.bar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;background:color-mix(in srgb,var(--surface-1) 92%,transparent);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:var(--sp);position:sticky;top:env(safe-area-inset-top,0px);z-index:20}
+.bar .grow{flex:1 1 auto}
+.replay{font:inherit;font-weight:600;font-size:var(--fs-xs);padding:7px 14px;border-radius:999px;border:1px solid var(--accent);background:var(--accent);color:#fff;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}.seg button{font:inherit;font-size:var(--fs-xs);font-weight:600;padding:6px 11px;border:0;background:var(--surface-2);color:var(--ink-soft);cursor:pointer}.seg button[aria-pressed="true"]{background:var(--accent);color:#fff}
+.grid{display:grid;gap:var(--sp);grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr))}
+.pat{background:var(--surface-1);border:1px solid var(--line);border-radius:var(--radius);padding:var(--sp);box-shadow:0 10px 30px -18px var(--shadow);min-width:0}
+.pat .tag{font-family:var(--font-mono);font-size:var(--fs-3xs);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
+.pat .use{font-size:var(--fs-xs);color:var(--ink-soft);margin:.2rem 0 .9rem}
+.stage{background:var(--surface-2);border-radius:10px;padding:var(--sp);display:flex;flex-direction:column;gap:.7rem}
+.fb{font-size:var(--fs-xs);font-weight:600;min-height:1.2em}.fb.ok{color:var(--c-positive)}.fb.no{color:var(--c-negative)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+/* 1 REORDER */
+.order{display:flex;flex-direction:column;gap:.4rem}
+.orow{display:flex;align-items:center;gap:.5rem;padding:.5rem .6rem;border:1px solid var(--line);border-radius:9px;background:var(--surface-1);font-size:var(--fs-sm);transition:background .2s}
+.orow .idx{font-family:var(--font-mono);color:var(--ink-soft);width:1.3em}.orow .txt{flex:1;min-width:0}
+.orow .mv{border:0;background:none;color:var(--ink-soft);cursor:pointer;font:inherit;padding:2px}.orow .mv .material-symbol{font-size:1.2rem}
+.orow.ok{border-color:var(--c-positive);background:var(--c-pos-weak)}.orow.bad{border-color:var(--c-negative);background:var(--c-neg-weak)}
+
+/* 2 MEMORY */
+.mem{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem}
+.tile{aspect-ratio:1;border:0;border-radius:10px;cursor:pointer;font-size:1.6rem;display:grid;place-items:center;background:var(--accent);color:transparent;transition:transform .3s,background .3s}
+.tile .material-symbol{transform:scale(0);transition:transform .25s}
+.tile.up{background:var(--surface-1);border:1px solid var(--line);color:var(--accent)}.tile.up .material-symbol{transform:scale(1)}
+.tile.matched{background:var(--c-pos-weak);border:1px solid var(--c-positive);color:var(--c-positive);cursor:default}
+
+/* 3 CLOZE */
+.cloze{font-size:var(--fs-sm);line-height:2.1}
+.cloze select{font:inherit;font-size:var(--fs-sm);padding:.15rem .3rem;border:1px solid var(--line);border-radius:7px;background:var(--surface-1);color:var(--ink)}
+.cloze select.ok{border-color:var(--c-positive);background:var(--c-pos-weak)}.cloze select.no{border-color:var(--c-negative);background:var(--c-neg-weak)}
+
+/* 4 GLOSSARY */
+.term{position:relative;color:var(--accent);font-weight:600;border-bottom:2px dotted var(--accent);cursor:help}
+.term .def{position:absolute;left:50%;bottom:150%;transform:translateX(-50%);width:max-content;max-width:220px;background:var(--ink);color:var(--page-bg);font-size:var(--fs-2xs);font-weight:400;line-height:1.4;padding:.5rem .6rem;border-radius:8px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:5}
+.term:hover .def,.term:focus-visible .def,.term.open .def{opacity:1}
+
+/* 5 GAUGE */
+.gauge{display:grid;place-items:center}.gauge svg{width:160px;height:92px;overflow:visible}
+.gauge .track{fill:none;stroke:var(--line);stroke-width:12;stroke-linecap:round}
+.gauge .val{fill:none;stroke:var(--accent);stroke-width:12;stroke-linecap:round;stroke-dasharray:100;stroke-dashoffset:calc(100 - var(--val))}
+.playing .gauge .val{animation:gauge 1s ease both}@keyframes gauge{from{stroke-dashoffset:100}to{stroke-dashoffset:calc(100 - var(--val))}}
+.gauge .read{margin-top:-30px;font-family:var(--font-mono);font-weight:700;font-size:1.4rem}
+
+/* 6 SUCCESS TICK */
+.done-wrap{display:flex;align-items:center;gap:.8rem}
+.tick svg{width:52px;height:52px}.tick .ring{fill:none;stroke:var(--c-positive);stroke-width:6;stroke-dasharray:1;stroke-dashoffset:1}
+.tick .check{fill:none;stroke:var(--c-positive);stroke-width:7;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:1}
+.done .tick .ring{animation:tk .5s ease forwards}.done .tick .check{animation:tk .4s ease .35s forwards}@keyframes tk{to{stroke-dashoffset:0}}
+
+/* 7 ACCORDION */
+.acc{display:flex;flex-direction:column;gap:.4rem}
+.acc details{border:1px solid var(--line);border-radius:10px;background:var(--surface-1);overflow:hidden}
+.acc summary{list-style:none;cursor:pointer;padding:.65rem .8rem;font-weight:600;display:flex;align-items:center;gap:.5rem}
+.acc summary::-webkit-details-marker{display:none}
+.acc summary .material-symbol{margin-left:auto;transition:transform .25s;color:var(--accent)}
+.acc details[open] summary .material-symbol{transform:rotate(180deg)}
+.acc .body{padding:0 .8rem .8rem;color:var(--ink-soft);font-size:var(--fs-sm)}
+
+/* 8 STARS */
+.stars{display:flex;gap:.2rem}
+.stars button{border:0;background:none;cursor:pointer;font-size:1.8rem;color:var(--line);padding:0;line-height:1;transition:color .15s,transform .15s}
+.stars button.lit{color:var(--c-warning)}.stars button:hover{transform:scale(1.15)}
+.starread{font-size:var(--fs-xs);color:var(--ink-soft)}
+
+/* 9 WIZARD */
+.wiz{display:flex;flex-direction:column;gap:.7rem}
+.wizbar{position:relative;height:4px;background:var(--line);border-radius:4px}
+.wizbar i{position:absolute;inset:0 auto 0 0;background:var(--accent);border-radius:4px;width:var(--p,25%);transition:width .4s}
+.wizsteps{display:flex;justify-content:space-between;font-size:var(--fs-3xs);font-family:var(--font-mono);color:var(--ink-soft)}
+.wizsteps b{font-weight:400}.wizsteps b.on{color:var(--accent);font-weight:700}
+.wizpanel{background:var(--surface-1);border:1px solid var(--line);border-radius:10px;padding:.9rem;font-size:var(--fs-sm);animation:fade .35s ease}@keyframes fade{from{opacity:0}to{opacity:1}}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="wrap">
+  <div class="bar"><strong>Abbott Patterns · Vol 3</strong><span class="grow"></span>
+    <button class="replay" id="replay"><span class="material-symbol" aria-hidden="true">play_arrow</span>Replay</button>
+    <div class="seg" id="theme"><button data-set="light" aria-pressed="false">Light</button><button data-set="dark" aria-pressed="false">Dark</button><button data-set="system" aria-pressed="true">System</button></div>
+  </div>
+
+  <div class="grid">
+
+    <!-- 1 REORDER -->
+    <div class="pat"><div class="tag">Tool · sequencing</div><h3>Put in order</h3><p class="use">Rank or sequence — move rows, then check.</p>
+      <div class="stage"><div class="order" id="order">
+        <div class="orow" data-o="2"><span class="idx">1</span><span class="txt">Condense into cloud</span><button class="mv" data-d="-1" aria-label="Up"><span class="material-symbol">expand_less</span></button><button class="mv" data-d="1" aria-label="Down"><span class="material-symbol">expand_more</span></button></div>
+        <div class="orow" data-o="1"><span class="idx">2</span><span class="txt">Evaporate from the sea</span><button class="mv" data-d="-1" aria-label="Up"><span class="material-symbol">expand_less</span></button><button class="mv" data-d="1" aria-label="Down"><span class="material-symbol">expand_more</span></button></div>
+        <div class="orow" data-o="3"><span class="idx">3</span><span class="txt">Fall as rain</span><button class="mv" data-d="-1" aria-label="Up"><span class="material-symbol">expand_less</span></button><button class="mv" data-d="1" aria-label="Down"><span class="material-symbol">expand_more</span></button></div>
+      </div><div style="display:flex;gap:.7rem;align-items:center"><button class="ab btn btn-sm" id="ordercheck">Check order</button><span class="fb" id="orderfb"></span></div></div>
+    </div>
+
+    <!-- 2 MEMORY -->
+    <div class="pat"><div class="tag">Tool · game</div><h3>Memory match</h3><p class="use">Flip tiles to find the pairs — recall through play.</p>
+      <div class="stage"><div class="mem" id="mem"></div><span class="fb" id="memfb"></span></div>
+    </div>
+
+    <!-- 3 CLOZE -->
+    <div class="pat"><div class="tag">Tool</div><h3>Fill the blanks</h3><p class="use">Choose the words that complete the sentence.</p>
+      <div class="stage"><form id="cloze"><p class="cloze">Warm colours <select data-c="advance"><option value=""></option><option value="advance">advance</option><option value="recede">recede</option></select> while cool colours <select data-c="recede"><option value=""></option><option value="advance">advance</option><option value="recede">recede</option></select>.</p><div style="display:flex;gap:.7rem;align-items:center"><button class="ab btn btn-sm" type="submit">Check</button><span class="fb" id="clozefb"></span></div></form></div>
+    </div>
+
+    <!-- 4 GLOSSARY -->
+    <div class="pat"><div class="tag">Interaction</div><h3>Glossary tooltip</h3><p class="use">Explain a term in place without leaving the sentence.</p>
+      <div class="stage"><p style="font-size:var(--fs-sm)">A colour's <span class="term" tabindex="0" data-open>saturation<span class="def">How pure or intense a colour is — from vivid to grey.</span></span> changes how close it feels, and its <span class="term" tabindex="0" data-open>value<span class="def">How light or dark a colour is.</span></span> sets the contrast.</p></div>
+    </div>
+
+    <!-- 5 GAUGE -->
+    <div class="pat"><div class="tag">Reveal on view</div><h3>Gauge / dial</h3><p class="use">One value on a dial — a score, a level, a reading.</p>
+      <div class="stage"><div class="gauge" style="--val:68">
+        <svg viewBox="0 0 120 66"><path class="track" d="M8 60 A52 52 0 0 1 112 60" pathLength="100"/><path class="val" d="M8 60 A52 52 0 0 1 112 60" pathLength="100"/></svg>
+        <div class="read">68</div>
+      </div></div>
+    </div>
+
+    <!-- 6 SUCCESS -->
+    <div class="pat"><div class="tag">Reveal</div><h3>Success tick</h3><p class="use">A quiet, drawn checkmark — reward without the confetti.</p>
+      <div class="stage"><div class="done-wrap" id="donew">
+        <span class="tick"><svg viewBox="0 0 52 52"><circle class="ring" cx="26" cy="26" r="22" pathLength="1"/><path class="check" d="M15 27 L23 35 L38 18" pathLength="1"/></svg></span>
+        <div><strong>Stage complete</strong><br><small style="color:var(--ink-soft)">tap below to replay</small></div>
+      </div><button class="ab btn outline btn-sm" id="donebtn"><span class="material-symbol">check</span>Mark complete</button></div>
+    </div>
+
+    <!-- 7 ACCORDION -->
+    <div class="pat"><div class="tag">Interaction</div><h3>Accordion (FAQ)</h3><p class="use">Many short answers; opening one closes the rest.</p>
+      <div class="stage"><div class="acc" id="acc">
+        <details open><summary>What is hue?<span class="material-symbol">expand_more</span></summary><div class="body">Its position on the colour wheel — red, blue, and so on.</div></details>
+        <details><summary>What is value?<span class="material-symbol">expand_more</span></summary><div class="body">How light or dark the colour is.</div></details>
+        <details><summary>What is saturation?<span class="material-symbol">expand_more</span></summary><div class="body">How pure or intense the colour is.</div></details>
+      </div></div>
+    </div>
+
+    <!-- 8 STARS -->
+    <div class="pat"><div class="tag">Tool · input</div><h3>Star rating</h3><p class="use">Capture a self-rating or confidence check.</p>
+      <div class="stage"><div class="stars" id="stars" role="radiogroup" aria-label="Rating"></div><span class="starread" id="starread">Tap to rate your confidence</span></div>
+    </div>
+
+    <!-- 9 WIZARD -->
+    <div class="pat"><div class="tag">Transition · progress</div><h3>Step wizard</h3><p class="use">A guided multi-step flow with a progress bar.</p>
+      <div class="stage"><div class="wiz">
+        <div class="wizbar"><i id="wizi"></i></div>
+        <div class="wizsteps" id="wizsteps"><b class="on">Intro</b><b>Explore</b><b>Practise</b><b>Review</b></div>
+        <div class="wizpanel" id="wizpanel">Welcome — here's what this lesson covers.</div>
+        <div style="display:flex;gap:.5rem"><button class="ab btn outline btn-sm" data-w="-1">Back</button><button class="ab btn btn-sm" data-w="1">Next</button></div>
+      </div></div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  const root=document.documentElement,$=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+  function play(){root.classList.remove('playing');void root.offsetWidth;root.classList.add('playing');clearTimeout(play._t);play._t=setTimeout(()=>root.classList.remove('playing'),1600);}
+  $('#replay').addEventListener('click',play);
+  $('#theme').addEventListener('click',e=>{const b=e.target.closest('[data-set]');if(!b)return;const m=b.dataset.set;m==='system'?root.removeAttribute('data-theme'):root.setAttribute('data-theme',m);$$('#theme button').forEach(x=>x.setAttribute('aria-pressed',x===b));});
+
+  // 1 reorder
+  const order=$('#order');
+  order.addEventListener('click',e=>{const b=e.target.closest('.mv');if(!b)return;const row=b.closest('.orow'),d=+b.dataset.d;if(d<0&&row.previousElementSibling)order.insertBefore(row,row.previousElementSibling);if(d>0&&row.nextElementSibling)order.insertBefore(row.nextElementSibling,row);renumber();});
+  function renumber(){[...order.children].forEach((r,i)=>r.querySelector('.idx').textContent=i+1);}
+  $('#ordercheck').addEventListener('click',()=>{const rows=[...order.children];let ok=true;rows.forEach((r,i)=>{const good=+r.dataset.o===i+1;r.classList.toggle('ok',good);r.classList.toggle('bad',!good);if(!good)ok=false;});const fb=$('#orderfb');fb.className='fb '+(ok?'ok':'no');fb.textContent=ok?'Correct sequence!':'Not yet — keep moving.';});
+
+  // 2 memory
+  const icons=['bolt','cloud','rainy'],deck=[...icons,...icons].map(i=>({i,k:i})).sort(()=>Math.random()-.5);
+  const mem=$('#mem');let open=[],lock=false,found=0;
+  deck.forEach(c=>{const b=document.createElement('button');b.className='tile';b.innerHTML='<span class="material-symbol">'+c.i+'</span>';b.dataset.k=c.k;mem.append(b);});
+  mem.addEventListener('click',e=>{const t=e.target.closest('.tile');if(!t||lock||t.classList.contains('up')||t.classList.contains('matched'))return;t.classList.add('up');open.push(t);if(open.length===2){lock=true;const[a,b]=open;if(a.dataset.k===b.dataset.k){setTimeout(()=>{a.classList.add('matched');b.classList.add('matched');a.classList.remove('up');b.classList.remove('up');open=[];lock=false;if(++found===icons.length){$('#memfb').className='fb ok';$('#memfb').textContent='All pairs found!';}},350);}else{setTimeout(()=>{a.classList.remove('up');b.classList.remove('up');open=[];lock=false;},700);}}});
+
+  // 3 cloze
+  $('#cloze').addEventListener('submit',e=>{e.preventDefault();let ok=true;$$('#cloze select').forEach(s=>{const good=s.value===s.dataset.c;s.classList.toggle('ok',good);s.classList.toggle('no',!good);if(!good)ok=false;});const fb=$('#clozefb');fb.className='fb '+(ok?'ok':'no');fb.textContent=ok?'Both right!':'Check the blanks.';});
+
+  // 4 glossary (tap toggle)
+  $$('.term[data-open]').forEach(t=>t.addEventListener('click',()=>t.classList.toggle('open')));
+
+  // 6 success
+  $('#donebtn').addEventListener('click',()=>{const w=$('#donew');w.classList.remove('done');void w.offsetWidth;w.classList.add('done');});
+  setTimeout(()=>$('#donew').classList.add('done'),500);
+
+  // 7 accordion (one open)
+  $('#acc').addEventListener('click',e=>{const s=e.target.closest('summary');if(!s)return;const d=s.parentElement;if(!d.open)$$('#acc details').forEach(x=>{if(x!==d)x.open=false;});});
+
+  // 8 stars
+  const stars=$('#stars'),read=$('#starread');let rating=0;
+  for(let i=1;i<=5;i++){const b=document.createElement('button');b.className='material-symbol';b.textContent='star';b.setAttribute('role','radio');b.dataset.v=i;b.setAttribute('aria-label',i+' of 5');stars.append(b);}
+  const paint=n=>$$('#stars button').forEach(b=>b.classList.toggle('lit',+b.dataset.v<=n));
+  stars.addEventListener('mouseover',e=>{const b=e.target.closest('button');if(b)paint(+b.dataset.v);});
+  stars.addEventListener('mouseleave',()=>paint(rating));
+  stars.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;rating=+b.dataset.v;paint(rating);read.textContent='You rated '+rating+' / 5';});
+
+  // 9 wizard
+  const panels=['Welcome — here’s what this lesson covers.','Explore the idea with examples.','Practise with a short activity.','Review what you learned.'];let wi=0;
+  function setWiz(n){wi=Math.max(0,Math.min(3,n));$('#wizi').style.setProperty('--p',((wi+1)/4*100)+'%');$$('#wizsteps b').forEach((b,i)=>b.classList.toggle('on',i===wi));const p=$('#wizpanel');p.style.animation='none';void p.offsetWidth;p.style.animation='';p.textContent=panels[wi];}
+  $$('[data-w]').forEach(b=>b.addEventListener('click',()=>setWiz(wi+ +b.dataset.w)));setWiz(0);
+
+  setTimeout(play,350);
+</script>

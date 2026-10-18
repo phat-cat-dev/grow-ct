@@ -1,0 +1,222 @@
+<title>Abbott Patterns Vol 2</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Material+Symbols+Outlined&display=swap">
+<style>
+/* Volume 2 — sequence transitions and interactive tools, on the Abbott theme.
+   Token-driven, theme-aware, quiet under reduced motion. */
+:root{
+  --h:202;--s:72%;--gs:12%;
+  --page-bg:hsl(var(--h) 30% 96%);--surface-1:hsl(var(--h) 24% 99%);--surface-2:hsl(var(--h) 20% 94%);
+  --ink:hsl(var(--h) 25% 16%);--ink-soft:hsl(var(--h) 14% 38%);--line:hsl(var(--h) 18% 86%);
+  --accent:hsl(var(--h) var(--s) 42%);--shadow:hsl(var(--h) 40% 20% / .16);
+  --c-positive:hsl(150 55% 38%);--c-pos-weak:hsl(150 55% 92%);--c-negative:hsl(5 62% 48%);--c-neg-weak:hsl(5 62% 94%);--c-info:hsl(var(--h) 55% 42%);
+  --font-ui:"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;--font-mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --fs-3xs:.72rem;--fs-2xs:.8rem;--fs-xs:.88rem;--fs-sm:.95rem;--radius:14px;
+  --sp:clamp(1rem,.85rem + .6vw,1.5rem);color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--page-bg:hsl(var(--h) 32% 8%);--surface-1:hsl(var(--h) 26% 12%);--surface-2:hsl(var(--h) 24% 16%);--ink:hsl(var(--h) 20% 92%);--ink-soft:hsl(var(--h) 14% 66%);--line:hsl(var(--h) 22% 22%);--accent:hsl(var(--h) var(--s) 64%);--shadow:hsl(var(--h) 60% 2% / .5);--c-pos-weak:hsl(150 30% 18%);--c-neg-weak:hsl(5 35% 20%);color-scheme:dark}}
+:root[data-theme="dark"]{--page-bg:hsl(var(--h) 32% 8%);--surface-1:hsl(var(--h) 26% 12%);--surface-2:hsl(var(--h) 24% 16%);--ink:hsl(var(--h) 20% 92%);--ink-soft:hsl(var(--h) 14% 66%);--line:hsl(var(--h) 22% 22%);--accent:hsl(var(--h) var(--s) 64%);--shadow:hsl(var(--h) 60% 2% / .5);--c-pos-weak:hsl(150 30% 18%);--c-neg-weak:hsl(5 35% 20%);color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page-bg);color:var(--ink);font-family:var(--font-ui);line-height:1.6}
+h3{font-size:1.2rem;margin:0 0 .3rem}
+.material-symbol{font-family:'Material Symbols Outlined';line-height:1}
+.ab.btn{--_c:hsl(var(--h) var(--s) 44%);display:inline-flex;align-items:center;gap:.4em;font:inherit;font-weight:600;padding:.45rem .9rem;border:1px solid var(--_c);border-radius:9px;background:var(--_c);color:#fff;cursor:pointer;font-size:var(--fs-sm)}
+.ab.btn.outline{background:transparent;color:var(--_c)}.ab.btn.btn-sm{padding:.3rem .6rem;font-size:.8rem}.ab.btn:disabled{opacity:.5;cursor:not-allowed}
+.ab.btn .material-symbol{font-size:1.1em}
+.wrap{max-width:70rem;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:var(--sp)}
+.bar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;background:color-mix(in srgb,var(--surface-1) 92%,transparent);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:var(--sp);position:sticky;top:env(safe-area-inset-top,0px);z-index:20}
+.bar .grow{flex:1 1 auto}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}.seg button{font:inherit;font-size:var(--fs-xs);font-weight:600;padding:6px 11px;border:0;background:var(--surface-2);color:var(--ink-soft);cursor:pointer}.seg button[aria-pressed="true"]{background:var(--accent);color:#fff}
+.grid{display:grid;gap:var(--sp);grid-template-columns:repeat(auto-fit,minmax(min(320px,100%),1fr))}
+.pat{background:var(--surface-1);border:1px solid var(--line);border-radius:var(--radius);padding:var(--sp);box-shadow:0 10px 30px -18px var(--shadow);min-width:0}
+.pat .tag{font-family:var(--font-mono);font-size:var(--fs-3xs);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
+.pat .use{font-size:var(--fs-xs);color:var(--ink-soft);margin:.2rem 0 .9rem}
+.stage{background:var(--surface-2);border-radius:10px;padding:var(--sp);display:flex;flex-direction:column;gap:.7rem}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.fb{font-size:var(--fs-xs);font-weight:600;min-height:1.2em}
+.fb.ok{color:var(--c-positive)}.fb.no{color:var(--c-negative)}
+
+/* 1 · TABS */
+.tabs{display:flex;gap:2px;position:relative;border-bottom:1px solid var(--line)}
+.tabs button{flex:1;font:inherit;font-weight:600;font-size:var(--fs-xs);padding:.5rem;border:0;background:none;color:var(--ink-soft);cursor:pointer}
+.tabs button[aria-selected="true"]{color:var(--accent)}
+.tabs .ink{position:absolute;bottom:-1px;height:2px;background:var(--accent);transition:left .3s,width .3s}
+.tabpanel{animation:fade .35s ease}.tabpanel[hidden]{display:none}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+/* 2 · SEQUENCE / SLIDES */
+.seqwin{overflow:hidden;border-radius:10px}
+.seqtrack{display:flex;transition:transform .4s cubic-bezier(.16,1,.3,1)}
+.slide{min-width:100%;padding:1.1rem;background:var(--surface-1);border:1px solid var(--line)}
+.seqnav{display:flex;align-items:center;gap:.5rem}.dots{display:flex;gap:5px;margin-left:auto}
+.dots b{width:8px;height:8px;border-radius:50%;background:var(--line);cursor:pointer}.dots b.on{background:var(--accent)}
+
+/* 3 · COMPARE */
+.compare{position:relative;aspect-ratio:16/9;border-radius:10px;overflow:hidden;border:1px solid var(--line)}
+.compare .layer{position:absolute;inset:0;display:grid;place-items:center;font-weight:700;font-size:1.1rem}
+.compare .before{background:linear-gradient(135deg,var(--surface-1),var(--surface-2));color:var(--ink-soft)}
+.compare .after{background:linear-gradient(135deg,hsl(var(--h) var(--s) 48%),hsl(calc(var(--h) + 40) var(--s) 52%));color:#fff;clip-path:inset(0 calc(100% - var(--x,50%)) 0 0)}
+.compare .handle{position:absolute;top:0;bottom:0;left:var(--x,50%);width:2px;background:#fff;transform:translateX(-1px);box-shadow:0 0 0 1px var(--shadow)}
+.compare input{position:absolute;inset:0;width:100%;opacity:0;cursor:ew-resize}
+
+/* 4 · MCQ */
+.opt{display:flex;align-items:center;gap:.6rem;padding:.55rem .7rem;border:1px solid var(--line);border-radius:9px;background:var(--surface-1);cursor:pointer;font-size:var(--fs-sm)}
+.opt input{accent-color:var(--accent)}
+.opt.correct{border-color:var(--c-positive);background:var(--c-pos-weak)}
+.opt.wrong{border-color:var(--c-negative);background:var(--c-neg-weak)}
+
+/* 5 · MATCH (tap pairs) */
+.match{display:grid;grid-template-columns:1fr 1fr;gap:.5rem}
+.chip{padding:.5rem .6rem;border:1px solid var(--line);border-radius:8px;background:var(--surface-1);cursor:pointer;font-size:var(--fs-sm);text-align:center}
+.chip.sel{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,var(--surface-1))}
+.chip.done{border-color:var(--c-positive);background:var(--c-pos-weak);color:var(--c-positive);cursor:default}
+.chip.miss{animation:shake .3s}@keyframes shake{25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+
+/* 6 · SORT BINS */
+.pool{display:flex;flex-wrap:wrap;gap:.4rem}
+.token{padding:.4rem .6rem;border:1px solid var(--line);border-radius:999px;background:var(--surface-1);cursor:pointer;font-size:var(--fs-sm)}
+.token.sel{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,var(--surface-1))}
+.bins{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-top:.6rem}
+.bin{min-height:70px;border:1.5px dashed var(--line);border-radius:10px;padding:.5rem;display:flex;flex-wrap:wrap;gap:.35rem;align-content:flex-start}
+.bin h5{margin:0 0 .3rem;width:100%;font-size:var(--fs-2xs);color:var(--ink-soft);text-transform:uppercase;letter-spacing:.05em}
+.bin.hot{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 6%,transparent)}
+
+/* 7 · SCALE SLIDER */
+.scale input{width:100%;accent-color:var(--accent)}
+.scaleread{font-family:var(--font-mono);font-weight:700;color:var(--accent);font-size:1.3rem}
+.scalemarks{display:flex;justify-content:space-between;font-size:var(--fs-3xs);color:var(--ink-soft);font-family:var(--font-mono)}
+
+/* 8 · VENN */
+.venn{position:relative;height:150px}
+.venn .c{position:absolute;top:10px;width:120px;height:120px;border-radius:50%;mix-blend-mode:multiply;opacity:.55;transition:opacity .25s,transform .25s}
+:root[data-theme="dark"] .venn .c,@media (prefers-color-scheme:dark){.venn .c{mix-blend-mode:screen}}
+.venn .a{left:calc(50% - 95px);background:var(--accent)}.venn .b{left:calc(50% - 25px);background:var(--c-info)}
+.venn.dim-a .b,.venn.dim-b .a{opacity:.18}
+.vlegend{display:flex;gap:.4rem;flex-wrap:wrap;margin-top:.4rem}
+.vlegend button{font:inherit;font-size:var(--fs-2xs);font-weight:600;padding:5px 10px;border:1px solid var(--line);border-radius:999px;background:var(--surface-1);color:var(--ink-soft);cursor:pointer}
+.vcap{font-size:var(--fs-xs);color:var(--ink-soft);min-height:1.2em;margin-top:.3rem}
+
+/* 9 · SPOTLIGHT */
+.spotlist{display:flex;flex-direction:column;gap:.4rem}
+.spotlist:hover .row,.spotlist:focus-within .row{opacity:.4;transition:opacity .2s}
+.spotlist .row:hover,.spotlist .row:focus-within{opacity:1}
+.row{padding:.55rem .7rem;border:1px solid var(--line);border-radius:9px;background:var(--surface-1);font-size:var(--fs-sm);cursor:pointer}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+
+<div class="wrap">
+  <div class="bar"><strong>Abbott Patterns · Vol 2</strong><span class="grow"></span>
+    <div class="seg" id="theme"><button data-set="light" aria-pressed="false">Light</button><button data-set="dark" aria-pressed="false">Dark</button><button data-set="system" aria-pressed="true">System</button></div>
+  </div>
+
+  <div class="grid">
+
+    <!-- 1 TABS -->
+    <div class="pat"><div class="tag">Transition</div><h3>Tabs</h3><p class="use">Switch between related views; the indicator slides, panels crossfade.</p>
+      <div class="stage"><div>
+        <div class="tabs" id="tabs"><button aria-selected="true" data-t="a">Warm</button><button aria-selected="false" data-t="b">Cool</button><button aria-selected="false" data-t="c">Neutral</button><span class="ink"></span></div>
+        <div class="tabpanel" data-p="a" style="padding-top:.7rem;font-size:var(--fs-sm)">Warm hues advance — they feel closer and more active.</div>
+        <div class="tabpanel" data-p="b" hidden style="padding-top:.7rem;font-size:var(--fs-sm)">Cool hues recede — calm, distant, quiet.</div>
+        <div class="tabpanel" data-p="c" hidden style="padding-top:.7rem;font-size:var(--fs-sm)">Neutrals rest the eye and let other colours speak.</div>
+      </div></div>
+    </div>
+
+    <!-- 2 SEQUENCE -->
+    <div class="pat"><div class="tag">Transition · sequence</div><h3>Slide sequence</h3><p class="use">Step through a short, ordered set — slides glide left/right.</p>
+      <div class="stage">
+        <div class="seqwin"><div class="seqtrack" id="seq">
+          <div class="slide"><strong>1 · Observe</strong><p style="margin:.3rem 0 0;color:var(--ink-soft);font-size:var(--fs-sm)">Gather what you notice first.</p></div>
+          <div class="slide"><strong>2 · Interpret</strong><p style="margin:.3rem 0 0;color:var(--ink-soft);font-size:var(--fs-sm)">Offer a reading of it.</p></div>
+          <div class="slide"><strong>3 · Test</strong><p style="margin:.3rem 0 0;color:var(--ink-soft);font-size:var(--fs-sm)">Check it against another case.</p></div>
+        </div></div>
+        <div class="seqnav"><button class="ab btn outline btn-sm" data-seq="-1">Back</button><button class="ab btn btn-sm" data-seq="1">Next</button><span class="dots" id="dots"></span></div>
+      </div>
+    </div>
+
+    <!-- 3 COMPARE -->
+    <div class="pat"><div class="tag">Transition</div><h3>Before / after</h3><p class="use">Drag to wipe between two states — great for edits and corrections.</p>
+      <div class="stage"><div class="compare" style="--x:50%"><div class="layer before">Before</div><div class="layer after">After</div><div class="handle"></div><input type="range" min="0" max="100" value="50" aria-label="Reveal after"></div></div>
+    </div>
+
+    <!-- 4 MCQ -->
+    <div class="pat"><div class="tag">Tool</div><h3>Multiple choice</h3><p class="use">Choose, check, and see correct/incorrect with feedback.</p>
+      <div class="stage"><form id="mcq"><div style="display:flex;flex-direction:column;gap:.4rem">
+        <label class="opt"><input type="radio" name="q" value="0">A warmer hue</label>
+        <label class="opt"><input type="radio" name="q" value="1" data-correct>A cooler, duller hue</label>
+        <label class="opt"><input type="radio" name="q" value="2">A brighter hue</label>
+      </div><div style="display:flex;align-items:center;gap:.7rem;margin-top:.6rem"><button class="ab btn btn-sm" type="submit">Check</button><span class="fb" id="mcqfb"></span></div></form></div>
+    </div>
+
+    <!-- 5 MATCH -->
+    <div class="pat"><div class="tag">Tool</div><h3>Tap to match</h3><p class="use">Pair a term with its meaning — tap one, then its partner.</p>
+      <div class="stage"><div class="match" id="match">
+        <button class="chip" data-k="hue">Hue</button><button class="chip" data-k="val">Value</button>
+        <button class="chip" data-k="val">Light ↔ dark</button><button class="chip" data-k="hue">Position on the wheel</button>
+      </div><span class="fb" id="matchfb"></span></div>
+    </div>
+
+    <!-- 6 SORT -->
+    <div class="pat"><div class="tag">Tool</div><h3>Sort into groups</h3><p class="use">Categorise — tap a token, then the bin it belongs in.</p>
+      <div class="stage"><div class="pool" id="pool">
+        <button class="token" data-cat="warm">Red</button><button class="token" data-cat="cool">Blue</button>
+        <button class="token" data-cat="warm">Orange</button><button class="token" data-cat="cool">Teal</button>
+      </div><div class="bins"><div class="bin" data-cat="warm"><h5>Warm</h5></div><div class="bin" data-cat="cool"><h5>Cool</h5></div></div><span class="fb" id="sortfb"></span></div>
+    </div>
+
+    <!-- 7 SCALE -->
+    <div class="pat"><div class="tag">Tool</div><h3>Estimate on a scale</h3><p class="use">Place a value on a continuum — good for judgement questions.</p>
+      <div class="stage scale"><div class="scaleread"><span id="scaleval">50</span>%</div><input type="range" min="0" max="100" value="50" id="scale" aria-label="Estimate"><div class="scalemarks"><span>0</span><span>50</span><span>100</span></div></div>
+    </div>
+
+    <!-- 8 VENN -->
+    <div class="pat"><div class="tag">Tool</div><h3>Venn overlap</h3><p class="use">Show what two sets share — hover a chip to isolate a region.</p>
+      <div class="stage"><div class="venn" id="venn"><div class="c a"></div><div class="c b"></div></div>
+        <div class="vlegend"><button data-v="a">Only A</button><button data-v="both">Both</button><button data-v="b">Only B</button></div>
+        <div class="vcap" id="vcap">Hover a chip to isolate a region.</div></div>
+    </div>
+
+    <!-- 9 SPOTLIGHT -->
+    <div class="pat"><div class="tag">Interaction</div><h3>Spotlight focus</h3><p class="use">Dim the rest so attention lands on one item at a time.</p>
+      <div class="stage"><div class="spotlist" tabindex="-1">
+        <div class="row" tabindex="0">Foreground — the nearest plane</div>
+        <div class="row" tabindex="0">Middle ground — the connective space</div>
+        <div class="row" tabindex="0">Background — the far distance</div>
+      </div></div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  const root=document.documentElement,$=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+  // theme
+  $('#theme').addEventListener('click',e=>{const b=e.target.closest('[data-set]');if(!b)return;const m=b.dataset.set;m==='system'?root.removeAttribute('data-theme'):root.setAttribute('data-theme',m);$$('#theme button').forEach(x=>x.setAttribute('aria-pressed',x===b));});
+  // tabs
+  const tabs=$('#tabs'),ink=tabs.querySelector('.ink');
+  function moveInk(btn){ink.style.left=btn.offsetLeft+'px';ink.style.width=btn.offsetWidth+'px';}
+  function setTab(k){$$('#tabs button').forEach(b=>b.setAttribute('aria-selected',b.dataset.t===k));$$('[data-p]').forEach(p=>p.hidden=p.dataset.p!==k);moveInk(tabs.querySelector(`[data-t="${k}"]`));}
+  tabs.addEventListener('click',e=>{const b=e.target.closest('[data-t]');if(b)setTab(b.dataset.t);});
+  setTimeout(()=>moveInk(tabs.querySelector('[aria-selected="true"]')),50);
+  // sequence
+  const track=$('#seq'),dots=$('#dots'),n=track.children.length;let si=0;
+  for(let i=0;i<n;i++){const d=document.createElement('b');d.addEventListener('click',()=>setSeq(i));dots.append(d);}
+  function setSeq(i){si=Math.max(0,Math.min(n-1,i));track.style.transform=`translateX(${-si*100}%)`;[...dots.children].forEach((d,j)=>d.classList.toggle('on',j===si));}
+  $$('[data-seq]').forEach(b=>b.addEventListener('click',()=>setSeq(si+ +b.dataset.seq)));setSeq(0);
+  // compare
+  const cmp=$('.compare');cmp.querySelector('input').addEventListener('input',e=>cmp.style.setProperty('--x',e.target.value+'%'));
+  // mcq
+  $('#mcq').addEventListener('submit',e=>{e.preventDefault();const sel=$('#mcq input:checked');const fb=$('#mcqfb');if(!sel){fb.className='fb no';fb.textContent='Pick an option first.';return;}$$('#mcq .opt').forEach(o=>o.classList.remove('correct','wrong'));const ok=sel.hasAttribute('data-correct');sel.closest('.opt').classList.add(ok?'correct':'wrong');$('#mcq [data-correct]').closest('.opt').classList.add('correct');fb.className='fb '+(ok?'ok':'no');fb.textContent=ok?'Correct — cooler and duller recedes.':'Not quite — look for cooler and duller.';});
+  // match
+  let pick=null;const mfb=$('#matchfb');
+  $('#match').addEventListener('click',e=>{const c=e.target.closest('.chip');if(!c||c.classList.contains('done'))return;if(!pick){pick=c;c.classList.add('sel');return;}if(pick===c){c.classList.remove('sel');pick=null;return;}if(pick.dataset.k===c.dataset.k){[pick,c].forEach(x=>{x.classList.remove('sel');x.classList.add('done');});mfb.className='fb ok';mfb.textContent='Matched!';}else{c.classList.add('miss');setTimeout(()=>c.classList.remove('miss'),300);pick.classList.remove('sel');mfb.className='fb no';mfb.textContent='Not a pair — try again.';}pick=null;});
+  // sort
+  let tok=null;const sfb=$('#sortfb');
+  $('#pool').addEventListener('click',e=>{const t=e.target.closest('.token');if(!t)return;if(tok)tok.classList.remove('sel');tok=t;t.classList.add('sel');});
+  $$('.bin').forEach(bin=>bin.addEventListener('click',()=>{if(!tok)return;const ok=tok.dataset.cat===bin.dataset.cat;bin.append(tok);tok.classList.remove('sel');tok.style.borderColor=ok?'var(--c-positive)':'var(--c-negative)';sfb.className='fb '+(ok?'ok':'no');sfb.textContent=ok?'Right group.':'That one belongs elsewhere.';tok=null;}));
+  // scale
+  $('#scale').addEventListener('input',e=>$('#scaleval').textContent=e.target.value);
+  // venn
+  const venn=$('#venn'),vcap=$('#vcap'),vtext={a:'Only A — in the first set, not the second.',b:'Only B — in the second set, not the first.',both:'Both — the shared overlap.'};
+  $$('.vlegend button').forEach(b=>{const set=()=>{venn.classList.remove('dim-a','dim-b');if(b.dataset.v==='a')venn.classList.add('dim-b');if(b.dataset.v==='b')venn.classList.add('dim-a');vcap.textContent=vtext[b.dataset.v];};b.addEventListener('mouseenter',set);b.addEventListener('focus',set);b.addEventListener('click',set);});
+</script>

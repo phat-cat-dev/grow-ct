@@ -1,0 +1,135 @@
+<title>Abbott Ink Animations</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<style>
+/* Hand-drawn ink marks + a reversible hierarchy build, on the Abbott theme.
+   Strokes draw on with stroke-dashoffset; a turbulence filter gives the ink
+   its wobble. One --flow-rate speed dial. Readable at rest; quiet under
+   reduced motion. .playing is scoped PER panel so each plays on its own. */
+:root{
+  --h:202;--s:72%;--gs:12%;
+  --page-bg:hsl(var(--h) 30% 96%);--surface-1:hsl(var(--h) 24% 99%);--surface-2:hsl(var(--h) 20% 94%);
+  --ink:hsl(var(--h) 25% 16%);--ink-soft:hsl(var(--h) 14% 38%);--line:hsl(var(--h) 18% 86%);
+  --accent:hsl(var(--h) var(--s) 42%);--shadow:hsl(var(--h) 40% 20% / .16);
+  --c-positive:hsl(150 55% 40%);--c-negative:hsl(5 65% 52%);--c-warning:hsl(42 92% 48%);
+  --flow-rate:1;   /* one speed dial — higher = faster; override per element inline */
+  --font-ui:"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;--font-mono:ui-monospace,Menlo,Consolas,monospace;
+  --fs-3xs:.72rem;--fs-xs:.88rem;--fs-sm:.95rem;--radius:14px;--sp:clamp(1rem,.85rem + .6vw,1.5rem);color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--page-bg:hsl(var(--h) 32% 8%);--surface-1:hsl(var(--h) 26% 12%);--surface-2:hsl(var(--h) 24% 16%);--ink:hsl(var(--h) 20% 92%);--ink-soft:hsl(var(--h) 14% 66%);--line:hsl(var(--h) 22% 22%);--accent:hsl(var(--h) var(--s) 64%);--shadow:hsl(var(--h) 60% 2% / .5);color-scheme:dark}}
+:root[data-theme="dark"]{--page-bg:hsl(var(--h) 32% 8%);--surface-1:hsl(var(--h) 26% 12%);--surface-2:hsl(var(--h) 24% 16%);--ink:hsl(var(--h) 20% 92%);--ink-soft:hsl(var(--h) 14% 66%);--line:hsl(var(--h) 22% 22%);--accent:hsl(var(--h) var(--s) 64%);--shadow:hsl(var(--h) 60% 2% / .5);color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page-bg);color:var(--ink);font-family:var(--font-ui);line-height:1.6}
+h3{font-size:1.15rem;margin:0 0 .2rem}
+.wrap{max-width:62rem;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:var(--sp)}
+.bar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;background:color-mix(in srgb,var(--surface-1) 92%,transparent);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:var(--sp);position:sticky;top:env(safe-area-inset-top,0px);z-index:9}
+.bar .grow{flex:1 1 auto}
+.btn{font:inherit;font-weight:600;font-size:var(--fs-xs);padding:7px 13px;border-radius:999px;border:1px solid var(--accent);background:var(--accent);color:#fff;cursor:pointer;display:inline-flex;align-items:center;gap:5px}
+.btn.ghost{background:transparent;color:var(--accent)}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}.seg button{font:inherit;font-size:var(--fs-xs);font-weight:600;padding:6px 11px;border:0;background:var(--surface-2);color:var(--ink-soft);cursor:pointer}.seg button[aria-pressed="true"]{background:var(--accent);color:#fff}
+.spd .v{min-width:3.4em;text-align:center;font-family:var(--font-mono);font-size:var(--fs-xs);font-weight:600;color:var(--ink);background:var(--surface-2);display:inline-flex;align-items:center;justify-content:center}.spd button{min-width:2em;font-size:1rem}
+.grid{display:grid;gap:var(--sp);grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr))}
+.pat{background:var(--surface-1);border:1px solid var(--line);border-radius:var(--radius);padding:var(--sp);box-shadow:0 10px 30px -18px var(--shadow)}
+.pat .tag{font-family:var(--font-mono);font-size:var(--fs-3xs);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
+.pat .use{font-size:var(--fs-xs);color:var(--ink-soft);margin:.2rem 0 .9rem}
+.stage{background:var(--surface-2);border-radius:10px;padding:var(--sp)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+/* ink strokes — drawn on, wobbled by the #ink filter */
+.ink{fill:none;stroke:currentColor;stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:0;filter:url(#ink)}
+.playing .ink{animation:draw calc(.55s / var(--flow-rate)) ease var(--d,0s) both}
+@keyframes draw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+.ok{color:var(--c-positive)}.no{color:var(--c-negative)}.warn{color:var(--c-warning)}.brand{color:var(--accent)}
+
+/* marks row */
+.marks{display:flex;flex-wrap:wrap;gap:26px;align-items:center}
+.mark{width:58px;height:58px;display:block}
+.scribbled{position:relative;display:inline-block;font-weight:700;font-size:1.3rem;color:var(--ink)}
+.scribbled svg{position:absolute;left:-8%;top:-10%;width:116%;height:130%;color:var(--c-negative);overflow:visible}
+.circled{position:relative;display:inline-block;font-weight:700;font-size:1.3rem;color:var(--ink)}
+.circled svg{position:absolute;left:-14%;top:-32%;width:128%;height:170%;color:var(--accent);overflow:visible}
+.excl{width:58px;height:70px}
+
+/* hierarchy */
+.hier svg{width:100%;height:auto;max-height:340px;overflow:visible}
+.hier .box{color:var(--accent)}.hier .box.key{color:var(--accent)}
+.hier .conn{color:var(--ink-soft)}
+.hier text{fill:var(--ink);font-family:var(--font-ui);font-weight:600;font-size:14px;text-anchor:middle;dominant-baseline:central}
+.hier .lvl{fill:var(--ink-soft);font-family:var(--font-mono);font-size:10px;font-weight:400}
+.playing .hier .stage text,.playing .hier .stage .lvl{animation:fadein calc(.4s / var(--flow-rate)) ease var(--d,0s) both}
+@keyframes fadein{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.hier .stage text,.hier .stage .lvl{transform-box:fill-box;transform-origin:center}
+
+@media (prefers-reduced-motion:reduce){.playing .ink{animation:none}.playing .hier .stage text,.playing .hier .stage .lvl{animation:none}}
+</style>
+
+<!-- shared ink wobble filter -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="ink" x="-20%" y="-20%" width="140%" height="140%"><feTurbulence type="fractalNoise" baseFrequency="0.014" numOctaves="2" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4"/></filter></svg>
+
+<div class="wrap">
+  <div class="bar"><strong>Abbott Ink Animations</strong><span class="grow"></span>
+    <div class="seg spd" role="group" aria-label="Speed"><button data-spd="-1" aria-label="Slower">−</button><span class="v" id="spdv">100%</span><button data-spd="1" aria-label="Faster">+</button></div>
+    <div class="seg" id="theme"><button data-set="light" aria-pressed="false">Light</button><button data-set="dark" aria-pressed="false">Dark</button><button data-set="system" aria-pressed="true">System</button></div>
+  </div>
+
+  <div class="grid">
+
+    <!-- INK MARKS -->
+    <div class="pat" id="marks"><div class="tag">Ink marks · drawn</div><h3>Ticks, crosses, scribble, exclamation</h3><p class="use">Feedback marks drawn in ink — the exclamation is drawn, then circled.</p>
+      <div class="stage"><div class="marks">
+        <svg class="mark ok" viewBox="0 0 48 48" aria-label="Tick"><path class="ink" pathLength="1" d="M9 26 L21 38 L40 11"/></svg>
+        <svg class="mark no" viewBox="0 0 48 48" aria-label="Cross"><path class="ink" pathLength="1" style="--d:0s" d="M12 12 L37 37"/><path class="ink" pathLength="1" style="--d:.28s" d="M37 12 L12 37"/></svg>
+        <span class="scribbled">mistake<svg viewBox="0 0 160 44" preserveAspectRatio="none" aria-label="Scribbled out"><path class="ink" pathLength="1" style="stroke-width:5" d="M8 26 L34 12 L58 28 L84 12 L110 28 L136 13 L154 24 M150 14 L120 30 L92 15 L66 29 L40 15 L14 28"/></svg></span>
+        <span class="circled">important<svg viewBox="0 0 200 70" preserveAspectRatio="none" aria-label="Circled word"><path class="ink" pathLength="1" style="stroke-width:3.5" d="M152 14 C 60 2,10 20,18 44 C 26 68,140 70,182 52 C 214 40,204 15,150 11"/></svg></span>
+        <svg class="excl warn" viewBox="0 0 48 60" aria-label="Exclamation, circled"><path class="ink" pathLength="1" style="--d:0s;stroke-width:5" d="M24 9 L24 30"/><path class="ink" pathLength="1" style="--d:.2s;stroke-width:6" d="M24 39 L24 40.5"/><path class="ink" pathLength="1" style="--d:.45s;stroke-width:3.5;color:var(--accent)" d="M35 11 C 12 5,5 24,10 39 C 15 54,42 55,41 33 C 40 17,30 9,21 10"/></svg>
+      </div>
+      <div style="margin-top:14px"><button class="btn" data-play="marks">▶ Replay marks</button></div></div>
+    </div>
+
+    <!-- HIERARCHY -->
+    <div class="pat" id="hier"><div class="tag">Hierarchy · reversible</div><h3>Build a hierarchy up or down</h3><p class="use">Stages drawn in ink. Play down to build top→bottom, or up to build bottom→top.</p>
+      <div class="stage"><div class="hier"><svg viewBox="0 0 300 340" role="img" aria-label="Four-level hierarchy">
+        <!-- one spine line beside the squares, an arrow pointing into each -->
+        <g class="conn">
+          <path class="ink spine" pathLength="1" style="stroke-width:3" d="M50 26 L50 304"/>
+          <g class="sidearrow" data-arrow="0"><path class="ink" data-off="0" pathLength="1" style="stroke-width:3" d="M50 45 L88 45"/><path class="ink" data-off="1" pathLength="1" style="stroke-width:3" d="M90 45 L82 40"/><path class="ink" data-off="2" pathLength="1" style="stroke-width:3" d="M90 45 L82 50"/></g>
+          <g class="sidearrow" data-arrow="1"><path class="ink" data-off="0" pathLength="1" style="stroke-width:3" d="M50 125 L88 125"/><path class="ink" data-off="1" pathLength="1" style="stroke-width:3" d="M90 125 L82 120"/><path class="ink" data-off="2" pathLength="1" style="stroke-width:3" d="M90 125 L82 130"/></g>
+          <g class="sidearrow" data-arrow="2"><path class="ink" data-off="0" pathLength="1" style="stroke-width:3" d="M50 205 L88 205"/><path class="ink" data-off="1" pathLength="1" style="stroke-width:3" d="M90 205 L82 200"/><path class="ink" data-off="2" pathLength="1" style="stroke-width:3" d="M90 205 L82 210"/></g>
+          <g class="sidearrow" data-arrow="3"><path class="ink" data-off="0" pathLength="1" style="stroke-width:3" d="M50 285 L88 285"/><path class="ink" data-off="1" pathLength="1" style="stroke-width:3" d="M90 285 L82 280"/><path class="ink" data-off="2" pathLength="1" style="stroke-width:3" d="M90 285 L82 290"/></g>
+        </g>
+        <!-- stage 0 (top) -->
+        <g class="stage" data-order="0"><path class="ink box key" pathLength="1" d="M95 20 L205 18 L206 68 L94 70 Z"/><text x="150" y="40">Goal</text><text class="lvl" x="150" y="56">level 1</text></g>
+        <g class="stage" data-order="1"><path class="ink box" pathLength="1" d="M95 100 L205 98 L206 148 L94 150 Z"/><text x="150" y="120">Strategy</text><text class="lvl" x="150" y="136">level 2</text></g>
+        <g class="stage" data-order="2"><path class="ink box" pathLength="1" d="M95 180 L205 178 L206 228 L94 230 Z"/><text x="150" y="200">Tactics</text><text class="lvl" x="150" y="216">level 3</text></g>
+        <g class="stage" data-order="3"><path class="ink box" pathLength="1" d="M95 260 L205 258 L206 308 L94 310 Z"/><text x="150" y="280">Actions</text><text class="lvl" x="150" y="296">level 4</text></g>
+      </svg></div>
+      <div style="margin-top:14px;display:flex;gap:.5rem;flex-wrap:wrap">
+        <button class="btn" data-dir="down">▼ Build down</button>
+        <button class="btn ghost" data-dir="up">▲ Build up</button>
+      </div></div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],root=document.documentElement;
+  function play(el){el.classList.remove('playing');void el.offsetWidth;el.classList.add('playing');clearTimeout(el._t);el._t=setTimeout(()=>el.classList.remove('playing'),2200);}
+  // marks
+  $$('[data-play]').forEach(b=>b.addEventListener('click',()=>play(document.getElementById(b.dataset.play))));
+  setTimeout(()=>play($('#marks')),350);
+  // hierarchy direction (sets stage + connector delays, then plays)
+  const hier=$('#hier'),stages=$$('#hier .stage'),spine=$('#hier .spine'),arrows=$$('#hier .sidearrow'),n=stages.length,step=0.28;
+  function build(dir){
+    stages.forEach(g=>{const o=+g.dataset.order;const i=dir==='up'?(n-1-o):o;g.style.setProperty('--d',(i*step)+'s');});
+    if(spine)spine.style.setProperty('--d','0s');
+    arrows.forEach(g=>{const o=+g.dataset.arrow;const i=dir==='up'?(n-1-o):o;const base=0.12+i*step;[...g.children].forEach(p=>p.style.setProperty('--d',(base+(+p.dataset.off)*0.08)+'s'));});
+    play(hier);
+  }
+  $$('#hier [data-dir]').forEach(b=>b.addEventListener('click',()=>build(b.dataset.dir)));
+  setTimeout(()=>build('down'),700);
+  // speed + theme
+  let rate=1;const spdv=$('#spdv');
+  $$('[data-spd]').forEach(b=>b.addEventListener('click',()=>{rate=Math.round(Math.min(2.5,Math.max(.4,rate+ +b.dataset.spd*0.1))*10)/10;root.style.setProperty('--flow-rate',rate);spdv.textContent=Math.round(rate*100)+'%';}));
+  $('#theme').addEventListener('click',e=>{const b=e.target.closest('[data-set]');if(!b)return;const m=b.dataset.set;m==='system'?root.removeAttribute('data-theme'):root.setAttribute('data-theme',m);$$('#theme button').forEach(x=>x.setAttribute('aria-pressed',x===b));});
+</script>

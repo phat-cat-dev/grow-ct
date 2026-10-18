@@ -1,0 +1,376 @@
+<title>Abbott Theme Preview</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Material+Symbols+Outlined&display=swap">
+<style>
+/* ============================================================================
+   PREVIEW ONLY — inlines the real Abbott layers so you can see the styling:
+   foundation tokens (colour+type+space) + 15-surfaces + 25-motion +
+   35-diagrams + a representative slice of the .ab.* components (tuner.css).
+   Nothing here is new design; it renders YOUR system. Knobs set the same
+   custom properties the theme reads (--h, --type-scale, --space-scale).
+   ============================================================================ */
+
+/* ---------- FOUNDATION (from ab-foundation.css) ---------- */
+:root{
+  --h:202; --s:72%; --gs:12%; --type-scale:1; --space-scale:1;
+  --page-bg:hsl(var(--h) 30% 96%); --surface-1:hsl(var(--h) 24% 99%); --surface-2:hsl(var(--h) 20% 94%);
+  --ink:hsl(var(--h) 25% 16%); --ink-soft:hsl(var(--h) 14% 38%); --line:hsl(var(--h) 18% 86%);
+  --accent:hsl(var(--h) var(--s) 42%); --shadow:hsl(var(--h) 40% 20% / .16); --acc-l:42%;
+  --l-h1:40%;--l-h2:24%;--l-h3:36%;--l-h4:52%;
+  --sem-s:55%;--sem-l:38%;--sem-weak-s:55%;--sem-weak-l:92%;
+  --c-positive:hsl(150 var(--sem-s) var(--sem-l)); --c-positive-weak:hsl(150 var(--sem-weak-s) var(--sem-weak-l));
+  --c-neutral:hsl(calc(var(--h) + 198) var(--sem-s) var(--sem-l)); --c-neutral-weak:hsl(calc(var(--h) + 198) var(--sem-weak-s) var(--sem-weak-l));
+  --c-negative:hsl(5 var(--sem-s) var(--sem-l)); --c-comment:hsl(270 var(--sem-s) var(--sem-l));
+  --c-info:hsl(var(--h) var(--sem-s) var(--sem-l));
+  --font-ui:"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-heading:var(--font-ui); --font-mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --fs-3xs:clamp(0.69rem,0.66rem + 0.14vw,0.78rem); --fs-2xs:clamp(0.75rem,0.71rem + 0.20vw,0.85rem);
+  --fs-xs:clamp(0.80rem,0.75rem + 0.25vw,0.92rem); --fs-sm:clamp(0.90rem,0.84rem + 0.30vw,1.02rem);
+  --fs-base:clamp(1.00rem,0.93rem + 0.35vw,1.15rem); --fs-md:clamp(1.15rem,1.03rem + 0.55vw,1.35rem);
+  --fs-lg:clamp(1.30rem,1.12rem + 0.80vw,1.60rem); --fs-xl:clamp(1.55rem,1.28rem + 1.20vw,2.05rem);
+  --fs-2xl:clamp(1.85rem,1.45rem + 1.80vw,2.60rem); --fs-3xl:clamp(2.20rem,1.60rem + 2.60vw,3.30rem);
+  --fs-4xl:clamp(2.60rem,1.75rem + 3.80vw,4.40rem);
+  --fw-regular:400;--fw-medium:500;--fw-semibold:600;--fw-bold:700;
+  --lh-tight:1.1;--lh-heading:1.2;--lh-snug:1.35;--lh-body:1.6;
+  --tracking-tight:-0.01em;--tracking-tighter:-0.02em;--tracking-wide:0.04em;--tracking-wider:0.08em;
+  --measure:66ch;--measure-wide:78ch;
+  --space-3xs:calc(clamp(0.25rem,0.23rem + 0.10vw,0.35rem) * var(--space-scale));
+  --space-2xs:calc(clamp(0.50rem,0.45rem + 0.20vw,0.65rem) * var(--space-scale));
+  --space-xs:calc(clamp(0.75rem,0.65rem + 0.40vw,1.05rem) * var(--space-scale));
+  --space-sm:calc(clamp(1.00rem,0.85rem + 0.60vw,1.50rem) * var(--space-scale));
+  --space-md:calc(clamp(1.50rem,1.20rem + 1.20vw,2.50rem) * var(--space-scale));
+  --space-lg:calc(clamp(2.25rem,1.70rem + 2.20vw,4.00rem) * var(--space-scale));
+  --space-xl:calc(clamp(3.00rem,2.10rem + 3.60vw,6.00rem) * var(--space-scale));
+  --stack:var(--space-sm);--stack-tight:var(--space-2xs);
+  --pad-card:var(--space-sm);--pad-component:var(--space-md);--pad-block:var(--space-lg);--pad-article:var(--space-xl);
+  --layout-max:75rem; --gutter:calc(clamp(1rem,0.5rem + 3vw,3rem) * var(--space-scale));
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --page-bg:hsl(var(--h) 32% 8%);--surface-1:hsl(var(--h) 26% 12%);--surface-2:hsl(var(--h) 24% 16%);
+  --ink:hsl(var(--h) 20% 92%);--ink-soft:hsl(var(--h) 14% 66%);--line:hsl(var(--h) 22% 22%);
+  --accent:hsl(var(--h) var(--s) 64%);--shadow:hsl(var(--h) 60% 2% / .5);--acc-l:64%;
+  --l-h1:68%;--l-h2:74%;--l-h3:70%;--l-h4:62%;--sem-l:64%;--sem-weak-l:18%;color-scheme:dark;
+}}
+:root[data-theme="dark"]{
+  --page-bg:hsl(var(--h) 32% 8%);--surface-1:hsl(var(--h) 26% 12%);--surface-2:hsl(var(--h) 24% 16%);
+  --ink:hsl(var(--h) 20% 92%);--ink-soft:hsl(var(--h) 14% 66%);--line:hsl(var(--h) 22% 22%);
+  --accent:hsl(var(--h) var(--s) 64%);--shadow:hsl(var(--h) 60% 2% / .5);--acc-l:64%;
+  --l-h1:68%;--l-h2:74%;--l-h3:70%;--l-h4:62%;--sem-l:64%;--sem-weak-l:18%;color-scheme:dark;
+}
+body{background:var(--page-bg);color:var(--ink);font-family:var(--font-ui);font-size:calc(var(--fs-base) * var(--type-scale));line-height:var(--lh-body);margin:0}
+h1,h2,h3,h4{font-family:var(--font-heading);font-weight:var(--fw-bold);line-height:var(--lh-heading);margin:0 0 var(--stack-tight);text-wrap:balance}
+h1{font-size:calc(var(--fs-4xl) * var(--type-scale));line-height:var(--lh-tight);letter-spacing:var(--tracking-tighter)}
+h2{font-size:calc(var(--fs-3xl) * var(--type-scale));letter-spacing:var(--tracking-tight)}
+h3{font-size:calc(var(--fs-2xl) * var(--type-scale))}
+h4{font-size:calc(var(--fs-xl) * var(--type-scale))}
+p{max-width:var(--measure)} a{color:var(--accent)}
+.material-symbol{font-family:'Material Symbols Outlined';font-weight:normal;font-style:normal;line-height:1;letter-spacing:normal;text-transform:none;white-space:nowrap;-webkit-font-feature-settings:'liga';font-feature-settings:'liga'}
+
+/* Adapt wiring (the component__inner card guard avoids double-styling .ab.card) */
+.article__inner,.block__inner{width:100%;max-width:var(--layout-max);margin-inline:auto;padding-inline:var(--gutter)}
+.article__inner{padding-block:var(--pad-article)} .block__inner{padding-block:var(--pad-block)}
+.component{margin-block-end:var(--pad-component)}
+.block__inner.two-up{display:flex;flex-wrap:wrap;gap:var(--space-md)}
+.block__inner.two-up>.component{flex:1 1 clamp(16rem,40%,100%);margin-block-end:0}
+.component__inner:not(.card){background:var(--surface-1);border:1px solid var(--line);border-radius:14px;padding:var(--pad-card);box-shadow:0 1px 2px var(--shadow),0 8px 24px -10px var(--shadow)}
+.component img,.component svg{max-width:100%;height:auto}
+
+/* ---------- COMPONENTS (slice of tuner.css) ---------- */
+.btnrow{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.ab.btn{--_c:hsl(var(--h) var(--s) 44%);--_fg:#fff;display:inline-flex;align-items:center;justify-content:center;gap:.5em;font:inherit;font-weight:600;line-height:1.4;text-decoration:none;padding:.5rem 1rem;border:1px solid var(--_c);border-radius:9px;background:var(--_c);color:var(--_fg);cursor:pointer;max-width:100%;transition:color .15s,background-color .3s,border-color .15s,box-shadow .3s}
+.ab.btn:hover,.ab.btn:focus-visible{background:transparent;color:var(--_c)}
+.ab.btn:focus-visible{outline:none;box-shadow:0 0 0 .2rem color-mix(in srgb,var(--_c),transparent 55%)}
+.ab.btn.primary{--_c:hsl(var(--h) var(--s) 44%)} .ab.btn.secondary{--_c:hsl(var(--h) var(--gs) 42%)}
+.ab.btn.positive{--_c:var(--c-positive)} .ab.btn.negative{--_c:var(--c-negative)} .ab.btn.info{--_c:var(--c-info)}
+.ab.btn.outline{background:transparent;color:var(--_c)} .ab.btn.outline:hover{background:var(--_c);color:#fff}
+.ab.btn.soft{background:color-mix(in srgb,var(--_c),transparent 86%);color:var(--_c);border-color:transparent}
+.ab.btn.btn-sm{padding:.3rem .6rem;font-size:.8rem} .ab.btn .material-symbol{font-size:1.15em}
+.cardgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px}
+.ab.card{--ab-card-accent:var(--line);position:relative;display:flex;flex-direction:column;min-width:0;color:var(--ink);background:var(--surface-1);border:1px solid var(--ab-card-accent);border-radius:14px;box-shadow:0 1px 2px var(--shadow),0 6px 18px -10px var(--shadow)}
+.ab.card .card-body{flex:1 1 auto;padding:1rem 1.1rem} .ab.card .card-title{margin:0 0 .4rem;font-weight:700;font-size:1.05rem;color:var(--ink)}
+.ab.card .card-text{margin:0;color:var(--ink-soft);font-size:.88rem}
+.ab.card .card-header{padding:.7rem 1.1rem;font-weight:600;color:var(--ink-soft);background:color-mix(in srgb,var(--ab-card-accent) 14%,var(--surface-1));border-bottom:1px solid var(--ab-card-accent);border-radius:13px 13px 0 0}
+.ab.card.primary{--ab-card-accent:hsl(var(--h) var(--s) 44%)} .ab.card.positive{--ab-card-accent:var(--c-positive)}
+.ab.card.negative{--ab-card-accent:var(--c-negative)} .ab.card.comment{--ab-card-accent:var(--c-comment)}
+.ab.card.info{--ab-card-accent:var(--c-info)} .ab.card.warning{--ab-card-accent:var(--c-neutral)} .ab.card.secondary{--ab-card-accent:hsl(var(--h) var(--gs) 45%)}
+.ab.card.soft{background:color-mix(in srgb,var(--ab-card-accent) 9%,var(--surface-1))}
+.ab.callout{--_ca:var(--accent);display:block;padding:1rem 1.25rem;color:var(--ink);background:color-mix(in srgb,var(--_ca) 7%,var(--surface-1));border:1px solid var(--line);border-left:4px solid var(--_ca);border-radius:12px}
+.ab.callout .callout-header{margin:0 0 .35rem;font-weight:600;color:var(--_ca);font-size:1.1rem} .ab.callout p{margin:0;color:var(--ink-soft);font-size:.9rem}
+.ab.callout.positive{--_ca:var(--c-positive)} .ab.callout.negative{--_ca:var(--c-negative)} .ab.callout.info{--_ca:var(--c-info)}
+
+/* ---------- 15-surfaces ---------- */
+:root{--rule-gap:1.75rem;--rule-color:color-mix(in srgb,var(--line) 80%,transparent);--rule-margin:color-mix(in srgb,var(--accent) 45%,transparent);--dot-color:color-mix(in srgb,var(--ink-soft) 22%,transparent);--dot-gap:1.25rem}
+.lesson-sketchbook{background-color:var(--surface-1);background-image:linear-gradient(to right,transparent 2.25rem,var(--rule-margin) 2.25rem,var(--rule-margin) calc(2.25rem + 1px),transparent calc(2.25rem + 1px)),repeating-linear-gradient(to bottom,transparent 0,transparent calc(var(--rule-gap) - 1px),var(--rule-color) calc(var(--rule-gap) - 1px),var(--rule-color) var(--rule-gap));background-position:0 .65rem;border:1px solid var(--line);border-radius:10px;padding:var(--space-sm) var(--space-sm) var(--space-sm) calc(2.25rem + var(--space-xs))}
+.lesson-journal textarea{line-height:var(--rule-gap);background-color:var(--surface-1);background-image:repeating-linear-gradient(to bottom,transparent 0,transparent calc(var(--rule-gap) - 1px),var(--rule-color) calc(var(--rule-gap) - 1px),var(--rule-color) var(--rule-gap));background-attachment:local;background-position:0 .55rem;padding:.55rem .75rem;border:1px solid var(--line);border-radius:8px;color:var(--ink);font-family:var(--font-ui);resize:vertical;width:100%;box-sizing:border-box}
+.lesson-kicker{display:inline-block;font-family:var(--font-mono);font-size:var(--fs-3xs);letter-spacing:var(--tracking-wider);text-transform:uppercase;color:var(--ink-soft);margin-bottom:var(--space-2xs)}
+.lesson-composition:has(>aside){display:grid;gap:var(--space-md);grid-template-columns:minmax(0,2fr) minmax(0,1fr)}
+.lesson-composition>aside{min-width:0}
+
+/* ---------- 25-motion ---------- */
+:root{--motion-base:240ms;--motion-slow:420ms;--motion-ease-out:cubic-bezier(0.16,1,0.3,1);--motion-ease-spring:cubic-bezier(0.34,1.56,0.64,1);--motion-ease:cubic-bezier(0.2,0,0.2,1)}
+.fade-up-before{opacity:0;transform:translateY(1.25rem)} .fade-up-after{opacity:1;transform:none;transition:opacity var(--motion-slow) var(--motion-ease-out),transform var(--motion-slow) var(--motion-ease-out)}
+.motion-pulse{animation:ab-pulse 1800ms var(--motion-ease) infinite} .motion-float{animation:ab-float 5000ms ease-in-out infinite}
+.motion-spin{animation:ab-spin 900ms linear infinite} .motion-nudge{animation:ab-nudge 600ms var(--motion-ease) infinite}
+.motion-pop{animation:ab-pop 900ms var(--motion-ease-spring) infinite} .motion-bounce{animation:ab-bounce 1400ms var(--motion-ease) infinite}
+@keyframes ab-pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.75;transform:scale(1.06)}}
+@keyframes ab-float{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@keyframes ab-spin{to{transform:rotate(360deg)}}
+@keyframes ab-nudge{0%,100%{transform:translateX(0)}20%{transform:translateX(-3px)}60%{transform:translateX(3px)}}
+@keyframes ab-pop{0%{transform:scale(.8)}20%{transform:scale(1.08)}40%,100%{transform:scale(1)}}
+@keyframes ab-bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+.no-motion :is(.motion-pulse,.motion-float,.motion-spin,.motion-nudge,.motion-pop,.motion-bounce){animation:none!important}
+.no-motion :is(.fade-up-before,.fade-up-after){opacity:1!important;transform:none!important;transition:none!important}
+@media (prefers-reduced-motion:reduce){:is(.motion-pulse,.motion-float,.motion-spin,.motion-nudge,.motion-pop,.motion-bounce){animation:none!important}}
+
+/* ---------- 35-diagrams ---------- */
+:root{--dia-surface:var(--surface-1);--dia-fill:var(--surface-2);--dia-fill-accent:color-mix(in srgb,var(--accent) 10%,var(--surface-1));--dia-stroke:var(--line);--dia-stroke-strong:var(--ink-soft);--dia-accent:var(--accent);--dia-ink:var(--ink);--dia-ink-soft:var(--ink-soft);--dia-stroke-w:1.5px;--dia-radius:10px;--dia-gap:var(--space-sm)}
+.lesson-scene{margin:0;background:var(--dia-surface);border:1px solid var(--dia-stroke);border-radius:var(--dia-radius);padding:var(--dia-gap);display:flex;flex-direction:column;gap:var(--space-2xs);min-width:0}
+.lesson-scene>figcaption{font-family:var(--font-mono);font-size:var(--fs-2xs);color:var(--dia-ink-soft);letter-spacing:var(--tracking-wide)}
+.scene-art{position:relative;aspect-ratio:4/3;border-radius:7px;background:var(--dia-fill);overflow:hidden;display:grid;place-items:center}
+.scene-art>span:not(.material-symbol){position:absolute;border-radius:999px;background:color-mix(in srgb,var(--dia-ink-soft) 14%,transparent)}
+.scene-art>span:nth-child(1):not(.material-symbol){width:44%;aspect-ratio:1;top:-12%;left:-8%;background:color-mix(in srgb,var(--dia-accent) 16%,transparent)}
+.scene-art>span:nth-child(2):not(.material-symbol){width:30%;aspect-ratio:1;bottom:-10%;right:8%}
+.scene-art>span:nth-child(3):not(.material-symbol){width:20%;aspect-ratio:1;bottom:18%;left:16%;border-radius:4px;transform:rotate(12deg)}
+.scene-art>.material-symbol{position:relative;font-size:clamp(2rem,1.2rem + 4vw,3.5rem);color:var(--dia-ink-soft);opacity:.55}
+.ab-diagram{display:block;width:100%;height:auto}
+.ab-diagram [data-dia="node"]{fill:var(--dia-fill);stroke:var(--dia-stroke);stroke-width:var(--dia-stroke-w)}
+.ab-diagram [data-dia="link"]{fill:none;stroke:var(--dia-stroke-strong);stroke-width:var(--dia-stroke-w);stroke-linecap:round;stroke-linejoin:round}
+.ab-diagram [data-dia="label"]{fill:var(--dia-ink-soft);font-family:var(--font-mono);font-size:11px}
+.ab-diagram .is-key[data-dia="node"]{fill:var(--dia-fill-accent);stroke:var(--dia-accent)}
+.ab-diagram .is-key[data-dia="link"]{stroke:var(--dia-accent)}
+.lesson-swatch-study{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:3px;border-radius:10px;overflow:hidden;border:1px solid var(--dia-stroke);min-height:2.5rem}
+.lesson-swatch-study>span:nth-child(1){background:hsl(var(--h) var(--s) 42%)} .lesson-swatch-study>span:nth-child(2){background:hsl(var(--h) var(--gs) 62%)}
+.lesson-swatch-study>span:nth-child(3){background:hsl(var(--h) var(--gs) 82%)} .lesson-swatch-study>span:nth-child(4){background:var(--surface-2)}
+.lesson-inspiration-wall{display:grid;gap:var(--space-md);grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr));align-items:start;max-width:var(--measure-wide)}
+.lesson-inspiration-wall blockquote{margin:0;padding:0;border:0;grid-column:1/-1;font-family:var(--font-heading);font-size:calc(var(--fs-xl) * var(--type-scale));line-height:var(--lh-snug);color:var(--dia-ink);text-wrap:balance;max-width:var(--measure)}
+.lesson-inspiration-wall blockquote::before{content:"\201C";color:var(--dia-accent);margin-right:.1em}
+
+/* ---------- 15/16 learning surfaces (inlined for preview) ---------- */
+.ab-lined{background-color:var(--surface-1);background-image:repeating-linear-gradient(to bottom,transparent 0,transparent calc(var(--rule-gap) - 1px),var(--rule-color) calc(var(--rule-gap) - 1px),var(--rule-color) var(--rule-gap));background-position:0 .65rem}
+.ab-dotgrid{background-color:var(--surface-1);background-image:radial-gradient(var(--dot-color) 1.5px,transparent 1.5px);background-size:var(--dot-gap) var(--dot-gap)}
+.ab-graph{background-color:var(--surface-1);background-image:repeating-linear-gradient(to right,transparent 0,transparent calc(var(--dot-gap) - 1px),var(--rule-color) calc(var(--dot-gap) - 1px),var(--rule-color) var(--dot-gap)),repeating-linear-gradient(to bottom,transparent 0,transparent calc(var(--dot-gap) - 1px),var(--rule-color) calc(var(--dot-gap) - 1px),var(--rule-color) var(--dot-gap))}
+.ab-handwriting{--hw-gap:2.6rem;background-color:var(--surface-1);background-image:repeating-linear-gradient(to bottom,transparent 0,transparent calc(var(--hw-gap) - 1px),var(--rule-color) calc(var(--hw-gap) - 1px),var(--rule-color) var(--hw-gap)),radial-gradient(circle,var(--rule-color) .6px,transparent .7px);background-size:auto,9px var(--hw-gap);background-position:0 .5rem,0 .5rem}
+.ab-quad{--q:1.25rem;background-color:var(--surface-1);background-image:repeating-linear-gradient(to right,var(--rule-color) 0 1px,transparent 1px var(--q)),repeating-linear-gradient(to bottom,var(--rule-color) 0 1px,transparent 1px var(--q)),repeating-linear-gradient(to right,color-mix(in srgb,var(--accent) 30%,var(--line)) 0 1px,transparent 1px calc(var(--q) * 5)),repeating-linear-gradient(to bottom,color-mix(in srgb,var(--accent) 30%,var(--line)) 0 1px,transparent 1px calc(var(--q) * 5))}
+.ab-spiral{position:relative;padding-left:2.25rem}
+.ab-spiral::before{content:"";position:absolute;left:.6rem;top:.4rem;bottom:.4rem;width:12px;background-image:radial-gradient(circle,color-mix(in srgb,var(--ink-soft) 30%,transparent) 42%,transparent 46%);background-size:14px 22px;background-repeat:repeat-y}
+.ab-highlight{background:linear-gradient(to bottom,transparent 55%,color-mix(in srgb,var(--accent) 38%,transparent) 55%);padding:0 .1em;border-radius:2px}
+.ab-highlight.warning{background:linear-gradient(to bottom,transparent 55%,color-mix(in srgb,var(--c-neutral) 45%,transparent) 55%)}
+.ab-chalkboard{--chalk:#eef2ee;background-color:hsl(var(--h) 14% 18%);background-image:radial-gradient(ellipse at 22% 28%,rgba(255,255,255,.05),transparent 45%),radial-gradient(ellipse at 78% 72%,rgba(255,255,255,.04),transparent 45%);color:var(--chalk);border:1px solid hsl(var(--h) 14% 10%);border-radius:10px;padding:var(--space-md)}
+.ab-chalkboard :is(h1,h2,h3,h4){color:#fff}
+.ab-chalkboard .ab-chalk-accent{color:hsl(var(--h) var(--s) 72%)}
+.ab-whiteboard{background-color:#fcfdff;color:#1b2230;border:1px solid #d7dce4;border-radius:10px;box-shadow:inset 0 1px 0 #fff,0 1px 2px rgba(0,0,0,.06);padding:var(--space-md)}
+.ab-legalpad{background-color:#fbf6c9;background-image:linear-gradient(to right,transparent 2.5rem,rgba(200,60,60,.5) 2.5rem,rgba(200,60,60,.5) calc(2.5rem + 1px),transparent calc(2.5rem + 1px)),repeating-linear-gradient(to bottom,transparent 0,transparent calc(1.9rem - 1px),rgba(70,120,190,.4) calc(1.9rem - 1px),rgba(70,120,190,.4) 1.9rem);background-position:0 .6rem;color:#2a2a1f;border:1px solid #e7df9e;border-radius:4px;padding:.6rem .9rem .9rem 3rem}
+.ab-indexcard{background-color:#fffef9;background-image:linear-gradient(to bottom,transparent 2.4rem,rgba(200,60,60,.45) 2.4rem,rgba(200,60,60,.45) calc(2.4rem + 1px),transparent calc(2.4rem + 1px)),repeating-linear-gradient(to bottom,transparent 0,transparent calc(1.6rem - 1px),rgba(70,120,190,.28) calc(1.6rem - 1px),rgba(70,120,190,.28) 1.6rem);background-position:0 .4rem;color:#26272b;border:1px solid #e4e2d6;border-radius:6px;box-shadow:0 1px 2px rgba(0,0,0,.08);padding:.5rem .9rem .9rem}
+.ab-corkboard{background-color:#c8a46a;background-image:radial-gradient(rgba(120,80,40,.28) 15%,transparent 16%),radial-gradient(rgba(90,60,28,.22) 15%,transparent 16%),radial-gradient(rgba(150,110,60,.25) 12%,transparent 13%);background-size:7px 7px,11px 11px,5px 5px;background-position:0 0,4px 5px,2px 3px;color:#3a2c17;border-radius:10px;padding:var(--space-md)}
+.ab-sticky{--sticky:#fff3a8;background:var(--sticky);color:#3a361f;padding:var(--space-sm);box-shadow:0 6px 14px -6px rgba(0,0,0,.3);border-radius:2px}
+.ab-sticky.pink{--sticky:#ffc7d9;color:#3f2430}
+.ab-sticky.blue{--sticky:#bfe0ff;color:#1f3346}
+.ab-sticky.brand{--sticky:color-mix(in srgb,var(--accent) 22%,#fff);color:var(--ink)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) :is(.ab-whiteboard,.ab-indexcard){filter:brightness(.9)}}
+:root[data-theme="dark"] :is(.ab-whiteboard,.ab-indexcard){filter:brightness(.9)}
+.surface-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.surf{position:relative;min-height:120px;border-radius:10px;overflow:hidden;box-shadow:inset 0 0 0 1px var(--line)}
+.surf b{position:absolute;left:8px;bottom:8px;font-family:var(--font-mono);font-size:var(--fs-3xs);color:var(--ink-soft);background:color-mix(in srgb,var(--surface-1) 82%,transparent);padding:2px 6px;border-radius:5px}
+
+/* ---------- preview chrome ---------- */
+.page{max-width:var(--layout-max);margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:var(--space-lg)}
+.studio-bar{display:flex;flex-wrap:wrap;gap:16px 20px;align-items:end;background:color-mix(in srgb,var(--surface-1) 92%,transparent);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:var(--space-lg)}
+.studio-bar .knob{display:flex;flex-direction:column;gap:5px;min-width:150px}
+.studio-bar label{font-size:var(--fs-3xs);font-weight:600;letter-spacing:var(--tracking-wide);text-transform:uppercase;color:var(--ink-soft);display:flex;justify-content:space-between;gap:10px}
+.studio-bar label b{font-family:var(--font-mono);color:var(--ink);font-weight:600}
+.studio-bar input[type=range]{width:100%;accent-color:var(--accent);cursor:ew-resize}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.seg button{font:inherit;font-size:var(--fs-xs);font-weight:600;padding:6px 12px;border:0;background:var(--surface-2);color:var(--ink-soft);cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent);color:#fff}
+.sec-label{font-family:var(--font-mono);font-size:var(--fs-2xs);letter-spacing:var(--tracking-wider);text-transform:uppercase;color:var(--ink-soft);border-bottom:1px solid var(--line);padding-bottom:8px;margin:var(--space-xl) 0 var(--space-md)}
+.lesson-depth{font-family:var(--font-mono);font-size:var(--fs-3xs);color:var(--ink-soft);background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:2px 8px;margin-right:.5rem}
+.lesson-component-title{display:flex;align-items:center;gap:.5rem;font-weight:700;color:var(--ink);margin:0 0 .5rem;font-size:var(--fs-sm)}
+.lesson-component-title .material-symbol{color:var(--accent)}
+.lesson-journal{display:flex;flex-direction:column;gap:.4rem;font-size:var(--fs-sm);color:var(--ink-soft)}
+.lesson-intro{color:var(--ink-soft);max-width:var(--measure)}
+.page__header{position:relative;display:flex;flex-direction:column;gap:var(--space-2xs);overflow:hidden;padding:var(--space-md) 0}
+.lesson-hero-symbol{position:absolute;right:0;top:50%;transform:translateY(-50%);font-family:'Material Symbols Outlined';font-size:clamp(4rem,2rem + 10vw,8rem);color:var(--accent);opacity:.14;pointer-events:none}
+.lesson-completion{display:flex;align-items:center;gap:var(--space-sm);margin-top:var(--space-sm);flex-wrap:wrap}
+.motion-tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px}
+.motion-tile{display:flex;flex-direction:column;align-items:center;gap:8px;padding:18px 10px;border:1px solid var(--line);border-radius:12px;background:var(--surface-1);text-align:center;color:var(--ink-soft);font-size:var(--fs-2xs)}
+.motion-tile .material-symbol{font-size:2rem;color:var(--accent)}
+.intro-note{color:var(--ink-soft);font-size:var(--fs-sm);max-width:var(--measure)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+</style>
+
+<div class="page">
+
+  <header style="margin-bottom:var(--space-lg)">
+    <span class="lesson-kicker">Abbott theme · live preview</span>
+    <h1>See the styling, then tune it</h1>
+    <p class="intro-note">This renders the real Abbott layers — foundation tokens, surfaces, motion and the diagram house style — on sample lesson markup. Drag a knob and the whole page retints and re-scales from the same tokens the theme uses. This is a preview harness, not the course runtime.</p>
+  </header>
+
+  <!-- LIVE KNOBS -->
+  <div class="studio-bar" role="group" aria-label="Theme controls">
+    <div class="knob"><label for="k-h">Brand hue <b id="k-h-v">202°</b></label><input id="k-h" type="range" min="0" max="360" value="202"></div>
+    <div class="knob"><label for="k-type">Type scale <b id="k-type-v">1.00×</b></label><input id="k-type" type="range" min="0.85" max="1.3" step="0.01" value="1"></div>
+    <div class="knob"><label for="k-space">Space density <b id="k-space-v">1.00×</b></label><input id="k-space" type="range" min="0.8" max="1.3" step="0.01" value="1"></div>
+    <div class="knob" style="min-width:0"><label>Theme</label><div class="seg" id="k-theme"><button data-theme-set="light" aria-pressed="false">Light</button><button data-theme-set="dark" aria-pressed="false">Dark</button><button data-theme-set="system" aria-pressed="true">System</button></div></div>
+    <div class="knob" style="min-width:0"><label>Motion</label><div class="seg"><button id="k-motion" data-motion-toggle aria-pressed="true">On</button></div></div>
+  </div>
+
+  <!-- PAGE HEADER PATTERN (d1 / d2) -->
+  <div class="sec-label">Page header · kicker, title, intro, hero glyph</div>
+  <header class="page__header">
+    <span class="lesson-kicker">Maker lab / 02</span>
+    <h2 style="margin:0"><span class="lesson-depth">d1 · page / H1</span>Learn by taking it apart</h2>
+    <p class="lesson-intro">A working bench: inspect a model, make something, then compare the result.</p>
+    <span class="lesson-hero-symbol material-symbol" aria-hidden="true">construction</span>
+  </header>
+
+  <!-- TYPOGRAPHY SCALE -->
+  <div class="sec-label">Typography · fluid, driven by the type-scale knob</div>
+  <h1>Depth from a single hue</h1>
+  <h2>A section within the page</h2>
+  <h3>A block, one step of the lesson</h3>
+  <h4>A component — the leaf content</h4>
+  <p>Body text sits on a comfortable measure. Every size above is <code>clamp()</code>-fluid and multiplied by the type-scale knob, so the whole ramp grows or tightens together without breakpoints.</p>
+
+  <!-- TWO-UP BLOCK (Adapt wiring) -->
+  <div class="sec-label">Block wiring · two components reflow on their own width</div>
+  <div class="block__inner two-up" style="padding:0">
+    <div class="component" style="margin:0"><div class="component__inner text__inner ab card primary soft"><div class="card-body"><div class="lesson-component-title"><span class="material-symbol" aria-hidden="true">auto_stories</span>Core idea</div><p style="margin:0;color:var(--ink-soft)">The accent border and soft fill both come from one token. Resize the window — the two cards stay side by side until they genuinely can't, then stack. No media query.</p></div></div></div>
+    <div class="component" style="margin:0"><div class="component__inner text__inner ab card info soft"><div class="card-body"><div class="lesson-component-title"><span class="material-symbol" aria-hidden="true">extension</span>Try it</div><p style="margin:0;color:var(--ink-soft)">Info family — the same card template, a different accent. In a course this would hold an interactive component.</p></div></div></div>
+  </div>
+
+  <!-- INSPIRATION WALL + DIAGRAM HOUSE STYLE -->
+  <div class="sec-label">Diagram house style · quiet scenes, one accent, swatch study</div>
+  <div class="lesson-inspiration-wall">
+    <figure class="lesson-scene"><div class="scene-art" aria-hidden="true"><span></span><span></span><span></span><span class="material-symbol">gesture</span></div><figcaption>01 / Colour study · media placeholder</figcaption></figure>
+    <blockquote>Start with a question, not an answer.</blockquote>
+    <figure class="lesson-scene"><div class="scene-art" aria-hidden="true"><span></span><span></span><span></span><span class="material-symbol">filter_hdr</span></div><figcaption>02 / Texture study · media placeholder</figcaption></figure>
+    <div class="lesson-swatch-study" aria-label="Theme colour study"><span></span><span></span><span></span><span></span></div>
+  </div>
+
+  <div style="margin-top:var(--space-md)">
+    <svg class="ab-diagram" viewBox="0 0 440 90" role="img" aria-label="Three-step flow, middle step emphasised">
+      <rect data-dia="node" x="8" y="25" width="110" height="44" rx="8"/>
+      <text data-dia="label" x="63" y="51" text-anchor="middle">Inspect</text>
+      <path data-dia="link" d="M122 47 H162"/>
+      <rect data-dia="node" class="is-key" x="166" y="20" width="110" height="54" rx="8"/>
+      <text data-dia="label" x="221" y="51" text-anchor="middle">Make</text>
+      <path data-dia="link" class="is-key" d="M280 47 H320"/>
+      <rect data-dia="node" x="324" y="25" width="110" height="44" rx="8"/>
+      <text data-dia="label" x="379" y="51" text-anchor="middle">Compare</text>
+    </svg>
+  </div>
+
+  <!-- SKETCHBOOK (lined surface, d5) -->
+  <div class="sec-label">Sketchbook surface · ruled background + lined textarea</div>
+  <div class="lesson-composition">
+    <div class="lesson-sketchbook">
+      <span class="lesson-kicker">Work in progress / no perfect answers</span>
+      <div class="component" style="margin:0"><div class="component__inner text__inner ab card primary soft"><div class="card-body">
+        <div class="lesson-component-title"><span class="material-symbol" aria-hidden="true">draw</span>Develop your thought</div>
+        <label class="lesson-journal">Private practice notes (not saved)<textarea rows="4" placeholder="Capture a thought, question or next step…"></textarea></label>
+      </div></div></div>
+      <p style="color:var(--ink-soft)">The ruled lines are one CSS gradient keyed to the line-height, so text sits on them and they scroll with your typing.</p>
+    </div>
+    <aside>
+      <div class="component" style="margin:0"><div class="component__inner text__inner ab card warning soft"><div class="card-body">
+        <div class="lesson-component-title"><span class="material-symbol" aria-hidden="true">lightbulb</span>Change the lens</div>
+        <ul style="margin:0;color:var(--ink-soft);padding-left:1.2em"><li>What if the opposite were true?</li><li>What would you remove?</li><li>What would you keep?</li></ul>
+      </div></div></div>
+    </aside>
+  </div>
+  <div class="lesson-completion"><button type="button" class="ab btn primary outline"><span class="material-symbol" aria-hidden="true">draw</span>Sketch ready / curate your ideas</button></div>
+
+  <!-- LEARNING SURFACES -->
+  <div class="sec-label">Learning surfaces · opt-in school textures</div>
+  <p class="intro-note">Pure-CSS backgrounds in the lined-paper spirit. Neutral ones retint and flip for dark mode; coloured materials (chalkboard, legal pad, cork) carry their own ink. Use one to signal what a surface is for.</p>
+  <div class="surface-grid">
+    <div class="surf ab-handwriting"><b>ab-handwriting</b></div>
+    <div class="surf ab-quad"><b>ab-quad</b></div>
+    <div class="surf ab-dotgrid"><b>ab-dotgrid</b></div>
+    <div class="surf ab-graph"><b>ab-graph</b></div>
+    <div class="surf ab-lined ab-spiral"><b>ab-lined + ab-spiral</b></div>
+    <div class="surf ab-legalpad"><b>ab-legalpad</b></div>
+    <div class="surf ab-indexcard"><b>ab-indexcard</b></div>
+    <div class="surf ab-whiteboard"><b>ab-whiteboard</b></div>
+  </div>
+  <div class="ab-chalkboard" style="margin-top:12px">
+    <h3 style="margin:0 0 .3rem">Chalkboard</h3>
+    <p style="margin:0;opacity:.85">A slate that still tracks the hue, with chalk-white ink and <span class="ab-chalk-accent">coloured chalk</span> from the accent.</p>
+  </div>
+  <div class="ab-corkboard" style="margin-top:12px;display:flex;gap:12px;flex-wrap:wrap">
+    <div class="ab-sticky" style="transform:rotate(-2deg)">Pin a thought</div>
+    <div class="ab-sticky pink" style="transform:rotate(1.5deg)">A question</div>
+    <div class="ab-sticky blue" style="transform:rotate(-1deg)">A next step</div>
+    <div class="ab-sticky brand" style="transform:rotate(2deg)">Brand tint</div>
+  </div>
+  <p class="intro-note" style="margin-top:14px">Inline emphasis — a <span class="ab-highlight">highlighter sweep</span> or <span class="ab-highlight warning">a warning mark</span> behind key words.</p>
+
+  <!-- COMPONENTS -->
+  <div class="sec-label">Components · cards, buttons, callouts</div>
+  <div class="cardgrid">
+    <div class="ab card primary"><div class="card-header">Primary</div><div class="card-body"><h3 class="card-title" style="font-size:1.05rem">Brand accent</h3><p class="card-text">Border and header tint follow the hue knob.</p></div></div>
+    <div class="ab card positive"><div class="card-header">Positive</div><div class="card-body"><h3 class="card-title" style="font-size:1.05rem">Confirmed</h3><p class="card-text">Semantic hues stay fixed so green always reads as green.</p></div></div>
+    <div class="ab card comment"><div class="card-header">Comment</div><div class="card-body"><h3 class="card-title" style="font-size:1.05rem">A note</h3><p class="card-text">Same template, violet accent.</p></div></div>
+  </div>
+  <div class="btnrow" style="margin-top:16px">
+    <button class="ab btn primary">Primary</button>
+    <button class="ab btn primary outline">Outline</button>
+    <button class="ab btn primary soft">Soft</button>
+    <button class="ab btn positive">Positive</button>
+    <button class="ab btn primary btn-sm">Small</button>
+  </div>
+  <div style="display:grid;gap:12px;margin-top:16px">
+    <div class="ab callout info"><div class="callout-header">Info</div><p>Callouts carry a left accent bar from the same token set.</p></div>
+    <div class="ab callout positive"><div class="callout-header">Positive</div><p>Use these to signal advice or a confirmed step.</p></div>
+  </div>
+
+  <!-- MOTION -->
+  <div class="sec-label">Motion · opt-in signals (toggle Motion off above to stop them all)</div>
+  <div class="motion-tiles">
+    <div class="motion-tile"><span class="material-symbol motion-pulse" aria-hidden="true">sensors</span>pulse · live</div>
+    <div class="motion-tile"><span class="material-symbol motion-nudge" aria-hidden="true">warning</span>nudge · look here</div>
+    <div class="motion-tile"><span class="material-symbol motion-pop" aria-hidden="true">verified</span>pop · success</div>
+    <div class="motion-tile"><span class="material-symbol motion-bounce" aria-hidden="true">arrow_upward</span>bounce · continue</div>
+    <div class="motion-tile"><span class="material-symbol motion-spin" aria-hidden="true">progress_activity</span>spin · busy</div>
+    <div class="motion-tile"><span class="material-symbol motion-float" aria-hidden="true">cloud</span>float · idle</div>
+  </div>
+  <div class="lesson-completion"><button type="button" class="ab btn secondary btn-sm" id="replay"><span class="material-symbol" aria-hidden="true">replay</span>Replay reveal (fade-up)</button><span class="intro-note" style="margin:0">This is the entrance motion Trickle triggers as a block scrolls in.</span></div>
+  <div class="cardgrid" style="margin-top:14px">
+    <div class="ab card secondary" data-reveal><div class="card-body"><h3 class="card-title" style="font-size:1.05rem">Revealed block</h3><p class="card-text">In a course, Adapt's onscreen hook adds the reveal class as this scrolls into view.</p></div></div>
+    <div class="ab card secondary" data-reveal><div class="card-body"><h3 class="card-title" style="font-size:1.05rem">Next block</h3><p class="card-text">Trickle reveals + scrolls, so trickled blocks animate in for free.</p></div></div>
+  </div>
+
+</div>
+
+<script>
+  const root = document.documentElement;
+  const setVar = (k,v)=>root.style.setProperty(k,v);
+  const h=document.getElementById('k-h'), ty=document.getElementById('k-type'), sp=document.getElementById('k-space');
+  const hv=document.getElementById('k-h-v'), tyv=document.getElementById('k-type-v'), spv=document.getElementById('k-space-v');
+  h.addEventListener('input',()=>{setVar('--h',h.value);hv.textContent=h.value+'°';});
+  ty.addEventListener('input',()=>{setVar('--type-scale',ty.value);tyv.textContent=(+ty.value).toFixed(2)+'×';});
+  sp.addEventListener('input',()=>{setVar('--space-scale',sp.value);spv.textContent=(+sp.value).toFixed(2)+'×';});
+  // theme
+  document.getElementById('k-theme').addEventListener('click',e=>{
+    const b=e.target.closest('[data-theme-set]'); if(!b) return;
+    const mode=b.dataset.themeSet;
+    if(mode==='system') root.removeAttribute('data-theme'); else root.setAttribute('data-theme',mode);
+    document.querySelectorAll('#k-theme button').forEach(x=>x.setAttribute('aria-pressed', x===b));
+  });
+  // motion toggle
+  const mt=document.getElementById('k-motion');
+  mt.addEventListener('click',()=>{
+    const off=!root.classList.contains('no-motion');
+    root.classList.toggle('no-motion',off);
+    mt.textContent=off?'Off':'On'; mt.setAttribute('aria-pressed',String(!off));
+  });
+  // replay reveal — start visible, re-trigger the entrance
+  document.getElementById('replay').addEventListener('click',()=>{
+    document.querySelectorAll('[data-reveal]').forEach(el=>{
+      el.classList.remove('fade-up-after'); el.classList.add('fade-up-before'); void el.offsetWidth;
+      requestAnimationFrame(()=>{el.classList.add('fade-up-after'); el.classList.remove('fade-up-before');});
+    });
+  });
+</script>

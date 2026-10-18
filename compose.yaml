@@ -1,0 +1,30 @@
+# ============================================================================
+#  One-command Adapt build + serve of the GROW theme.
+#    docker compose up --build        → builds the theme into a fresh Adapt
+#                                        course, serves it at http://localhost:8080
+#    ADAPT_MODE=build docker compose up --build   → one-shot build then serve
+#  First run clones the framework + installs plugins (slow); it lives in the
+#  named volume `adapt_framework` and is reused on later runs.
+#  See docker/README.md.
+# ============================================================================
+services:
+  adapt:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # the repo is mounted read-only; the entrypoint copies the GROW theme + config
+    # out of it into the framework on each start, so your edits take effect.
+    volumes:
+      - ./:/repo:ro
+      - adapt_framework:/work
+    ports:
+      # loopback only — it's a dev server
+      - "127.0.0.1:8080:8080"
+    environment:
+      THEME: "${THEME:-grow-ct}"   # which theme/<name> to build
+      ADAPT_MODE: "${ADAPT_MODE:-dev}"      # dev = build + serve + watch-rebuild; build = one-shot
+    # the adapt-cli pulls plugins from GitHub on first run
+    # (remove if your network is restricted and you pre-seed the volume)
+
+volumes:
+  adapt_framework:

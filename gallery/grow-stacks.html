@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en" data-theme="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>grow stacks</title>
+<meta name="description" content="The two Grow × Adapt build stacks — adapt-core-base and grow-core-base — laid out as layered interfaces: the mechanical (structure/HTML) tier, then the style (LESS/token) tier, with a swappable base profile.">
+<style>
+:root{
+  --h:202;--s:72%;--gs:12%;
+  --page-bg:hsl(var(--h) 30% 96%);--surface-1:hsl(var(--h) 24% 99%);--surface-2:hsl(var(--h) 20% 94%);
+  --ink:hsl(var(--h) 25% 16%);--ink-soft:hsl(var(--h) 14% 40%);--line:hsl(var(--h) 18% 86%);
+  --accent:hsl(var(--h) var(--s) 42%);--accent-ink:hsl(var(--h) var(--s) 34%);--shadow:hsl(var(--h) 40% 20% / .16);
+  --mech:hsl(calc(var(--h) + 150) 45% 42%);        /* structure tier accent */
+  --sty:var(--accent);                              /* style tier accent */
+  --font-ui:"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --radius:14px;--sp:clamp(1rem,.85rem + .6vw,1.5rem);color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--page-bg:hsl(var(--h) 32% 8%);--surface-1:hsl(var(--h) 26% 12%);--surface-2:hsl(var(--h) 24% 16%);--ink:hsl(var(--h) 20% 92%);--ink-soft:hsl(var(--h) 14% 66%);--line:hsl(var(--h) 22% 22%);--accent:hsl(var(--h) var(--s) 64%);--accent-ink:hsl(var(--h) var(--s) 78%);--shadow:hsl(var(--h) 60% 2% / .5);--mech:hsl(calc(var(--h) + 150) 50% 62%);color-scheme:dark}}
+:root[data-theme="dark"]{--page-bg:hsl(var(--h) 32% 8%);--surface-1:hsl(var(--h) 26% 12%);--surface-2:hsl(var(--h) 24% 16%);--ink:hsl(var(--h) 20% 92%);--ink-soft:hsl(var(--h) 14% 66%);--line:hsl(var(--h) 22% 22%);--accent:hsl(var(--h) var(--s) 64%);--accent-ink:hsl(var(--h) var(--s) 78%);--shadow:hsl(var(--h) 60% 2% / .5);--mech:hsl(calc(var(--h) + 150) 50% 62%);color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page-bg);color:var(--ink);font-family:var(--font-ui);line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:var(--sp)}
+.wrap{max-width:74rem;margin-inline:auto}
+.bar{display:flex;flex-wrap:wrap;gap:14px;align-items:center;background:color-mix(in srgb,var(--surface-1) 92%,transparent);
+  border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:var(--sp);position:sticky;top:8px;z-index:9;backdrop-filter:blur(6px)}
+.bar .grow{flex:1 1 auto}
+.kicker{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft)}
+label{font-size:.78rem;color:var(--ink-soft);font-weight:600;display:flex;align-items:center;gap:8px}
+input[type=range]{accent-color:var(--accent)}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.seg button{font:inherit;font-size:.78rem;font-weight:600;padding:6px 11px;border:0;background:var(--surface-2);color:var(--ink-soft);cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent);color:#fff}
+h1{font-size:clamp(1.7rem,1.2rem + 2.2vw,2.6rem);margin:.1rem 0 .3rem;letter-spacing:-.02em}
+.lede{color:var(--ink-soft);max-width:70ch;margin:0 0 var(--sp)}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:.8rem;color:var(--ink-soft);margin-bottom:var(--sp)}
+.legend b{display:inline-flex;align-items:center;gap:7px;font-weight:600;color:var(--ink)}
+.dot{width:12px;height:12px;border-radius:3px}
+.dot.m{background:var(--mech)}.dot.s{background:var(--sty)}
+
+.stacks{display:grid;grid-template-columns:1fr;gap:20px}
+@media(min-width:60rem){.stacks{grid-template-columns:1fr 1fr}}
+.stack{border:1px solid var(--line);border-radius:var(--radius);background:color-mix(in srgb,var(--surface-1) 70%,transparent);padding:16px;box-shadow:0 14px 34px -24px var(--shadow)}
+.stack h2{font-size:1.15rem;margin:.1rem 0 .1rem;font-family:var(--font-mono)}
+.stack .sub{color:var(--ink-soft);font-size:.86rem;margin:0 0 14px}
+
+.tier{font-family:var(--font-mono);font-size:.64rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);margin:14px 0 6px;display:flex;align-items:center;gap:8px}
+.tier::after{content:"";flex:1;height:1px;background:var(--line)}
+.layer{position:relative;border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:7px 0;background:var(--surface-1)}
+.layer .nm{font-family:var(--font-mono);font-size:.82rem;font-weight:700}
+.layer .ds{font-size:.78rem;color:var(--ink-soft);margin-top:2px}
+.layer.mech{border-left:4px solid var(--mech)}
+.layer.sty{border-left:4px solid var(--sty)}
+.layer.merged{border-left:4px solid var(--mech);background:color-mix(in srgb,var(--mech) 9%,var(--surface-1))}
+.layer.out{border:2px dashed var(--mech);background:color-mix(in srgb,var(--mech) 7%,transparent);text-align:center}
+.layer.profile{border-left:4px solid var(--sty);background:color-mix(in srgb,var(--sty) 9%,var(--surface-1))}
+.layer.contrib{border-left:4px solid var(--ink-soft);background:color-mix(in srgb,var(--ink-soft) 7%,transparent)}
+.arrow{text-align:center;color:var(--ink-soft);font-size:.9rem;line-height:1;margin:-1px 0}
+.plus{text-align:center;color:var(--mech);font-weight:800;margin:-1px 0}
+.pill{display:inline-block;font-family:var(--font-mono);font-size:.6rem;padding:1px 6px;border-radius:999px;border:1px solid var(--line);color:var(--ink-soft);margin-left:6px;vertical-align:middle}
+.pill.swap{border-color:var(--sty);color:var(--accent-ink);background:color-mix(in srgb,var(--sty) 10%,transparent)}
+.note{font-size:.82rem;color:var(--ink-soft);border-top:1px solid var(--line);margin-top:16px;padding-top:10px}
+code{font-family:var(--font-mono);font-size:.85em;background:color-mix(in srgb,var(--accent) 10%,transparent);padding:.05em .4em;border-radius:5px}
+footer{margin-top:var(--sp);padding-top:1rem;border-top:1px solid var(--line);color:var(--ink-soft);font-size:.84rem}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="bar">
+    <div class="grow"><div class="kicker">grow · the two build stacks</div></div>
+    <label>Hue <input id="hue" type="range" min="0" max="360" value="202"></label>
+    <div class="seg" id="theme"><button data-set="light" aria-pressed="false">Light</button><button data-set="dark" aria-pressed="false">Dark</button><button data-set="system" aria-pressed="true">System</button></div>
+  </div>
+
+  <h1>Two stacks, one <code>grow</code> interface</h1>
+  <p class="lede">Both stacks keep Adapt's <strong>contrib layer</strong> (components + extensions) fully functional and plug into Adapt's required structures. They differ only in <em>who owns the mechanical structure</em>. The <strong>style tier</strong> is shared: one <code>grow-core-less</code> entry that imports a swappable <strong>base</strong> token layer, a theme template, and finally a customer profile the generator writes.</p>
+  <div class="legend">
+    <b><span class="dot m"></span> Mechanical tier — structure / HTML + classes</b>
+    <b><span class="dot s"></span> Style tier — LESS / tokens</b>
+    <b><span class="pill swap">swappable</span> profile-driven, retint/reskin without touching the layer above</b>
+  </div>
+
+  <div class="stacks">
+
+    <!-- STACK 1 -->
+    <div class="stack">
+      <h2>adapt-core-base</h2>
+      <p class="sub">Adapt owns the structure; Grow owns the styles. The base layer is swappable, so a different base profile reskins your course on Adapt's native structure.</p>
+
+      <div class="tier">Mechanical — structure</div>
+      <div class="layer contrib"><div class="nm">adapt-contrib-core + contrib</div><div class="ds">core structural HTML + classes; components &amp; extensions stay functional</div></div>
+      <div class="arrow">↓</div>
+      <div class="layer out"><div class="nm">adapt-core-structure → course shape</div><div class="ds">the native Adapt tree (page / article / block / component) is emitted</div></div>
+
+      <div class="tier">End of mechanical · start of styles</div>
+      <div class="layer sty"><div class="nm">grow-core-less</div><div class="ds">the one interface entry — <code>@import</code>s the layers below</div></div>
+      <div class="arrow">↓ @import</div>
+      <div class="layer sty"><div class="nm">grow-base-&lt;grouping&gt;<span class="pill swap">base · swappable</span></div><div class="ds">token groupings — <code>grow-base-typography</code>, <code>-color</code>, <code>-space</code>…</div></div>
+      <div class="arrow">↓</div>
+      <div class="layer sty"><div class="nm">grow-theme-template</div><div class="ds">the painting that dresses Adapt's native structure from the tokens</div></div>
+      <div class="arrow">↓</div>
+      <div class="layer profile"><div class="nm">grow-&lt;customer&gt;-theme-profile<span class="pill swap">generator output</span></div><div class="ds">active profile — the dials, written by the theme generator</div></div>
+
+      <div class="note">Plugins: real <code>adapt-contrib-core</code> + contrib + <code>_theme: grow-ct</code> (styles) + the Grow content kit. Structure = Adapt's.</div>
+    </div>
+
+    <!-- STACK 2 -->
+    <div class="stack">
+      <h2>grow-core-base</h2>
+      <p class="sub">Grow adds its <em>own</em> structure on top of Adapt's — custom structural objects, classes and generated HTML — merged into the <code>grow</code> interface that emits the course shape. Same swappable style tier.</p>
+
+      <div class="tier">Mechanical — structure</div>
+      <div class="layer contrib"><div class="nm">adapt-contrib-core + contrib</div><div class="ds">Adapt's required structures kept intact + functional</div></div>
+      <div class="layer mech"><div class="nm">adapt-core-structure</div><div class="ds">Adapt structural HTML + classes</div></div>
+      <div class="plus">+</div>
+      <div class="layer mech"><div class="nm">grow-core-structure</div><div class="ds">Grow's own structural objects/classes — frontmatter, two-column block, custom menu… (template overrides + views)</div></div>
+      <div class="arrow">↓ merge</div>
+      <div class="layer merged"><div class="nm">= grow-core-structure</div><div class="ds">the merged interface where structural + functional HTML is built</div></div>
+      <div class="arrow">↓</div>
+      <div class="layer out"><div class="nm">→ THE COURSE SHAPE</div><div class="ds">your own Grow course &amp; page structure, spat out as HTML</div></div>
+
+      <div class="tier">End of mechanical · start of styles</div>
+      <div class="layer sty"><div class="nm">grow-core-less</div><div class="ds">same entry — <code>@import</code>s the layers below</div></div>
+      <div class="arrow">↓ @import</div>
+      <div class="layer sty"><div class="nm">grow-base-&lt;grouping&gt;<span class="pill swap">base · swappable</span></div><div class="ds">same token groupings; styles the Grow structure too</div></div>
+      <div class="arrow">↓</div>
+      <div class="layer sty"><div class="nm">grow-theme-template</div><div class="ds">painting for both Adapt's and Grow's structure</div></div>
+      <div class="arrow">↓</div>
+      <div class="layer profile"><div class="nm">grow-&lt;customer&gt;-theme-profile<span class="pill swap">generator output</span></div><div class="ds">active profile — the dials</div></div>
+
+      <div class="note">Plugins: real <code>adapt-contrib-core</code> + contrib + <code>_theme: grow-ct</code> carrying the <strong>structural overrides</strong> (<code>templates/</code> + <code>themeBlockView</code> + schema) = grow-core-structure, optionally a custom <code>_menu</code> plugin.</div>
+    </div>
+
+  </div>
+
+  <footer>
+    Both packages are assembled under <code>packages/</code> (README + <code>adapt.json</code> + <code>config.json</code>), and
+    <code>grow-core-base</code> carries the <code>grow/</code> LESS scaffold with these exact names. Architecture:
+    <code>docs/grow-base-architecture.md</code>. The one invariant: keep Adapt's class/hook contract so core + contrib
+    keep working.
+  </footer>
+</div>
+<script>
+  const root=document.documentElement;
+  document.getElementById('hue').addEventListener('input',e=>root.style.setProperty('--h',e.target.value));
+  document.getElementById('theme').addEventListener('click',e=>{const b=e.target.closest('[data-set]');if(!b)return;const m=b.dataset.set;m==='system'?root.removeAttribute('data-theme'):root.setAttribute('data-theme',m);document.querySelectorAll('#theme button').forEach(x=>x.setAttribute('aria-pressed',x===b));});
+</script>
+</body>
+</html>

@@ -1,0 +1,150 @@
+<title>Abbott Ink Connectors</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Caveat:wght@600&display=swap">
+<style>
+/* Hand-drawn code-structure connectors (tree / indent guides) you can place
+   between lines, plus scribble-over-a-box using an SVG filter applied to HTML
+   content (per MDN). Ink wobble from #ink; token-driven; theme-aware. */
+:root{
+  --h:202;--s:72%;--gs:12%;
+  --page-bg:hsl(var(--h) 30% 96%);--surface-1:hsl(var(--h) 24% 99%);--surface-2:hsl(var(--h) 20% 94%);
+  --ink:hsl(var(--h) 25% 16%);--ink-soft:hsl(var(--h) 14% 42%);--line:hsl(var(--h) 18% 86%);
+  --accent:hsl(var(--h) var(--s) 42%);--shadow:hsl(var(--h) 40% 20% / .16);--c-comment:hsl(270 45% 54%);
+  --flow-rate:1;
+  --font-ui:"Inter",ui-sans-serif,system-ui,sans-serif;--font-hand:"Caveat","Segoe Script",cursive;--font-mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --fs-3xs:.72rem;--fs-xs:.88rem;--radius:14px;--sp:clamp(1rem,.85rem + .6vw,1.5rem);color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--page-bg:hsl(var(--h) 32% 8%);--surface-1:hsl(var(--h) 26% 12%);--surface-2:hsl(var(--h) 24% 16%);--ink:hsl(var(--h) 20% 92%);--ink-soft:hsl(var(--h) 14% 64%);--line:hsl(var(--h) 22% 22%);--accent:hsl(var(--h) var(--s) 64%);--shadow:hsl(var(--h) 60% 2% / .5);color-scheme:dark}}
+:root[data-theme="dark"]{--page-bg:hsl(var(--h) 32% 8%);--surface-1:hsl(var(--h) 26% 12%);--surface-2:hsl(var(--h) 24% 16%);--ink:hsl(var(--h) 20% 92%);--ink-soft:hsl(var(--h) 14% 64%);--line:hsl(var(--h) 22% 22%);--accent:hsl(var(--h) var(--s) 64%);--shadow:hsl(var(--h) 60% 2% / .5);color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page-bg);color:var(--ink);font-family:var(--font-ui);line-height:1.6}
+h3{font-size:1.15rem;margin:0 0 .2rem}
+.wrap{max-width:60rem;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:var(--sp)}
+.bar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;background:color-mix(in srgb,var(--surface-1) 92%,transparent);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:var(--sp);position:sticky;top:env(safe-area-inset-top,0px);z-index:9}
+.bar .grow{flex:1 1 auto}
+.btn{font:inherit;font-weight:600;font-size:var(--fs-xs);padding:7px 13px;border-radius:999px;border:1px solid var(--accent);background:var(--accent);color:#fff;cursor:pointer}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}.seg button{font:inherit;font-size:var(--fs-xs);font-weight:600;padding:6px 11px;border:0;background:var(--surface-2);color:var(--ink-soft);cursor:pointer}.seg button[aria-pressed="true"]{background:var(--accent);color:#fff}
+.spd .v{min-width:3.4em;text-align:center;font-family:var(--font-mono);font-size:var(--fs-xs);font-weight:600;color:var(--ink);background:var(--surface-2);display:inline-flex;align-items:center;justify-content:center}.spd button{min-width:2em;font-size:1rem}
+.pat{background:var(--surface-1);border:1px solid var(--line);border-radius:var(--radius);padding:var(--sp);box-shadow:0 10px 30px -18px var(--shadow);margin-bottom:var(--sp)}
+.pat .tag{font-family:var(--font-mono);font-size:var(--fs-3xs);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
+.note-cap{font-size:var(--fs-xs);color:var(--ink-soft);margin:.2rem 0 1rem}
+code{font-family:var(--font-mono);font-size:.85em;background:color-mix(in srgb,var(--accent) 10%,transparent);padding:.05em .35em;border-radius:5px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+/* ---- the connector pieces (reusable via <use>) ---- */
+/* inherited stroke/fill flow into <use> shadow content; filter wobbles each glyph */
+.conn{width:22px;height:40px;display:block;flex:none;color:var(--ink-soft);stroke:currentColor;fill:none;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;filter:url(#ink)}
+.conn.key{color:var(--accent)}
+
+/* ---- tree rows ---- */
+.tree{display:flex;flex-direction:column;background:var(--surface-2);border-radius:10px;padding:10px 14px;width:fit-content;min-width:min(100%,360px)}
+.trow{display:flex;align-items:center;height:40px}
+.lab{font-family:var(--font-mono);font-size:.95rem;color:var(--ink);margin-left:4px;white-space:nowrap}
+.lab.dir{color:var(--accent);font-weight:600}
+.lab.root{font-weight:700}
+.playing .tree{animation:treewipe calc(1s / var(--flow-rate)) steps(1,end) both, treereveal calc(1s / var(--flow-rate)) ease both}
+@keyframes treereveal{from{clip-path:inset(0 0 100% 0)}to{clip-path:inset(0 0 -4px 0)}}
+@keyframes treewipe{from{} to{}}
+
+/* ---- pieces showcase ---- */
+.pieces{display:flex;flex-wrap:wrap;gap:20px}
+.piece{display:flex;flex-direction:column;align-items:center;gap:8px}
+.piece .cap{font-family:var(--font-mono);font-size:var(--fs-3xs);color:var(--ink-soft)}
+.piece .conn{height:48px;width:28px}
+
+/* ---- scribble over a square + SVG filter on HTML ---- */
+.demos{display:flex;flex-wrap:wrap;gap:22px}
+.demo{display:flex;flex-direction:column;gap:8px}
+.demo .cap{font-size:var(--fs-3xs);color:var(--ink-soft);font-family:var(--font-mono)}
+.htmlbox{width:180px;padding:16px;border:2.5px solid var(--accent);border-radius:10px;background:color-mix(in srgb,var(--accent) 7%,var(--surface-1));color:var(--ink);font-weight:600}
+.wobble{filter:url(#ink)}                    /* SVG filter applied to HTML content (MDN) */
+.sqwrap{position:relative;width:180px;height:132px}
+.sqwrap .htmlsq{position:absolute;inset:0;border-radius:8px;background:var(--surface-1);border:1px solid var(--line);display:grid;place-items:center;color:var(--ink-soft);font-size:var(--fs-xs)}
+.sqwrap svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible;color:var(--accent);pointer-events:none}
+.ink{fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:0;filter:url(#ink)}
+.playing .ink{animation:draw calc(.6s / var(--flow-rate)) ease var(--d,0s) both}
+@keyframes draw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+@media (prefers-reduced-motion:reduce){.playing .ink{animation:none}.playing .tree{animation:none}}
+</style>
+
+<!-- ink wobble filter + reusable connector symbols -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="ink" x="-30%" y="-30%" width="160%" height="160%"><feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="5" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2.6"/></filter>
+  <symbol id="c-vert"  viewBox="0 0 22 40"><path d="M11 0 L11 40"/></symbol>
+  <symbol id="c-tee"   viewBox="0 0 22 40"><path d="M11 0 L11 40"/><path d="M11 20 L22 20"/></symbol>
+  <symbol id="c-elbow" viewBox="0 0 22 40"><path d="M11 0 L11 20"/><path d="M11 20 L22 20"/></symbol>
+  <symbol id="c-cross" viewBox="0 0 22 40"><path d="M11 0 L11 40"/><path d="M0 20 L22 20"/></symbol>
+  <symbol id="c-top"   viewBox="0 0 22 40"><path d="M11 20 L11 40"/><path d="M11 20 L22 20"/></symbol>
+  <symbol id="c-space" viewBox="0 0 22 40"></symbol>
+</svg>
+
+<div class="wrap">
+  <div class="bar"><strong>Abbott Ink Connectors</strong><span class="grow"></span>
+    <div class="seg spd" role="group" aria-label="Speed"><button data-spd="-1" aria-label="Slower">−</button><span class="v" id="spdv">100%</span><button data-spd="1" aria-label="Faster">+</button></div>
+    <button class="btn" id="replay">▶ Replay</button>
+    <div class="seg" id="theme"><button data-set="light" aria-pressed="false">Light</button><button data-set="dark" aria-pressed="false">Dark</button><button data-set="system" aria-pressed="true">System</button></div>
+  </div>
+
+  <!-- PIECES -->
+  <div class="pat"><div class="tag">The pieces</div><h3>Connector parts</h3><p class="note-cap">Each is a <code>&lt;use&gt;</code> of one symbol, sized to the line height so verticals tile seamlessly down the rows. Drop one per indent level, then the label.</p>
+    <div class="pieces">
+      <div class="piece"><svg class="conn"><use href="#c-vert"/></svg><span class="cap">vertical</span></div>
+      <div class="piece"><svg class="conn"><use href="#c-tee"/></svg><span class="cap">tee ├</span></div>
+      <div class="piece"><svg class="conn"><use href="#c-elbow"/></svg><span class="cap">elbow └</span></div>
+      <div class="piece"><svg class="conn"><use href="#c-cross"/></svg><span class="cap">cross ┼</span></div>
+      <div class="piece"><svg class="conn"><use href="#c-top"/></svg><span class="cap">top ┌</span></div>
+      <div class="piece"><svg class="conn"><use href="#c-space"/></svg><span class="cap">(space)</span></div>
+    </div>
+  </div>
+
+  <!-- TREE -->
+  <div class="pat"><div class="tag">Worked example · code structure</div><h3>A hand-drawn file tree</h3><p class="note-cap">Built only from the pieces above — <code>vertical</code> to continue a branch, <code>tee</code> to fork, <code>elbow</code> for the last child, <code>space</code> to clear a finished branch. Press Replay to draw it in.</p>
+    <div class="tree">
+      <div class="trow"><span class="lab root">project/</span></div>
+      <div class="trow"><svg class="conn key"><use href="#c-tee"/></svg><span class="lab dir">src/</span></div>
+      <div class="trow"><svg class="conn"><use href="#c-vert"/></svg><svg class="conn"><use href="#c-tee"/></svg><span class="lab">index.js</span></div>
+      <div class="trow"><svg class="conn"><use href="#c-vert"/></svg><svg class="conn"><use href="#c-tee"/></svg><span class="lab">theme.less</span></div>
+      <div class="trow"><svg class="conn"><use href="#c-vert"/></svg><svg class="conn"><use href="#c-elbow"/></svg><span class="lab dir">core/</span></div>
+      <div class="trow"><svg class="conn"><use href="#c-vert"/></svg><svg class="conn"><use href="#c-space"/></svg><svg class="conn"><use href="#c-elbow"/></svg><span class="lab">tokens.less</span></div>
+      <div class="trow"><svg class="conn key"><use href="#c-elbow"/></svg><span class="lab dir">docs/</span></div>
+      <div class="trow"><svg class="conn"><use href="#c-space"/></svg><svg class="conn"><use href="#c-elbow"/></svg><span class="lab">guide.md</span></div>
+    </div>
+  </div>
+
+  <!-- INDENT GUIDES (for code / prose) -->
+  <div class="pat"><div class="tag">Indent guides</div><h3>Between indented lines</h3><p class="note-cap">The same <code>vertical</code> piece as a scribbly indent guide beside nested lines.</p>
+    <div class="tree" style="font-family:var(--font-mono)">
+      <div class="trow"><span class="lab">function build() {</span></div>
+      <div class="trow"><svg class="conn"><use href="#c-vert"/></svg><span class="lab">const t = tokens()</span></div>
+      <div class="trow"><svg class="conn"><use href="#c-vert"/></svg><span class="lab">if (t.ok) {</span></div>
+      <div class="trow"><svg class="conn"><use href="#c-vert"/></svg><svg class="conn"><use href="#c-vert"/></svg><span class="lab">render(t)</span></div>
+      <div class="trow"><svg class="conn"><use href="#c-vert"/></svg><span class="lab">}</span></div>
+      <div class="trow"><span class="lab">}</span></div>
+    </div>
+  </div>
+
+  <!-- SCRIBBLE OVER A SQUARE + SVG FILTER ON HTML -->
+  <div class="pat"><div class="tag">Scribble over a shape · SVG filter on HTML</div><h3>Ink over a box</h3><p class="note-cap">Left: a scribble drawn over a plain HTML square. Right: the <em>same</em> ink filter applied directly to HTML with <code>filter: url(#ink)</code> — the technique from the MDN page you linked.</p>
+    <div class="demos">
+      <div class="demo"><div class="sqwrap">
+        <div class="htmlsq">HTML square</div>
+        <svg viewBox="0 0 180 132" aria-hidden="true">
+          <path class="ink" pathLength="1" style="--d:0s;stroke-width:3" d="M8 10 L172 7 L175 124 L6 127 Z"/>
+          <path class="ink" pathLength="1" style="--d:.25s;stroke-width:2.5;color:var(--c-comment)" d="M18 112 L150 18 M44 120 L166 32 M70 126 L172 54 M96 128 L176 78"/>
+        </svg>
+      </div><span class="cap">scribble drawn over a square</span></div>
+      <div class="demo"><div class="htmlbox wobble">Real HTML text &amp; border — the SVG <code>#ink</code> filter makes its edges hand-drawn, live and selectable.</div><span class="cap">filter: url(#ink) on HTML</span></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],root=document.documentElement;
+  function play(){root.classList.remove('playing');void root.offsetWidth;root.classList.add('playing');clearTimeout(play._t);play._t=setTimeout(()=>root.classList.remove('playing'),2000);}
+  $('#replay').addEventListener('click',play);
+  let rate=1;const spdv=$('#spdv');
+  $$('[data-spd]').forEach(b=>b.addEventListener('click',()=>{rate=Math.round(Math.min(2.5,Math.max(.4,rate+ +b.dataset.spd*0.1))*10)/10;root.style.setProperty('--flow-rate',rate);spdv.textContent=Math.round(rate*100)+'%';}));
+  $('#theme').addEventListener('click',e=>{const b=e.target.closest('[data-set]');if(!b)return;const m=b.dataset.set;m==='system'?root.removeAttribute('data-theme'):root.setAttribute('data-theme',m);$$('#theme button').forEach(x=>x.setAttribute('aria-pressed',x===b));});
+  setTimeout(play,350);
+</script>

@@ -1,0 +1,99 @@
+<title>Abbott Washes & Textures</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<style>
+/* Very subtle transparent-to-colour gradient washes and fine textures, on the
+   Abbott theme. Static (no motion) — meant to sit quietly behind content.
+   Token-driven (retint with hue), theme-aware, with an Intensity dial (--i)
+   that scales how strong the wash/texture reads. */
+:root{
+  --h:202;--s:72%;--gs:12%;--i:1;
+  --page-bg:hsl(var(--h) 30% 96%);--surface-1:hsl(var(--h) 24% 98%);--surface-2:hsl(var(--h) 20% 93%);
+  --ink:hsl(var(--h) 25% 16%);--ink-soft:hsl(var(--h) 14% 42%);--line:hsl(var(--h) 18% 86%);
+  --accent:hsl(var(--h) var(--s) 48%);--shadow:hsl(var(--h) 40% 20% / .14);
+  --font-ui:"Inter",ui-sans-serif,system-ui,sans-serif;--font-mono:ui-monospace,Menlo,Consolas,monospace;
+  --fs-3xs:.72rem;--fs-xs:.88rem;--radius:14px;--sp:clamp(1rem,.85rem + .6vw,1.5rem);
+  --noise:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='140'%20height='140'%3E%3Cfilter%20id='n'%3E%3CfeTurbulence%20type='fractalNoise'%20baseFrequency='0.8'%20numOctaves='2'%20stitchTiles='stitch'/%3E%3CfeColorMatrix%20type='saturate'%20values='0'/%3E%3C/filter%3E%3Crect%20width='140'%20height='140'%20filter='url(%23n)'/%3E%3C/svg%3E");
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--page-bg:hsl(var(--h) 32% 9%);--surface-1:hsl(var(--h) 26% 13%);--surface-2:hsl(var(--h) 24% 17%);--ink:hsl(var(--h) 20% 92%);--ink-soft:hsl(var(--h) 14% 64%);--line:hsl(var(--h) 22% 24%);--accent:hsl(var(--h) var(--s) 64%);--shadow:hsl(var(--h) 60% 2% / .5);color-scheme:dark}}
+:root[data-theme="dark"]{--page-bg:hsl(var(--h) 32% 9%);--surface-1:hsl(var(--h) 26% 13%);--surface-2:hsl(var(--h) 24% 17%);--ink:hsl(var(--h) 20% 92%);--ink-soft:hsl(var(--h) 14% 64%);--line:hsl(var(--h) 22% 24%);--accent:hsl(var(--h) var(--s) 64%);--shadow:hsl(var(--h) 60% 2% / .5);color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page-bg);color:var(--ink);font-family:var(--font-ui);line-height:1.6}
+.wrap{max-width:70rem;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:var(--sp)}
+.bar{display:flex;flex-wrap:wrap;gap:14px;align-items:center;background:color-mix(in srgb,var(--surface-1) 92%,transparent);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:var(--sp);position:sticky;top:env(safe-area-inset-top,0px);z-index:9}
+.bar .grow{flex:1 1 auto}.bar label{font-size:var(--fs-xs);color:var(--ink-soft);display:flex;align-items:center;gap:8px}
+input[type=range]{accent-color:var(--accent)}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}.seg button{font:inherit;font-size:var(--fs-xs);font-weight:600;padding:6px 11px;border:0;background:var(--surface-2);color:var(--ink-soft);cursor:pointer}.seg button[aria-pressed="true"]{background:var(--accent);color:#fff}
+h1{font-size:clamp(1.6rem,1.1rem + 2vw,2.4rem);margin:.2rem 0 .3rem}
+.lede{color:var(--ink-soft);max-width:60ch;margin:0 0 var(--sp)}
+.sec{font-family:var(--font-mono);font-size:var(--fs-3xs);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);border-bottom:1px solid var(--line);padding-bottom:8px;margin:var(--sp) 0}
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(min(240px,100%),1fr))}
+.tile{position:relative;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;background:var(--surface-1);min-height:150px;padding:18px;display:flex;flex-direction:column;justify-content:flex-end;box-shadow:0 10px 30px -20px var(--shadow)}
+.tile::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none}
+.mini{position:relative;z-index:1}
+.mini h4{margin:0 0 .2rem;font-size:1rem}
+.mini p{margin:0;color:var(--ink-soft);font-size:.84rem}
+.lab{position:absolute;top:10px;left:12px;z-index:2;font-family:var(--font-mono);font-size:var(--fs-3xs);color:var(--ink-soft)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+/* ---- WASHES: transparent → faint colour ---- */
+.top::before{background:linear-gradient(to top,transparent 45%,color-mix(in srgb,var(--accent) calc(var(--i) * 16%),transparent))}
+.bottom::before{background:linear-gradient(to bottom,transparent 45%,color-mix(in srgb,var(--accent) calc(var(--i) * 16%),transparent))}
+.corner::before{background:radial-gradient(120% 120% at 100% 0%,color-mix(in srgb,var(--accent) calc(var(--i) * 18%),transparent),transparent 60%)}
+.centre::before{background:radial-gradient(circle at 50% 42%,color-mix(in srgb,var(--accent) calc(var(--i) * 16%),transparent),transparent 65%)}
+.diagonal::before{background:linear-gradient(135deg,color-mix(in srgb,var(--accent) calc(var(--i) * 15%),transparent),transparent 70%)}
+.dual::before{background:radial-gradient(90% 90% at 0% 0%,color-mix(in srgb,var(--accent) calc(var(--i) * 15%),transparent),transparent 55%),radial-gradient(90% 90% at 100% 100%,color-mix(in srgb,hsl(calc(var(--h) + 60) var(--s) 56%) calc(var(--i) * 15%),transparent),transparent 55%)}
+.vignette::before{background:radial-gradient(130% 130% at 50% 50%,transparent 52%,color-mix(in srgb,var(--accent) calc(var(--i) * 13%),transparent))}
+.band::before{background:linear-gradient(to bottom,transparent 28%,color-mix(in srgb,var(--accent) calc(var(--i) * 13%),transparent) 50%,transparent 72%)}
+
+/* ---- TEXTURES: fine, faint ---- */
+.dots::before{background-image:radial-gradient(color-mix(in srgb,var(--ink-soft) calc(var(--i) * 24%),transparent) 1px,transparent 1.3px);background-size:14px 14px}
+.hairlines::before{background-image:repeating-linear-gradient(to bottom,transparent 0 13px,color-mix(in srgb,var(--ink-soft) calc(var(--i) * 16%),transparent) 13px 14px)}
+.crosshatch::before{background-image:repeating-linear-gradient(45deg,color-mix(in srgb,var(--accent) calc(var(--i) * 12%),transparent) 0 1px,transparent 1px 10px),repeating-linear-gradient(-45deg,color-mix(in srgb,var(--accent) calc(var(--i) * 12%),transparent) 0 1px,transparent 1px 10px)}
+.microgrid::before{background-image:repeating-linear-gradient(to right,color-mix(in srgb,var(--ink-soft) calc(var(--i) * 14%),transparent) 0 1px,transparent 1px 12px),repeating-linear-gradient(to bottom,color-mix(in srgb,var(--ink-soft) calc(var(--i) * 14%),transparent) 0 1px,transparent 1px 12px)}
+.grain::before{background-image:var(--noise);background-size:150px 150px;opacity:calc(var(--i) * 0.5);mix-blend-mode:overlay}
+.paper::before{background-image:var(--noise),repeating-linear-gradient(to bottom,transparent 0 5px,color-mix(in srgb,var(--ink-soft) 40%,transparent) 5px 6px);background-size:150px 150px,auto;opacity:calc(var(--i) * 0.4);mix-blend-mode:overlay}
+.washgrain::before{background:linear-gradient(135deg,color-mix(in srgb,var(--accent) calc(var(--i) * 16%),transparent),transparent 72%),var(--noise);background-size:auto,150px 150px}
+</style>
+
+<div class="wrap">
+  <div class="bar"><strong>Abbott Washes &amp; Textures</strong><span class="grow"></span>
+    <label>Intensity <input id="int" type="range" min="0.3" max="2.2" step="0.05" value="1"></label>
+    <label>Hue <input id="hue" type="range" min="0" max="360" value="202"></label>
+    <div class="seg" id="theme"><button data-set="light" aria-pressed="false">Light</button><button data-set="dark" aria-pressed="false">Dark</button><button data-set="system" aria-pressed="true">System</button></div>
+  </div>
+
+  <h1>Washes &amp; textures</h1>
+  <p class="lede">Whisper-soft transparent-to-colour gradients and fine textures to sit behind headers, cards and sections. Drag <strong>Intensity</strong> to see how subtle (or not) each can be — they're tuned faint by default.</p>
+
+  <div class="sec">Transparent → colour washes</div>
+  <div class="grid">
+    <div class="tile top"><span class="lab">top</span><div class="mini"><h4>Top wash</h4><p>Fades up into the accent.</p></div></div>
+    <div class="tile bottom"><span class="lab">bottom</span><div class="mini"><h4>Bottom wash</h4><p>Grounds a card or footer.</p></div></div>
+    <div class="tile corner"><span class="lab">corner</span><div class="mini"><h4>Corner glow</h4><p>A hint of light, top-right.</p></div></div>
+    <div class="tile centre"><span class="lab">centre</span><div class="mini"><h4>Centre glow</h4><p>Soft focus behind a hero.</p></div></div>
+    <div class="tile diagonal"><span class="lab">diagonal</span><div class="mini"><h4>Diagonal</h4><p>Colour in one corner only.</p></div></div>
+    <div class="tile dual"><span class="lab">dual</span><div class="mini"><h4>Dual corners</h4><p>Two hues, opposite corners.</p></div></div>
+    <div class="tile vignette"><span class="lab">vignette</span><div class="mini"><h4>Vignette</h4><p>Faint tint around the edges.</p></div></div>
+    <div class="tile band"><span class="lab">band</span><div class="mini"><h4>Soft band</h4><p>A gentle horizontal glow.</p></div></div>
+  </div>
+
+  <div class="sec">Fine textures</div>
+  <div class="grid">
+    <div class="tile dots"><span class="lab">dots</span><div class="mini"><h4>Micro dots</h4><p>A faint dotted field.</p></div></div>
+    <div class="tile hairlines"><span class="lab">hairlines</span><div class="mini"><h4>Hairlines</h4><p>Ruled, barely there.</p></div></div>
+    <div class="tile crosshatch"><span class="lab">crosshatch</span><div class="mini"><h4>Crosshatch</h4><p>Fine diagonal weave.</p></div></div>
+    <div class="tile microgrid"><span class="lab">microgrid</span><div class="mini"><h4>Micro grid</h4><p>Blueprint, dialled down.</p></div></div>
+    <div class="tile grain"><span class="lab">grain</span><div class="mini"><h4>Grain</h4><p>Film-like noise overlay.</p></div></div>
+    <div class="tile paper"><span class="lab">paper</span><div class="mini"><h4>Paper</h4><p>Noise + faint fibre lines.</p></div></div>
+    <div class="tile washgrain"><span class="lab">wash + grain</span><div class="mini"><h4>Wash + grain</h4><p>A colour wash with texture.</p></div></div>
+  </div>
+</div>
+
+<script>
+  const root=document.documentElement,$=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+  $('#int').addEventListener('input',e=>root.style.setProperty('--i',e.target.value));
+  $('#hue').addEventListener('input',e=>root.style.setProperty('--h',e.target.value));
+  $('#theme').addEventListener('click',e=>{const b=e.target.closest('[data-set]');if(!b)return;const m=b.dataset.set;m==='system'?root.removeAttribute('data-theme'):root.setAttribute('data-theme',m);$$('#theme button').forEach(x=>x.setAttribute('aria-pressed',x===b));});
+</script>

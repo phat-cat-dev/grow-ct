@@ -1,0 +1,220 @@
+// ============================================================================
+//  00-foundation.less — the complete token contract   (colour × space × type)
+//  ----------------------------------------------------------------------------
+//  SINGLE SOURCE OF TRUTH for the theme. Compiled first (00-) so every later
+//  Abbott layer (15-surfaces, 16-paper, 25-motion, 35-diagrams, …) and every
+//  Adapt component can read these custom properties.
+//
+//  This is the LESS-wired form of foundation/ab-foundation.css. Only difference:
+//  bare clamp() values (which carry `+` arithmetic) and hsl() values with a `/`
+//  alpha slash are wrapped in ~"..." so LESS emits them verbatim instead of
+//  trying to do maths on them. calc() is left untouched — LESS preserves it.
+//
+//  LAYER ON VANILLA: adapt-abbott provides tokens + the fluid content-tree
+//  rhythm + Abbott decoration. It deliberately does NOT restyle Adapt's full
+//  shell (nav bar, drawer, buttons) — it is meant to ride on vanilla's base
+//  markup/conventions. See README.md.
+//
+//  THREE KNOBS drive the whole system:
+//    COLOUR  --h / --s / --gs       (one hue rotates the palette)
+//    TYPE    --type-scale           (multiply the whole ramp)
+//    SPACE   --space-scale          (density dial)
+// ============================================================================
+
+:root {
+
+  // ── THE KNOBS ───────────────────────────────────────────────────────────
+  --h: 202;              // COLOUR · brand hue 0–360
+  --s: 72%;              // COLOUR · brand saturation
+  --gs: 12%;             // COLOUR · blue-grey saturation
+  --type-scale: 1;       // TYPE   · multiply the whole ramp (0.9 tighter, 1.2 bigger)
+  --space-scale: 1;      // SPACE  · density dial (0.85 compact, 1.25 airy)
+
+  // ── COLOUR ENGINE (light values) ─────────────────────────────────────────
+  --page-bg:   hsl(var(--h) 30% 96%);
+  --surface-1: hsl(var(--h) 24% 99%);
+  --surface-2: hsl(var(--h) 20% 94%);
+  --ink:       hsl(var(--h) 25% 16%);
+  --ink-soft:  hsl(var(--h) 14% 38%);
+  --line:      hsl(var(--h) 18% 86%);
+  --accent:    hsl(var(--h) var(--s) 42%);
+  --accent-ink:hsl(var(--h) var(--s) 34%);   // darker accent for text on light washes
+  --shadow:    ~"hsl(var(--h) 40% 20% / .16)";
+  --acc-l: 42%;
+
+  --harm-2: 180; --harm-3: 120; --harm-4: 270;
+  --hue-1: var(--h);
+  --hue-2: calc(var(--h) + var(--harm-2));
+  --hue-3: calc(var(--h) + var(--harm-3));
+  --hue-4: calc(var(--h) + var(--harm-4));
+
+  --l-h1: 40%; --l-h2: 24%; --l-h3: 36%; --l-h4: 52%; --l-h5: 60%; --l-h6: 68%;
+  --e0: 90%; --e1: 93%; --e2: 95%; --e3: 96.5%; --e4: 98%; --e5: 99%; --e6: 100%;
+  --d-line: 86%; --shL: 24%; --code-l: 97%; --hint-l: 38%;
+
+  --sem-s: 55%; --sem-l: 38%; --sem-weak-s: 55%; --sem-weak-l: 92%;
+  --c-positive: hsl(150 var(--sem-s) var(--sem-l)); --c-positive-weak: hsl(150 var(--sem-weak-s) var(--sem-weak-l));
+  --c-neutral:  hsl(calc(var(--h) + 198) var(--sem-s) var(--sem-l)); --c-neutral-weak: hsl(calc(var(--h) + 198) var(--sem-weak-s) var(--sem-weak-l));
+  --c-negative: hsl(5   var(--sem-s) var(--sem-l)); --c-negative-weak: hsl(5   var(--sem-weak-s) var(--sem-weak-l));
+  --c-comment:  hsl(270 var(--sem-s) var(--sem-l)); --c-comment-weak:  hsl(270 var(--sem-weak-s) var(--sem-weak-l));
+  --c-info:     hsl(var(--h) var(--sem-s) var(--sem-l)); --c-info-weak: hsl(var(--h) var(--sem-weak-s) var(--sem-weak-l));
+
+  // ── TYPE ENGINE ────────────────────────────────────────────────────────
+  --font-ui:      "Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-heading: var(--font-ui);
+  --font-mono:    ui-monospace, "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
+
+  // FLUID RAMP · clamp(MIN, vw-slope, MAX). Escaped so LESS keeps the `+` maths.
+  --fs-3xs:  ~"clamp(0.69rem, 0.66rem + 0.14vw, 0.78rem)";   // fine print
+  --fs-2xs:  ~"clamp(0.75rem, 0.71rem + 0.20vw, 0.85rem)";   // caption / eyebrow
+  --fs-xs:   ~"clamp(0.80rem, 0.75rem + 0.25vw, 0.92rem)";   // small
+  --fs-sm:   ~"clamp(0.90rem, 0.84rem + 0.30vw, 1.02rem)";   // secondary
+  --fs-base: ~"clamp(1.00rem, 0.93rem + 0.35vw, 1.15rem)";   // body
+  --fs-md:   ~"clamp(1.15rem, 1.03rem + 0.55vw, 1.35rem)";   // lead / large body
+  --fs-lg:   ~"clamp(1.30rem, 1.12rem + 0.80vw, 1.60rem)";   // h5 / small head
+  --fs-xl:   ~"clamp(1.55rem, 1.28rem + 1.20vw, 2.05rem)";   // h4
+  --fs-2xl:  ~"clamp(1.85rem, 1.45rem + 1.80vw, 2.60rem)";   // h3
+  --fs-3xl:  ~"clamp(2.20rem, 1.60rem + 2.60vw, 3.30rem)";   // h2
+  --fs-4xl:  ~"clamp(2.60rem, 1.75rem + 3.80vw, 4.40rem)";   // h1
+  --fs-5xl:  ~"clamp(3.10rem, 1.90rem + 5.40vw, 5.80rem)";   // display / hero
+
+  --fw-regular: 400; --fw-medium: 500; --fw-semibold: 600; --fw-bold: 700;
+  --lh-none: 1; --lh-tight: 1.1; --lh-heading: 1.2; --lh-snug: 1.35; --lh-body: 1.6; --lh-loose: 1.85;
+  --tracking-tighter: -0.02em; --tracking-tight: -0.01em; --tracking-normal: 0;
+  --tracking-wide: 0.04em; --tracking-wider: 0.08em;
+  --measure: 66ch; --measure-narrow: 48ch; --measure-wide: 78ch;
+
+  // ── SPACE ENGINE (calc() is preserved by LESS; no escaping needed) ────────
+  --space-3xs: calc(clamp(0.25rem, 0.23rem + 0.10vw, 0.35rem) * var(--space-scale));
+  --space-2xs: calc(clamp(0.50rem, 0.45rem + 0.20vw, 0.65rem) * var(--space-scale));
+  --space-xs:  calc(clamp(0.75rem, 0.65rem + 0.40vw, 1.05rem) * var(--space-scale));
+  --space-sm:  calc(clamp(1.00rem, 0.85rem + 0.60vw, 1.50rem) * var(--space-scale));
+  --space-md:  calc(clamp(1.50rem, 1.20rem + 1.20vw, 2.50rem) * var(--space-scale));
+  --space-lg:  calc(clamp(2.25rem, 1.70rem + 2.20vw, 4.00rem) * var(--space-scale));
+  --space-xl:  calc(clamp(3.00rem, 2.10rem + 3.60vw, 6.00rem) * var(--space-scale));
+  --space-2xl: calc(clamp(4.00rem, 2.60rem + 5.60vw, 8.00rem) * var(--space-scale));
+  --space-3xl: calc(clamp(5.50rem, 3.30rem + 8.80vw, 11.0rem) * var(--space-scale));
+
+  --stack:          var(--space-sm);
+  --stack-tight:    var(--space-2xs);
+  --stack-loose:    var(--space-md);
+  --gap-inline:     var(--space-xs);
+  --gap-grid:       var(--space-md);
+  --pad-control:    var(--space-2xs) var(--space-sm);
+  --pad-card:       var(--space-sm);
+  --pad-component:  var(--space-md);   // d4 · component rhythm
+  --pad-block:      var(--space-lg);   // d3 · block padding
+  --pad-article:    var(--space-xl);   // d2 · article padding (most air)
+  --pad-section:    var(--space-2xl);  // page-level section rhythm
+
+  --layout-max:    75rem;
+  --layout-wide:   88rem;
+  --layout-narrow: 44rem;
+  --gutter: calc(clamp(1rem, 0.5rem + 3vw, 3rem) * var(--space-scale));
+
+  color-scheme: light;
+}
+
+// ── DARK MODE · colour ladders flip; space & type are theme-agnostic ────────
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --page-bg: hsl(var(--h) 32% 8%); --surface-1: hsl(var(--h) 26% 12%); --surface-2: hsl(var(--h) 24% 16%);
+    --ink: hsl(var(--h) 20% 92%); --ink-soft: hsl(var(--h) 14% 66%); --line: hsl(var(--h) 22% 22%);
+    --accent: hsl(var(--h) var(--s) 64%); --accent-ink: hsl(var(--h) var(--s) 78%); --shadow: ~"hsl(var(--h) 60% 2% / .5)"; --acc-l: 64%;
+    --l-h1: 68%; --l-h2: 74%; --l-h3: 70%; --l-h4: 62%; --l-h5: 54%; --l-h6: 48%;
+    --e0: 8%; --e1: 12%; --e2: 15%; --e3: 18%; --e4: 22%; --e5: 26%; --e6: 31%;
+    --d-line: 24%; --shL: 3%; --code-l: 11%; --hint-l: 66%;
+    --sem-l: 64%; --sem-weak-l: 18%;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --page-bg: hsl(var(--h) 32% 8%); --surface-1: hsl(var(--h) 26% 12%); --surface-2: hsl(var(--h) 24% 16%);
+  --ink: hsl(var(--h) 20% 92%); --ink-soft: hsl(var(--h) 14% 66%); --line: hsl(var(--h) 22% 22%);
+  --accent: hsl(var(--h) var(--s) 64%); --accent-ink: hsl(var(--h) var(--s) 78%); --shadow: ~"hsl(var(--h) 60% 2% / .5)"; --acc-l: 64%;
+  --l-h1: 68%; --l-h2: 74%; --l-h3: 70%; --l-h4: 62%; --l-h5: 54%; --l-h6: 48%;
+  --e0: 8%; --e1: 12%; --e2: 15%; --e3: 18%; --e4: 22%; --e5: 26%; --e6: 31%;
+  --d-line: 24%; --shL: 3%; --code-l: 11%; --hint-l: 66%;
+  --sem-l: 64%; --sem-weak-l: 18%;
+  color-scheme: dark;
+}
+
+// ============================================================================
+//  APPLIED TYPOGRAPHY — every text element, fluid, tuned by --type-scale
+// ============================================================================
+body {
+  font-family: var(--font-ui);
+  font-size: calc(var(--fs-base) * var(--type-scale));
+  line-height: var(--lh-body);
+  font-weight: var(--fw-regular);
+  color: var(--ink);
+}
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: var(--fw-bold);
+  line-height: var(--lh-heading);
+  margin: 0 0 var(--stack-tight);
+  text-wrap: balance;
+}
+h1 { font-size: calc(var(--fs-4xl) * var(--type-scale)); line-height: var(--lh-tight); letter-spacing: var(--tracking-tighter); }
+h2 { font-size: calc(var(--fs-3xl) * var(--type-scale)); letter-spacing: var(--tracking-tight); }
+h3 { font-size: calc(var(--fs-2xl) * var(--type-scale)); letter-spacing: var(--tracking-tight); }
+h4 { font-size: calc(var(--fs-xl)  * var(--type-scale)); }
+h5 { font-size: calc(var(--fs-lg)  * var(--type-scale)); }
+h6 { font-size: calc(var(--fs-sm)  * var(--type-scale)); font-weight: var(--fw-semibold);
+     text-transform: uppercase; letter-spacing: var(--tracking-wider); color: var(--ink-soft); }
+
+p, ul, ol, blockquote, figure, table { margin: 0 0 var(--stack); }
+p { max-width: var(--measure); }
+li + li { margin-top: var(--stack-tight); }
+ul, ol { padding-left: 1.4em; }
+
+small, .text-sm { font-size: calc(var(--fs-sm) * var(--type-scale)); }
+.text-xs, figcaption { font-size: calc(var(--fs-xs) * var(--type-scale)); color: var(--ink-soft); }
+.lead { font-size: calc(var(--fs-md) * var(--type-scale)); color: var(--ink-soft); line-height: var(--lh-snug); max-width: var(--measure-wide); }
+.eyebrow { font-size: calc(var(--fs-2xs) * var(--type-scale)); font-weight: var(--fw-semibold);
+           text-transform: uppercase; letter-spacing: var(--tracking-wider); color: var(--ink-soft); }
+strong, b { font-weight: var(--fw-semibold); }
+a { color: var(--accent); text-underline-offset: 0.18em; }
+code, kbd, pre, samp { font-family: var(--font-mono); font-size: 0.9em; }
+blockquote { padding-left: var(--space-sm); border-left: 3px solid var(--line); color: var(--ink-soft); }
+hr { border: 0; border-top: 1px solid var(--line); margin: var(--space-lg) 0; }
+
+// FLOW utility — automatic vertical rhythm for any stack (the "owl")
+.flow > * + *        { margin-top: var(--stack); }
+.flow-tight > * + *  { margin-top: var(--stack-tight); }
+.flow-loose > * + *  { margin-top: var(--stack-loose); }
+
+// ============================================================================
+//  APPLIED SPACE + ADAPT WIRING — content tree on the fluid spacing scale
+//  Depth = UNEQUAL rhythm: article → block → component, most air to least.
+// ============================================================================
+.article__inner,
+.block__inner {
+  width: 100%;
+  max-width: var(--layout-max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+.article__inner { padding-block: var(--pad-article); }
+.block__inner   { padding-block: var(--pad-block); }
+.component       { margin-block-end: var(--pad-component); }
+
+// two-up blocks reflow on their own width — no breakpoint
+.block__inner { display: flex; flex-wrap: wrap; gap: var(--gap-grid); }
+.block__inner > .component { flex: 1 1 ~"clamp(16rem, 40%, 100%)"; margin-block-end: 0; }
+
+// component card consumes the surface + elevation tokens
+.component__inner {
+  background: var(--surface-1);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: var(--pad-card);
+  box-shadow: 0 1px 2px var(--shadow), 0 8px 24px -10px var(--shadow);
+}
+.component img, .component video, .component svg { max-width: 100%; height: auto; }
+
+// page-level section rhythm
+.page__inner > * + * { margin-top: var(--pad-section); }
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }

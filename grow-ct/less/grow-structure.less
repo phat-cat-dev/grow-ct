@@ -1,0 +1,64 @@
+// ============================================================================
+//  grow-structure.less — styling for the grow-base structural overrides
+//  ----------------------------------------------------------------------------
+//  Styles the extra DOM the template overrides add: the article frontmatter
+//  section and the two-column block. Token-driven (retints with --h, dark-mode
+//  aware). Plain Adapt blocks are untouched (these classes only appear when the
+//  _grow fields are authored).
+// ============================================================================
+
+// article frontmatter — an extra section, same rhythm as the header
+.article__frontmatter {
+  margin-top: var(--space-sm);
+  margin-inline: auto;
+  max-width: 68ch;
+  border-left: 3px solid var(--accent);
+  background: color-mix(in srgb, var(--accent) 7%, var(--surface-1));
+  border-radius: 0 12px 12px 0;
+  padding: var(--space-sm) var(--space-sm) var(--space-sm) var(--space-md);
+}
+.article__frontmatter .fm-eyebrow {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: var(--fs-2xs);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--accent-ink);
+  margin-bottom: .25rem;
+}
+
+// two-column block
+.cols {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-md);
+  margin-top: var(--space-sm);
+}
+@media (min-width: 46rem) {
+  .cols { grid-template-columns: repeat(var(--grow-cols, 2), 1fr); }
+}
+.col {
+  display: flex;
+  flex-direction: column;
+  gap: .6rem;
+  border: 1px dashed var(--line);
+  border-radius: 12px;
+  padding: var(--space-sm);
+  background: color-mix(in srgb, var(--surface-2) 40%, transparent);
+}
+.col__title { margin: 0; font-weight: 700; font-size: var(--fs-md); }
+.col__body  { margin: 0; color: var(--ink-soft); font-size: var(--fs-sm); }
+.col__frontmatter {
+  font-family: var(--font-mono);
+  font-size: var(--fs-2xs);
+  color: var(--accent-ink);
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  border-radius: 8px;
+  padding: .4rem .6rem;
+}
+.col__components { margin-top: .2rem; }
+.col__components > .component { margin: 0; }
+
+// the staging container is hidden by themeBlockView once components are moved;
+// belt-and-braces in case JS is disabled — keep components visible (no columns).
+.component__container[hidden] { display: none; }

@@ -1,0 +1,122 @@
+// ============================================================================
+//  60-backgrounds.less — Abbott AMBIENT BACKGROUNDS
+//  ----------------------------------------------------------------------------
+//  Subtle, token-driven animated backgrounds to sit behind a hero/header/section.
+//  All pure CSS — they retint with the hue and flip for dark mode automatically,
+//  run off the shared --flow-rate speed dial, and stop under reduced motion or
+//  <html class="no-motion">.
+//
+//  USAGE — drop a fill layer into a position:relative container:
+//    <div class="ab-bg-host">
+//      <div class="ab-bg ab-bg--aurora"></div>
+//      …content above it…
+//    </div>
+//  In Adapt, add `ab-bg-host` to a block/article `_classes` and place the
+//  `.ab-bg` layer in a text/graphic component. Pseudo-only effects (grad, dots,
+//  grid, stripes, spot, mesh, aurora) need no extra markup; blobs/bokeh/wave
+//  expect child <span>/<svg> (see gallery/backgrounds.html).
+//
+//  Extracted from gallery/backgrounds.html.
+// ============================================================================
+
+:root { --flow-rate: 1; }  // shared across all Abbott motion; stepped ±10% by UI
+
+.ab-bg-host { position: relative; overflow: hidden; }
+
+.ab-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+.ab-bg-host > :not(.ab-bg) { position: relative; z-index: 1; }
+
+// 1 · gradient drift
+.ab-bg--grad {
+  background: linear-gradient(120deg,
+    hsl(var(--h) var(--s) 55%),
+    hsl(calc(var(--h) + 55) var(--s) 55%),
+    hsl(calc(var(--h) - 35) var(--s) 48%));
+  background-size: 220% 220%;
+  animation: ab-gradmove calc(9s / var(--flow-rate)) ease-in-out infinite;
+}
+@keyframes ab-gradmove { 0% { background-position: 0% 50% } 50% { background-position: 100% 50% } 100% { background-position: 0% 50% } }
+
+// 2 · aurora
+.ab-bg--aurora { background: var(--surface-2); }
+.ab-bg--aurora::before,
+.ab-bg--aurora::after { content: ""; position: absolute; inset: -45%; filter: blur(26px); animation: ab-aur calc(11s / var(--flow-rate)) ease-in-out infinite; }
+.ab-bg--aurora::before { background: radial-gradient(closest-side, color-mix(in srgb, var(--accent) 65%, transparent), transparent); }
+.ab-bg--aurora::after  { background: radial-gradient(closest-side, color-mix(in srgb, hsl(calc(var(--h) + 70) var(--s) 56%) 60%, transparent), transparent); animation-duration: calc(14s / var(--flow-rate)); animation-direction: reverse; }
+@keyframes ab-aur { 0% { transform: translate(-18%,-8%) scale(1) } 50% { transform: translate(22%,14%) scale(1.3) } 100% { transform: translate(-18%,-8%) scale(1) } }
+
+// 3 · blobs (expects child <span>s, each positioned + sized by the author)
+.ab-bg--blobs { background: var(--surface-1); }
+.ab-bg--blobs span { position: absolute; border-radius: 50%; filter: blur(6px); opacity: .5; animation: ab-drift calc(12s / var(--flow-rate)) ease-in-out infinite; }
+@keyframes ab-drift { 0% { transform: translate(0,0) } 33% { transform: translate(28px,-18px) } 66% { transform: translate(-20px,16px) } 100% { transform: translate(0,0) } }
+
+// 4 · dot drift
+.ab-bg--dots {
+  background-color: var(--surface-1);
+  background-image: radial-gradient(color-mix(in srgb, var(--accent) 42%, transparent) 2px, transparent 2px);
+  background-size: 22px 22px;
+  animation: ab-pan calc(5s / var(--flow-rate)) linear infinite;
+}
+@keyframes ab-pan { to { background-position: 22px 22px } }
+
+// 5 · grid pan
+.ab-bg--grid {
+  background-color: var(--surface-1);
+  background-image:
+    repeating-linear-gradient(to right,  color-mix(in srgb, var(--accent) 22%, transparent) 0 1px, transparent 1px 28px),
+    repeating-linear-gradient(to bottom, color-mix(in srgb, var(--accent) 22%, transparent) 0 1px, transparent 1px 28px);
+  animation: ab-pang calc(8s / var(--flow-rate)) linear infinite;
+}
+@keyframes ab-pang { to { background-position: 28px 28px } }
+
+// 6 · stripes
+.ab-bg--stripes {
+  background: repeating-linear-gradient(45deg, color-mix(in srgb, var(--accent) 20%, var(--surface-1)) 0 14px, var(--surface-1) 14px 28px);
+  background-size: 200% 200%;
+  animation: ab-slide calc(2.6s / var(--flow-rate)) linear infinite;
+}
+@keyframes ab-slide { to { background-position: 39.6px 0 } }
+
+// 7 · bokeh (expects child <span>s rising)
+.ab-bg--bokeh { background: linear-gradient(hsl(var(--h) 45% 24%), hsl(var(--h) 55% 12%)); }
+.ab-bg--bokeh span { position: absolute; bottom: -24px; border-radius: 50%; background: color-mix(in srgb, var(--accent) 70%, #fff); opacity: .32; animation: ab-rise calc(7s / var(--flow-rate)) linear infinite; }
+@keyframes ab-rise { 0% { transform: translateY(0) scale(.7); opacity: 0 } 15% { opacity: .4 } 100% { transform: translateY(-220px) scale(1.1); opacity: 0 } }
+
+// 8 · wave (expects child <svg> with .b second path)
+.ab-bg--wave { background: linear-gradient(var(--surface-1), var(--surface-2)); }
+.ab-bg--wave svg { position: absolute; bottom: -2px; left: 0; width: 200%; height: 60%; color: var(--accent); }
+.ab-bg--wave path { fill: color-mix(in srgb, var(--accent) 30%, transparent); animation: ab-wavemove calc(6s / var(--flow-rate)) linear infinite; }
+.ab-bg--wave path.b { fill: color-mix(in srgb, var(--accent) 18%, transparent); animation-duration: calc(9s / var(--flow-rate)); }
+@keyframes ab-wavemove { to { transform: translateX(-50%) } }
+
+// 9 · spotlight sweep
+.ab-bg--spot { background: var(--surface-2); }
+.ab-bg--spot::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 50% 45%, color-mix(in srgb, var(--accent) 55%, transparent), transparent 42%); animation: ab-sweep calc(5s / var(--flow-rate)) ease-in-out infinite; }
+@keyframes ab-sweep { 0% { transform: translateX(-32%) } 50% { transform: translateX(32%) } 100% { transform: translateX(-32%) } }
+
+// 10 · mesh rotate
+.ab-bg--mesh { background: var(--surface-1); }
+.ab-bg--mesh::before {
+  content: ""; position: absolute; inset: -55%; filter: blur(32px);
+  background: conic-gradient(from 0deg,
+    color-mix(in srgb, var(--accent) 55%, transparent),
+    color-mix(in srgb, hsl(calc(var(--h) + 90) var(--s) 56%) 55%, transparent),
+    color-mix(in srgb, hsl(calc(var(--h) - 40) var(--s) 52%) 55%, transparent),
+    color-mix(in srgb, var(--accent) 55%, transparent));
+  animation: ab-spin calc(16s / var(--flow-rate)) linear infinite;
+}
+@keyframes ab-spin { to { transform: rotate(360deg) } }
+
+// stop motion — in-course toggle or OS setting
+.no-motion .ab-bg,
+.no-motion .ab-bg::before,
+.no-motion .ab-bg::after,
+.no-motion .ab-bg * { animation: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  .ab-bg, .ab-bg::before, .ab-bg::after, .ab-bg * { animation: none !important; }
+}

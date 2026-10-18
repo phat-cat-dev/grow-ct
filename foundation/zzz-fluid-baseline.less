@@ -1,0 +1,135 @@
+// =============================================================================
+//  FLUID BASELINE — adapt-contrib-vanilla
+//  Drop in:  src/theme/adapt-contrib-vanilla/less/zzz-fluid-baseline.less
+//  Rebuild:  grunt build   (or grunt dev to watch)
+//
+//  100% FLUID — NO media queries, NO breakpoint steps.
+//  Every size interpolates continuously with the viewport using clamp():
+//      clamp(MIN, PREFERRED, MAX)
+//  - MIN  = value at the smallest screen (never goes below)
+//  - MAX  = value at the largest screen (never goes above)
+//  - PREFERRED = a vw-based slope that scales smoothly between them
+//
+//  LESS note: clamp() expressions are wrapped in ~"..." (string escape) so
+//  LESS passes them to CSS verbatim instead of trying to do math on the
+//  rem + vw arithmetic inside.
+// =============================================================================
+
+
+// =============================================================================
+//  0. FLUID SCALING REFERENCE
+//  Tune the whole system from these two numbers = the viewport range the
+//  fluid slopes interpolate across. Below MIN everything clamps to its min;
+//  above MAX everything clamps to its max.
+// =============================================================================
+//  design range:  ~320px  →  ~1440px
+//  (the vw values below are hand-tuned to that range; if you change the
+//   range a lot, nudge the vw numbers so min/max land where you want.)
+
+
+// =============================================================================
+//  1. FLUID TYPOGRAPHY
+//  A fluid modular scale. Each step clamps between a small-screen size and a
+//  large-screen size, scaling smoothly in between. No step jumps.
+// =============================================================================
+
+@font-base:    "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+@font-heading:  @font-base;
+
+// line-heights (unitless = fluid by nature)
+@lh-tight:      1.15;   // display / h1
+@lh-heading:    1.25;   // h2–h4
+@lh-body:       1.6;    // body copy
+@measure:       66ch;   // max line length (ch = fluid to font size)
+
+// --- fluid type steps -------------------------------------------------------
+//        name        clamp( MIN , PREFERRED (fluid) , MAX )
+@fs-xs:   ~"clamp(0.75rem, 0.71rem + 0.20vw, 0.85rem)";
+@fs-sm:   ~"clamp(0.85rem, 0.80rem + 0.25vw, 0.95rem)";
+@fs-base: ~"clamp(1.00rem, 0.93rem + 0.35vw, 1.15rem)";
+@fs-lg:   ~"clamp(1.20rem, 1.08rem + 0.60vw, 1.45rem)";
+@fs-h4:   ~"clamp(1.30rem, 1.15rem + 0.75vw, 1.65rem)";
+@fs-h3:   ~"clamp(1.55rem, 1.30rem + 1.20vw, 2.10rem)";
+@fs-h2:   ~"clamp(1.95rem, 1.55rem + 2.00vw, 2.90rem)";
+@fs-h1:   ~"clamp(2.40rem, 1.80rem + 3.00vw, 3.80rem)";
+
+html { font-size: 100%; }          // respect user's base size; never fix px here
+
+body,
+.component {
+  font-family: @font-base;
+  font-size: @fs-base;
+  line-height: @lh-body;
+}
+
+h1, .component__title { font-family: @font-heading; line-height: @lh-tight;   font-size: @fs-h1; }
+h2                     { font-family: @font-heading; line-height: @lh-heading; font-size: @fs-h2; }
+h3                     { font-family: @font-heading; line-height: @lh-heading; font-size: @fs-h3; }
+h4                     { font-family: @font-heading; line-height: @lh-heading; font-size: @fs-h4; }
+
+// keep prose readable: cap line length (fluid, because ch tracks font size)
+.component__title-inner,
+.component__body-inner { max-width: @measure; }
+
+
+// =============================================================================
+//  2. FLUID SPACING SCALE
+//  One fluid rhythm, reused everywhere. Depth comes from applying DIFFERENT
+//  steps at the article / block / component levels (unequal = hierarchy).
+// =============================================================================
+
+@space-3xs: ~"clamp(0.25rem, 0.23rem + 0.10vw, 0.35rem)";
+@space-2xs: ~"clamp(0.50rem, 0.45rem + 0.20vw, 0.65rem)";
+@space-xs:  ~"clamp(0.75rem, 0.65rem + 0.40vw, 1.05rem)";
+@space-sm:  ~"clamp(1.00rem, 0.85rem + 0.60vw, 1.50rem)";
+@space-md:  ~"clamp(1.50rem, 1.20rem + 1.20vw, 2.50rem)";
+@space-lg:  ~"clamp(2.25rem, 1.70rem + 2.20vw, 4.00rem)";
+@space-xl:  ~"clamp(3.00rem, 2.10rem + 3.60vw, 6.00rem)";
+
+// map the scale onto Adapt's three nesting levels — UNEQUAL on purpose
+@pad-article:   @space-xl;   // most air
+@pad-block:     @space-lg;   // medium
+@gap-component: @space-md;   // least
+
+
+// =============================================================================
+//  3. FLUID LAYOUT
+//  Width is fluid (%), capped by a max, with a fluid side gutter. Padding
+//  lives on __inner (constrained); full-bleed things on the outer element.
+// =============================================================================
+
+@layout-max:  75rem;   // ~1200px cap on huge screens; content stays fluid below
+@gutter:      ~"clamp(1rem, 0.5rem + 3vw, 3rem)";   // fluid side gutter
+
+.article__inner,
+.block__inner {
+  width: 100%;                       // fluid
+  max-width: @layout-max;            // but capped
+  margin-left: auto;
+  margin-right: auto;
+  padding-left:  @gutter;
+  padding-right: @gutter;
+}
+
+// vertical rhythm = the unequal fluid steps (this is where "depth" comes from)
+.article__inner { padding-top: @pad-article; padding-bottom: @pad-article; }
+.block__inner   { padding-top: @pad-block;    padding-bottom: @pad-block; }
+.component       { margin-bottom: @gap-component; }
+
+// two-up blocks: let them stack fluidly without a hard breakpoint.
+// flex-basis with a min keeps columns side-by-side until they genuinely
+// can't fit, then they wrap — no media query needed.
+.block__inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: @gap-component;
+}
+.block__inner > .component {
+  flex: 1 1 ~"clamp(16rem, 40%, 100%)";   // grow/shrink, wrap when too tight
+  margin-bottom: 0;                        // gap handles spacing now
+}
+
+// media inside components stays fluid
+.component img,
+.component video,
+.component svg { max-width: 100%; height: auto; }

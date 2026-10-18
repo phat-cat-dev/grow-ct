@@ -1,0 +1,18 @@
+// ============================================================================
+//  grow-base-color  —  colour token grouping (the interface)
+//  ----------------------------------------------------------------------------
+//  Grow's own colour maths, applied to the profile dials (--growp-*) to make
+//  the STABLE interface tokens (--grow-color-*) that the theme-template paints
+//  with. All runtime: darken() is replaced by calc() on lightness, so hover /
+//  active follow the hue dial live — nothing baked.
+// ============================================================================
+:root {
+  --grow-color-accent:        hsl(var(--growp-h) var(--growp-s) var(--growp-accent-l));
+  --grow-color-accent-hover:  hsl(var(--growp-h) var(--growp-s) calc(var(--growp-accent-l) - var(--growp-hover-d)));
+  --grow-color-accent-active: hsl(var(--growp-h) var(--growp-s) calc(var(--growp-accent-l) - var(--growp-active-d)));
+  --grow-color-ink:           hsl(var(--growp-h) 25% var(--growp-ink-l));
+  --grow-color-ink-soft:      hsl(var(--growp-h) 14% calc(var(--growp-ink-l) + 24%));
+  --grow-color-surface-1:     hsl(var(--growp-h) 24% var(--growp-surface1-l));
+  --grow-color-surface-2:     hsl(var(--growp-h) 20% var(--growp-surface2-l));
+  --grow-color-line:          hsl(var(--growp-h) 18% var(--growp-line-l));
+}

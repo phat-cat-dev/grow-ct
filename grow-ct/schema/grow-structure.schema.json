@@ -1,0 +1,61 @@
+{
+  "_comment": "Field shapes the grow-base structural objects read, grouped under the theme target attribute _grow. The _frontmatter shape is UNIVERSAL — it attaches at page, article, block and component level (the same object everywhere). Shown in modern Adapt .schema style; merge each block into the matching model schema (or add equivalents to properties.schema for the legacy authoring tool). Runtime render needs only the attributes present in the JSON.",
+
+  "$frontmatter": {
+    "_comment": "Reusable. _isEnabled turns the metadata layer on; _display decides whether it also renders as visible HTML (false = metadata-only, stamped as data-fm-* on the element). _fields is the extensible metadata list; each field has its own _display.",
+    "type": "object",
+    "properties": {
+      "_isEnabled": { "type": "boolean", "title": "Frontmatter enabled", "default": false },
+      "_display":   { "type": "boolean", "title": "Render to HTML (else metadata-only)", "default": true },
+      "_role":      { "type": "string", "title": "Role (BEM modifier; defaults per level)", "enum": ["", "lesson", "phase", "section", "learning-step", "item"], "default": "" },
+      "_type":      { "type": "string", "title": "Data-type (semantic function, e.g. learning-outcomes)", "default": "" },
+      "eyebrow":    { "type": "string", "title": "Eyebrow", "default": "" },
+      "body":       { "type": "string", "title": "Body (HTML)", "default": "" },
+      "_outcomes":     { "type": "array", "title": "Outcomes", "items": { "type": "string" }, "default": [] },
+      "outcomesTitle": { "type": "string", "title": "Outcomes heading", "default": "" },
+      "_fields": {
+        "type": "array",
+        "title": "Metadata fields (extensible)",
+        "items": {
+          "type": "object",
+          "properties": {
+            "_key":     { "type": "string", "title": "Key (→ data-fm-<key>)" },
+            "label":    { "type": "string", "title": "Label", "default": "" },
+            "value":    { "type": "string", "title": "Value", "default": "" },
+            "_display": { "type": "boolean", "title": "Show this field", "default": true }
+          }
+        },
+        "default": []
+      },
+      "_objectives":     { "type": "array", "title": "Objectives (page/lesson hero)", "items": { "type": "string" }, "default": [] },
+      "objectivesTitle": { "type": "string", "title": "Objectives heading", "default": "In this lesson" }
+    }
+  },
+
+  "page._grow":      { "type": "object", "title": "Grow", "properties": { "_frontmatter": { "$ref": "#/$frontmatter" } } },
+  "article._grow":   { "type": "object", "title": "Grow", "properties": { "_frontmatter": { "$ref": "#/$frontmatter" } } },
+  "component._grow": { "type": "object", "title": "Grow", "properties": { "_frontmatter": { "$ref": "#/$frontmatter" } } },
+
+  "block._grow": {
+    "type": "object",
+    "title": "Grow",
+    "properties": {
+      "_frontmatter": { "$ref": "#/$frontmatter" },
+      "_kind": { "type": "string", "title": "Block kind", "enum": ["", "summary", "callout"], "default": "" },
+      "_columns": {
+        "type": "array",
+        "title": "Columns",
+        "items": {
+          "type": "object",
+          "properties": {
+            "title":       { "type": "string", "title": "Column title", "default": "" },
+            "body":        { "type": "string", "title": "Column description (HTML)", "default": "" },
+            "frontmatter": { "type": "string", "title": "Column frontmatter (HTML)", "default": "" },
+            "_components":  { "type": "array", "title": "Component _ids in this column", "items": { "type": "string" }, "default": [] }
+          }
+        },
+        "default": []
+      }
+    }
+  }
+}

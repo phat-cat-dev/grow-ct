@@ -1,0 +1,44 @@
+// ============================================================================
+//  65-washes.less — Abbott WASHES & TEXTURES
+//  ----------------------------------------------------------------------------
+//  Very subtle transparent→colour gradient washes and fine textures to sit
+//  quietly behind content. Static (no motion). Token-driven (retint with hue),
+//  theme-aware. An intensity dial --i scales how strongly the wash/texture reads
+//  (set it per element, e.g. style="--i:1.4", or on a section).
+//
+//  USAGE — add to a block/article _classes alongside your content:
+//    <div class="ab-wash ab-wash--top">…</div>        (a colour wash)
+//    <div class="ab-wash ab-wash--crosshatch">…</div>  (a texture)
+//  The host is made position:relative; the wash paints in a ::before behind
+//  content. Combine a wash + a texture by stacking two layers if needed.
+//
+//  Extracted from gallery/washes.html.
+// ============================================================================
+
+:root {
+  --i: 1;  // wash/texture intensity
+  --noise: url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20width='140'%20height='140'%3E%3Cfilter%20id='n'%3E%3CfeTurbulence%20type='fractalNoise'%20baseFrequency='0.8'%20numOctaves='2'%20stitchTiles='stitch'/%3E%3CfeColorMatrix%20type='saturate'%20values='0'/%3E%3C/filter%3E%3Crect%20width='140'%20height='140'%20filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.ab-wash { position: relative; overflow: hidden; }
+.ab-wash::before { content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+.ab-wash > * { position: relative; z-index: 1; }
+
+// ---- WASHES: transparent → faint colour ----
+.ab-wash--top::before      { background: linear-gradient(to top, transparent 45%, color-mix(in srgb, var(--accent) calc(var(--i) * 16%), transparent)); }
+.ab-wash--bottom::before   { background: linear-gradient(to bottom, transparent 45%, color-mix(in srgb, var(--accent) calc(var(--i) * 16%), transparent)); }
+.ab-wash--corner::before   { background: radial-gradient(120% 120% at 100% 0%, color-mix(in srgb, var(--accent) calc(var(--i) * 18%), transparent), transparent 60%); }
+.ab-wash--centre::before   { background: radial-gradient(circle at 50% 42%, color-mix(in srgb, var(--accent) calc(var(--i) * 16%), transparent), transparent 65%); }
+.ab-wash--diagonal::before { background: linear-gradient(135deg, color-mix(in srgb, var(--accent) calc(var(--i) * 15%), transparent), transparent 70%); }
+.ab-wash--dual::before     { background: radial-gradient(90% 90% at 0% 0%, color-mix(in srgb, var(--accent) calc(var(--i) * 15%), transparent), transparent 55%), radial-gradient(90% 90% at 100% 100%, color-mix(in srgb, hsl(calc(var(--h) + 60) var(--s) 56%) calc(var(--i) * 15%), transparent), transparent 55%); }
+.ab-wash--vignette::before { background: radial-gradient(130% 130% at 50% 50%, transparent 52%, color-mix(in srgb, var(--accent) calc(var(--i) * 13%), transparent)); }
+.ab-wash--band::before     { background: linear-gradient(to bottom, transparent 28%, color-mix(in srgb, var(--accent) calc(var(--i) * 13%), transparent) 50%, transparent 72%); }
+
+// ---- TEXTURES: fine, faint ----
+.ab-wash--dots::before       { background-image: radial-gradient(color-mix(in srgb, var(--ink-soft) calc(var(--i) * 24%), transparent) 1px, transparent 1.3px); background-size: 14px 14px; }
+.ab-wash--hairlines::before  { background-image: repeating-linear-gradient(to bottom, transparent 0 13px, color-mix(in srgb, var(--ink-soft) calc(var(--i) * 16%), transparent) 13px 14px); }
+.ab-wash--crosshatch::before { background-image: repeating-linear-gradient(45deg, color-mix(in srgb, var(--accent) calc(var(--i) * 12%), transparent) 0 1px, transparent 1px 10px), repeating-linear-gradient(-45deg, color-mix(in srgb, var(--accent) calc(var(--i) * 12%), transparent) 0 1px, transparent 1px 10px); }
+.ab-wash--microgrid::before  { background-image: repeating-linear-gradient(to right, color-mix(in srgb, var(--ink-soft) calc(var(--i) * 14%), transparent) 0 1px, transparent 1px 12px), repeating-linear-gradient(to bottom, color-mix(in srgb, var(--ink-soft) calc(var(--i) * 14%), transparent) 0 1px, transparent 1px 12px); }
+.ab-wash--grain::before      { background-image: var(--noise); background-size: 150px 150px; opacity: calc(var(--i) * 0.5); mix-blend-mode: overlay; }
+.ab-wash--paper::before      { background-image: var(--noise), repeating-linear-gradient(to bottom, transparent 0 5px, color-mix(in srgb, var(--ink-soft) 40%, transparent) 5px 6px); background-size: 150px 150px, auto; opacity: calc(var(--i) * 0.4); mix-blend-mode: overlay; }
+.ab-wash--washgrain::before  { background: linear-gradient(135deg, color-mix(in srgb, var(--accent) calc(var(--i) * 16%), transparent), transparent 72%), var(--noise); background-size: auto, 150px 150px; }

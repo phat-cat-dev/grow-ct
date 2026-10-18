@@ -1,0 +1,69 @@
+// ============================================================================
+//  70-heroes.less — Grow HERO / SECTION HEADERS
+//  ----------------------------------------------------------------------------
+//  A ready-made hero shell that layers an ambient animated background + a subtle
+//  wash + legible content. The background effects come from 60-backgrounds
+//  (.bg / .bg--*) and the washes from 65-washes (.wash--*) — this layer
+//  owns the SHELL, the legibility scrims and the content type.
+//
+//  USAGE:
+//    <header class="hero hero--center">
+//      <div class="bg bg--aurora"></div>   <!-- animated layer, z0 -->
+//      <div class="hero-wash hero-wash--vignette"></div> <!-- z1 -->
+//      <div class="hero__inner">               <!-- content, z3 -->
+//        <span class="kicker">Module 2</span>
+//        <h1>Designing for depth</h1>
+//        <p class="hero-sub">A short standfirst.</p>
+//        <div class="cta-row"><a class="cta" href="#">Start</a></div>
+//      </div>
+//    </header>
+//
+//  Extracted from gallery/heroes.html.
+// ============================================================================
+
+.hero {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  padding: clamp(24px, 4.5vw, 60px);
+  box-shadow: 0 20px 50px -30px var(--shadow);
+}
+.hero--center { justify-content: center; text-align: center; }
+
+// layers: background (z0) sits under washes/scrims (z1) under content (z3)
+.hero .bg { z-index: 0; }
+.hero-wash, .hero-scrim { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
+.hero__inner { position: relative; z-index: 3; max-width: 48ch; }
+.hero--center .hero__inner { max-width: 40ch; margin-inline: auto; }
+
+// content type
+.kicker { display: inline-block; font-family: var(--font-mono); font-size: var(--fs-2xs); letter-spacing: .14em; text-transform: uppercase; color: var(--accent-ink); margin-bottom: .6rem; }
+.hero h1 { font-size: calc(var(--fs-4xl) * var(--type-scale)); line-height: 1.05; letter-spacing: -.02em; margin: 0 0 .5rem; text-wrap: balance; font-weight: 800; }
+.hero-sub { margin: 0; color: var(--ink-soft); font-size: var(--fs-md); max-width: 46ch; }
+.hero--center .hero-sub { margin-inline: auto; }
+.hero-meta { margin-top: .9rem; font-family: var(--font-mono); font-size: var(--fs-xs); color: var(--ink-soft); }
+
+.cta-row { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 1.3rem; }
+.hero--center .cta-row { justify-content: center; }
+.cta { display: inline-flex; align-items: center; gap: .4em; font: inherit; font-weight: 600; padding: .6rem 1.2rem; border-radius: 10px; border: 1px solid var(--accent); background: var(--accent); color: #fff; cursor: pointer; text-decoration: none; }
+.cta--ghost { background: transparent; color: var(--accent-ink); }
+
+// wash overlays (transparent → colour) specific to heroes
+.hero-wash--top       { background: linear-gradient(to top, transparent 45%, color-mix(in srgb, var(--accent) 14%, transparent)); }
+.hero-wash--bottom    { background: linear-gradient(to bottom, transparent 40%, color-mix(in srgb, var(--surface-1) 85%, transparent)); }
+.hero-wash--vignette  { background: radial-gradient(130% 130% at 50% 50%, transparent 50%, color-mix(in srgb, var(--accent) 14%, transparent)); }
+.hero-wash--corner    { background: radial-gradient(120% 120% at 0% 100%, color-mix(in srgb, var(--accent) 16%, transparent), transparent 60%); }
+.hero-wash--centre-dark { background: radial-gradient(circle at 50% 40%, color-mix(in srgb, var(--accent) 36%, transparent), transparent 60%); }
+
+// legibility scrims — surface fading in from the content side
+.hero-scrim--left { background: linear-gradient(to right, color-mix(in srgb, var(--surface-1) 86%, transparent), transparent 70%); }
+.hero-scrim--soft { background: linear-gradient(to top, color-mix(in srgb, var(--surface-1) 75%, transparent), transparent 65%); }
+
+// a dark hero variant (for light "night" backgrounds behind white text)
+.hero--night .hero-sub { color: color-mix(in srgb, #fff 78%, transparent); }
+.hero--night .kicker   { color: color-mix(in srgb, #fff 80%, transparent); }
+.hero--night h1           { color: #fff; }

@@ -1,0 +1,148 @@
+/* ============================================================================
+   16-paper.less — Abbott LEARNING SURFACES
+   ----------------------------------------------------------------------------
+   A kit of school/learning backgrounds in the lined-paper spirit. All pure
+   CSS (no images), opt-in via class, used SPARINGLY to signal what a surface
+   is for. Two groups:
+     • NEUTRAL textures — built from theme tokens, retint + flip for dark mode.
+     • MATERIAL surfaces — deliberately coloured (chalkboard, legal pad…);
+       colour is intrinsic, so they set their own ink and get small dark tweaks.
+   Pairs with 15-surfaces (.ab-lined / .ab-dotgrid / .ab-graph).
+   ============================================================================ */
+
+/* ---------- NEUTRAL TEXTURES (theme-token driven) -------------------------- */
+
+/* Handwriting rules — baseline + dotted midline, like a primary practice book */
+.ab-handwriting {
+  --hw-gap: 2.6rem;
+  background-color: var(--surface-1);
+  background-image:
+    repeating-linear-gradient(to bottom, transparent 0, transparent calc(var(--hw-gap) - 1px),
+      var(--rule-color) calc(var(--hw-gap) - 1px), var(--rule-color) var(--hw-gap)),
+    radial-gradient(circle, var(--rule-color) 0.6px, transparent 0.7px);
+  background-size: auto, 9px var(--hw-gap);
+  background-position: 0 0.5rem, 0 0.5rem;
+}
+
+/* Quad / squared maths pad — fine grid with a bold every-5th line */
+.ab-quad {
+  --q: 1.25rem;
+  background-color: var(--surface-1);
+  background-image:
+    repeating-linear-gradient(to right,  var(--rule-color) 0 1px, transparent 1px var(--q)),
+    repeating-linear-gradient(to bottom, var(--rule-color) 0 1px, transparent 1px var(--q)),
+    repeating-linear-gradient(to right,  color-mix(in srgb, var(--accent) 30%, var(--line)) 0 1px, transparent 1px calc(var(--q) * 5)),
+    repeating-linear-gradient(to bottom, color-mix(in srgb, var(--accent) 30%, var(--line)) 0 1px, transparent 1px calc(var(--q) * 5));
+}
+
+/* Spiral / punch-hole binding — a decorative left edge, pair with .ab-lined */
+.ab-spiral { position: relative; padding-left: 2.25rem; }
+.ab-spiral::before {
+  content: ""; position: absolute; left: 0.6rem; top: 0.4rem; bottom: 0.4rem; width: 12px;
+  background-image: radial-gradient(circle, color-mix(in srgb, var(--ink-soft) 30%, transparent) 42%, transparent 46%);
+  background-size: 14px 22px; background-repeat: repeat-y;
+}
+
+/* Highlighter sweep — marker emphasis behind running text (inline) */
+/* one --hl var, set per modifier from the SAME token set as everything else,
+   so every highlighter aligns to the theme. box-decoration-break keeps the
+   marker clean when it wraps across lines. */
+.ab-highlight {
+  --hl: var(--accent);
+  background: linear-gradient(to bottom, transparent 55%, color-mix(in srgb, var(--hl) 38%, transparent) 55%);
+  padding: 0 0.1em; border-radius: 2px;
+  -webkit-box-decoration-break: clone; box-decoration-break: clone;
+}
+.ab-highlight.brand     { --hl: var(--accent); }
+.ab-highlight.secondary { --hl: hsl(var(--h) var(--gs) 55%); }   /* blue-grey */
+.ab-highlight.positive  { --hl: var(--c-positive); }
+.ab-highlight.negative  { --hl: var(--c-negative); }
+.ab-highlight.warning   { --hl: var(--c-neutral); }             /* amber     */
+.ab-highlight.comment   { --hl: var(--c-comment); }             /* violet    */
+.ab-highlight.info      { --hl: var(--c-info); }
+
+/* ---------- MATERIAL SURFACES (intrinsic colour, set their own ink) -------- */
+
+/* Chalkboard — a slate that still tracks the hue; chalk-white ink */
+.ab-chalkboard {
+  --chalk: #eef2ee;
+  background-color: hsl(var(--h) 14% 18%);
+  background-image:
+    radial-gradient(ellipse at 22% 28%, rgba(255,255,255,0.05), transparent 45%),
+    radial-gradient(ellipse at 78% 72%, rgba(255,255,255,0.04), transparent 45%);
+  color: var(--chalk);
+  border: 1px solid hsl(var(--h) 14% 10%);
+  border-radius: var(--dia-radius, 10px);
+  padding: var(--space-md);
+}
+.ab-chalkboard :is(h1,h2,h3,h4) { color: #fff; }
+.ab-chalkboard a, .ab-chalkboard .ab-chalk-accent { color: hsl(var(--h) var(--s) 72%); }
+
+/* Whiteboard — clean light material (stays light in both themes), marker accent */
+.ab-whiteboard {
+  background-color: #fcfdff;
+  background-image: radial-gradient(ellipse at 70% 20%, rgba(0,0,0,0.015), transparent 50%);
+  color: #1b2230;
+  border: 1px solid #d7dce4;
+  border-radius: var(--dia-radius, 10px);
+  box-shadow: inset 0 1px 0 #fff, 0 1px 2px rgba(0,0,0,0.06);
+  padding: var(--space-md);
+}
+
+/* Legal pad — yellow leaf, blue rules, red margin */
+.ab-legalpad {
+  background-color: #fbf6c9;
+  background-image:
+    linear-gradient(to right, transparent 2.5rem, rgba(200,60,60,0.5) 2.5rem, rgba(200,60,60,0.5) calc(2.5rem + 1px), transparent calc(2.5rem + 1px)),
+    repeating-linear-gradient(to bottom, transparent 0, transparent calc(1.9rem - 1px), rgba(70,120,190,0.4) calc(1.9rem - 1px), rgba(70,120,190,0.4) 1.9rem);
+  background-position: 0 0.6rem;
+  color: #2a2a1f;
+  border: 1px solid #e7df9e; border-radius: 4px;
+  padding: 0.6rem 0.9rem 0.9rem 3rem;
+}
+
+/* Index card — white ruled card with a red header rule */
+.ab-indexcard {
+  background-color: #fffef9;
+  background-image:
+    linear-gradient(to bottom, transparent 2.4rem, rgba(200,60,60,0.45) 2.4rem, rgba(200,60,60,0.45) calc(2.4rem + 1px), transparent calc(2.4rem + 1px)),
+    repeating-linear-gradient(to bottom, transparent 0, transparent calc(1.6rem - 1px), rgba(70,120,190,0.28) calc(1.6rem - 1px), rgba(70,120,190,0.28) 1.6rem);
+  background-position: 0 0.4rem;
+  color: #26272b;
+  border: 1px solid #e4e2d6; border-radius: 6px;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+  padding: 0.5rem 0.9rem 0.9rem;
+}
+
+/* Corkboard — warm speckled cork, for "pinned" cards */
+.ab-corkboard {
+  background-color: #c8a46a;
+  background-image:
+    radial-gradient(rgba(120,80,40,0.28) 15%, transparent 16%),
+    radial-gradient(rgba(90,60,28,0.22) 15%, transparent 16%),
+    radial-gradient(rgba(150,110,60,0.25) 12%, transparent 13%);
+  background-size: 7px 7px, 11px 11px, 5px 5px;
+  background-position: 0 0, 4px 5px, 2px 3px;
+  color: #3a2c17;
+  border-radius: var(--dia-radius, 10px);
+  padding: var(--space-md);
+}
+
+/* Sticky note — small tinted leaf with a soft peel shadow (component-ish) */
+.ab-sticky {
+  --sticky: #fff3a8;
+  background: var(--sticky);
+  color: #3a361f;
+  padding: var(--space-sm);
+  box-shadow: 0 6px 14px -6px rgba(0,0,0,0.3);
+  border-radius: 2px;
+}
+.ab-sticky.pink { --sticky: #ffc7d9; color: #3f2430; }
+.ab-sticky.blue { --sticky: #bfe0ff; color: #1f3346; }
+.ab-sticky.brand { --sticky: color-mix(in srgb, var(--accent) 22%, #fff); color: var(--ink); }
+
+/* small dark-mode courtesy: dim the brightest paper materials to cut glare */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) :is(.ab-whiteboard, .ab-indexcard) { filter: brightness(0.9); }
+}
+:root[data-theme="dark"] :is(.ab-whiteboard, .ab-indexcard) { filter: brightness(0.9); }

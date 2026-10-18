@@ -1,0 +1,19 @@
+// ============================================================================
+//  grow-base-space  —  spacing token grouping (the interface)
+//  ----------------------------------------------------------------------------
+//  Fully fluid clamp scale with the density dial (--growp-space-scale) baked
+//  into each token via calc(). Semantic roles name the job, not the size.
+// ============================================================================
+:root {
+  --grow-space-xs: calc(clamp(0.75rem, 0.65rem + 0.40vw, 1.05rem) * var(--growp-space-scale));
+  --grow-space-sm: calc(clamp(1.00rem, 0.85rem + 0.60vw, 1.50rem) * var(--growp-space-scale));
+  --grow-space-md: calc(clamp(1.50rem, 1.20rem + 1.20vw, 2.50rem) * var(--growp-space-scale));
+  --grow-space-lg: calc(clamp(2.25rem, 1.70rem + 2.20vw, 4.00rem) * var(--growp-space-scale));
+  --grow-space-xl: calc(clamp(3.00rem, 2.10rem + 3.60vw, 6.00rem) * var(--growp-space-scale));
+
+  // semantic roles the painting reads
+  --grow-pad-article: var(--grow-space-xl);
+  --grow-pad-block:   var(--grow-space-lg);
+  --grow-gap-grid:    var(--grow-space-md);
+  --grow-layout-max:  75rem;
+}

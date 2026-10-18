@@ -1,0 +1,176 @@
+<title>Abbott Bullets & Markers</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<style>
+/* Lots of small, simple bullet / marker animations on the Abbott theme — each a
+   tiny SVG that draws (stroke) or pops (fill) in ink. Use one as a list bullet
+   that animates as the point appears. One --flow-rate dial; theme-aware; quiet
+   under reduced motion. */
+:root{
+  --h:202;--s:72%;--gs:12%;
+  --page-bg:hsl(var(--h) 30% 96%);--surface-1:hsl(var(--h) 24% 98%);--surface-2:hsl(var(--h) 20% 93%);
+  --ink:hsl(var(--h) 25% 16%);--ink-soft:hsl(var(--h) 14% 42%);--line:hsl(var(--h) 18% 86%);
+  --accent:hsl(var(--h) var(--s) 44%);--shadow:hsl(var(--h) 40% 20% / .16);--c-positive:hsl(150 55% 40%);--c-negative:hsl(5 62% 52%);
+  --flow-rate:1;
+  --font-ui:"Inter",ui-sans-serif,system-ui,sans-serif;--font-mono:ui-monospace,Menlo,Consolas,monospace;
+  --fs-3xs:.72rem;--fs-xs:.88rem;--fs-sm:.95rem;--radius:14px;--sp:clamp(1rem,.85rem + .6vw,1.5rem);color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--page-bg:hsl(var(--h) 32% 8%);--surface-1:hsl(var(--h) 26% 13%);--surface-2:hsl(var(--h) 24% 17%);--ink:hsl(var(--h) 20% 92%);--ink-soft:hsl(var(--h) 14% 64%);--line:hsl(var(--h) 22% 24%);--accent:hsl(var(--h) var(--s) 64%);--shadow:hsl(var(--h) 60% 2% / .5);color-scheme:dark}}
+:root[data-theme="dark"]{--page-bg:hsl(var(--h) 32% 8%);--surface-1:hsl(var(--h) 26% 13%);--surface-2:hsl(var(--h) 24% 17%);--ink:hsl(var(--h) 20% 92%);--ink-soft:hsl(var(--h) 14% 64%);--line:hsl(var(--h) 22% 24%);--accent:hsl(var(--h) var(--s) 64%);--shadow:hsl(var(--h) 60% 2% / .5);color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page-bg);color:var(--ink);font-family:var(--font-ui);line-height:1.6}
+h3{font-size:1.1rem;margin:0 0 .2rem}
+.wrap{max-width:66rem;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:var(--sp)}
+.bar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;background:color-mix(in srgb,var(--surface-1) 92%,transparent);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:var(--sp);position:sticky;top:env(safe-area-inset-top,0px);z-index:9}
+.bar .grow{flex:1 1 auto}
+.btn{font:inherit;font-weight:600;font-size:var(--fs-xs);padding:7px 13px;border-radius:999px;border:1px solid var(--accent);background:var(--accent);color:#fff;cursor:pointer}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}.seg button{font:inherit;font-size:var(--fs-xs);font-weight:600;padding:6px 11px;border:0;background:var(--surface-2);color:var(--ink-soft);cursor:pointer}.seg button[aria-pressed="true"]{background:var(--accent);color:#fff}
+.spd .v{min-width:3.4em;text-align:center;font-family:var(--font-mono);font-size:var(--fs-xs);font-weight:600;color:var(--ink);background:var(--surface-2);display:inline-flex;align-items:center;justify-content:center}.spd button{min-width:2em;font-size:1rem}
+.pat{background:var(--surface-1);border:1px solid var(--line);border-radius:var(--radius);padding:var(--sp);box-shadow:0 10px 30px -18px var(--shadow);margin-bottom:var(--sp)}
+.pat .tag{font-family:var(--font-mono);font-size:var(--fs-3xs);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
+.pat .use{font-size:var(--fs-xs);color:var(--ink-soft);margin:.2rem 0 .9rem}
+.mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(86px,1fr));gap:14px}
+.cell{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center}
+.cap{font-family:var(--font-mono);font-size:var(--fs-3xs);color:var(--ink-soft)}
+.m{width:40px;height:40px;display:block;color:var(--accent)}
+.m.ok{color:var(--c-positive)}.m.no{color:var(--c-negative)}
+.ink{fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:0;filter:url(#ink)}
+.fill{fill:currentColor;filter:url(#ink)}
+.playing .ink{animation:draw calc(.45s / var(--flow-rate)) ease var(--d,0s) both}
+@keyframes draw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+.pop{transform-box:fill-box;transform-origin:center}
+.playing .pop{animation:pop calc(.4s / var(--flow-rate)) cubic-bezier(.2,1.5,.5,1) var(--d,0s) both}
+@keyframes pop{0%{transform:scale(0)}70%{transform:scale(1.18)}100%{transform:scale(1)}}
+.num{fill:#fff;font-family:var(--font-ui);font-weight:700;font-size:16px;text-anchor:middle;dominant-baseline:central;transform-box:fill-box;transform-origin:center}
+.knob{transform-box:fill-box}
+.playing .knob{animation:knob calc(.5s / var(--flow-rate)) cubic-bezier(.3,1.4,.5,1) var(--d,.15s) both}
+@keyframes knob{from{transform:translateX(-16px)}to{transform:translateX(0)}}
+/* list demo */
+.dlist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:.55rem;font-size:var(--fs-sm)}
+.dlist li{display:flex;align-items:center;gap:.7rem}
+.dlist .m{width:26px;height:26px;flex:none}
+@media (prefers-reduced-motion:reduce){.playing .ink,.playing .pop{animation:none}}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="ink" x="-25%" y="-25%" width="150%" height="150%"><feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="3" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="1.4"/></filter></svg>
+
+<div class="wrap">
+  <div class="bar"><strong>Abbott Bullets &amp; Markers</strong><span class="grow"></span>
+    <div class="seg spd" role="group" aria-label="Speed"><button data-spd="-1" aria-label="Slower">−</button><span class="v" id="spdv">100%</span><button data-spd="1" aria-label="Faster">+</button></div>
+    <button class="btn" id="replay">▶ Replay</button>
+    <div class="seg" id="theme"><button data-set="light" aria-pressed="false">Light</button><button data-set="dark" aria-pressed="false">Dark</button><button data-set="system" aria-pressed="true">System</button></div>
+  </div>
+
+  <!-- LIST DEMO -->
+  <div class="pat"><div class="tag">In context</div><h3>Bullets draw as points appear</h3><p class="use">Each bullet animates in as its line is revealed — staggered down the list.</p>
+    <ul class="dlist">
+      <li><svg class="m" viewBox="0 0 40 40"><circle class="fill pop" cx="20" cy="20" r="7" style="--d:0s"/></svg> Identify the core idea</li>
+      <li><svg class="m" viewBox="0 0 40 40"><path class="ink" pathLength="1" style="--d:.2s" d="M12 20 L28 20 M28 20 L22 14 M28 20 L22 26"/></svg> Apply it in practice</li>
+      <li><svg class="m ok" viewBox="0 0 40 40"><path class="ink" pathLength="1" style="--d:.4s;stroke-width:4" d="M11 21 L18 29 L30 11"/></svg> Check it worked</li>
+      <li><svg class="m" viewBox="0 0 40 40"><path class="ink" pathLength="1" style="--d:.6s" d="M20 8 L24 17 L34 18 L26 25 L29 35 L20 29 L11 35 L14 25 L6 18 L16 17 Z"/></svg> Reflect on next steps</li>
+    </ul>
+  </div>
+
+  <!-- DOTS & DISCS -->
+  <div class="pat"><div class="tag">Dots &amp; discs</div><h3>Round bullets</h3>
+    <div class="mgrid">
+      <div class="cell"><svg class="m" viewBox="0 0 40 40"><circle class="fill pop" cx="20" cy="20" r="7"/></svg><span class="cap">dot</span></div>
+      <div class="cell"><svg class="m" viewBox="0 0 40 40"><circle class="fill pop" cx="20" cy="20" r="11"/></svg><span class="cap">disc</span></div>
+      <div class="cell"><svg class="m" viewBox="0 0 40 40"><circle class="ink" pathLength="1" cx="20" cy="20" r="11" style="stroke-width:3"/></svg><span class="cap">ring</span></div>
+      <div class="cell"><svg class="m" viewBox="0 0 40 40"><circle class="ink" pathLength="1" cx="20" cy="20" r="12" style="stroke-width:3"/><circle class="fill pop" cx="20" cy="20" r="5" style="--d:.25s"/></svg><span class="cap">ring + dot</span></div>
+      <div class="cell"><svg class="m" viewBox="0 0 40 40"><circle class="ink" pathLength="1" cx="20" cy="20" r="12" style="stroke-width:3"/><path class="ink ok" pathLength="1" style="--d:.25s;stroke-width:3.5" d="M14 20 L18 25 L27 14"/></svg><span class="cap">check ring</span></div>
+    </div>
+  </div>
+
+  <!-- ANGULAR -->
+  <div class="pat"><div class="tag">Angular</div><h3>Squares, diamonds, triangles</h3>
+    <div class="mgrid">
+      <div class="cell"><svg class="m" viewBox="0 0 40 40"><rect class="ink" pathLength="1" x="9" y="9" width="22" height="22" rx="3" style="stroke-width:3"/></svg><span class="cap">square</span></div>
+      <div class="cell"><svg class="m" viewBox="0 0 40 40"><rect class="fill pop" x="10" y="10" width="20" height="20" rx="3"/></svg><span class="cap">square fill</span></div>
+      <div class="cell"><svg class="m" viewBox="0 0 40 40"><path class="ink" pathLength="1" style="stroke-width:3" d="M20 7 L33 20 L20 33 L7 20 Z"/></svg><span class="cap">diamond</span></div>
+      <div class="cell"><svg class="m" viewBox="0 0 40 40"><path class="fill pop" d="M20 8 L32 20 L20 32 L8 20 Z"/></svg><span class="cap">diamond fill</span></div>
+      <div class="cell"><svg class="m" viewBox="0 0 40 40"><path class="fill pop" d="M13 10 L31 20 L13 30 Z"/></svg><span class="cap">play ▸</span></div>
+      <div class="cell"><svg class="m" viewBox="0 0 40 40"><path class="ink" pathLength="1" style="stroke-width:3" d="M20 9 L31 29 L9 29 Z"/></svg><span class="cap">triangle</span></div>
+      <div class="cell"><svg class="m" viewBox="0 0 40 40"><path class="ink" pathLength="1" style="stroke-width:3" d="M8 13 L20 9 L32 13 L30 27 L20 32 L10 27 Z"/></svg><span class="cap">hexagon</span></div>
+      <div class="cell"><svg class="m" viewBox="0 0 40 40"><path class="ink" pathLength="1" style="stroke-width:3" d="M20 7 L24 16 L34 17 L26 24 L29 34 L20 28 L11 34 L14 24 L6 17 L16 16 Z"/></svg><span class="cap">star</span></div>
+    </div>
+  </div>
+
+  <!-- ARROWS & CHEVRONS -->
+  <div class="pat"><div class="tag">Arrows &amp; chevrons</div><h3>Pointers</h3>
+    <div class="mgrid">
+      <div class="cell"><svg class="m" viewBox="0 0 40 40"><path class="ink" pathLength="1" d="M9 20 L29 20 M29 20 L22 13 M29 20 L22 27"/></svg><span class="cap">arrow</span></div>
+      <div class="cell"><svg class="m" viewBox="0 0 40 40"><path class="ink" pathLength="1" d="M9 25 C 18 12,28 14,31 23 M31 23 L25 21 M31 23 L29 15"/></svg><span class="cap">curved</span></div>
+      <div class="cell"><svg class="m" viewBox="0 0 40 40"><path class="ink" pathLength="1" d="M16 11 L26 20 L16 29"/></svg><span class="cap">chevron ›</span></div>
+      <div class="cell"><svg class="m" viewBox="0 0 40 40"><path class="ink" pathLength="1" style="--d:0s" d="M11 11 L21 20 L11 29"/><path class="ink" pathLength="1" style="--d:.15s" d="M21 11 L31 20 L21 29"/></svg><span class="cap">double »</span></div>
+      <div class="cell"><svg class="m" viewBox="0 0 40 40"><path class="ink" pathLength="1" d="M11 24 L20 13 L29 24"/></svg><span class="cap">caret ^</span></div>
+      <div class="cell"><svg class="m" viewBox="0 0 40 40"><path class="ink" pathLength="1" d="M11 16 L20 26 L29 16"/></svg><span class="cap">chevron ⌄</span></div>
+      <div class="cell"><svg class="m" viewBox="0 0 40 40"><path class="ink" pathLength="1" d="M20 30 L20 10 M20 10 L13 17 M20 10 L27 17"/></svg><span class="cap">up</span></div>
+      <div class="cell"><svg class="m" viewBox="0 0 40 40"><path class="ink" pathLength="1" d="M10 16 L30 16 C 30 16,31 28,20 30 M20 30 L25 27 M20 30 L16 25"/></svg><span class="cap">hook</span></div>
+    </div>
+  </div>
+
+  <!-- TICKS, SIGNS -->
+  <div class="pat"><div class="tag">Ticks &amp; signs</div><h3>Marks</h3>
+    <div class="mgrid">
+      <div class="cell"><svg class="m ok" viewBox="0 0 40 40"><path class="ink" pathLength="1" style="stroke-width:4" d="M10 21 L17 29 L30 11"/></svg><span class="cap">tick</span></div>
+      <div class="cell"><svg class="m no" viewBox="0 0 40 40"><path class="ink" pathLength="1" style="--d:0s;stroke-width:3.5" d="M12 12 L28 28"/><path class="ink" pathLength="1" style="--d:.2s;stroke-width:3.5" d="M28 12 L12 28"/></svg><span class="cap">cross</span></div>
+      <div class="cell"><svg class="m" viewBox="0 0 40 40"><path class="ink" pathLength="1" style="--d:0s" d="M20 10 L20 30"/><path class="ink" pathLength="1" style="--d:.15s" d="M10 20 L30 20"/></svg><span class="cap">plus</span></div>
+      <div class="cell"><svg class="m" viewBox="0 0 40 40"><path class="ink" pathLength="1" d="M10 20 L30 20"/></svg><span class="cap">dash</span></div>
+      <div class="cell"><svg class="m" viewBox="0 0 40 40"><path class="ink" pathLength="1" style="--d:0s" d="M20 9 L20 31"/><path class="ink" pathLength="1" style="--d:.1s" d="M9 14 L31 26"/><path class="ink" pathLength="1" style="--d:.2s" d="M31 14 L9 26"/></svg><span class="cap">asterisk</span></div>
+      <div class="cell"><svg class="m" viewBox="0 0 40 40"><path class="ink" pathLength="1" d="M13 30 L13 10 L27 15 L13 19"/></svg><span class="cap">flag</span></div>
+      <div class="cell"><svg class="m" viewBox="0 0 40 40"><path class="ink" pathLength="1" d="M22 7 L12 22 L19 22 L17 33 L28 17 L21 17 Z"/></svg><span class="cap">bolt</span></div>
+      <div class="cell"><svg class="m" viewBox="0 0 40 40"><path class="fill pop" d="M20 31 C 6 22,8 11,16 12 C 19 12,20 15,20 15 C 20 15,21 12,24 12 C 32 11,34 22,20 31 Z"/></svg><span class="cap">heart</span></div>
+    </div>
+  </div>
+
+  <div class="pat"><div class="tag">Numbered</div><h3>Badges &amp; numbers</h3><p class="use">Numbered badges pop in — stagger them down an ordered list.</p>
+    <div class="mgrid">
+      <div class="cell"><svg class="m" viewBox="0 0 40 40"><circle class="fill pop" cx="20" cy="20" r="15" style="--d:0s"/><text class="num pop" x="20" y="20" style="--d:.08s">1</text></svg><span class="cap">badge 1</span></div>
+      <div class="cell"><svg class="m" viewBox="0 0 40 40"><circle class="fill pop" cx="20" cy="20" r="15" style="--d:.1s"/><text class="num pop" x="20" y="20" style="--d:.18s">2</text></svg><span class="cap">badge 2</span></div>
+      <div class="cell"><svg class="m" viewBox="0 0 40 40"><circle class="fill pop" cx="20" cy="20" r="15" style="--d:.2s"/><text class="num pop" x="20" y="20" style="--d:.28s">3</text></svg><span class="cap">badge 3</span></div>
+      <div class="cell"><svg class="m" viewBox="0 0 40 40"><circle class="fill pop" cx="20" cy="20" r="15" style="--d:.3s"/><text class="num pop" x="20" y="20" style="--d:.38s">4</text></svg><span class="cap">badge 4</span></div>
+      <div class="cell"><svg class="m" viewBox="0 0 40 40"><circle class="fill pop" cx="20" cy="20" r="15" style="--d:.4s"/><text class="num pop" x="20" y="20" style="--d:.48s">5</text></svg><span class="cap">badge 5</span></div>
+      <div class="cell"><svg class="m" viewBox="0 0 40 40"><circle class="ink" pathLength="1" cx="20" cy="20" r="15" style="stroke-width:3"/><text class="num pop" x="20" y="20" style="fill:var(--accent);--d:.3s">6</text></svg><span class="cap">ring 6</span></div>
+      <div class="cell"><svg class="m" viewBox="0 0 40 40"><circle class="fill pop" cx="20" cy="20" r="15"/><text class="num pop" x="20" y="20" style="--d:.08s">A</text></svg><span class="cap">letter A</span></div>
+    </div>
+  </div>
+
+  <div class="pat"><div class="tag">Numbered · full set</div><h3>1–20 and A–Z</h3><p class="use">The complete run of numbered and lettered badges, popping in in sequence.</p>
+    <div style="font-family:var(--font-mono);font-size:var(--fs-3xs);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin-bottom:8px">Numbers</div>
+    <div class="mgrid" id="nums"></div>
+    <div style="font-family:var(--font-mono);font-size:var(--fs-3xs);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);margin:16px 0 8px">Letters</div>
+    <div class="mgrid" id="alpha"></div>
+  </div>
+
+  <div class="pat"><div class="tag">Objects &amp; states</div><h3>Pins, bookmarks, toggles</h3><p class="use">Marker objects and switch states — drawn or popped in.</p>
+    <div class="mgrid">
+      <div class="cell"><svg class="m" viewBox="0 0 40 40"><path class="ink" pathLength="1" style="stroke-width:3" d="M20 6 C 12 6,8 13,12 22 L20 34 L28 22 C 32 13,28 6,20 6 Z"/><circle class="fill pop" cx="20" cy="17" r="4.5" style="--d:.3s;fill:var(--surface-2)"/></svg><span class="cap">pin</span></div>
+      <div class="cell"><svg class="m" viewBox="0 0 40 40"><path class="ink" pathLength="1" style="stroke-width:3" d="M13 7 L27 7 L27 33 L20 26 L13 33 Z"/></svg><span class="cap">bookmark</span></div>
+      <div class="cell"><svg class="m" viewBox="0 0 40 40"><path class="ink" pathLength="1" style="stroke-width:3" d="M9 9 L22 9 L33 20 L22 31 L9 31 Z"/><circle class="fill pop" cx="16" cy="16" r="2.6" style="--d:.25s;fill:var(--accent)"/></svg><span class="cap">tag</span></div>
+      <div class="cell"><svg class="m" viewBox="0 0 40 40"><circle class="ink" pathLength="1" cx="20" cy="20" r="12" style="stroke-width:3;color:var(--ink-soft)"/></svg><span class="cap">radio off</span></div>
+      <div class="cell"><svg class="m" viewBox="0 0 40 40"><circle class="ink" pathLength="1" cx="20" cy="20" r="12" style="stroke-width:3"/><circle class="fill pop" cx="20" cy="20" r="6" style="--d:.25s"/></svg><span class="cap">radio on</span></div>
+      <div class="cell"><svg class="m" viewBox="0 0 40 40"><rect class="ink" pathLength="1" x="9" y="9" width="22" height="22" rx="4" style="stroke-width:3;color:var(--ink-soft)"/></svg><span class="cap">box off</span></div>
+      <div class="cell"><svg class="m ok" viewBox="0 0 40 40"><rect class="ink" pathLength="1" x="9" y="9" width="22" height="22" rx="4" style="--d:0s;stroke-width:3"/><path class="ink" pathLength="1" style="--d:.25s;stroke-width:3.5" d="M14 20 L18 25 L27 14"/></svg><span class="cap">box on</span></div>
+      <div class="cell"><svg class="m" viewBox="0 0 48 40"><rect class="ink" pathLength="1" x="7" y="13" width="34" height="16" rx="8" style="stroke-width:3"/><circle class="fill knob" cx="31" cy="21" r="6" style="fill:var(--accent)"/></svg><span class="cap">toggle</span></div>
+      <div class="cell"><svg class="m" viewBox="0 0 40 40"><path class="fill pop" d="M13 9 L13 31 L19 25 L23 33 L26 31 L22 23 L30 23 Z"/></svg><span class="cap">cursor</span></div>
+      <div class="cell"><svg class="m" viewBox="0 0 40 40"><circle class="ink" pathLength="1" cx="20" cy="20" r="14" style="--d:0s;stroke-width:3"/><circle class="fill pop" cx="20" cy="20" r="14" style="--d:.3s"/></svg><span class="cap">fill in</span></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],root=document.documentElement;
+  function play(){root.classList.remove('playing');void root.offsetWidth;root.classList.add('playing');clearTimeout(play._t);play._t=setTimeout(()=>root.classList.remove('playing'),1800);}
+  $('#replay').addEventListener('click',play);
+  let rate=1;const spdv=$('#spdv');
+  $$('[data-spd]').forEach(b=>b.addEventListener('click',()=>{rate=Math.round(Math.min(2.5,Math.max(.4,rate+ +b.dataset.spd*0.1))*10)/10;root.style.setProperty('--flow-rate',rate);spdv.textContent=Math.round(rate*100)+'%';}));
+  $('#theme').addEventListener('click',e=>{const b=e.target.closest('[data-set]');if(!b)return;const m=b.dataset.set;m==='system'?root.removeAttribute('data-theme'):root.setAttribute('data-theme',m);$$('#theme button').forEach(x=>x.setAttribute('aria-pressed',x===b));});
+  function badge(l,i){var d=Math.min(i*0.05,1.2);var fs=((''+l).length>1)?13:16;return '<div class="cell"><svg class="m" viewBox="0 0 40 40"><circle class="fill pop" cx="20" cy="20" r="15" style="--d:'+d+'s"/><text class="num pop" x="20" y="20" style="font-size:'+fs+'px;--d:'+(d+0.06).toFixed(2)+'s">'+l+'</text></svg></div>';}
+  var nums=$('#nums'),alpha=$('#alpha'),bh='';
+  if(nums){bh='';for(var n=1;n<=20;n++)bh+=badge(n,n-1);nums.innerHTML=bh;}
+  if(alpha){bh='';for(var c=0;c<26;c++)bh+=badge(String.fromCharCode(65+c),c);alpha.innerHTML=bh;}
+  setTimeout(play,350);
+</script>

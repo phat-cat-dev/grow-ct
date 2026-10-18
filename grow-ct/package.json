@@ -1,0 +1,35 @@
+{
+  "name": "grow-ct",
+  "version": "1.0.0",
+  "framework": ">=5.31.3",
+  "description": "Grow Base — a full, standalone Adapt theme that replaces vanilla and colours the whole page (menu, nav, drawer, buttons, notify) from the GROW token system. Forked from adapt-contrib-vanilla (GPL-3.0); the shell painting is vanilla's, re-driven by the @grow-*/--grow-* engine.",
+  "main": "js/theme.js",
+  "keywords": [
+    "adapt-plugin",
+    "adapt-theme"
+  ],
+  "license": "GPL-3.0",
+  "homepage": "https://github.com/phat-cat-dev/grow-ct/tree/main/grow-ct",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/phat-cat-dev/grow-ct.git",
+    "directory": "grow-ct"
+  },
+  "bugs": {
+    "url": "https://github.com/phat-cat-dev/grow-ct/issues"
+  },
+  "files": [
+    "less",
+    "js",
+    "templates",
+    "schema",
+    "assets",
+    "fonts",
+    "properties.schema",
+    "example.json",
+    "examples",
+    "bower.json",
+    "README.md",
+    "LICENSE"
+  ]
+}

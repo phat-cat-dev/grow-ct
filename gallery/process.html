@@ -1,0 +1,156 @@
+<title>Abbott Process & Flow</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Caveat:wght@600&display=swap">
+<style>
+/* Process / workings / flow-diagram animations on the Abbott theme:
+   a real flowchart with a travelling token through a decision, fork/join,
+   loop+counter, a streaming pipeline, and a step-by-step "show your working".
+   One --flow-rate dial; theme-aware; quiet under reduced motion. */
+:root{
+  --h:202;--s:72%;--gs:12%;
+  --page-bg:hsl(var(--h) 30% 96%);--surface-1:hsl(var(--h) 24% 99%);--surface-2:hsl(var(--h) 20% 94%);
+  --ink:hsl(var(--h) 25% 16%);--ink-soft:hsl(var(--h) 14% 42%);--line:hsl(var(--h) 18% 86%);
+  --accent:hsl(var(--h) var(--s) 42%);--shadow:hsl(var(--h) 40% 20% / .16);--c-positive:hsl(150 55% 40%);--c-comment:hsl(270 45% 54%);
+  --flow-rate:1;
+  --font-ui:"Inter",ui-sans-serif,system-ui,sans-serif;--font-hand:"Caveat","Segoe Script",cursive;--font-mono:ui-monospace,Menlo,Consolas,monospace;
+  --fs-3xs:.72rem;--fs-xs:.88rem;--fs-sm:.95rem;--radius:14px;--sp:clamp(1rem,.85rem + .6vw,1.5rem);color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--page-bg:hsl(var(--h) 32% 8%);--surface-1:hsl(var(--h) 26% 12%);--surface-2:hsl(var(--h) 24% 16%);--ink:hsl(var(--h) 20% 92%);--ink-soft:hsl(var(--h) 14% 64%);--line:hsl(var(--h) 22% 22%);--accent:hsl(var(--h) var(--s) 64%);--shadow:hsl(var(--h) 60% 2% / .5);color-scheme:dark}}
+:root[data-theme="dark"]{--page-bg:hsl(var(--h) 32% 8%);--surface-1:hsl(var(--h) 26% 12%);--surface-2:hsl(var(--h) 24% 16%);--ink:hsl(var(--h) 20% 92%);--ink-soft:hsl(var(--h) 14% 64%);--line:hsl(var(--h) 22% 22%);--accent:hsl(var(--h) var(--s) 64%);--shadow:hsl(var(--h) 60% 2% / .5);color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page-bg);color:var(--ink);font-family:var(--font-ui);line-height:1.6}
+h3{font-size:1.15rem;margin:0 0 .2rem}
+.wrap{max-width:66rem;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:var(--sp)}
+.bar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;background:color-mix(in srgb,var(--surface-1) 92%,transparent);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:var(--sp);position:sticky;top:env(safe-area-inset-top,0px);z-index:9}
+.bar .grow{flex:1 1 auto}
+.btn{font:inherit;font-weight:600;font-size:var(--fs-xs);padding:7px 13px;border-radius:999px;border:1px solid var(--accent);background:var(--accent);color:#fff;cursor:pointer}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}.seg button{font:inherit;font-size:var(--fs-xs);font-weight:600;padding:6px 11px;border:0;background:var(--surface-2);color:var(--ink-soft);cursor:pointer}.seg button[aria-pressed="true"]{background:var(--accent);color:#fff}
+.spd .v{min-width:3.4em;text-align:center;font-family:var(--font-mono);font-size:var(--fs-xs);font-weight:600;color:var(--ink);background:var(--surface-2);display:inline-flex;align-items:center;justify-content:center}.spd button{min-width:2em;font-size:1rem}
+.grid{display:grid;gap:var(--sp);grid-template-columns:repeat(auto-fit,minmax(min(300px,100%),1fr))}
+.pat{background:var(--surface-1);border:1px solid var(--line);border-radius:var(--radius);padding:var(--sp);box-shadow:0 10px 30px -18px var(--shadow)}
+.pat .tag{font-family:var(--font-mono);font-size:var(--fs-3xs);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
+.pat .use{font-size:var(--fs-xs);color:var(--ink-soft);margin:.2rem 0 .9rem}
+.stage{background:var(--surface-2);border-radius:10px;padding:var(--sp);display:flex;justify-content:center}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+svg{overflow:visible}
+.ink{fill:none;stroke:currentColor;stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;color:var(--ink-soft)}
+.edge{fill:none;stroke:var(--accent);stroke-width:2.5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:0}
+.playing .edge{animation:draw calc(.5s / var(--flow-rate)) ease var(--d,0s) both}
+@keyframes draw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+.node{fill:var(--surface-1);stroke:var(--accent);stroke-width:2.5}
+.node.q{fill:color-mix(in srgb,var(--accent) 12%,var(--surface-1))}
+.nt{fill:var(--ink);font-family:var(--font-ui);font-weight:600;font-size:13px;text-anchor:middle;dominant-baseline:central}
+.et{fill:var(--ink-soft);font-family:var(--font-mono);font-size:11px;text-anchor:middle}
+.token{fill:var(--accent)}
+.playing .token{animation:travel calc(2.6s / var(--flow-rate)) cubic-bezier(.5,0,.5,1) forwards}
+@keyframes travel{from{offset-distance:0%}to{offset-distance:100%}}
+
+/* fork/join + loop + pipeline tokens */
+.ptoken{fill:var(--accent);animation:stream calc(3s / var(--flow-rate)) linear infinite}
+@keyframes stream{from{offset-distance:0%}to{offset-distance:100%}}
+.ltoken{fill:var(--accent)}
+.playing .ltoken{animation:travel calc(1.1s / var(--flow-rate)) linear 3 both}
+
+/* show working */
+.work{font-family:var(--font-mono);font-size:1.15rem;display:flex;flex-direction:column;gap:.7rem}
+.wline{display:flex;align-items:center;gap:1rem}
+.wline .eq{min-width:7em}
+.wline .ann{font-family:var(--font-hand);font-size:1.3rem;color:var(--accent)}
+.wline .tick{width:26px;height:26px;color:var(--c-positive)}
+.playing .wline{animation:rise calc(.5s / var(--flow-rate)) ease var(--d,0s) both}
+@keyframes rise{from{opacity:0;transform:translateX(-14px)}to{opacity:1;transform:none}}
+.sub{--c:var(--accent);background:linear-gradient(to bottom,transparent 55%,color-mix(in srgb,var(--c) 38%,transparent) 55%);padding:0 .12em;border-radius:3px}
+
+@media (prefers-reduced-motion:reduce){.playing .edge,.playing .token,.playing .ltoken,.playing .wline{animation:none}.ptoken{animation:none;offset-distance:40%}}
+</style>
+
+<div class="wrap">
+  <div class="bar"><strong>Abbott Process &amp; Flow</strong><span class="grow"></span>
+    <div class="seg spd" role="group" aria-label="Speed"><button data-spd="-1" aria-label="Slower">−</button><span class="v" id="spdv">100%</span><button data-spd="1" aria-label="Faster">+</button></div>
+    <button class="btn" id="replay">▶ Replay</button>
+    <div class="seg" id="theme"><button data-set="light" aria-pressed="false">Light</button><button data-set="dark" aria-pressed="false">Dark</button><button data-set="system" aria-pressed="true">System</button></div>
+  </div>
+
+  <div class="grid">
+
+    <!-- FLOWCHART -->
+    <div class="pat"><div class="tag">Flow diagram</div><h3>Flowchart with a travelling token</h3><p class="use">Start, process, decision — the dot flows through and takes the "yes" branch. The "no" path loops back.</p>
+      <div class="stage"><svg viewBox="0 0 260 300" width="240" role="img" aria-label="Flowchart">
+        <path class="edge" style="--d:.1s" d="M130 46 L130 72"/>
+        <path class="edge" style="--d:.3s" d="M130 116 L130 146"/>
+        <path class="edge" style="--d:.5s" d="M130 198 L130 224"/>
+        <path class="edge" style="--d:.6s" d="M166 172 L214 172 L214 94 L192 94 M192 94 L199 89 M192 94 L199 99"/>
+        <rect class="node" x="80" y="12" width="100" height="34" rx="17"/><text class="nt" x="130" y="29">Start</text>
+        <rect class="node" x="70" y="72" width="120" height="44" rx="6"/><text class="nt" x="130" y="94">Process</text>
+        <path class="node q" d="M130 146 L166 172 L130 198 L94 172 Z"/><text class="nt" x="130" y="172">OK?</text>
+        <rect class="node" x="80" y="224" width="100" height="34" rx="17"/><text class="nt" x="130" y="241">Done</text>
+        <text class="et" x="140" y="214">yes</text><text class="et" x="224" y="166">no</text>
+        <circle class="token" r="5" style="offset-path:path('M130 46 L130 72 L130 116 L130 146 L130 172 L130 198 L130 224 L130 241')"/>
+      </svg></div>
+    </div>
+
+    <!-- FORK / JOIN -->
+    <div class="pat"><div class="tag">Parallel</div><h3>Fork &amp; join</h3><p class="use">One path splits into two that run at the same time, then merge — two tokens travel together.</p>
+      <div class="stage"><svg viewBox="0 0 300 170" width="290" role="img" aria-label="Fork and join">
+        <path class="edge" style="--d:0s" d="M46 85 L96 85"/>
+        <path class="edge" style="--d:.2s" d="M96 85 C 120 85,122 44,150 44"/>
+        <path class="edge" style="--d:.2s" d="M96 85 C 120 85,122 126,150 126"/>
+        <path class="edge" style="--d:.5s" d="M204 44 C 230 44,228 85,252 85"/>
+        <path class="edge" style="--d:.5s" d="M204 126 C 230 126,228 85,252 85"/>
+        <circle class="node" cx="30" cy="85" r="18"/><text class="nt" x="30" y="85">in</text>
+        <rect class="node" x="150" y="26" width="54" height="36" rx="6"/><text class="nt" x="177" y="44">A</text>
+        <rect class="node" x="150" y="108" width="54" height="36" rx="6"/><text class="nt" x="177" y="126">B</text>
+        <circle class="node" cx="270" cy="85" r="18"/><text class="nt" x="270" y="85">out</text>
+        <circle class="ptoken" r="5" style="offset-path:path('M46 85 L96 85 C 120 85,122 44,150 44 L204 44 C 230 44,228 85,252 85')"/>
+        <circle class="ptoken" r="5" style="offset-path:path('M46 85 L96 85 C 120 85,122 126,150 126 L204 126 C 230 126,228 85,252 85')"/>
+      </svg></div>
+    </div>
+
+    <!-- LOOP -->
+    <div class="pat"><div class="tag">Iteration</div><h3>Loop with a counter</h3><p class="use">Repeat a step until a condition is met — the token circles and the count ticks up.</p>
+      <div class="stage" style="flex-direction:column;gap:10px"><svg viewBox="0 0 220 150" width="220" role="img" aria-label="Loop">
+        <path class="edge" style="--d:0s" d="M150 92 C 152 36,68 36,70 92 M70 92 L63 83 M70 92 L77 83"/>
+        <rect class="node" x="60" y="92" width="100" height="44" rx="6"/><text class="nt" x="110" y="114">repeat</text>
+        <text class="et" x="110" y="30">while not done</text>
+        <circle class="ltoken" r="5" style="offset-path:path('M150 92 C 152 36,68 36,70 92')"/>
+      </svg><div style="font-family:var(--font-mono);font-size:var(--fs-sm);color:var(--ink-soft)">iteration <b id="loopn" style="color:var(--accent)">1</b></div></div>
+    </div>
+
+    <!-- PIPELINE -->
+    <div class="pat"><div class="tag">Data flow</div><h3>Streaming pipeline</h3><p class="use">Items flow continuously through stages — dots stream along the pipe (independent of Replay).</p>
+      <div class="stage"><svg viewBox="0 0 320 80" width="310" role="img" aria-label="Pipeline">
+        <path class="edge" style="--d:0s" d="M44 40 L276 40"/>
+        <rect class="node" x="14" y="22" width="56" height="36" rx="6"/><text class="nt" x="42" y="40">load</text>
+        <rect class="node" x="132" y="22" width="56" height="36" rx="6"/><text class="nt" x="160" y="40">clean</text>
+        <rect class="node" x="250" y="22" width="56" height="36" rx="6"/><text class="nt" x="278" y="40">save</text>
+        <circle class="ptoken" r="4" style="offset-path:path('M70 40 L250 40');animation-delay:0s"/>
+        <circle class="ptoken" r="4" style="offset-path:path('M70 40 L250 40');animation-delay:-1s"/>
+        <circle class="ptoken" r="4" style="offset-path:path('M70 40 L250 40');animation-delay:-2s"/>
+      </svg></div>
+    </div>
+
+    <!-- SHOW WORKING -->
+    <div class="pat" style="grid-column:1/-1"><div class="tag">Show your working</div><h3>Step-by-step, with annotations</h3><p class="use">Each line arrives in turn with the move explained, then the answer is checked by substitution.</p>
+      <div class="stage" style="justify-content:flex-start"><div class="work">
+        <div class="wline" style="--d:0s"><span class="eq">2x + 6 = 14</span></div>
+        <div class="wline" style="--d:.3s"><span class="eq">2x = 8</span><span class="ann">− 6 both sides</span></div>
+        <div class="wline" style="--d:.6s"><span class="eq">x = 4</span><span class="ann">÷ 2 both sides</span></div>
+        <div class="wline" style="--d:.95s"><span class="eq">2(<span class="sub">4</span>) + 6 = 14</span><span class="ann">check: sub x = 4</span><svg class="tick" viewBox="0 0 48 48"><path class="edge" style="--d:1.2s;stroke:var(--c-positive)" d="M9 26 L21 38 L40 11"/></svg></div>
+      </div></div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],root=document.documentElement;
+  const loopn=$('#loopn'),lt=$('.ltoken');
+  if(lt){lt.addEventListener('animationiteration',()=>{loopn.textContent=Math.min(3,(+loopn.textContent||1)+1);});lt.addEventListener('animationstart',()=>loopn.textContent='1');}
+  function play(){root.classList.remove('playing');void root.offsetWidth;root.classList.add('playing');loopn.textContent='1';clearTimeout(play._t);play._t=setTimeout(()=>root.classList.remove('playing'),3200);}
+  $('#replay').addEventListener('click',play);
+  let rate=1;const spdv=$('#spdv');
+  $$('[data-spd]').forEach(b=>b.addEventListener('click',()=>{rate=Math.round(Math.min(2.5,Math.max(.4,rate+ +b.dataset.spd*0.1))*10)/10;root.style.setProperty('--flow-rate',rate);spdv.textContent=Math.round(rate*100)+'%';}));
+  $('#theme').addEventListener('click',e=>{const b=e.target.closest('[data-set]');if(!b)return;const m=b.dataset.set;m==='system'?root.removeAttribute('data-theme'):root.setAttribute('data-theme',m);$$('#theme button').forEach(x=>x.setAttribute('aria-pressed',x===b));});
+  setTimeout(play,400);
+</script>

@@ -1,0 +1,131 @@
+/* ============================================================================
+   35-diagrams.less — Abbott diagram & figure HOUSE STYLE
+   ----------------------------------------------------------------------------
+   One calm visual family for every illustration, scene, figure and inline-SVG
+   diagram in a course. Editorial and quiet — the register of the inspiration
+   wall: generous air, hairline structure, ONE accent for the single thing
+   that matters. All colour comes from the theme tokens, so diagrams retint
+   with the hue and flip for dark mode automatically.
+
+   THE SIX HOUSE RULES
+   1. Quiet by default — fills & strokes are greys/lines; accent is rationed.
+   2. One accent — colour the ONE key element (add .is-key); everything else neutral.
+   3. One stroke weight — --dia-stroke-w everywhere; round joins & caps.
+   4. One radius — --dia-radius on frames & nodes.
+   5. Labelled in mono-soft — captions/labels use the mono face, --ink-soft, small.
+   6. Theme-driven — never hardcode colour; use the --dia-* tokens below.
+   ============================================================================ */
+
+:root {
+  /* diagram tokens — derived from the foundation, so they theme automatically */
+  --dia-surface:      var(--surface-1);                                   /* frame background       */
+  --dia-fill:         var(--surface-2);                                   /* node / shape fill      */
+  --dia-fill-accent:  color-mix(in srgb, var(--accent) 10%, var(--surface-1)); /* key-element fill  */
+  --dia-stroke:       var(--line);                                        /* default stroke         */
+  --dia-stroke-strong:var(--ink-soft);                                    /* emphasis stroke        */
+  --dia-accent:       var(--accent);                                      /* the one accent         */
+  --dia-ink:          var(--ink);                                         /* primary label          */
+  --dia-ink-soft:     var(--ink-soft);                                    /* secondary label        */
+  --dia-stroke-w:     1.5px;
+  --dia-radius:       10px;
+  --dia-gap:          var(--space-sm);
+}
+
+/* ---- FIGURE FRAME — the quiet container (.ab-figure, incl. .lesson-scene) -- */
+.ab-figure,
+.lesson-scene {
+  margin: 0;
+  background: var(--dia-surface);
+  border: 1px solid var(--dia-stroke);
+  border-radius: var(--dia-radius);
+  padding: var(--dia-gap);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2xs);
+  min-width: 0;
+}
+.ab-figure > figcaption,
+.lesson-scene > figcaption {
+  font-family: var(--font-mono);
+  font-size: var(--fs-2xs);
+  color: var(--dia-ink-soft);
+  letter-spacing: var(--tracking-wide);
+}
+
+/* ---- SCENE ART — abstract placeholder: soft shapes + one faint glyph ------- */
+.scene-art,
+.ab-scene-art {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: calc(var(--dia-radius) - 3px);
+  background: var(--dia-fill);
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+}
+/* the three decorative spans = quiet geometry; only the first carries accent */
+.scene-art > span:not(.material-symbol),
+.ab-scene-art > span:not(.material-symbol) {
+  position: absolute;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--dia-ink-soft) 14%, transparent);
+}
+.scene-art > span:nth-child(1):not(.material-symbol) { width: 44%; aspect-ratio: 1; top: -12%; left: -8%;
+  background: color-mix(in srgb, var(--dia-accent) 16%, transparent); }   /* the single accent note */
+.scene-art > span:nth-child(2):not(.material-symbol) { width: 30%; aspect-ratio: 1; bottom: -10%; right: 8%; }
+.scene-art > span:nth-child(3):not(.material-symbol) { width: 20%; aspect-ratio: 1; bottom: 18%; left: 16%;
+  border-radius: 4px; transform: rotate(12deg); }
+/* the centred glyph — large, faint, never shouting */
+.scene-art > .material-symbol,
+.ab-scene-art > .material-symbol {
+  position: relative; font-size: clamp(2rem, 1.2rem + 4vw, 3.5rem);
+  color: var(--dia-ink-soft); opacity: .55;
+}
+
+/* ---- INLINE-SVG DIAGRAM CONVENTION ---------------------------------------- */
+/* Author SVGs with data-dia roles; these rules theme them. No colour in markup.
+   <svg class="ab-diagram"> … <rect data-dia="node"/> <path data-dia="link"/>
+   <rect data-dia="node" class="is-key"/> <text data-dia="label">…</text> </svg> */
+.ab-diagram { display: block; width: 100%; height: auto; }
+.ab-diagram [data-dia="node"],
+.ab-diagram [data-dia="frame"] {
+  fill: var(--dia-fill); stroke: var(--dia-stroke); stroke-width: var(--dia-stroke-w);
+}
+.ab-diagram [data-dia="link"],
+.ab-diagram [data-dia="arrow"] {
+  fill: none; stroke: var(--dia-stroke-strong); stroke-width: var(--dia-stroke-w);
+  stroke-linecap: round; stroke-linejoin: round;
+}
+.ab-diagram [data-dia="label"] { fill: var(--dia-ink-soft); font-family: var(--font-mono); font-size: 0.75rem; }
+.ab-diagram [data-dia="label"].is-title { fill: var(--dia-ink); font-family: var(--font-ui); font-weight: var(--fw-semibold); }
+/* the ONE accent — apply .is-key to the single element that carries meaning */
+.ab-diagram .is-key[data-dia="node"] { fill: var(--dia-fill-accent); stroke: var(--dia-accent); }
+.ab-diagram .is-key:is([data-dia="link"],[data-dia="arrow"]) { stroke: var(--dia-accent); }
+.ab-diagram .is-key[data-dia="label"] { fill: var(--dia-accent); }
+
+/* ---- SWATCH STUDY — a quiet row of theme steps (.ab-swatches) -------------- */
+.lesson-swatch-study,
+.ab-swatches {
+  display: grid; grid-auto-flow: column; grid-auto-columns: 1fr;
+  gap: 3px; border-radius: var(--dia-radius); overflow: hidden;
+  border: 1px solid var(--dia-stroke); min-height: 2.5rem;
+}
+.lesson-swatch-study > span,
+.ab-swatches > span { min-height: inherit; }
+.lesson-swatch-study > span:nth-child(1) { background: hsl(var(--h) var(--s) 42%); }  /* accent     */
+.lesson-swatch-study > span:nth-child(2) { background: hsl(var(--h) var(--gs) 62%); }  /* blue-grey  */
+.lesson-swatch-study > span:nth-child(3) { background: hsl(var(--h) var(--gs) 82%); }  /* light grey */
+.lesson-swatch-study > span:nth-child(4) { background: var(--surface-2); }             /* surface    */
+
+/* ---- EDITORIAL WALL + PULL-QUOTE (the inspiration-wall register) ----------- */
+.lesson-inspiration-wall {
+  display: grid; gap: var(--space-md);
+  grid-template-columns: repeat(auto-fit, minmax(min(240px, 100%), 1fr));
+  align-items: start; max-width: var(--measure-wide);
+}
+.lesson-inspiration-wall blockquote {
+  margin: 0; padding: 0; border: 0; grid-column: 1 / -1;
+  font-family: var(--font-heading); font-size: var(--fs-xl);
+  line-height: var(--lh-snug); color: var(--dia-ink); text-wrap: balance; max-width: var(--measure);
+}
+.lesson-inspiration-wall blockquote::before { content: "\201C"; color: var(--dia-accent); margin-right: .1em; }

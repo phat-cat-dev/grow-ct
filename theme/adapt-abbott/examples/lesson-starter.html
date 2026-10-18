@@ -1,0 +1,62 @@
+<!--
+  ============================================================================
+  LESSON STARTER — the canonical Abbott page skeleton
+  ============================================================================
+  Copy this as the starting point for a new lesson page. It is the plain Adapt
+  content tree (page → article → block → component) with Abbott classes on the
+  component inners. Everything styles itself from the theme tokens; swap the
+  copy, add blocks/components, layer surfaces (ab-lined, ab-quad…), marks
+  (ab-mark) and diagrams (ab-cycle, ab-timeline) as the lesson needs.
+
+  Layers (d):  d1 page · d2 article · d3 block · d4 component
+  Heading map: page H1 · article H2 · block H3 · component H4
+  ============================================================================
+-->
+<div class="page contentobject" data-layer="d1">
+  <div class="page__inner">
+
+    <!-- d1 · page header -->
+    <header class="page__header">
+      <span class="lesson-kicker">Topic / 01</span>
+      <h1>Lesson title</h1>
+      <p class="lesson-intro">One sentence that frames what the learner will be able to do by the end.</p>
+      <span class="lesson-hero-symbol material-symbol" aria-hidden="true">layers</span>
+    </header>
+
+    <!-- d2 · article -->
+    <article class="article" data-layer="d2">
+      <div class="article__inner">
+        <header class="article__header"><h2 class="article__title">Section heading</h2></header>
+
+        <!-- d3 · block -->
+        <div class="block" data-layer="d3">
+          <div class="block__inner">
+            <h3 class="block__title">Block heading</h3>
+
+            <!-- d4 · component(s) -->
+            <div class="component text" data-layer="d4">
+              <div class="component__inner text__inner ab card primary soft">
+                <div class="card-body">
+                  <h4 class="lesson-component-title"><span class="material-symbol" aria-hidden="true">auto_stories</span>Component title</h4>
+                  <p>Body copy for the component. Mark the <span class="ab-highlight">one key term</span> and no more.</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- d3 · block (completion / continue) -->
+        <div class="block" data-layer="d3">
+          <div class="block__inner">
+            <div class="component" data-layer="d4">
+              <a class="ab btn primary" href="#"><span class="material-symbol" aria-hidden="true">arrow_forward</span>Continue</a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </article>
+
+  </div>
+</div>

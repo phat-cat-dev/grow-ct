@@ -1,0 +1,17 @@
+{
+  "_comment": "Plugin manifest for the grow-core-base stack. The theme grow-ct is a LOCAL plugin (copied into src/theme/), so it is not listed as a remote dependency here — the contrib core/components/extensions/menu are.",
+  "dependencies": {
+    "adapt-contrib-core": "*",
+    "adapt-contrib-text": "*",
+    "adapt-contrib-graphic": "*",
+    "adapt-contrib-narrative": "*",
+    "adapt-contrib-mcq": "*",
+    "adapt-contrib-media": "*",
+    "adapt-contrib-accordion": "*",
+    "adapt-contrib-trickle": "*",
+    "adapt-contrib-boxMenu": "*",
+    "adapt-contrib-pageLevelProgress": "*",
+    "adapt-contrib-resources": "*",
+    "adapt-contrib-spoor": "*"
+  }
+}

@@ -1,0 +1,209 @@
+<title>Abbott Lesson Kit</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Material+Symbols+Outlined&display=swap">
+<style>
+/* Starter page structure + hand-drawn scribble assets + animated cycle &
+   timeline, all on the Abbott blue-grey theme. Press Replay to re-run the
+   draw-on animations; everything is readable at rest and honours reduced motion. */
+
+:root{
+  --h:202;--s:72%;--gs:12%;--type-scale:1;--space-scale:1;
+  --page-bg:hsl(var(--h) 30% 96%);--surface-1:hsl(var(--h) 24% 99%);--surface-2:hsl(var(--h) 20% 94%);
+  --ink:hsl(var(--h) 25% 16%);--ink-soft:hsl(var(--h) 14% 38%);--line:hsl(var(--h) 18% 86%);
+  --accent:hsl(var(--h) var(--s) 42%);--shadow:hsl(var(--h) 40% 20% / .16);
+  --c-positive:hsl(150 55% 38%);--c-neutral:hsl(calc(var(--h) + 198) 55% 42%);--c-comment:hsl(270 45% 52%);--c-info:hsl(var(--h) 55% 42%);
+  --font-ui:"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;--font-mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --fs-3xs:clamp(.69rem,.66rem + .14vw,.78rem);--fs-2xs:clamp(.75rem,.71rem + .2vw,.85rem);--fs-xs:clamp(.8rem,.75rem + .25vw,.92rem);--fs-sm:clamp(.9rem,.84rem + .3vw,1.02rem);--fs-base:clamp(1rem,.93rem + .35vw,1.15rem);--fs-lg:clamp(1.3rem,1.12rem + .8vw,1.6rem);--fs-xl:clamp(1.55rem,1.28rem + 1.2vw,2.05rem);--fs-3xl:clamp(2.2rem,1.6rem + 2.6vw,3.3rem);
+  --fw-bold:700;--lh-tight:1.1;--lh-heading:1.2;--lh-body:1.6;--tracking-wide:.04em;--tracking-wider:.08em;--measure:66ch;
+  --space-2xs:calc(clamp(.5rem,.45rem + .2vw,.65rem) * var(--space-scale));--space-xs:calc(clamp(.75rem,.65rem + .4vw,1.05rem) * var(--space-scale));--space-sm:calc(clamp(1rem,.85rem + .6vw,1.5rem) * var(--space-scale));--space-md:calc(clamp(1.5rem,1.2rem + 1.2vw,2.5rem) * var(--space-scale));--space-lg:calc(clamp(2.25rem,1.7rem + 2.2vw,4rem) * var(--space-scale));
+  --radius:14px;color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--page-bg:hsl(var(--h) 32% 8%);--surface-1:hsl(var(--h) 26% 12%);--surface-2:hsl(var(--h) 24% 16%);--ink:hsl(var(--h) 20% 92%);--ink-soft:hsl(var(--h) 14% 66%);--line:hsl(var(--h) 22% 22%);--accent:hsl(var(--h) var(--s) 64%);--shadow:hsl(var(--h) 60% 2% / .5);color-scheme:dark}}
+:root[data-theme="dark"]{--page-bg:hsl(var(--h) 32% 8%);--surface-1:hsl(var(--h) 26% 12%);--surface-2:hsl(var(--h) 24% 16%);--ink:hsl(var(--h) 20% 92%);--ink-soft:hsl(var(--h) 14% 66%);--line:hsl(var(--h) 22% 22%);--accent:hsl(var(--h) var(--s) 64%);--shadow:hsl(var(--h) 60% 2% / .5);color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page-bg);color:var(--ink);font-family:var(--font-ui);font-size:calc(var(--fs-base) * var(--type-scale));line-height:var(--lh-body)}
+h1,h2,h3,h4{font-weight:var(--fw-bold);line-height:var(--lh-heading);margin:0 0 var(--space-2xs);text-wrap:balance}
+h1{font-size:calc(var(--fs-3xl) * var(--type-scale));line-height:var(--lh-tight)}h3{font-size:var(--fs-xl)}h4{font-size:var(--fs-lg)}
+p{max-width:var(--measure)}
+.material-symbol{font-family:'Material Symbols Outlined';line-height:1;white-space:nowrap}
+
+/* components + surfaces used here */
+.ab.card{--ab-card-accent:var(--line);display:flex;flex-direction:column;min-width:0;background:var(--surface-1);border:1px solid var(--ab-card-accent);border-radius:var(--radius);box-shadow:0 1px 2px var(--shadow),0 6px 18px -10px var(--shadow)}
+.ab.card .card-body{padding:1rem 1.1rem}.card-title{margin:0 0 .4rem;font-weight:700;font-size:1.05rem}.card-text{margin:0;color:var(--ink-soft);font-size:.9rem}
+.ab.card.primary{--ab-card-accent:hsl(var(--h) var(--s) 44%)}.ab.card.info{--ab-card-accent:var(--c-info)}.ab.card.positive{--ab-card-accent:var(--c-positive)}
+.ab.card.soft{background:color-mix(in srgb,var(--ab-card-accent) 9%,var(--surface-1))}
+.ab.btn{--_c:hsl(var(--h) var(--s) 44%);display:inline-flex;align-items:center;gap:.5em;font:inherit;font-weight:600;padding:.5rem 1rem;border:1px solid var(--_c);border-radius:9px;background:var(--_c);color:#fff;cursor:pointer}
+.ab.btn.outline{background:transparent;color:var(--_c)}.ab.btn .material-symbol{font-size:1.15em}
+.kicker{display:inline-block;font-family:var(--font-mono);font-size:var(--fs-3xs);letter-spacing:var(--tracking-wider);text-transform:uppercase;color:var(--ink-soft);margin-bottom:var(--space-2xs)}
+.lead{color:var(--ink-soft);max-width:var(--measure)}
+.hero-symbol{position:absolute;right:0;top:50%;transform:translateY(-50%);font-family:'Material Symbols Outlined';font-size:clamp(4rem,2rem + 10vw,7rem);color:var(--accent);opacity:.14;pointer-events:none}
+
+/* page structure */
+.page__inner{max-width:60rem;margin-inline:auto}
+.page__header{position:relative;overflow:hidden;display:flex;flex-direction:column;gap:var(--space-2xs);padding:var(--space-md) 0}
+.article+.article,.block+.block{margin-top:var(--space-md)}.component+.component{margin-top:var(--space-sm)}
+
+/* ============ HIGHLIGHTER + SCRIBBLE ASSETS ============ */
+.ab-highlight{--hl:var(--accent);background:linear-gradient(to bottom,transparent 55%,color-mix(in srgb,var(--hl) 38%,transparent) 55%);padding:0 .1em;border-radius:2px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.ab-highlight.warning{--hl:var(--c-neutral)}.ab-highlight.comment{--hl:var(--c-comment)}
+
+/* a word wearing a scribble: the SVG overlaps the text and draws on */
+.ab-mark{position:relative;display:inline-block;color:var(--accent)}
+.ab-mark>*{color:var(--ink)}
+.ab-mark svg{position:absolute;left:-6%;width:112%;overflow:visible;color:var(--accent);pointer-events:none}
+.ab-mark.underline svg{bottom:-.35em;height:.55em}
+.ab-mark.circle svg{top:-28%;height:150%;left:-12%;width:124%}
+.ab-mark.strike svg{top:42%;height:.5em}
+.ab-scribble{fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:0}
+.ab-arrow{color:var(--accent);display:inline-block;vertical-align:middle;width:3rem}
+.ab-arrow .ab-scribble{stroke-width:4}
+.ab-doodle{color:var(--c-neutral);width:2.4rem;display:inline-block;vertical-align:middle}
+
+/* draw-on: only while .playing; at rest everything is fully drawn */
+.playing .ab-scribble{animation:draw .7s ease var(--d,0s) both}
+@keyframes draw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+
+/* ============ CYCLE ============ */
+.ab-cycle{max-width:320px;margin-inline:auto}
+.ab-cycle svg{width:100%;height:auto;overflow:visible}
+.ab-cycle .arc{fill:none;stroke:var(--accent);stroke-width:4;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:0;opacity:.55}
+.playing .ab-cycle .arc{animation:draw .6s ease var(--d,0s) both}
+.ab-cycle .node{fill:var(--surface-1);stroke:var(--accent);stroke-width:2.5}
+.ab-cycle .node.key{fill:color-mix(in srgb,var(--accent) 16%,var(--surface-1))}
+.ab-cycle .nlabel{fill:var(--ink);font-family:var(--font-ui);font-weight:700;font-size:13px;text-anchor:middle}
+.ab-cycle .runner{fill:var(--accent)}
+.ab-cycle.flow .runner{offset-path:path('M120 40 A80 80 0 0 1 200 120 A80 80 0 0 1 120 200 A80 80 0 0 1 40 120 A80 80 0 0 1 120 40');animation:run 7s linear infinite}
+@keyframes run{to{offset-distance:100%}}
+
+/* ============ TIMELINE ============ */
+.ab-timeline{position:relative;display:grid;gap:var(--space-sm);padding-left:2rem}
+.ab-timeline::before{content:"";position:absolute;left:.65rem;top:.4rem;bottom:.4rem;width:3px;border-radius:3px;background:var(--line);transform-origin:top;transform:scaleY(1)}
+.playing .ab-timeline::before{animation:grow .9s ease both}
+@keyframes grow{from{transform:scaleY(0)}to{transform:scaleY(1)}}
+.tl-item{position:relative}
+.tl-item::before{content:"";position:absolute;left:calc(-2rem + .4rem);top:.25rem;width:1rem;height:1rem;border-radius:50%;background:var(--accent);box-shadow:0 0 0 4px var(--page-bg)}
+.tl-item .when{font-family:var(--font-mono);font-size:var(--fs-2xs);color:var(--ink-soft);letter-spacing:var(--tracking-wide)}
+.tl-item h4{margin:.1rem 0 .2rem}
+.playing .tl-item{animation:rise .5s ease var(--d,0s) both}
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+/* chrome */
+.wrap{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:var(--space-md);max-width:64rem;margin-inline:auto}
+.bar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;background:color-mix(in srgb,var(--surface-1) 92%,transparent);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:var(--space-md)}
+.bar .grow{flex:1 1 auto}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}.seg button{font:inherit;font-size:var(--fs-xs);font-weight:600;padding:6px 11px;border:0;background:var(--surface-2);color:var(--ink-soft);cursor:pointer}.seg button[aria-pressed="true"]{background:var(--accent);color:#fff}
+.replay{font:inherit;font-weight:600;font-size:var(--fs-xs);padding:7px 14px;border-radius:999px;border:1px solid var(--accent);background:var(--accent);color:#fff;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.sec{margin-top:var(--space-lg)}
+.sec-label{font-family:var(--font-mono);font-size:var(--fs-2xs);letter-spacing:var(--tracking-wider);text-transform:uppercase;color:var(--ink-soft);border-bottom:1px solid var(--line);padding-bottom:8px;margin-bottom:var(--space-sm)}
+.panel{background:var(--surface-1);border:1px solid var(--line);border-radius:var(--radius);padding:var(--space-md);box-shadow:0 10px 30px -18px var(--shadow)}
+.scribble-row{display:flex;flex-wrap:wrap;gap:22px 34px;align-items:center;font-size:var(--fs-lg)}
+.two{display:grid;gap:var(--space-md);grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr));align-items:center}
+.idea{font-size:var(--fs-sm);color:var(--ink-soft)}.idea b{color:var(--ink)}
+.idea-list{margin:0;padding-left:1.1em;display:flex;flex-direction:column;gap:.35rem}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+@media (prefers-reduced-motion:reduce){.playing *{animation:none!important}.ab-cycle.flow .runner{animation:none!important;offset-distance:25%}}
+</style>
+
+<div class="wrap">
+  <div class="bar">
+    <strong>Abbott Lesson Kit</strong><span class="grow"></span>
+    <button class="replay" id="replay"><span class="material-symbol" aria-hidden="true">play_arrow</span>Replay animations</button>
+    <div class="seg" id="theme"><button data-set="light" aria-pressed="false">Light</button><button data-set="dark" aria-pressed="false">Dark</button><button data-set="system" aria-pressed="true">System</button></div>
+  </div>
+
+  <!-- 1 · BASIC LESSON PAGE STRUCTURE -->
+  <div class="sec-label">1 · Basic lesson page — the starting skeleton</div>
+  <div class="panel">
+    <div class="page__inner">
+      <header class="page__header">
+        <span class="kicker">Topic / 01</span>
+        <h1>How colour creates <span class="ab-mark underline">depth<svg viewBox="0 0 240 14" preserveAspectRatio="none" aria-hidden="true"><path class="ab-scribble" pathLength="1" d="M3 8 C 48 2, 78 12, 120 7 S 196 3, 237 8"/></svg></span></h1>
+        <p class="lead">One page object (d1) holds a header, then articles (d2) of blocks (d3), each made of components (d4). This is the canonical shape every template builds on.</p>
+        <span class="hero-symbol material-symbol" aria-hidden="true">layers</span>
+      </header>
+      <article class="article"><div class="article__inner">
+        <div class="block"><div class="block__inner two">
+          <div class="component"><div class="ab card primary soft"><div class="card-body"><h4 class="card-title">Warm advances</h4><p class="card-text">Warm, saturated colour feels closer to the eye.</p></div></div></div>
+          <div class="component"><div class="ab card info soft"><div class="card-body"><h4 class="card-title">Cool recedes</h4><p class="card-text">Cool, muted colour reads as further away.</p></div></div></div>
+        </div></div>
+        <div class="block"><div class="block__inner"><div class="component"><a class="ab btn"><span class="material-symbol" aria-hidden="true">arrow_forward</span>Continue</a></div></div></div>
+      </div></article>
+    </div>
+  </div>
+
+  <!-- 2 · SCRIBBLE ASSETS -->
+  <div class="sec-label">2 · Highlighter &amp; scribble assets — emphasis that feels hand-made</div>
+  <div class="panel">
+    <div class="scribble-row">
+      <span class="ab-mark underline">underline<svg viewBox="0 0 240 14" preserveAspectRatio="none" aria-hidden="true"><path class="ab-scribble" pathLength="1" d="M3 8 C 48 2, 78 12, 120 7 S 196 3, 237 8"/></svg></span>
+      <span class="ab-mark circle">circle it<svg viewBox="0 0 220 90" preserveAspectRatio="none" aria-hidden="true"><path class="ab-scribble" pathLength="1" d="M168 16 C 70 2, 16 20, 22 48 C 28 78, 128 88, 186 70 C 220 58, 206 20, 150 15"/></svg></span>
+      <span class="ab-mark strike">struck<svg viewBox="0 0 200 16" preserveAspectRatio="none" aria-hidden="true"><path class="ab-scribble" pathLength="1" d="M4 9 C 54 4, 96 14, 142 8 S 196 6, 196 9"/></svg></span>
+      <span class="ab-highlight">sweep</span>
+      <span class="ab-highlight warning">amber</span>
+      <span class="ab-highlight comment">violet</span>
+      <span class="ab-arrow"><svg viewBox="0 0 120 70" aria-hidden="true"><path class="ab-scribble" pathLength="1" d="M8 18 C 48 8, 92 20, 102 50"/><path class="ab-scribble" pathLength="1" d="M102 50 L 86 42 M102 50 L 106 32"/></svg></span>
+      <span class="ab-doodle"><svg viewBox="0 0 60 60" aria-hidden="true"><path class="ab-scribble" pathLength="1" d="M30 5 L 37 23 L 56 23 L 41 35 L 47 55 L 30 43 L 13 55 L 19 35 L 4 23 L 23 23 Z"/></svg></span>
+    </div>
+    <p class="idea" style="margin-top:14px">Each is a single SVG stroke using <code>currentColor</code>, so it inherits the theme and draws on with <code>stroke-dashoffset</code>. Use them to <span class="ab-mark underline">mark the one thing<svg viewBox="0 0 240 14" preserveAspectRatio="none" aria-hidden="true"><path class="ab-scribble" pathLength="1" d="M3 8 C 48 2, 78 12, 120 7 S 196 3, 237 8"/></svg></span> that matters — sparingly.</p>
+  </div>
+
+  <!-- 3 · CYCLE -->
+  <div class="sec-label">3 · Teaching cycles — a loop with continuous flow</div>
+  <div class="panel two">
+    <div class="ab-cycle flow">
+      <svg viewBox="0 0 240 240" role="img" aria-label="Four-stage cycle">
+        <path class="ab-scribble arc" pathLength="1" style="--d:0s"  d="M120 40 A80 80 0 0 1 200 120"/>
+        <path class="ab-scribble arc" pathLength="1" style="--d:.15s" d="M200 120 A80 80 0 0 1 120 200"/>
+        <path class="ab-scribble arc" pathLength="1" style="--d:.3s" d="M120 200 A80 80 0 0 1 40 120"/>
+        <path class="ab-scribble arc" pathLength="1" style="--d:.45s" d="M40 120 A80 80 0 0 1 120 40"/>
+        <circle class="node key" cx="120" cy="40" r="20"/><text class="nlabel" x="120" y="45">1</text>
+        <circle class="node" cx="200" cy="120" r="20"/><text class="nlabel" x="200" y="125">2</text>
+        <circle class="node" cx="120" cy="200" r="20"/><text class="nlabel" x="120" y="205">3</text>
+        <circle class="node" cx="40" cy="120" r="20"/><text class="nlabel" x="40" y="125">4</text>
+        <circle class="runner" r="5"/>
+      </svg>
+    </div>
+    <div>
+      <h3 style="margin-top:0">When to use a cycle</h3>
+      <ul class="idea-list idea">
+        <li><b>The order repeats.</b> Water cycle, feedback loops, the design process — anything with no real end.</li>
+        <li><b>Animate the flow, not each node.</b> A single dot travelling the loop says "continuous" better than six separate effects.</li>
+        <li><b>Draw the arcs in sequence</b> on first view, then let the runner loop. Stop both under reduced motion.</li>
+        <li><b>Pair with blocks:</b> one Adapt block per stage, revealed by Trickle as the learner completes each.</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- 4 · TIMELINE -->
+  <div class="sec-label">4 · Timelines — a line that draws, milestones that arrive</div>
+  <div class="panel two">
+    <div class="ab-timeline">
+      <div class="tl-item" style="--d:.15s"><span class="when">Step 01</span><h4>Observe</h4><p class="idea" style="margin:0">Gather what you notice before explaining it.</p></div>
+      <div class="tl-item" style="--d:.35s"><span class="when">Step 02</span><h4>Interpret</h4><p class="idea" style="margin:0">Offer a reading, and say what it rests on.</p></div>
+      <div class="tl-item" style="--d:.55s"><span class="when">Step 03</span><h4>Test</h4><p class="idea" style="margin:0">Check the reading against one more case.</p></div>
+      <div class="tl-item" style="--d:.75s"><span class="when">Step 04</span><h4>Revise</h4><p class="idea" style="margin:0">Keep, change or drop it — and note why.</p></div>
+    </div>
+    <div>
+      <h3 style="margin-top:0">When to use a timeline</h3>
+      <ul class="idea-list idea">
+        <li><b>The order is the point.</b> A real sequence, process or history where "before/after" carries meaning.</li>
+        <li><b>Draw the spine first,</b> then let each milestone rise in turn — the eye follows the line down.</li>
+        <li><b>Tie reveals to progress:</b> in a course, map each milestone to a block and let Adapt's onscreen hook or Trickle trigger the rise.</li>
+        <li><b>Keep it readable stopped.</b> At rest the whole timeline is visible; the animation only re-tells the order on request.</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  const root=document.documentElement;
+  function play(){
+    root.classList.remove('playing'); void root.offsetWidth; root.classList.add('playing');
+    clearTimeout(play._t); play._t=setTimeout(()=>root.classList.remove('playing'),2000);
+  }
+  document.getElementById('replay').addEventListener('click',play);
+  document.getElementById('theme').addEventListener('click',e=>{const b=e.target.closest('[data-set]');if(!b)return;const m=b.dataset.set;m==='system'?root.removeAttribute('data-theme'):root.setAttribute('data-theme',m);document.querySelectorAll('#theme button').forEach(x=>x.setAttribute('aria-pressed',x===b));});
+  // play once on load (after a tick so the first frame is the finished state)
+  setTimeout(play,350);
+</script>

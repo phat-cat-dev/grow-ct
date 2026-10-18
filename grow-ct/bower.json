@@ -1,0 +1,16 @@
+{
+  "name": "grow-ct",
+  "version": "1.0.0",
+  "framework": ">=5.31.3",
+  "theme": "grow-base",
+  "displayName": "Grow Base",
+  "description": "Grow Base — a full, standalone Adapt theme that replaces vanilla and colours the whole page (menu, nav, drawer, buttons, notify) from the Grow token system. Forked from adapt-contrib-vanilla (GPL-3.0); the shell painting is vanilla's, re-driven by the @grow-*/--grow-* engine.",
+  "main": "js/theme.js",
+  "keywords": [
+    "adapt-plugin",
+    "adapt-theme"
+  ],
+  "license": "GPL-3.0",
+  "targetAttribute": "_grow",
+  "private": true
+}

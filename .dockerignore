@@ -1,0 +1,8 @@
+# keep the build context small — the image only needs docker/entrypoint.sh;
+# the repo itself is bind-mounted at runtime (see compose.yaml).
+.git
+**/node_modules
+**/.DS_Store
+build
+scratchpad
+*.log

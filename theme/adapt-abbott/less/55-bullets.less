@@ -1,0 +1,57 @@
+// ============================================================================
+//  55-bullets.less — Abbott BULLETS & MARKERS  (draw-on list markers)
+//  ----------------------------------------------------------------------------
+//  Simple draw-on marker shapes for list items and inline flags — dots, rings,
+//  squares, diamonds, triangles, stars, arrows, chevrons, ticks, signs,
+//  numbered badges, pins, bookmarks, tags, radio/checkbox/toggle states.
+//
+//  Reuses the ink stroke + draw-on from 50-marks (.ab-ink, trigger via an
+//  `ab-ink-play` / `.playing` ancestor). Adds the FILL + POP + knob behaviours
+//  bullets need (a dot that pops in, a toggle knob that slides). One --flow-rate.
+//
+//  Geometry is inline SVG — copy a marker's <svg> from gallery/bullets.html and
+//  drop it before the list text. Requires the #ink filter (theme.js injects it).
+// ============================================================================
+
+// a solid (filled) shape — the dot inside a ring, a pin head, a toggle knob
+.ab-fill { fill: currentColor; filter: url(#ink); }
+
+// pop-in for filled shapes
+.ab-pop { transform-box: fill-box; transform-origin: center; }
+:is(.ab-ink-play, .playing) .ab-pop {
+  animation: ab-pop calc(0.4s / var(--flow-rate)) cubic-bezier(.2,1.5,.5,1) var(--d, 0s) both;
+}
+@keyframes ab-pop { 0% { transform: scale(0) } 70% { transform: scale(1.18) } 100% { transform: scale(1) } }
+
+// numbered badge label (white text centred in a filled shape)
+.ab-num {
+  fill: #fff;
+  font-family: var(--font-ui);
+  font-weight: 700;
+  font-size: 16px;
+  text-anchor: middle;
+  dominant-baseline: central;
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+// toggle knob that slides across on play
+.ab-knob { transform-box: fill-box; }
+:is(.ab-ink-play, .playing) .ab-knob {
+  animation: ab-knob calc(0.5s / var(--flow-rate)) cubic-bezier(.3,1.4,.5,1) var(--d, .15s) both;
+}
+@keyframes ab-knob { from { transform: translateX(-16px) } to { transform: translateX(0) } }
+
+// the marker svg before a bullet
+.ab-marker { display: inline-block; width: 40px; height: 40px; color: var(--accent); vertical-align: middle; overflow: visible; }
+
+// a ready-made draw-on list
+.ab-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.55rem; }
+.ab-list li { display: flex; align-items: center; gap: 0.7rem; }
+.ab-list .ab-marker { width: 26px; height: 26px; flex: none; }
+
+// stop motion — show final state
+.no-motion :is(.ab-fill, .ab-pop, .ab-knob) { animation: none !important; transform: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  :is(.ab-fill, .ab-pop, .ab-knob) { animation: none !important; transform: none !important; }
+}

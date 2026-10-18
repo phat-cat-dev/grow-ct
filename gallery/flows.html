@@ -1,0 +1,149 @@
+<title>Abbott Flow Diagrams</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+<style>
+/* One flow family, five layouts: cycle · triangle · square · vertical · horizontal.
+   Same style as the cycle — edges draw on in sequence, numbered nodes, a runner
+   dot travels the path. Token-driven, theme-aware, quiet under reduced motion.
+   Reusable: each diagram is self-contained SVG; the runner's route is set inline
+   with offset-path so one CSS block drives them all. */
+:root{
+  --h:202;--s:72%;--gs:12%;
+  --page-bg:hsl(var(--h) 30% 96%);--surface-1:hsl(var(--h) 24% 99%);--surface-2:hsl(var(--h) 20% 94%);
+  --ink:hsl(var(--h) 25% 16%);--ink-soft:hsl(var(--h) 14% 38%);--line:hsl(var(--h) 18% 86%);
+  --accent:hsl(var(--h) var(--s) 42%);--shadow:hsl(var(--h) 40% 20% / .16);
+  --flow-rate:1;   /* ONE speed dial — higher = faster. Overridable per diagram: style="--flow-rate:1.2" */
+  --font-ui:"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;--font-mono:ui-monospace,Menlo,Consolas,monospace;
+  --fs-3xs:.72rem;--fs-xs:.88rem;--radius:14px;--sp:clamp(1rem,.85rem + .6vw,1.5rem);color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--page-bg:hsl(var(--h) 32% 8%);--surface-1:hsl(var(--h) 26% 12%);--surface-2:hsl(var(--h) 24% 16%);--ink:hsl(var(--h) 20% 92%);--ink-soft:hsl(var(--h) 14% 66%);--line:hsl(var(--h) 22% 22%);--accent:hsl(var(--h) var(--s) 64%);--shadow:hsl(var(--h) 60% 2% / .5);color-scheme:dark}}
+:root[data-theme="dark"]{--page-bg:hsl(var(--h) 32% 8%);--surface-1:hsl(var(--h) 26% 12%);--surface-2:hsl(var(--h) 24% 16%);--ink:hsl(var(--h) 20% 92%);--ink-soft:hsl(var(--h) 14% 66%);--line:hsl(var(--h) 22% 22%);--accent:hsl(var(--h) var(--s) 64%);--shadow:hsl(var(--h) 60% 2% / .5);color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page-bg);color:var(--ink);font-family:var(--font-ui);line-height:1.6}
+h3{font-size:1.1rem;margin:0 0 .2rem}
+.wrap{max-width:68rem;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:var(--sp)}
+.bar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;background:color-mix(in srgb,var(--surface-1) 92%,transparent);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:var(--sp);position:sticky;top:env(safe-area-inset-top,0px);z-index:9}
+.bar .grow{flex:1 1 auto}
+.replay{font:inherit;font-weight:600;font-size:var(--fs-xs);padding:7px 14px;border-radius:999px;border:1px solid var(--accent);background:var(--accent);color:#fff;cursor:pointer}
+.hue{accent-color:var(--accent)}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}.seg button{font:inherit;font-size:var(--fs-xs);font-weight:600;padding:6px 11px;border:0;background:var(--surface-2);color:var(--ink-soft);cursor:pointer}.seg button[aria-pressed="true"]{background:var(--accent);color:#fff}
+.spd .spdval{min-width:3.4em;text-align:center;font-family:var(--font-mono);font-size:var(--fs-xs);font-weight:600;color:var(--ink);background:var(--surface-2);display:inline-flex;align-items:center;justify-content:center;padding:0 4px}
+.spd button{font-size:1rem;line-height:1;min-width:2em}
+.grid{display:grid;gap:var(--sp);grid-template-columns:repeat(auto-fit,minmax(min(230px,100%),1fr))}
+.pat{background:var(--surface-1);border:1px solid var(--line);border-radius:var(--radius);padding:var(--sp);box-shadow:0 10px 30px -18px var(--shadow);text-align:center}
+.pat .tag{font-family:var(--font-mono);font-size:var(--fs-3xs);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
+
+/* the flow family — shared */
+.flow svg{width:100%;height:auto;overflow:visible;max-height:230px}
+.flow .edge{fill:none;stroke:var(--accent);stroke-width:4;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:0;opacity:.5}
+.playing .flow .edge{animation:draw calc(.55s / var(--flow-rate)) ease var(--d,0s) both}
+@keyframes draw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+.flow .node{fill:var(--surface-1);stroke:var(--accent);stroke-width:2.5}
+.flow .node.key{fill:color-mix(in srgb,var(--accent) 16%,var(--surface-1))}
+.flow .nlabel{fill:var(--ink);font-family:var(--font-ui);font-weight:700;font-size:13px;text-anchor:middle;dominant-baseline:central}
+.flow .runner{fill:var(--accent);animation:run calc(6s / var(--flow-rate)) linear infinite}
+@keyframes run{to{offset-distance:100%}}
+@media (prefers-reduced-motion:reduce){.playing .flow .edge{animation:none}.flow .runner{animation:none;offset-distance:20%}}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+</style>
+
+<div class="wrap">
+  <div class="bar"><strong>Abbott Flow Diagrams</strong><span class="grow"></span>
+    <label style="font-size:var(--fs-xs);color:var(--ink-soft)">Hue <input class="hue" type="range" min="0" max="360" value="202" id="hue"></label>
+    <div class="seg spd" role="group" aria-label="Animation speed"><button data-spd="-1" aria-label="Slower">−</button><span class="spdval" id="spdval">100%</span><button data-spd="1" aria-label="Faster">+</button></div>
+    <div class="seg" id="dot" role="group" aria-label="Runner layer"><button data-dot="over" aria-pressed="true">Dot over</button><button data-dot="behind" aria-pressed="false">Dot behind</button></div>
+    <button class="replay" id="replay">Replay</button>
+    <div class="seg" id="theme"><button data-set="light" aria-pressed="false">Light</button><button data-set="dark" aria-pressed="false">Dark</button><button data-set="system" aria-pressed="true">System</button></div>
+  </div>
+
+  <div class="grid">
+
+    <!-- CIRCLE -->
+    <div class="pat"><div class="tag">Cycle · 4</div><h3>Circle</h3><div class="flow">
+      <svg viewBox="0 0 240 240" role="img" aria-label="Four-stage cycle">
+        <path class="edge" pathLength="1" style="--d:0s"   d="M120 40 A80 80 0 0 1 200 120"/>
+        <path class="edge" pathLength="1" style="--d:.15s" d="M200 120 A80 80 0 0 1 120 200"/>
+        <path class="edge" pathLength="1" style="--d:.3s"  d="M120 200 A80 80 0 0 1 40 120"/>
+        <path class="edge" pathLength="1" style="--d:.45s" d="M40 120 A80 80 0 0 1 120 40"/>
+        <circle class="node key" cx="120" cy="40" r="20"/><text class="nlabel" x="120" y="40">1</text>
+        <circle class="node" cx="200" cy="120" r="20"/><text class="nlabel" x="200" y="120">2</text>
+        <circle class="node" cx="120" cy="200" r="20"/><text class="nlabel" x="120" y="200">3</text>
+        <circle class="node" cx="40" cy="120" r="20"/><text class="nlabel" x="40" y="120">4</text>
+        <circle class="runner" r="5" style="offset-path:path('M120 40 A80 80 0 0 1 200 120 A80 80 0 0 1 120 200 A80 80 0 0 1 40 120 A80 80 0 0 1 120 40')"/>
+      </svg></div>
+    </div>
+
+    <!-- TRIANGLE -->
+    <div class="pat"><div class="tag">Loop · 3</div><h3>Triangle</h3><div class="flow">
+      <svg viewBox="0 0 240 240" role="img" aria-label="Three-stage loop">
+        <path class="edge" pathLength="1" style="--d:0s"   d="M120 42 L202 196"/>
+        <path class="edge" pathLength="1" style="--d:.15s" d="M202 196 L38 196"/>
+        <path class="edge" pathLength="1" style="--d:.3s"  d="M38 196 L120 42"/>
+        <circle class="node key" cx="120" cy="42" r="20"/><text class="nlabel" x="120" y="42">1</text>
+        <circle class="node" cx="202" cy="196" r="20"/><text class="nlabel" x="202" y="196">2</text>
+        <circle class="node" cx="38" cy="196" r="20"/><text class="nlabel" x="38" y="196">3</text>
+        <circle class="runner" r="5" style="offset-path:path('M120 42 L202 196 L38 196 Z')"/>
+      </svg></div>
+    </div>
+
+    <!-- SQUARE -->
+    <div class="pat"><div class="tag">Loop · 4</div><h3>Square</h3><div class="flow">
+      <svg viewBox="0 0 240 240" role="img" aria-label="Four-stage square loop">
+        <path class="edge" pathLength="1" style="--d:0s"   d="M54 54 L186 54"/>
+        <path class="edge" pathLength="1" style="--d:.15s" d="M186 54 L186 186"/>
+        <path class="edge" pathLength="1" style="--d:.3s"  d="M186 186 L54 186"/>
+        <path class="edge" pathLength="1" style="--d:.45s" d="M54 186 L54 54"/>
+        <circle class="node key" cx="54" cy="54" r="20"/><text class="nlabel" x="54" y="54">1</text>
+        <circle class="node" cx="186" cy="54" r="20"/><text class="nlabel" x="186" y="54">2</text>
+        <circle class="node" cx="186" cy="186" r="20"/><text class="nlabel" x="186" y="186">3</text>
+        <circle class="node" cx="54" cy="186" r="20"/><text class="nlabel" x="54" y="186">4</text>
+        <circle class="runner" r="5" style="offset-path:path('M54 54 L186 54 L186 186 L54 186 Z')"/>
+      </svg></div>
+    </div>
+
+    <!-- VERTICAL -->
+    <div class="pat"><div class="tag">Sequence · down</div><h3>Vertical</h3><div class="flow">
+      <svg viewBox="0 0 120 260" role="img" aria-label="Four-step vertical sequence">
+        <path class="edge" pathLength="1" style="--d:0s"   d="M60 34 L60 100"/>
+        <path class="edge" pathLength="1" style="--d:.15s" d="M60 100 L60 166"/>
+        <path class="edge" pathLength="1" style="--d:.3s"  d="M60 166 L60 232"/>
+        <circle class="node key" cx="60" cy="34" r="18"/><text class="nlabel" x="60" y="34">1</text>
+        <circle class="node" cx="60" cy="100" r="18"/><text class="nlabel" x="60" y="100">2</text>
+        <circle class="node" cx="60" cy="166" r="18"/><text class="nlabel" x="60" y="166">3</text>
+        <circle class="node" cx="60" cy="232" r="18"/><text class="nlabel" x="60" y="232">4</text>
+        <circle class="runner" r="5" style="offset-path:path('M60 34 L60 232')"/>
+      </svg></div>
+    </div>
+
+    <!-- HORIZONTAL -->
+    <div class="pat"><div class="tag">Sequence · across</div><h3>Horizontal</h3><div class="flow">
+      <svg viewBox="0 0 300 90" role="img" aria-label="Four-step horizontal sequence">
+        <path class="edge" pathLength="1" style="--d:0s"   d="M38 45 L118 45"/>
+        <path class="edge" pathLength="1" style="--d:.15s" d="M118 45 L198 45"/>
+        <path class="edge" pathLength="1" style="--d:.3s"  d="M198 45 L278 45"/>
+        <circle class="node key" cx="38" cy="45" r="18"/><text class="nlabel" x="38" y="45">1</text>
+        <circle class="node" cx="118" cy="45" r="18"/><text class="nlabel" x="118" y="45">2</text>
+        <circle class="node" cx="198" cy="45" r="18"/><text class="nlabel" x="198" y="45">3</text>
+        <circle class="node" cx="278" cy="45" r="18"/><text class="nlabel" x="278" y="45">4</text>
+        <circle class="runner" r="5" style="offset-path:path('M38 45 L278 45')"/>
+      </svg></div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  const root=document.documentElement,$=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)];
+  function play(){root.classList.remove('playing');void root.offsetWidth;root.classList.add('playing');clearTimeout(play._t);play._t=setTimeout(()=>root.classList.remove('playing'),1400);}
+  $('#replay').addEventListener('click',play);
+  $('#hue').addEventListener('input',e=>root.style.setProperty('--h',e.target.value));
+  // speed — one --flow-rate dial, stepped ±10%
+  let rate=1;const spdv=$('#spdval');
+  function setSpd(d){rate=Math.round(Math.min(2.5,Math.max(.4,rate+d*0.1))*10)/10;root.style.setProperty('--flow-rate',rate);spdv.textContent=Math.round(rate*100)+'%';}
+  $$('[data-spd]').forEach(b=>b.addEventListener('click',()=>setSpd(+b.dataset.spd)));
+  // dot over / behind the nodes (SVG paint order = DOM order)
+  function setDot(mode){$$('.flow svg').forEach(svg=>{const r=svg.querySelector('.runner');if(!r)return;if(mode==='behind'){svg.insertBefore(r,svg.querySelector('.node'));}else{svg.appendChild(r);}});$$('#dot button').forEach(x=>x.setAttribute('aria-pressed',String(x.dataset.dot===mode)));}
+  $('#dot').addEventListener('click',e=>{const b=e.target.closest('[data-dot]');if(b)setDot(b.dataset.dot);});
+  $('#theme').addEventListener('click',e=>{const b=e.target.closest('[data-set]');if(!b)return;const m=b.dataset.set;m==='system'?root.removeAttribute('data-theme'):root.setAttribute('data-theme',m);$$('#theme button').forEach(x=>x.setAttribute('aria-pressed',x===b));});
+  setTimeout(play,350);
+</script>

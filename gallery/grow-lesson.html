@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en" data-theme="">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Grow lesson</title>
+<meta name="description" content="A full Grow lesson — lesson/phase/section/learning-step levels, each carrying role-based frontmatter (.frontmatter--role) in its body, with the data layer (data-grow-level/role/type + data-fm-*) revealable.">
+<style>
+:root{
+  --h:202;--s:72%;--gs:12%;
+  --page-bg:hsl(var(--h) 30% 96%);--surface-1:hsl(var(--h) 24% 99%);--surface-2:hsl(var(--h) 20% 94%);
+  --ink:hsl(var(--h) 25% 16%);--ink-soft:hsl(var(--h) 14% 40%);--line:hsl(var(--h) 18% 86%);
+  --accent:hsl(var(--h) var(--s) 42%);--accent-ink:hsl(var(--h) var(--s) 34%);--shadow:hsl(var(--h) 40% 20% / .16);
+  --font-ui:"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --font-mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --radius:16px;--fs-3xs:.7rem;--fs-2xs:.76rem;--fs-sm:.9rem;
+  --space-sm:clamp(1rem,.85rem + .6vw,1.5rem);--space-md:clamp(1.5rem,1.2rem + 1.2vw,2.5rem);--space-lg:clamp(2.25rem,1.7rem + 2.2vw,4rem);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--page-bg:hsl(var(--h) 32% 8%);--surface-1:hsl(var(--h) 26% 12%);--surface-2:hsl(var(--h) 24% 16%);--ink:hsl(var(--h) 20% 92%);--ink-soft:hsl(var(--h) 14% 66%);--line:hsl(var(--h) 22% 22%);--accent:hsl(var(--h) var(--s) 64%);--accent-ink:hsl(var(--h) var(--s) 78%);--shadow:hsl(var(--h) 60% 2% / .5);color-scheme:dark}}
+:root[data-theme="dark"]{--page-bg:hsl(var(--h) 32% 8%);--surface-1:hsl(var(--h) 26% 12%);--surface-2:hsl(var(--h) 24% 16%);--ink:hsl(var(--h) 20% 92%);--ink-soft:hsl(var(--h) 14% 66%);--line:hsl(var(--h) 22% 22%);--accent:hsl(var(--h) var(--s) 64%);--accent-ink:hsl(var(--h) var(--s) 78%);--shadow:hsl(var(--h) 60% 2% / .5);color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page-bg);color:var(--ink);font-family:var(--font-ui);line-height:1.6;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:var(--space-md)}
+.wrap{max-width:70rem;margin-inline:auto}
+.bar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;background:color-mix(in srgb,var(--surface-1) 92%,transparent);
+  border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:var(--space-md);position:sticky;top:8px;z-index:30;backdrop-filter:blur(6px)}
+.bar .grow{flex:1 1 auto}
+.kicker{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft)}
+label{font-size:.76rem;color:var(--ink-soft);font-weight:600;display:flex;align-items:center;gap:8px}
+input[type=range]{accent-color:var(--accent)}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.seg button{font:inherit;font-size:.74rem;font-weight:600;padding:6px 10px;border:0;background:var(--surface-2);color:var(--ink-soft);cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent);color:#fff}
+.hint{font-size:.82rem;color:var(--ink-soft);margin:.2rem 0 var(--space-md)}
+
+/* levels */
+.page__title{font-size:clamp(1.9rem,1.3rem + 2.6vw,3rem);font-weight:800;letter-spacing:-.02em;margin:.1rem 0 .3rem}
+.page__subtitle{color:var(--ink-soft);margin:0}
+/* PHASE (article) = a card of its own — overview, content, summary each one card */
+.article[data-grow-role="phase"]{margin-top:var(--space-lg);background:var(--surface-1);border:1px solid var(--line);border-radius:var(--radius);padding:var(--space-md);box-shadow:0 1px 2px var(--shadow),0 18px 40px -26px var(--shadow)}
+.article__title{font-size:clamp(1.4rem,1.1rem + 1.4vw,2rem);font-weight:800;margin:0 0 .2rem}
+.article__subtitle{color:var(--ink-soft);margin:0}
+/* sections inside the phase card are lighter sub-panels (no card-in-card) */
+.block{margin-top:var(--space-md)}
+.block__inner{background:color-mix(in srgb,var(--surface-2) 45%,transparent);border:1px solid var(--line);border-radius:12px;padding:var(--space-sm) var(--space-md)}
+.block__title{font-size:clamp(1.1rem,1rem + .7vw,1.4rem);font-weight:700;margin:0 0 .15rem}
+.block__subtitle{color:var(--ink-soft);margin:0 0 var(--space-sm);font-size:.92rem}
+.component{margin-top:var(--space-sm);background:color-mix(in srgb,var(--surface-2) 40%,transparent);border:1px solid var(--line);border-radius:12px;padding:var(--space-sm)}
+.component__title{font-weight:700;margin:0 0 .3rem}
+.ctag{display:inline-block;font-family:var(--font-mono);font-size:.58rem;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-soft);border:1px solid var(--line);border-radius:6px;padding:1px 6px;margin-bottom:.35rem}
+
+/* the ONE frontmatter block + role modifiers */
+.frontmatter{--fm-accent:var(--accent);border-left:3px solid var(--fm-accent);background:color-mix(in srgb,var(--fm-accent) 7%,var(--surface-1));border-radius:0 12px 12px 0;padding:var(--space-sm) var(--space-sm) var(--space-sm) var(--space-md);margin-top:.4rem}
+.frontmatter--lesson{--fm-accent:var(--accent)}
+.frontmatter--phase{--fm-accent:hsl(calc(var(--h) + 150) 45% 46%)}
+.frontmatter--section{--fm-accent:hsl(calc(var(--h) + 60) 55% 48%)}
+.frontmatter--learning-step{--fm-accent:hsl(calc(var(--h) - 40) 60% 50%)}
+.frontmatter__eyebrow{margin:0 0 .3rem;font-family:var(--font-mono);font-size:var(--fs-2xs);letter-spacing:.12em;text-transform:uppercase;color:var(--accent-ink)}
+.frontmatter__list{display:grid;grid-template-columns:repeat(auto-fit,minmax(9rem,1fr));gap:.5rem var(--space-sm);margin:.3rem 0;padding:0}
+.frontmatter__item{margin:0}
+.frontmatter__label{font-family:var(--font-mono);font-size:var(--fs-3xs);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
+.frontmatter__value{margin:0;font-weight:600}
+.frontmatter__group{margin-top:.5rem}
+.frontmatter__group-title{margin:0 0 .3rem;font-family:var(--font-mono);font-size:var(--fs-sm);letter-spacing:.04em;text-transform:uppercase;color:var(--ink-soft)}
+.frontmatter__items{list-style:none;margin:0;padding:0;display:grid;gap:.35rem}
+.frontmatter__item--outcome,.frontmatter__item--objective{position:relative;padding-left:1.5rem}
+.frontmatter__item--outcome::before,.frontmatter__item--objective::before{content:"";position:absolute;left:0;top:.4em;width:.75rem;height:.75rem;border-radius:50%;background:color-mix(in srgb,var(--fm-accent) 30%,transparent);box-shadow:inset 0 0 0 2px var(--fm-accent)}
+.frontmatter__body{color:var(--ink-soft);margin-top:.3rem}
+.lesson-hero .frontmatter--lesson{border-left:0;border-radius:16px;background:linear-gradient(135deg,color-mix(in srgb,var(--accent) 12%,var(--surface-1)),var(--surface-1) 70%);border:1px solid var(--line);padding:var(--space-md)}
+
+/* ---- reveal: data layer + BEM ---- */
+.lesson [data-grow-role]{position:relative}
+.lesson.meta [data-grow-role]{outline:1px dashed color-mix(in srgb,var(--accent) 45%,transparent);outline-offset:3px}
+.badge{display:none;position:absolute;top:0;left:0;transform:translateY(-100%);font-family:var(--font-mono);font-size:.58rem;color:#fff;background:var(--accent);padding:0 6px;border-radius:4px 4px 0 0;white-space:nowrap;z-index:5}
+.lesson.meta .badge{display:inline-block}
+.fmchips{display:none;flex-wrap:wrap;gap:4px;margin:.4rem 0 0}
+.lesson.meta .fmchips{display:flex}
+.fmchip{font-family:var(--font-mono);font-size:.58rem;color:#fff;background:var(--accent);border-radius:999px;padding:1px 7px}
+footer{margin-top:var(--space-lg);padding-top:1rem;border-top:1px solid var(--line);color:var(--ink-soft);font-size:.84rem}
+code{font-family:var(--font-mono);font-size:.85em;background:color-mix(in srgb,var(--accent) 10%,transparent);padding:.05em .4em;border-radius:5px}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="bar">
+    <div class="grow"><div class="kicker">grow-base · lesson · role-based frontmatter</div></div>
+    <label>Hue <input id="hue" type="range" min="0" max="360" value="202"></label>
+    <div class="seg" id="meta"><button data-m="on" aria-pressed="false">Reveal data layer</button><button data-m="off" aria-pressed="true">Hide</button></div>
+    <div class="seg" id="theme"><button data-set="light" aria-pressed="false">Light</button><button data-set="dark" aria-pressed="false">Dark</button><button data-set="system" aria-pressed="true">System</button></div>
+  </div>
+
+  <p class="hint">A whole lesson: <strong>lesson → phase → section → learning-step</strong>. Every level carries the same <code>.frontmatter</code> block (just a different <code>--role</code> tint) in its body, and the same <strong>data layer</strong> — <code>data-grow-level / -role / -type</code> + <code>data-fm-*</code>. Hit <strong>Reveal data layer</strong> to see the role/depth/type badge on each level and the metadata chips (including metadata-only fields). Drag the hue; flip the theme.</p>
+
+  <div class="lesson" id="lesson">
+    <!-- ===== d01 PAGE - LESSON: Understanding learning in Adapt (page · d01 · h1) ===== -->
+    <div class="page__inner" data-grow-level="01" data-grow-role="lesson" data-grow-type="lesson"
+         data-fm="on" data-fm-duration="25 min" data-fm-level="Intermediate" data-fm-owner="stuart">
+      <span class="badge"></span>
+      <div class="page__header">
+        <div class="page__subtitle">Module 2 · Lesson 3</div>
+        <h1 class="page__title">Understanding learning in Adapt</h1>
+      </div>
+      <div class="lesson-hero">
+        <div class="frontmatter frontmatter--lesson">
+          <p class="frontmatter__eyebrow">Lesson overview</p>
+          <dl class="frontmatter__list">
+            <div class="frontmatter__item frontmatter__item--duration"><dt class="frontmatter__label">Duration</dt><dd class="frontmatter__value">25 min</dd></div>
+            <div class="frontmatter__item frontmatter__item--level"><dt class="frontmatter__label">Level</dt><dd class="frontmatter__value">Intermediate</dd></div>
+          </dl>
+          <div class="frontmatter__body"><p>All you need to know about this lesson. (Author is stored as metadata only — see the chip when revealed.)</p></div>
+        </div>
+      </div>
+      <div class="fmchips"></div>
+
+      <!-- ===== d02 ARTICLE - PHASE: Lesson overview (article · d02 · h2) ===== -->
+      <div class="article" data-grow-level="02" data-grow-role="phase" data-grow-type="lesson-phase" data-fm="on" data-fm-phase="overview">
+        <span class="badge"></span>
+        <div class="article__header"><h2 class="article__title">Lesson overview</h2><p class="article__subtitle">All you need to know before you start</p></div>
+        <div class="article__body">
+          <div class="frontmatter frontmatter--phase"><p class="frontmatter__eyebrow">Phase · overview</p>
+            <div class="frontmatter__body"><p>Orientation for the lesson.</p></div></div>
+        </div>
+
+        <!-- d03 BLOCK - SECTION: Learning outcomes (block · d03 · h3) -->
+        <div class="block" data-grow-level="03" data-grow-role="section" data-grow-type="learning-outcomes" data-fm="on">
+          <span class="badge"></span>
+          <div class="block__inner">
+            <h3 class="block__title">Learning outcomes</h3>
+            <p class="block__subtitle">By the end of this lesson you will be able to:</p>
+            <div class="frontmatter frontmatter--section">
+              <div class="frontmatter__group frontmatter__group--outcomes">
+                <ul class="frontmatter__items">
+                  <li class="frontmatter__item frontmatter__item--outcome">Explain where colour, type and space come from in a token system</li>
+                  <li class="frontmatter__item frontmatter__item--outcome">Describe how a lesson is assembled from phases and sections</li>
+                  <li class="frontmatter__item frontmatter__item--outcome">Record metadata that may or may not display</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- d03 BLOCK - SECTION: Learning administration (block · d03 · h3) -->
+        <div class="block" data-grow-level="03" data-grow-role="section" data-grow-type="learning-administration" data-fm="on" data-fm-contact="help@uni.edu">
+          <span class="badge"></span>
+          <div class="block__inner">
+            <h3 class="block__title">Key contacts</h3>
+            <p class="block__subtitle">Who to call</p>
+            <div class="frontmatter frontmatter--section"><p class="frontmatter__eyebrow">Learning administration</p>
+              <dl class="frontmatter__list">
+                <div class="frontmatter__item frontmatter__item--tutor"><dt class="frontmatter__label">Tutor</dt><dd class="frontmatter__value">Dr A. Fun</dd></div>
+                <div class="frontmatter__item frontmatter__item--email"><dt class="frontmatter__label">Email</dt><dd class="frontmatter__value">help@uni.edu</dd></div>
+              </dl></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== d02 ARTICLE - PHASE: Learning content (article · d02 · h2) ===== -->
+      <div class="article" data-grow-level="02" data-grow-role="phase" data-grow-type="lesson-phase" data-fm="on" data-fm-phase="content">
+        <span class="badge"></span>
+        <div class="article__header"><h2 class="article__title">Learning content</h2></div>
+
+        <div class="block" data-grow-level="03" data-grow-role="section" data-grow-type="concept-introduction" data-fm="on">
+          <span class="badge"></span>
+          <div class="block__inner">
+            <h3 class="block__title">Understanding Adapt</h3>
+            <p class="block__subtitle">Adapt is great — know this!</p>
+            <div class="component" data-grow-level="04" data-grow-role="learning-step" data-grow-type="text" data-fm="on" data-fm-concept="depth" data-fm-reviewed="2026-10">
+              <span class="badge"></span>
+              <span class="ctag">adapt-contrib-text · learning-step</span>
+              <div class="component__title">What depth buys you</div>
+              <p>A learning-step. Its frontmatter is <strong>metadata-only</strong> — nothing renders here, but <code>data-fm-concept</code> / <code>data-fm-reviewed</code> ride on the element.</p>
+              <div class="fmchips"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="block" data-grow-level="03" data-grow-role="section" data-grow-type="concept-context" data-fm="on">
+          <span class="badge"></span>
+          <div class="block__inner">
+            <h3 class="block__title">Adapt in your faculty</h3>
+            <p class="block__subtitle">Especially in the Faculty of FUN!</p>
+            <div class="component" data-grow-level="04" data-grow-role="learning-step" data-grow-type="context-standards" data-fm="on">
+              <span class="badge"></span>
+              <span class="ctag">component · context-standards</span>
+              <div class="component__title">Disciplinary expectations</div>
+              <ul><li>Benchmark one</li><li>Benchmark two</li></ul>
+              <div class="fmchips"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== d02 ARTICLE - PHASE: Learning summary (article · d02 · h2) ===== -->
+      <div class="article" data-grow-level="02" data-grow-role="phase" data-grow-type="lesson-phase" data-fm="on" data-fm-phase="summary">
+        <span class="badge"></span>
+        <div class="article__header"><h2 class="article__title">Learning summary</h2></div>
+
+        <div class="block" data-grow-level="03" data-grow-role="section" data-grow-type="lesson-signpost" data-fm="on">
+          <span class="badge"></span>
+          <div class="block__inner">
+            <h3 class="block__title">How this will help</h3>
+            <div class="frontmatter frontmatter--section"><p class="frontmatter__eyebrow">Signpost</p>
+              <div class="frontmatter__body"><p>Where this lesson leads next.</p></div></div>
+          </div>
+        </div>
+
+        <div class="block" data-grow-level="03" data-grow-role="section" data-grow-type="lesson-activity" data-fm="on">
+          <span class="badge"></span>
+          <div class="block__inner">
+            <h3 class="block__title">Your thoughts…</h3>
+            <p class="block__subtitle">Reflect on your learning</p>
+            <div class="component" data-grow-level="04" data-grow-role="learning-step" data-grow-type="reflective-activity" data-fm="on" data-fm-interactive="true">
+              <span class="badge"></span>
+              <span class="ctag">component · reflective-activity</span>
+              <div class="component__title">One thing you'll try</div>
+              <p>The interactive learning-step — where the bells &amp; whistles live (a real Adapt component in a build).</p>
+              <div class="fmchips"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    Rendered to match the grow-base objects + the role-based <code>.frontmatter</code> block. Map &amp; templates:
+    <code>docs/grow-data-presentation-map.md</code>. Data layer stamped by <code>growMeta.js</code>; visible frontmatter
+    gated by <code>_display</code>.
+  </footer>
+</div>
+<script>
+  const root=document.documentElement;
+  document.getElementById('hue').addEventListener('input',e=>root.style.setProperty('--h',e.target.value));
+  document.getElementById('theme').addEventListener('click',e=>{const b=e.target.closest('[data-set]');if(!b)return;const m=b.dataset.set;m==='system'?root.removeAttribute('data-theme'):root.setAttribute('data-theme',m);document.querySelectorAll('#theme button').forEach(x=>x.setAttribute('aria-pressed',x===b));});
+  // build role/depth/type badges + data-fm chips from the data layer
+  document.querySelectorAll('#lesson [data-grow-role]').forEach(el=>{
+    const badge=el.querySelector(':scope > .badge');
+    if(badge){const r=el.getAttribute('data-grow-role'),d=el.getAttribute('data-grow-level'),t=el.getAttribute('data-grow-type');
+      badge.textContent=`d${d} · ${r}${t?' · '+t:''}`;}
+    const chips=el.querySelector(':scope > .fmchips');
+    if(chips){for(const a of el.attributes){if(a.name.startsWith('data-fm-')){const c=document.createElement('span');c.className='fmchip';c.textContent=a.name.slice(8)+': '+a.value;chips.appendChild(c);}}}
+  });
+  document.getElementById('meta').addEventListener('click',e=>{const b=e.target.closest('[data-m]');if(!b)return;document.getElementById('lesson').classList.toggle('meta',b.dataset.m==='on');document.querySelectorAll('#meta button').forEach(x=>x.setAttribute('aria-pressed',x===b));});
+</script>
+</body>
+</html>

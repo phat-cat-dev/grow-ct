@@ -1,0 +1,267 @@
+<title>Abbott Lesson Templates</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Material+Symbols+Outlined&display=swap">
+<style>
+/* Six lesson layouts on ONE Abbott theme (blue-grey). Toggle "Show structure"
+   to reveal the Adapt page skeleton (page / article / block / component)
+   woven through each template. Renders the real Abbott layers inline. */
+
+/* ---- foundation tokens (colour + type + space) ---- */
+:root{
+  --h:202;--s:72%;--gs:12%;--type-scale:1;--space-scale:1;
+  --page-bg:hsl(var(--h) 30% 96%);--surface-1:hsl(var(--h) 24% 99%);--surface-2:hsl(var(--h) 20% 94%);
+  --ink:hsl(var(--h) 25% 16%);--ink-soft:hsl(var(--h) 14% 38%);--line:hsl(var(--h) 18% 86%);
+  --accent:hsl(var(--h) var(--s) 42%);--shadow:hsl(var(--h) 40% 20% / .16);--acc-l:42%;
+  --sem-s:55%;--sem-l:38%;--sem-weak-s:55%;--sem-weak-l:92%;
+  --c-positive:hsl(150 var(--sem-s) var(--sem-l));--c-neutral:hsl(calc(var(--h) + 198) var(--sem-s) var(--sem-l));
+  --c-negative:hsl(5 var(--sem-s) var(--sem-l));--c-comment:hsl(270 var(--sem-s) var(--sem-l));--c-info:hsl(var(--h) var(--sem-s) var(--sem-l));
+  --font-ui:"Inter",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;--font-heading:var(--font-ui);--font-mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --fs-3xs:clamp(.69rem,.66rem + .14vw,.78rem);--fs-2xs:clamp(.75rem,.71rem + .20vw,.85rem);--fs-xs:clamp(.80rem,.75rem + .25vw,.92rem);--fs-sm:clamp(.90rem,.84rem + .30vw,1.02rem);--fs-base:clamp(1rem,.93rem + .35vw,1.15rem);--fs-md:clamp(1.15rem,1.03rem + .55vw,1.35rem);--fs-lg:clamp(1.30rem,1.12rem + .80vw,1.60rem);--fs-xl:clamp(1.55rem,1.28rem + 1.2vw,2.05rem);--fs-2xl:clamp(1.85rem,1.45rem + 1.8vw,2.60rem);--fs-3xl:clamp(2.2rem,1.6rem + 2.6vw,3.3rem);--fs-4xl:clamp(2.6rem,1.75rem + 3.8vw,4.4rem);
+  --fw-semibold:600;--fw-bold:700;--lh-tight:1.1;--lh-heading:1.2;--lh-snug:1.35;--lh-body:1.6;--tracking-tight:-.01em;--tracking-tighter:-.02em;--tracking-wide:.04em;--tracking-wider:.08em;--measure:66ch;--measure-wide:78ch;
+  --space-2xs:calc(clamp(.5rem,.45rem + .2vw,.65rem) * var(--space-scale));--space-xs:calc(clamp(.75rem,.65rem + .4vw,1.05rem) * var(--space-scale));--space-sm:calc(clamp(1rem,.85rem + .6vw,1.5rem) * var(--space-scale));--space-md:calc(clamp(1.5rem,1.2rem + 1.2vw,2.5rem) * var(--space-scale));--space-lg:calc(clamp(2.25rem,1.7rem + 2.2vw,4rem) * var(--space-scale));--space-xl:calc(clamp(3rem,2.1rem + 3.6vw,6rem) * var(--space-scale));
+  --stack:var(--space-sm);--pad-card:var(--space-sm);--pad-block:var(--space-lg);--pad-article:var(--space-lg);
+  --rule-gap:1.75rem;--rule-color:color-mix(in srgb,var(--line) 80%,transparent);--rule-margin:color-mix(in srgb,var(--accent) 45%,transparent);--dot-color:color-mix(in srgb,var(--ink-soft) 22%,transparent);--dot-gap:1.25rem;
+  --dia-radius:10px;--radius:14px;
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--page-bg:hsl(var(--h) 32% 8%);--surface-1:hsl(var(--h) 26% 12%);--surface-2:hsl(var(--h) 24% 16%);--ink:hsl(var(--h) 20% 92%);--ink-soft:hsl(var(--h) 14% 66%);--line:hsl(var(--h) 22% 22%);--accent:hsl(var(--h) var(--s) 64%);--shadow:hsl(var(--h) 60% 2% / .5);--acc-l:64%;--sem-l:64%;--sem-weak-l:18%;color-scheme:dark}}
+:root[data-theme="dark"]{--page-bg:hsl(var(--h) 32% 8%);--surface-1:hsl(var(--h) 26% 12%);--surface-2:hsl(var(--h) 24% 16%);--ink:hsl(var(--h) 20% 92%);--ink-soft:hsl(var(--h) 14% 66%);--line:hsl(var(--h) 22% 22%);--accent:hsl(var(--h) var(--s) 64%);--shadow:hsl(var(--h) 60% 2% / .5);--acc-l:64%;--sem-l:64%;--sem-weak-l:18%;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page-bg);color:var(--ink);font-family:var(--font-ui);font-size:calc(var(--fs-base) * var(--type-scale));line-height:var(--lh-body)}
+h1,h2,h3,h4{font-family:var(--font-heading);font-weight:var(--fw-bold);line-height:var(--lh-heading);margin:0 0 var(--space-2xs);text-wrap:balance}
+h1{font-size:calc(var(--fs-4xl) * var(--type-scale));line-height:var(--lh-tight);letter-spacing:var(--tracking-tighter)}
+h2{font-size:calc(var(--fs-3xl) * var(--type-scale));letter-spacing:var(--tracking-tight)}
+h3{font-size:calc(var(--fs-xl) * var(--type-scale))}
+h4{font-size:calc(var(--fs-lg) * var(--type-scale))}
+p{max-width:var(--measure)}a{color:var(--accent)}
+.material-symbol{font-family:'Material Symbols Outlined';font-weight:normal;font-style:normal;line-height:1;white-space:nowrap}
+
+/* ---- components ---- */
+.ab.card{--ab-card-accent:var(--line);display:flex;flex-direction:column;min-width:0;color:var(--ink);background:var(--surface-1);border:1px solid var(--ab-card-accent);border-radius:var(--radius);box-shadow:0 1px 2px var(--shadow),0 6px 18px -10px var(--shadow)}
+.ab.card .card-body{flex:1 1 auto;padding:1rem 1.1rem}
+.ab.card .card-header{padding:.7rem 1.1rem;font-weight:600;color:var(--ink-soft);background:color-mix(in srgb,var(--ab-card-accent) 14%,var(--surface-1));border-bottom:1px solid var(--ab-card-accent);border-radius:13px 13px 0 0}
+.ab.card.primary{--ab-card-accent:hsl(var(--h) var(--s) 44%)}.ab.card.info{--ab-card-accent:var(--c-info)}.ab.card.positive{--ab-card-accent:var(--c-positive)}.ab.card.comment{--ab-card-accent:var(--c-comment)}.ab.card.warning{--ab-card-accent:var(--c-neutral)}.ab.card.secondary{--ab-card-accent:hsl(var(--h) var(--gs) 45%)}
+.ab.card.soft{background:color-mix(in srgb,var(--ab-card-accent) 9%,var(--surface-1))}
+.card-title{margin:0 0 .4rem;font-weight:700;font-size:1.05rem}.card-text{margin:0;color:var(--ink-soft);font-size:.9rem}
+.ab.btn{--_c:hsl(var(--h) var(--s) 44%);--_fg:#fff;display:inline-flex;align-items:center;gap:.5em;font:inherit;font-weight:600;padding:.5rem 1rem;border:1px solid var(--_c);border-radius:9px;background:var(--_c);color:var(--_fg);cursor:pointer;text-decoration:none;transition:background-color .3s,color .15s}
+.ab.btn:hover{background:transparent;color:var(--_c)}.ab.btn.outline{background:transparent;color:var(--_c)}.ab.btn.outline:hover{background:var(--_c);color:#fff}.ab.btn.btn-sm{padding:.3rem .6rem;font-size:.8rem}.ab.btn .material-symbol{font-size:1.15em}
+.ab.callout{--_ca:var(--accent);display:block;padding:1rem 1.25rem;color:var(--ink);background:color-mix(in srgb,var(--_ca) 7%,var(--surface-1));border:1px solid var(--line);border-left:4px solid var(--_ca);border-radius:12px}
+.ab.callout .callout-header{margin:0 0 .35rem;font-weight:600;color:var(--_ca)}.ab.callout p{margin:0;color:var(--ink-soft);font-size:.9rem}.ab.callout.positive{--_ca:var(--c-positive)}.ab.callout.info{--_ca:var(--c-info)}
+
+/* ---- surfaces (15 + 16) ---- */
+.ab-lined{background-color:var(--surface-1);background-image:repeating-linear-gradient(to bottom,transparent 0,transparent calc(var(--rule-gap) - 1px),var(--rule-color) calc(var(--rule-gap) - 1px),var(--rule-color) var(--rule-gap));background-position:0 .65rem}
+.lesson-sketchbook{background-color:var(--surface-1);background-image:linear-gradient(to right,transparent 2.25rem,var(--rule-margin) 2.25rem,var(--rule-margin) calc(2.25rem + 1px),transparent calc(2.25rem + 1px)),repeating-linear-gradient(to bottom,transparent 0,transparent calc(var(--rule-gap) - 1px),var(--rule-color) calc(var(--rule-gap) - 1px),var(--rule-color) var(--rule-gap));background-position:0 .65rem;border:1px solid var(--line);border-radius:10px;padding:var(--space-sm) var(--space-sm) var(--space-sm) calc(2.25rem + var(--space-xs))}
+.lesson-journal{display:flex;flex-direction:column;gap:.4rem;font-size:var(--fs-sm);color:var(--ink-soft)}
+.lesson-journal textarea{line-height:var(--rule-gap);background-color:var(--surface-1);background-image:repeating-linear-gradient(to bottom,transparent 0,transparent calc(var(--rule-gap) - 1px),var(--rule-color) calc(var(--rule-gap) - 1px),var(--rule-color) var(--rule-gap));background-attachment:local;background-position:0 .55rem;padding:.55rem .75rem;border:1px solid var(--line);border-radius:8px;color:var(--ink);font-family:var(--font-ui);resize:vertical;width:100%}
+.ab-handwriting{--hw-gap:2.6rem;background-color:var(--surface-1);background-image:repeating-linear-gradient(to bottom,transparent 0,transparent calc(var(--hw-gap) - 1px),var(--rule-color) calc(var(--hw-gap) - 1px),var(--rule-color) var(--hw-gap)),radial-gradient(circle,var(--rule-color) .6px,transparent .7px);background-size:auto,9px var(--hw-gap);background-position:0 .5rem,0 .5rem}
+.ab-quad{--q:1.25rem;background-color:var(--surface-1);background-image:repeating-linear-gradient(to right,var(--rule-color) 0 1px,transparent 1px var(--q)),repeating-linear-gradient(to bottom,var(--rule-color) 0 1px,transparent 1px var(--q)),repeating-linear-gradient(to right,color-mix(in srgb,var(--accent) 30%,var(--line)) 0 1px,transparent 1px calc(var(--q) * 5)),repeating-linear-gradient(to bottom,color-mix(in srgb,var(--accent) 30%,var(--line)) 0 1px,transparent 1px calc(var(--q) * 5))}
+.ab-spiral{position:relative;padding-left:2.25rem}.ab-spiral::before{content:"";position:absolute;left:.6rem;top:.4rem;bottom:.4rem;width:12px;background-image:radial-gradient(circle,color-mix(in srgb,var(--ink-soft) 30%,transparent) 42%,transparent 46%);background-size:14px 22px;background-repeat:repeat-y}
+.ab-highlight{--hl:var(--accent);background:linear-gradient(to bottom,transparent 55%,color-mix(in srgb,var(--hl) 38%,transparent) 55%);padding:0 .1em;border-radius:2px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.ab-highlight.positive{--hl:var(--c-positive)}.ab-highlight.warning{--hl:var(--c-neutral)}.ab-highlight.comment{--hl:var(--c-comment)}.ab-highlight.info{--hl:var(--c-info)}.ab-highlight.secondary{--hl:hsl(var(--h) var(--gs) 55%)}
+.ab-chalkboard{background-color:hsl(var(--h) 14% 18%);background-image:radial-gradient(ellipse at 22% 28%,rgba(255,255,255,.05),transparent 45%),radial-gradient(ellipse at 78% 72%,rgba(255,255,255,.04),transparent 45%);color:#eef2ee;border:1px solid hsl(var(--h) 14% 10%);border-radius:var(--radius);padding:var(--space-md)}
+.ab-chalkboard :is(h1,h2,h3,h4){color:#fff}.ab-chalkboard .chalk-accent{color:hsl(var(--h) var(--s) 72%)}
+.ab-corkboard{background-color:#c8a46a;background-image:radial-gradient(rgba(120,80,40,.28) 15%,transparent 16%),radial-gradient(rgba(90,60,28,.22) 15%,transparent 16%);background-size:7px 7px,11px 11px;background-position:0 0,4px 5px;color:#3a2c17;border-radius:var(--radius);padding:var(--space-md)}
+.ab-sticky{--sticky:#fff3a8;background:var(--sticky);color:#3a361f;padding:var(--space-sm);box-shadow:0 6px 14px -6px rgba(0,0,0,.3);border-radius:2px}
+.ab-sticky.pink{--sticky:#ffc7d9;color:#3f2430}.ab-sticky.blue{--sticky:#bfe0ff;color:#1f3346}.ab-sticky.brand{--sticky:color-mix(in srgb,var(--accent) 22%,#fff);color:var(--ink)}
+.ab-indexcard{background-color:#fffef9;background-image:linear-gradient(to bottom,transparent 2.4rem,rgba(200,60,60,.45) 2.4rem,rgba(200,60,60,.45) calc(2.4rem + 1px),transparent calc(2.4rem + 1px)),repeating-linear-gradient(to bottom,transparent 0,transparent calc(1.6rem - 1px),rgba(70,120,190,.28) calc(1.6rem - 1px),rgba(70,120,190,.28) 1.6rem);background-position:0 .4rem;color:#26272b;border:1px solid #e4e2d6;border-radius:6px;box-shadow:0 1px 2px rgba(0,0,0,.08);padding:.5rem .9rem .9rem}
+
+/* ---- diagrams / figures ---- */
+.lesson-scene{margin:0;background:var(--surface-1);border:1px solid var(--line);border-radius:var(--dia-radius);padding:var(--space-sm);display:flex;flex-direction:column;gap:var(--space-2xs);min-width:0}
+.lesson-scene>figcaption{font-family:var(--font-mono);font-size:var(--fs-2xs);color:var(--ink-soft);letter-spacing:var(--tracking-wide)}
+.scene-art{position:relative;aspect-ratio:4/3;border-radius:7px;background:var(--surface-2);overflow:hidden;display:grid;place-items:center}
+.scene-art>span:not(.material-symbol){position:absolute;border-radius:999px;background:color-mix(in srgb,var(--ink-soft) 14%,transparent)}
+.scene-art>span:nth-child(1):not(.material-symbol){width:44%;aspect-ratio:1;top:-12%;left:-8%;background:color-mix(in srgb,var(--accent) 16%,transparent)}
+.scene-art>span:nth-child(2):not(.material-symbol){width:30%;aspect-ratio:1;bottom:-10%;right:8%}
+.scene-art>span:nth-child(3):not(.material-symbol){width:20%;aspect-ratio:1;bottom:18%;left:16%;border-radius:4px;transform:rotate(12deg)}
+.scene-art>.material-symbol{position:relative;font-size:clamp(2rem,1.2rem + 4vw,3.5rem);color:var(--ink-soft);opacity:.55}
+.swatch-study{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:3px;border-radius:10px;overflow:hidden;border:1px solid var(--line);min-height:2.5rem}
+.swatch-study>span:nth-child(1){background:hsl(var(--h) var(--s) 42%)}.swatch-study>span:nth-child(2){background:hsl(var(--h) var(--gs) 62%)}.swatch-study>span:nth-child(3){background:hsl(var(--h) var(--gs) 82%)}.swatch-study>span:nth-child(4){background:var(--surface-2)}
+
+/* ---- motion (subtle) ---- */
+.motion-pulse{animation:ab-pulse 1800ms cubic-bezier(.2,0,.2,1) infinite}@keyframes ab-pulse{0%,100%{opacity:1}50%{opacity:.7}}
+@media (prefers-reduced-motion:reduce){.motion-pulse{animation:none}}
+
+/* ---- page structure (Adapt wiring) ---- */
+.page__inner{max-width:var(--layout-max,72rem);margin-inline:auto}
+.article__inner,.block__inner{width:100%}
+.article{display:block}.article+.article{margin-top:var(--space-lg)}
+.block+.block{margin-top:var(--space-md)}
+.component+.component{margin-top:var(--space-sm)}
+.page__header{position:relative;overflow:hidden;display:flex;flex-direction:column;gap:var(--space-2xs);padding:var(--space-md) 0}
+.lesson-kicker{display:inline-block;font-family:var(--font-mono);font-size:var(--fs-3xs);letter-spacing:var(--tracking-wider);text-transform:uppercase;color:var(--ink-soft);margin-bottom:var(--space-2xs)}
+.lesson-intro{color:var(--ink-soft);max-width:var(--measure)}
+.lesson-hero-symbol{position:absolute;right:0;top:50%;transform:translateY(-50%);font-family:'Material Symbols Outlined';font-size:clamp(4rem,2rem + 10vw,8rem);color:var(--accent);opacity:.14;pointer-events:none}
+
+/* ---- template chrome ---- */
+.wrap{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:var(--space-md)}
+.bar{max-width:72rem;margin:0 auto var(--space-md);display:flex;flex-wrap:wrap;gap:12px 18px;align-items:center;background:color-mix(in srgb,var(--surface-1) 92%,transparent);border:1px solid var(--line);border-radius:14px;padding:12px 14px}
+.bar .grow{flex:1 1 auto}
+.tabs{display:flex;flex-wrap:wrap;gap:6px}
+.tab{font:inherit;font-size:var(--fs-xs);font-weight:600;padding:7px 12px;border:1px solid var(--line);border-radius:999px;background:var(--surface-2);color:var(--ink-soft);cursor:pointer}
+.tab[aria-selected="true"]{background:var(--accent);color:#fff;border-color:var(--accent)}
+.ctl{display:inline-flex;align-items:center;gap:8px;font-size:var(--fs-2xs);font-weight:600;letter-spacing:var(--tracking-wide);text-transform:uppercase;color:var(--ink-soft)}
+.ctl input[type=range]{accent-color:var(--accent)}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}
+.seg button{font:inherit;font-size:var(--fs-xs);font-weight:600;padding:6px 11px;border:0;background:var(--surface-2);color:var(--ink-soft);cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent);color:#fff}
+.frame{max-width:72rem;margin:0 auto;background:var(--page-bg);border:1px solid var(--line);border-radius:18px;padding:clamp(16px,3vw,34px);box-shadow:0 20px 60px -30px var(--shadow)}
+.tpl[hidden]{display:none}
+
+/* ---- the "Show structure" overlay — weaves the Adapt skeleton in ---- */
+.show-structure .page__inner{outline:1.5px dashed color-mix(in srgb,var(--ink-soft) 50%,transparent);outline-offset:8px;position:relative}
+.show-structure .article{outline:1.5px dashed color-mix(in srgb,var(--accent) 65%,transparent);outline-offset:5px;position:relative}
+.show-structure .block{outline:1.5px dashed color-mix(in srgb,var(--c-info) 60%,transparent);outline-offset:3px;position:relative}
+.show-structure .component{outline:1.5px dashed color-mix(in srgb,var(--c-comment) 60%,transparent);position:relative}
+.show-structure :is(.page__inner,.article,.block,.component)::after{position:absolute;top:0;left:0;transform:translateY(-100%);font-family:var(--font-mono);font-size:10px;line-height:1.5;padding:1px 6px;border-radius:5px 5px 0 0;color:#fff;white-space:nowrap;z-index:6;pointer-events:none}
+.show-structure .page__inner::after{content:"d1 · page";background:var(--ink-soft)}
+.show-structure .article::after{content:"d2 · article";background:var(--accent)}
+.show-structure .block::after{content:"d3 · block";background:var(--c-info)}
+.show-structure .component::after{content:"d4 · component";background:var(--c-comment)}
+
+.grid-2{display:grid;gap:var(--space-md);grid-template-columns:repeat(auto-fit,minmax(min(260px,100%),1fr))}
+.grid-3{display:grid;gap:var(--space-sm);grid-template-columns:repeat(auto-fit,minmax(min(200px,100%),1fr))}
+.milestone{display:flex;gap:var(--space-sm);align-items:flex-start}
+.milestone .num{flex:none;width:2.2rem;height:2.2rem;border-radius:50%;display:grid;place-items:center;font-family:var(--font-mono);font-weight:700;background:var(--accent);color:#fff}
+.stepline{border-left:2px solid var(--line);padding-left:var(--space-sm);margin-left:1.1rem;display:flex;flex-direction:column;gap:var(--space-sm)}
+.lesson-comp-title{display:flex;align-items:center;gap:.5rem;font-weight:700;margin:0 0 .4rem}.lesson-comp-title .material-symbol{color:var(--accent)}
+.inspiration-wall{display:grid;gap:var(--space-md);grid-template-columns:repeat(auto-fit,minmax(min(240px,100%),1fr));align-items:start}
+.inspiration-wall blockquote{margin:0;grid-column:1/-1;font-size:calc(var(--fs-xl) * var(--type-scale));line-height:var(--lh-snug);text-wrap:balance;max-width:var(--measure)}
+.inspiration-wall blockquote::before{content:"\201C";color:var(--accent)}
+.tpl-note{font-size:var(--fs-sm);color:var(--ink-soft);max-width:var(--measure);margin-top:var(--space-sm)}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+</style>
+
+<div class="wrap">
+
+  <div class="bar">
+    <div class="tabs" id="tabs" role="tablist" aria-label="Templates">
+      <button class="tab" role="tab" aria-selected="true"  data-tpl="journey">Milestone journey</button>
+      <button class="tab" role="tab" aria-selected="false" data-tpl="maker">Maker lab</button>
+      <button class="tab" role="tab" aria-selected="false" data-tpl="studio">Studio</button>
+      <button class="tab" role="tab" aria-selected="false" data-tpl="notebook">Notebook</button>
+      <button class="tab" role="tab" aria-selected="false" data-tpl="board">Chalkboard</button>
+      <button class="tab" role="tab" aria-selected="false" data-tpl="editorial">Editorial</button>
+    </div>
+    <span class="grow"></span>
+    <label class="ctl">Hue <input id="hue" type="range" min="0" max="360" value="202"></label>
+    <div class="seg"><button id="struct" aria-pressed="false">Show structure</button></div>
+    <div class="seg" id="theme"><button data-set="light" aria-pressed="false">Light</button><button data-set="dark" aria-pressed="false">Dark</button><button data-set="system" aria-pressed="true">System</button></div>
+  </div>
+
+  <div class="frame">
+
+    <!-- ============ 1 · MILESTONE JOURNEY ============ -->
+    <section class="tpl" data-tpl="journey" aria-label="Milestone journey template">
+      <div class="page__inner">
+        <header class="page__header">
+          <span class="lesson-kicker">Journey / 01</span>
+          <h1>Build a habit in three steps</h1>
+          <p class="lesson-intro">A numbered route where each stage reveals the next — progress you can <span class="ab-highlight">see</span>.</p>
+          <span class="lesson-hero-symbol material-symbol" aria-hidden="true">flag</span>
+        </header>
+        <article class="article"><div class="article__inner">
+          <div class="block"><div class="block__inner stepline">
+            <div class="component milestone"><span class="num">1</span><div class="ab card primary soft" style="flex:1"><div class="card-body"><div class="lesson-comp-title"><span class="material-symbol" aria-hidden="true">explore</span>Orient yourself</div><p class="card-text">Name the one behaviour you want to build, and when it will happen.</p></div></div></div>
+            <div class="component milestone"><span class="num">2</span><div class="ab card info soft" style="flex:1"><div class="card-body"><div class="lesson-comp-title"><span class="material-symbol" aria-hidden="true">science</span>Make it small</div><p class="card-text">Shrink it until it is <span class="ab-highlight info">almost too easy</span> to skip.</p></div></div></div>
+            <div class="component milestone"><span class="num">3</span><div class="ab card positive soft" style="flex:1"><div class="card-body"><div class="lesson-comp-title"><span class="material-symbol" aria-hidden="true">verified</span>Anchor it</div><p class="card-text">Attach it to something you already do every day.</p></div></div></div>
+          </div></div>
+          <div class="block"><div class="block__inner"><div class="component"><a class="ab btn primary">Complete and continue</a></div></div></div>
+        </div></article>
+      </div>
+    </section>
+
+    <!-- ============ 2 · MAKER LAB ============ -->
+    <section class="tpl" data-tpl="maker" hidden aria-label="Maker lab template">
+      <div class="page__inner">
+        <header class="page__header ab-quad" style="padding:var(--space-md);border-radius:var(--radius)">
+          <span class="lesson-kicker">Maker lab / 02</span>
+          <h1>Learn by taking it apart</h1>
+          <p class="lesson-intro">A working bench: inspect a model, make something, then compare the result.</p>
+          <span class="lesson-hero-symbol material-symbol" aria-hidden="true">construction</span>
+        </header>
+        <article class="article"><div class="article__inner">
+          <div class="block"><div class="block__inner grid-3">
+            <div class="component"><div class="ab card primary"><div class="card-header">Station 1</div><div class="card-body"><p class="card-text">Inspect the torch. List every part you can name.</p></div></div></div>
+            <div class="component"><div class="ab card primary"><div class="card-header">Station 2</div><div class="card-body"><p class="card-text">Trace the circuit from cell to bulb.</p></div></div></div>
+            <div class="component"><div class="ab card primary"><div class="card-header">Station 3</div><div class="card-body"><p class="card-text">Break the circuit. Where does the light stop?</p></div></div></div>
+          </div></div>
+          <div class="block"><div class="block__inner"><div class="component"><div class="ab callout info"><div class="callout-header">Bench note</div><p>Keep the cell out until you are ready to test — <span class="ab-highlight warning">short circuits get warm</span>.</p></div></div></div></div>
+        </div></article>
+      </div>
+    </section>
+
+    <!-- ============ 3 · STUDIO ============ -->
+    <section class="tpl" data-tpl="studio" hidden aria-label="Studio template">
+      <div class="page__inner">
+        <header class="page__header"><span class="lesson-kicker">Studio / 03</span><h1>A colour study</h1><p class="lesson-intro">Observe, interpret, then curate — three moves of a studio practice.</p><span class="lesson-hero-symbol material-symbol" aria-hidden="true">palette</span></header>
+        <article class="article"><div class="article__inner"><div class="block"><div class="block__inner grid-2">
+          <div class="component"><figure class="lesson-scene"><div class="scene-art" aria-hidden="true"><span></span><span></span><span></span><span class="material-symbol">image</span></div><figcaption>01 / Look closer · media placeholder</figcaption></figure></div>
+          <div class="component"><div class="ab card secondary soft"><div class="card-body"><div class="lesson-comp-title"><span class="material-symbol" aria-hidden="true">edit_note</span>Studio journal</div><label class="lesson-journal">Private notes (not saved)<textarea rows="4" placeholder="What do you notice about the light?"></textarea></label></div></div></div>
+        </div></div>
+        <div class="block"><div class="block__inner"><div class="component"><div class="swatch-study" aria-label="Colour study"><span></span><span></span><span></span><span></span></div></div></div></div>
+        </div></article>
+      </div>
+    </section>
+
+    <!-- ============ 4 · NOTEBOOK ============ -->
+    <section class="tpl" data-tpl="notebook" hidden aria-label="Notebook template">
+      <div class="page__inner">
+        <header class="page__header"><span class="lesson-kicker">Notebook / 04</span><h1>Working through a problem</h1><p class="lesson-intro">A quiet page for thinking on paper — <span class="ab-highlight secondary">no perfect answers</span>.</p><span class="lesson-hero-symbol material-symbol" aria-hidden="true">draw</span></header>
+        <article class="article"><div class="article__inner"><div class="block"><div class="block__inner">
+          <div class="component lesson-sketchbook ab-spiral">
+            <div class="ab-handwriting" style="border-radius:8px;padding:.6rem .8rem;margin-bottom:var(--space-sm)"><strong>Prompt.</strong> What would you try first, and why?</div>
+            <label class="lesson-journal">Your working<textarea rows="5" placeholder="Think it through here…"></textarea></label>
+          </div>
+        </div></div></div></article>
+      </div>
+    </section>
+
+    <!-- ============ 5 · CHALKBOARD ============ -->
+    <section class="tpl" data-tpl="board" hidden aria-label="Chalkboard template">
+      <div class="page__inner">
+        <article class="article"><div class="article__inner">
+          <div class="block"><div class="block__inner"><div class="component"><div class="ab-chalkboard">
+            <span class="lesson-kicker" style="color:rgba(255,255,255,.6)">Lesson / 05</span>
+            <h1>The water cycle</h1>
+            <p style="color:rgba(255,255,255,.85);max-width:var(--measure)">Water moves in a loop: it <span class="chalk-accent">evaporates</span>, condenses into cloud, then falls as rain. Nothing is lost — it just changes form.</p>
+          </div></div></div></div>
+          <div class="block"><div class="block__inner grid-3">
+            <div class="component"><div class="ab card info soft"><div class="card-body"><div class="lesson-comp-title"><span class="material-symbol" aria-hidden="true">wb_sunny</span>Evaporate</div><p class="card-text">The sun warms the sea; water rises as vapour.</p></div></div></div>
+            <div class="component"><div class="ab card info soft"><div class="card-body"><div class="lesson-comp-title"><span class="material-symbol" aria-hidden="true">cloud</span>Condense</div><p class="card-text">Vapour cools high up and gathers into cloud.</p></div></div></div>
+            <div class="component"><div class="ab card info soft"><div class="card-body"><div class="lesson-comp-title"><span class="material-symbol" aria-hidden="true">rainy</span>Precipitate</div><p class="card-text">Droplets grow heavy and fall as rain.</p></div></div></div>
+          </div></div>
+        </div></article>
+      </div>
+    </section>
+
+    <!-- ============ 6 · EDITORIAL ============ -->
+    <section class="tpl" data-tpl="editorial" hidden aria-label="Editorial template">
+      <div class="page__inner">
+        <header class="page__header"><span class="lesson-kicker">Reading / 06</span><h1>What makes a landscape</h1><p class="lesson-intro">A reading-led page: images, a question to hold, and space to think.</p><span class="lesson-hero-symbol material-symbol" aria-hidden="true">filter_hdr</span></header>
+        <article class="article"><div class="article__inner"><div class="block"><div class="block__inner">
+          <div class="component"><div class="inspiration-wall">
+            <figure class="lesson-scene"><div class="scene-art" aria-hidden="true"><span></span><span></span><span></span><span class="material-symbol">gesture</span></div><figcaption>01 / Foreground</figcaption></figure>
+            <blockquote>A landscape is a question about where you are standing.</blockquote>
+            <figure class="lesson-scene"><div class="scene-art" aria-hidden="true"><span></span><span></span><span></span><span class="material-symbol">filter_hdr</span></div><figcaption>02 / Horizon</figcaption></figure>
+          </div><p class="tpl-note">Notice what the artist put <span class="ab-highlight">near</span> and what they pushed <span class="ab-highlight comment">far</span> — depth is a choice.</p></div>
+        </div></div></article>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<script>
+  const root=document.documentElement;
+  // tabs
+  const tabs=[...document.querySelectorAll('.tab')], tpls=[...document.querySelectorAll('.tpl')];
+  function show(id){tabs.forEach(t=>t.setAttribute('aria-selected',t.dataset.tpl===id));tpls.forEach(s=>{s.hidden=s.dataset.tpl!==id});}
+  document.getElementById('tabs').addEventListener('click',e=>{const t=e.target.closest('.tab');if(t)show(t.dataset.tpl);});
+  // hue
+  document.getElementById('hue').addEventListener('input',e=>root.style.setProperty('--h',e.target.value));
+  // structure overlay
+  const sb=document.getElementById('struct');
+  sb.addEventListener('click',()=>{const on=!root.classList.contains('show-structure');root.classList.toggle('show-structure',on);sb.setAttribute('aria-pressed',String(on));sb.textContent=on?'Hide structure':'Show structure';});
+  // theme
+  document.getElementById('theme').addEventListener('click',e=>{const b=e.target.closest('[data-set]');if(!b)return;const m=b.dataset.set;m==='system'?root.removeAttribute('data-theme'):root.setAttribute('data-theme',m);document.querySelectorAll('#theme button').forEach(x=>x.setAttribute('aria-pressed',x===b));});
+</script>

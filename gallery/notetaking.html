@@ -1,0 +1,174 @@
+<title>Abbott Note-taking</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Caveat:wght@600;700&display=swap">
+<style>
+/* Note-taking SVG animations on the Abbott theme — the act of writing and
+   annotating, animated. Draw-on via pathLength + stroke-dashoffset, a pen nib
+   that follows the stroke via offset-path, all wobbled by the #ink filter.
+   One --flow-rate dial; theme-aware; quiet under reduced motion. */
+:root{
+  --h:202;--s:72%;--gs:12%;
+  --page-bg:hsl(var(--h) 30% 96%);--surface-1:hsl(var(--h) 24% 98%);--surface-2:hsl(var(--h) 20% 93%);
+  --ink:hsl(var(--h) 25% 16%);--ink-soft:hsl(var(--h) 14% 42%);--line:hsl(var(--h) 18% 86%);
+  --accent:hsl(var(--h) var(--s) 44%);--shadow:hsl(var(--h) 40% 20% / .16);--c-positive:hsl(150 55% 40%);--c-neutral:hsl(calc(var(--h)+198) 60% 46%);
+  --rule:color-mix(in srgb,var(--line) 80%,transparent);--flow-rate:1;
+  --font-ui:"Inter",ui-sans-serif,system-ui,sans-serif;--font-hand:"Caveat","Segoe Script",cursive;--font-mono:ui-monospace,Menlo,Consolas,monospace;
+  --fs-3xs:.72rem;--fs-xs:.88rem;--fs-sm:.95rem;--radius:14px;--sp:clamp(1rem,.85rem + .6vw,1.5rem);color-scheme:light;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--page-bg:hsl(var(--h) 32% 8%);--surface-1:hsl(var(--h) 26% 13%);--surface-2:hsl(var(--h) 24% 17%);--ink:hsl(var(--h) 20% 92%);--ink-soft:hsl(var(--h) 14% 64%);--line:hsl(var(--h) 22% 24%);--accent:hsl(var(--h) var(--s) 64%);--shadow:hsl(var(--h) 60% 2% / .5);color-scheme:dark}}
+:root[data-theme="dark"]{--page-bg:hsl(var(--h) 32% 8%);--surface-1:hsl(var(--h) 26% 13%);--surface-2:hsl(var(--h) 24% 17%);--ink:hsl(var(--h) 20% 92%);--ink-soft:hsl(var(--h) 14% 64%);--line:hsl(var(--h) 22% 24%);--accent:hsl(var(--h) var(--s) 64%);--shadow:hsl(var(--h) 60% 2% / .5);color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--page-bg);color:var(--ink);font-family:var(--font-ui);line-height:1.6}
+h3{font-size:1.1rem;margin:0 0 .2rem}
+.wrap{max-width:66rem;margin-inline:auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:var(--sp)}
+.bar{display:flex;flex-wrap:wrap;gap:12px;align-items:center;background:color-mix(in srgb,var(--surface-1) 92%,transparent);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:var(--sp);position:sticky;top:env(safe-area-inset-top,0px);z-index:9}
+.bar .grow{flex:1 1 auto}
+.btn{font:inherit;font-weight:600;font-size:var(--fs-xs);padding:7px 13px;border-radius:999px;border:1px solid var(--accent);background:var(--accent);color:#fff;cursor:pointer}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden}.seg button{font:inherit;font-size:var(--fs-xs);font-weight:600;padding:6px 11px;border:0;background:var(--surface-2);color:var(--ink-soft);cursor:pointer}.seg button[aria-pressed="true"]{background:var(--accent);color:#fff}
+.spd .v{min-width:3.4em;text-align:center;font-family:var(--font-mono);font-size:var(--fs-xs);font-weight:600;color:var(--ink);background:var(--surface-2);display:inline-flex;align-items:center;justify-content:center}.spd button{min-width:2em;font-size:1rem}
+.grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fill,minmax(min(280px,100%),1fr))}
+.pat{background:var(--surface-1);border:1px solid var(--line);border-radius:var(--radius);padding:var(--sp);box-shadow:0 10px 30px -18px var(--shadow);min-width:0}
+.pat .tag{font-family:var(--font-mono);font-size:var(--fs-3xs);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft)}
+.pat .use{font-size:var(--fs-xs);color:var(--ink-soft);margin:.2rem 0 .8rem}
+.stage{background:var(--surface-2);border-radius:10px;padding:14px;display:flex;justify-content:center;align-items:center;min-height:150px}
+.stage svg{width:100%;height:auto;max-height:160px;overflow:visible}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+/* shared ink stroke + draw-on */
+.ink{fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:1;stroke-dashoffset:0;filter:url(#ink)}
+.rule{fill:none;stroke:var(--rule);stroke-width:2;stroke-dasharray:1;stroke-dashoffset:0}
+.playing .ink,.playing .rule{animation:draw calc(.7s / var(--flow-rate)) ease var(--d,0s) both}
+@keyframes draw{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
+.hand{color:var(--accent)} .write{color:var(--ink)}
+/* pen nib follows the stroke */
+.nib{opacity:0}
+.playing .nib{animation:nibmove calc(.7s / var(--flow-rate)) ease var(--nd,0s) both,nibfade calc(.7s / var(--flow-rate)) step-end var(--nd,0s) both}
+@keyframes nibmove{from{offset-distance:0%}to{offset-distance:100%}}
+@keyframes nibfade{0%{opacity:1}99%{opacity:1}100%{opacity:0}}
+/* highlighter wipe */
+.hlwipe{transform-origin:left center}
+.playing .hlwipe{animation:wipe calc(.6s / var(--flow-rate)) ease var(--d,0s) both}
+@keyframes wipe{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+/* sticky slap */
+.slap{transform-origin:50% 0}
+.playing .slap{animation:slap calc(.5s / var(--flow-rate)) cubic-bezier(.2,1.5,.5,1) both}
+@keyframes slap{0%{transform:translateY(-40px) rotate(-8deg) scale(.9);opacity:0}60%{transform:translateY(0) rotate(3deg) scale(1.02);opacity:1}100%{transform:rotate(-2deg)}}
+/* page turn */
+.pageturn{transform-origin:right center;transform-style:preserve-3d}
+.playing .pageturn{animation:turn calc(1s / var(--flow-rate)) ease both}
+@keyframes turn{from{transform:rotateY(0)}to{transform:rotateY(-155deg)}}
+/* caret + typed text clip */
+.typed{clip-path:inset(0 0 0 0)}
+.playing .typed{animation:type calc(1.3s / var(--flow-rate)) steps(18,end) both}
+@keyframes type{from{clip-path:inset(0 100% 0 0)}to{clip-path:inset(0 -2% 0 0)}}
+.caret{animation:blink 1s step-end infinite}
+@keyframes blink{50%{opacity:0}}
+@media (prefers-reduced-motion:reduce){.playing *{animation:none!important}.typed{clip-path:none}}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="ink" x="-20%" y="-20%" width="140%" height="140%"><feTurbulence type="fractalNoise" baseFrequency="0.015" numOctaves="2" seed="5" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2"/></filter></svg>
+
+<div class="wrap">
+  <div class="bar"><strong>Abbott Note-taking</strong><span class="grow"></span>
+    <div class="seg spd" role="group" aria-label="Speed"><button data-spd="-1" aria-label="Slower">−</button><span class="v" id="spdv">100%</span><button data-spd="1" aria-label="Faster">+</button></div>
+    <button class="btn" id="replay">▶ Replay</button>
+    <div class="seg" id="theme"><button data-set="light" aria-pressed="false">Light</button><button data-set="dark" aria-pressed="false">Dark</button><button data-set="system" aria-pressed="true">System</button></div>
+  </div>
+
+  <div class="grid">
+
+    <!-- PEN WRITING -->
+    <div class="pat"><div class="tag">Writing</div><h3>Pen writes a line</h3><p class="use">A nib follows the stroke as the handwriting draws on beneath it.</p>
+      <div class="stage"><svg viewBox="0 0 300 90" role="img" aria-label="Pen writing">
+        <path class="rule" pathLength="1" style="--d:0s" d="M10 70 L290 70"/>
+        <path class="ink write" pathLength="1" style="--d:.1s;stroke-width:3.5" d="M16 60 q 10 -34 20 -2 t 22 0 q 8 -26 18 -4 q 10 20 22 2 q 10 -30 20 -2 t 22 0 q 14 -4 26 -14 q -6 20 10 16 q 20 -2 36 -18"/>
+        <g class="nib" style="--nd:.1s;offset-path:path('M16 60 q 10 -34 20 -2 t 22 0 q 8 -26 18 -4 q 10 20 22 2 q 10 -30 20 -2 t 22 0 q 14 -4 26 -14 q -6 20 10 16 q 20 -2 36 -18')">
+          <path d="M0 0 L10 3 L3 10 Z" fill="var(--accent)"/><path d="M8 8 L18 18" stroke="var(--ink)" stroke-width="3" stroke-linecap="round"/>
+        </g>
+      </svg></div>
+    </div>
+
+    <!-- PAGE FILLS -->
+    <div class="pat"><div class="tag">Writing</div><h3>Notes fill the page</h3><p class="use">Ruled lines of "writing" drawn top to bottom.</p>
+      <div class="stage"><svg viewBox="0 0 300 150" role="img" aria-label="Page fills with notes">
+        <path class="ink write" pathLength="1" style="--d:0s;stroke-width:3" d="M14 24 q 20 -14 40 0 t 40 0 t 40 0 t 40 0 t 40 0 q 20 10 36 0"/>
+        <path class="ink write" pathLength="1" style="--d:.25s;stroke-width:3" d="M14 54 q 18 -12 36 0 t 36 0 t 36 0 t 36 0 q 16 8 30 0"/>
+        <path class="ink write" pathLength="1" style="--d:.5s;stroke-width:3" d="M14 84 q 22 -14 44 0 t 44 0 t 44 0 t 44 0 q 18 8 34 0"/>
+        <path class="ink write" pathLength="1" style="--d:.75s;stroke-width:3" d="M14 114 q 18 -12 36 0 t 36 0 t 36 0 q 14 8 26 0"/>
+      </svg></div>
+    </div>
+
+    <!-- CHECKBOX -->
+    <div class="pat"><div class="tag">Marking</div><h3>Tick the box</h3><p class="use">Box draws, then the tick lands inside.</p>
+      <div class="stage"><svg viewBox="0 0 120 120" role="img" aria-label="Checkbox tick">
+        <path class="ink" style="--d:0s;color:var(--ink-soft);stroke-width:3" pathLength="1" d="M26 24 L94 20 L96 92 L24 96 Z"/>
+        <path class="ink" style="--d:.4s;color:var(--c-positive);stroke-width:7" pathLength="1" d="M38 58 L54 76 L86 34"/>
+      </svg></div>
+    </div>
+
+    <!-- HIGHLIGHTER -->
+    <div class="pat"><div class="tag">Marking</div><h3>Highlight a line</h3><p class="use">Marker band wipes across the written word.</p>
+      <div class="stage"><svg viewBox="0 0 280 70" role="img" aria-label="Highlight sweep">
+        <g class="hlwipe" style="--d:0s"><rect x="18" y="26" width="244" height="24" rx="4" fill="color-mix(in srgb,var(--c-neutral) 42%,transparent)"/></g>
+        <path class="ink write" pathLength="1" style="--d:.15s;stroke-width:3.5" d="M24 44 q 14 -22 28 -2 t 28 0 q 10 -18 20 -2 q 8 16 20 2 q 12 -22 24 -2 t 28 0 q 16 -2 30 -12"/>
+      </svg></div>
+    </div>
+
+    <!-- BULLETS -->
+    <div class="pat"><div class="tag">Writing</div><h3>Bullet list builds</h3><p class="use">A dot then a line per point, in turn.</p>
+      <div class="stage"><svg viewBox="0 0 280 150" role="img" aria-label="Bullet list">
+        <circle cx="22" cy="28" r="5" fill="var(--accent)" class="ink" style="--d:0s"/><path class="ink write" pathLength="1" style="--d:.1s;stroke-width:3" d="M40 28 q 20 -12 40 0 t 40 0 t 40 0 q 18 8 34 0"/>
+        <circle cx="22" cy="70" r="5" fill="var(--accent)" class="ink" style="--d:.4s"/><path class="ink write" pathLength="1" style="--d:.5s;stroke-width:3" d="M40 70 q 18 -12 36 0 t 36 0 t 36 0 q 14 8 26 0"/>
+        <circle cx="22" cy="112" r="5" fill="var(--accent)" class="ink" style="--d:.8s"/><path class="ink write" pathLength="1" style="--d:.9s;stroke-width:3" d="M40 112 q 22 -12 44 0 t 44 0 q 16 8 30 0"/>
+      </svg></div>
+    </div>
+
+    <!-- MARGIN NOTE -->
+    <div class="pat"><div class="tag">Annotating</div><h3>Margin note</h3><p class="use">A star in the margin and an arrow to the point that matters.</p>
+      <div class="stage"><svg viewBox="0 0 300 130" role="img" aria-label="Margin annotation">
+        <path class="ink write" pathLength="1" style="--d:0s;stroke-width:3;color:var(--ink-soft)" d="M70 40 q 20 -12 40 0 t 40 0 t 40 0 q 18 8 34 0"/>
+        <path class="ink write" pathLength="1" style="--d:.2s;stroke-width:3;color:var(--ink-soft)" d="M70 70 q 18 -12 36 0 t 36 0 q 20 8 40 0"/>
+        <path class="ink" style="--d:.5s;color:var(--c-neutral);stroke-width:3" pathLength="1" d="M28 60 L33 74 L47 74 L36 83 L40 97 L28 88 L16 97 L20 83 L9 74 L23 74 Z"/>
+        <path class="ink" style="--d:.8s;color:var(--accent);stroke-width:3" pathLength="1" d="M46 70 C 70 64,80 58,96 56 M96 56 L88 54 M96 56 L90 62"/>
+      </svg></div>
+    </div>
+
+    <!-- STICKY SLAP -->
+    <div class="pat"><div class="tag">Annotating</div><h3>Sticky note lands</h3><p class="use">A note drops in and settles with a little bounce.</p>
+      <div class="stage"><svg viewBox="0 0 160 160" role="img" aria-label="Sticky note">
+        <g class="slap"><rect x="26" y="20" width="108" height="108" rx="3" fill="#fff3a8" stroke="rgba(0,0,0,.12)"/><path d="M114 108 L134 108 L114 128 Z" fill="rgba(0,0,0,.1)"/>
+          <path d="M44 52 h72 M44 72 h72 M44 92 h48" stroke="#b7932a" stroke-width="3" stroke-linecap="round" fill="none" opacity=".6"/>
+        </g>
+      </svg></div>
+    </div>
+
+    <!-- PAGE TURN -->
+    <div class="pat"><div class="tag">Pages</div><h3>Turn the page</h3><p class="use">A page lifts and turns to reveal the next.</p>
+      <div class="stage" style="perspective:800px"><svg viewBox="0 0 180 150" role="img" aria-label="Page turn">
+        <rect x="20" y="16" width="140" height="120" rx="4" fill="var(--surface-1)" stroke="var(--line)"/>
+        <path d="M44 44 h92 M44 64 h92 M44 84 h70" stroke="var(--rule)" stroke-width="3" stroke-linecap="round"/>
+        <g class="pageturn"><rect x="20" y="16" width="140" height="120" rx="4" fill="color-mix(in srgb,var(--accent) 7%,var(--surface-1))" stroke="var(--line)"/>
+          <path d="M44 44 h92 M44 64 h92 M44 84 h92 M44 104 h60" stroke="var(--rule)" stroke-width="3" stroke-linecap="round"/></g>
+      </svg></div>
+    </div>
+
+    <!-- TYPEWRITER -->
+    <div class="pat"><div class="tag">Writing</div><h3>Typed note</h3><p class="use">Text reveals with a blinking caret.</p>
+      <div class="stage"><svg viewBox="0 0 300 80" role="img" aria-label="Typed text">
+        <text class="typed" x="16" y="48" font-family="var(--font-mono)" font-size="22" font-weight="700" fill="var(--ink)">Taking a note…</text>
+        <rect class="caret" x="214" y="30" width="3" height="26" fill="var(--accent)"/>
+      </svg></div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],root=document.documentElement;
+  function play(){root.classList.remove('playing');void root.offsetWidth;root.classList.add('playing');clearTimeout(play._t);play._t=setTimeout(()=>root.classList.remove('playing'),2600);}
+  $('#replay').addEventListener('click',play);
+  let rate=1;const spdv=$('#spdv');
+  $$('[data-spd]').forEach(b=>b.addEventListener('click',()=>{rate=Math.round(Math.min(2.5,Math.max(.4,rate+ +b.dataset.spd*0.1))*10)/10;root.style.setProperty('--flow-rate',rate);spdv.textContent=Math.round(rate*100)+'%';}));
+  $('#theme').addEventListener('click',e=>{const b=e.target.closest('[data-set]');if(!b)return;const m=b.dataset.set;m==='system'?root.removeAttribute('data-theme'):root.setAttribute('data-theme',m);$$('#theme button').forEach(x=>x.setAttribute('aria-pressed',x===b));});
+  setTimeout(play,400);
+</script>

@@ -1,0 +1,51 @@
+/* ============================================================================
+   45-scribbles.less — hand-drawn emphasis assets
+   ----------------------------------------------------------------------------
+   Marker scribbles that wrap a word: underline, circle, strike, plus loose
+   arrow and star doodles. Each is a single inline-SVG stroke using
+   currentColor, so it inherits the theme and draws on with stroke-dashoffset.
+   Readable at rest (fully drawn); the draw-on only runs while an ancestor
+   carries .playing (set that on reveal / Trickle, or a replay control).
+   Use sparingly — mark the ONE thing that matters.
+
+   MARKUP (give each animated <path> pathLength="1"):
+     <span class="ab-mark underline">key idea
+       <svg viewBox="0 0 240 14" preserveAspectRatio="none" aria-hidden="true">
+         <path class="ab-scribble" pathLength="1" d="M3 8 C 48 2,78 12,120 7 S 196 3,237 8"/>
+       </svg></span>
+
+   Ready paths (viewBox / d):
+     underline  0 0 240 14   M3 8 C 48 2,78 12,120 7 S 196 3,237 8
+     circle     0 0 220 90    M168 16 C 70 2,16 20,22 48 C 28 78,128 88,186 70 C 220 58,206 20,150 15
+     strike     0 0 200 16    M4 9 C 54 4,96 14,142 8 S 196 6,196 9
+     arrow      0 0 120 70    (shaft) M8 18 C 48 8,92 20,102 50  (head) M102 50 L 86 42 M102 50 L 106 32
+     star       0 0 60 60     M30 5 L37 23 L56 23 L41 35 L47 55 L30 43 L13 55 L19 35 L4 23 L23 23 Z
+   ============================================================================ */
+
+.ab-mark { position: relative; display: inline-block; color: var(--accent); }
+.ab-mark.positive { color: var(--c-positive); }
+.ab-mark.warning  { color: var(--c-neutral); }
+.ab-mark.comment  { color: var(--c-comment); }
+.ab-mark > * { color: var(--ink); }                 /* keep the text itself in ink */
+.ab-mark svg { position: absolute; left: -6%; width: 112%; overflow: visible; color: inherit; pointer-events: none; }
+.ab-mark.underline svg { bottom: -0.35em; height: 0.55em; }
+.ab-mark.circle    svg { top: -28%; height: 150%; left: -12%; width: 124%; }
+.ab-mark.strike    svg { top: 42%; height: 0.5em; }
+
+.ab-arrow  { display: inline-block; vertical-align: middle; width: 3rem; color: var(--accent); }
+.ab-doodle { display: inline-block; vertical-align: middle; width: 2.4rem; color: var(--c-neutral); }
+
+.ab-scribble {
+  fill: none; stroke: currentColor; stroke-width: 3;
+  stroke-linecap: round; stroke-linejoin: round;
+  stroke-dasharray: 1; stroke-dashoffset: 0;         /* at rest: fully drawn */
+}
+.ab-arrow .ab-scribble { stroke-width: 4; }
+
+/* draw-on only while .playing; stagger with inline style="--d:.15s" */
+.playing .ab-scribble { animation: ab-scribble-draw 0.7s ease var(--d, 0s) both; }
+@keyframes ab-scribble-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .playing .ab-scribble { animation: none; stroke-dashoffset: 0; }
+}

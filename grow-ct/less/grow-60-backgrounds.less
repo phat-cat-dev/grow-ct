@@ -1,0 +1,122 @@
+// ============================================================================
+//  60-backgrounds.less — Grow AMBIENT BACKGROUNDS
+//  ----------------------------------------------------------------------------
+//  Subtle, token-driven animated backgrounds to sit behind a hero/header/section.
+//  All pure CSS — they retint with the hue and flip for dark mode automatically,
+//  run off the shared --flow-rate speed dial, and stop under reduced motion or
+//  <html class="no-motion">.
+//
+//  USAGE — drop a fill layer into a position:relative container:
+//    <div class="bg-host">
+//      <div class="bg bg--aurora"></div>
+//      …content above it…
+//    </div>
+//  In Adapt, add `bg-host` to a block/article `_classes` and place the
+//  `.bg` layer in a text/graphic component. Pseudo-only effects (grad, dots,
+//  grid, stripes, spot, mesh, aurora) need no extra markup; blobs/bokeh/wave
+//  expect child <span>/<svg> (see gallery/backgrounds.html).
+//
+//  Extracted from gallery/backgrounds.html.
+// ============================================================================
+
+:root { --flow-rate: 1; }  // shared across all Grow motion; stepped ±10% by UI
+
+.bg-host { position: relative; overflow: hidden; }
+
+.bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+.bg-host > :not(.bg) { position: relative; z-index: 1; }
+
+// 1 · gradient drift
+.bg--grad {
+  background: linear-gradient(120deg,
+    hsl(var(--h) var(--s) 55%),
+    hsl(calc(var(--h) + 55) var(--s) 55%),
+    hsl(calc(var(--h) - 35) var(--s) 48%));
+  background-size: 220% 220%;
+  animation: grow-gradmove calc(9s / var(--flow-rate)) ease-in-out infinite;
+}
+@keyframes grow-gradmove { 0% { background-position: 0% 50% } 50% { background-position: 100% 50% } 100% { background-position: 0% 50% } }
+
+// 2 · aurora
+.bg--aurora { background: var(--surface-2); }
+.bg--aurora::before,
+.bg--aurora::after { content: ""; position: absolute; inset: -45%; filter: blur(26px); animation: grow-aur calc(11s / var(--flow-rate)) ease-in-out infinite; }
+.bg--aurora::before { background: radial-gradient(closest-side, color-mix(in srgb, var(--accent) 65%, transparent), transparent); }
+.bg--aurora::after  { background: radial-gradient(closest-side, color-mix(in srgb, hsl(calc(var(--h) + 70) var(--s) 56%) 60%, transparent), transparent); animation-duration: calc(14s / var(--flow-rate)); animation-direction: reverse; }
+@keyframes grow-aur { 0% { transform: translate(-18%,-8%) scale(1) } 50% { transform: translate(22%,14%) scale(1.3) } 100% { transform: translate(-18%,-8%) scale(1) } }
+
+// 3 · blobs (expects child <span>s, each positioned + sized by the author)
+.bg--blobs { background: var(--surface-1); }
+.bg--blobs span { position: absolute; border-radius: 50%; filter: blur(6px); opacity: .5; animation: grow-drift calc(12s / var(--flow-rate)) ease-in-out infinite; }
+@keyframes grow-drift { 0% { transform: translate(0,0) } 33% { transform: translate(28px,-18px) } 66% { transform: translate(-20px,16px) } 100% { transform: translate(0,0) } }
+
+// 4 · dot drift
+.bg--dots {
+  background-color: var(--surface-1);
+  background-image: radial-gradient(color-mix(in srgb, var(--accent) 42%, transparent) 2px, transparent 2px);
+  background-size: 22px 22px;
+  animation: grow-pan calc(5s / var(--flow-rate)) linear infinite;
+}
+@keyframes grow-pan { to { background-position: 22px 22px } }
+
+// 5 · grid pan
+.bg--grid {
+  background-color: var(--surface-1);
+  background-image:
+    repeating-linear-gradient(to right,  color-mix(in srgb, var(--accent) 22%, transparent) 0 1px, transparent 1px 28px),
+    repeating-linear-gradient(to bottom, color-mix(in srgb, var(--accent) 22%, transparent) 0 1px, transparent 1px 28px);
+  animation: grow-pang calc(8s / var(--flow-rate)) linear infinite;
+}
+@keyframes grow-pang { to { background-position: 28px 28px } }
+
+// 6 · stripes
+.bg--stripes {
+  background: repeating-linear-gradient(45deg, color-mix(in srgb, var(--accent) 20%, var(--surface-1)) 0 14px, var(--surface-1) 14px 28px);
+  background-size: 200% 200%;
+  animation: grow-slide calc(2.6s / var(--flow-rate)) linear infinite;
+}
+@keyframes grow-slide { to { background-position: 39.6px 0 } }
+
+// 7 · bokeh (expects child <span>s rising)
+.bg--bokeh { background: linear-gradient(hsl(var(--h) 45% 24%), hsl(var(--h) 55% 12%)); }
+.bg--bokeh span { position: absolute; bottom: -24px; border-radius: 50%; background: color-mix(in srgb, var(--accent) 70%, #fff); opacity: .32; animation: grow-rise calc(7s / var(--flow-rate)) linear infinite; }
+@keyframes grow-rise { 0% { transform: translateY(0) scale(.7); opacity: 0 } 15% { opacity: .4 } 100% { transform: translateY(-220px) scale(1.1); opacity: 0 } }
+
+// 8 · wave (expects child <svg> with .b second path)
+.bg--wave { background: linear-gradient(var(--surface-1), var(--surface-2)); }
+.bg--wave svg { position: absolute; bottom: -2px; left: 0; width: 200%; height: 60%; color: var(--accent); }
+.bg--wave path { fill: color-mix(in srgb, var(--accent) 30%, transparent); animation: grow-wavemove calc(6s / var(--flow-rate)) linear infinite; }
+.bg--wave path.b { fill: color-mix(in srgb, var(--accent) 18%, transparent); animation-duration: calc(9s / var(--flow-rate)); }
+@keyframes grow-wavemove { to { transform: translateX(-50%) } }
+
+// 9 · spotlight sweep
+.bg--spot { background: var(--surface-2); }
+.bg--spot::before { content: ""; position: absolute; inset: 0; background: radial-gradient(circle at 50% 45%, color-mix(in srgb, var(--accent) 55%, transparent), transparent 42%); animation: grow-sweep calc(5s / var(--flow-rate)) ease-in-out infinite; }
+@keyframes grow-sweep { 0% { transform: translateX(-32%) } 50% { transform: translateX(32%) } 100% { transform: translateX(-32%) } }
+
+// 10 · mesh rotate
+.bg--mesh { background: var(--surface-1); }
+.bg--mesh::before {
+  content: ""; position: absolute; inset: -55%; filter: blur(32px);
+  background: conic-gradient(from 0deg,
+    color-mix(in srgb, var(--accent) 55%, transparent),
+    color-mix(in srgb, hsl(calc(var(--h) + 90) var(--s) 56%) 55%, transparent),
+    color-mix(in srgb, hsl(calc(var(--h) - 40) var(--s) 52%) 55%, transparent),
+    color-mix(in srgb, var(--accent) 55%, transparent));
+  animation: grow-spin calc(16s / var(--flow-rate)) linear infinite;
+}
+@keyframes grow-spin { to { transform: rotate(360deg) } }
+
+// stop motion — in-course toggle or OS setting
+.no-motion .bg,
+.no-motion .bg::before,
+.no-motion .bg::after,
+.no-motion .bg * { animation: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  .bg, .bg::before, .bg::after, .bg * { animation: none !important; }
+}

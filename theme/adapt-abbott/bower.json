@@ -1,0 +1,16 @@
+{
+  "name": "adapt-abbott",
+  "version": "1.0.0",
+  "framework": ">=5.31.3",
+  "theme": "abbott",
+  "displayName": "Abbott",
+  "description": "Abbott — a fluid, token-driven theme generated from the AB Theme Studio.",
+  "main": "js/theme.js",
+  "keywords": [
+    "adapt-plugin",
+    "adapt-theme"
+  ],
+  "license": "MIT",
+  "targetAttribute": "_abbott",
+  "private": true
+}
