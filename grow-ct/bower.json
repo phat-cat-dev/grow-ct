@@ -1,6 +1,6 @@
 {
   "name": "grow-ct",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "framework": ">=5.31.3",
   "theme": "grow-base",
   "displayName": "Grow Base",

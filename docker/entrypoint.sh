@@ -28,8 +28,22 @@ echo "[grow] syncing $THEME from the repo → src/theme/$THEME"
 rm -rf "src/theme/$THEME"
 cp -r "$REPO/$THEME" "src/theme/$THEME"
 
-echo "[grow] pointing the course at _theme: $THEME"
-node -e "const f='src/course/config.json';const fs=require('fs');const c=JSON.parse(fs.readFileSync(f,'utf8'));c._theme=process.env.THEME;fs.writeFileSync(f,JSON.stringify(c,null,2));"
+echo "[grow] pointing the course at _theme: $THEME (excluding other installed themes)"
+# Adapt allows only one active theme, so add every other src/theme/* (e.g. the
+# vanilla theme `adapt install` pulls in) to build.excludes
+THEME="$THEME" node -e "
+const fs = require('fs');
+const f = 'src/course/config.json';
+const t = process.env.THEME;
+const c = JSON.parse(fs.readFileSync(f, 'utf8'));
+c._theme = t;
+const others = fs.readdirSync('src/theme', { withFileTypes: true })
+  .filter(d => d.isDirectory() && d.name !== t).map(d => d.name);
+c.build = c.build || {};
+const excludes = (c.build.excludes || []).filter(x => x !== t);
+c.build.excludes = [...new Set([...excludes, ...others])];
+fs.writeFileSync(f, JSON.stringify(c, null, 2));
+"
 
 echo "[grow] grunt build…"
 npx grunt build

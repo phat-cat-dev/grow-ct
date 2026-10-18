@@ -12,6 +12,11 @@ docker compose up --build
 
 Then open **http://localhost:8080**.
 
+Shell scripts use LF line endings via `.gitattributes`. The image build also
+normalizes the entrypoint to LF so existing Windows CRLF checkouts work. If you
+see `/usr/bin/env: 'bash\r': No such file or directory`, rebuild with
+`docker compose up --build`; no framework volume reset is needed.
+
 - **First run** clones `adapt_framework`, `npm install`s it, and runs
   `adapt install` to pull the core + contrib plugins. This is slow and needs
   GitHub access. It's stored in the `adapt_framework` named volume and reused.

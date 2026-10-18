@@ -2,6 +2,16 @@
 
 All notable changes to **adapt-grow** (the GROW theme layer for Adapt — ADAPT & GROW).
 
+## v1.0.1 — Docker fixes
+
+### Docker
+- Fix `/usr/bin/env: 'bash\r'` on Windows checkouts: `.gitattributes` forces LF
+  for `*.sh`, and the image build strips CRs from the entrypoint as a backstop.
+- Fix "More than one theme is active": the entrypoint now adds every other
+  installed theme (e.g. `adapt-contrib-vanilla` from `adapt install`) to
+  `build.excludes` in the course `config.json`.
+- `docker compose up` serves at http://localhost:8080.
+
 ## v1.0.0 — first release
 
 First tagged release of the GROW layer.
