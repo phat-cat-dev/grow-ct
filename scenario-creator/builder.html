@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scenario builder</title>
+<style>
+  :root { --bg:#eef2f6; --surface:#fff; --raised:#f2f6f9; --ink:#1d2730; --soft:#5b6670; --line:#cdd6de; --accent:#2f6d8f; --positive:#2e8b57; --mixed:#b8860b; --negative:#b23b3b; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#11181d; --surface:#182229; --raised:#1f2b33; --ink:#e8eef2; --soft:#9fb0bb; --line:#2c3a44; --accent:#6fb3d2; --positive:#5bbe86; --mixed:#e0b64e; --negative:#e07a7a; } }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:15px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif; }
+  .bar { position:sticky; top:0; z-index:5; display:flex; flex-wrap:wrap; gap:.5rem; align-items:center; padding:.6rem 1rem; background:color-mix(in srgb,var(--surface) 92%,transparent); backdrop-filter:blur(10px); border-bottom:1px solid var(--line); }
+  .bar strong { margin-right:auto; } .bar a { color:var(--accent); font-size:.9rem; text-decoration:none; }
+  .layout { display:grid; grid-template-columns: minmax(0,1fr) minmax(0,1fr); gap:1.2rem; max-width:72rem; margin:auto; padding:1.2rem 1rem 4rem; align-items:start; }
+  .col { background:var(--surface); border:1px solid var(--line); border-radius:.8rem; padding:1.1rem 1.2rem; }
+  h1 { font-size:1.15rem; margin:.1rem 0 .2rem; } .sub { color:var(--soft); font-size:.9rem; margin:.1rem 0 1rem; }
+  label { display:block; margin:.7rem 0; } label > span { display:block; font-size:.82rem; color:var(--soft); margin-bottom:.2rem; }
+  input, select, textarea, button { font:inherit; color:var(--ink); }
+  input, select, textarea { width:100%; padding:.5rem .6rem; border:1px solid var(--line); border-radius:.5rem; background:var(--surface); }
+  textarea { min-height:4.5rem; resize:vertical; }
+  .two { display:grid; grid-template-columns:1fr 1fr; gap:.7rem; }
+  .three { display:grid; grid-template-columns:1fr 1fr 1fr; gap:.7rem; }
+  button { cursor:pointer; padding:.5rem .8rem; border:1px solid var(--line); border-radius:.55rem; background:var(--surface); }
+  button.primary { background:var(--accent); border-color:var(--accent); color:#fff; font-weight:600; }
+  button:hover:not(:disabled) { border-color:var(--accent); }
+  .actions { display:flex; flex-wrap:wrap; gap:.5rem; margin-top:1rem; }
+  :focus-visible { outline:3px solid var(--accent); outline-offset:1px; }
+  .rangewrap { display:flex; align-items:center; gap:.6rem; } .rangewrap output { font:600 .95rem ui-monospace,monospace; min-width:1.4rem; text-align:center; }
+  .seg { display:inline-flex; border:1px solid var(--line); border-radius:.5rem; overflow:hidden; } .seg button { border:0; border-radius:0; background:var(--raised); padding:.45rem .7rem; } .seg button[aria-pressed="true"] { background:var(--accent); color:#fff; font-weight:600; }
+  .summary { display:flex; flex-wrap:wrap; gap:.5rem 1rem; font:.85rem ui-monospace,monospace; color:var(--soft); margin:.3rem 0 .6rem; }
+  .pill { display:inline-block; padding:.2rem .5rem; border-radius:999px; background:var(--raised); }
+  .valid-ok { color:var(--positive); font-weight:600; } .valid-bad { color:var(--negative); font-weight:600; }
+  .graph-wrap { overflow:auto; max-height:34vh; border:1px solid var(--line); border-radius:.5rem; background:var(--raised); margin:.5rem 0; }
+  svg text { font:11px system-ui; fill:var(--ink); }
+  pre { margin:.3rem 0; padding:.7rem; max-height:16rem; overflow:auto; background:var(--raised); border-radius:.5rem; font:12px/1.5 ui-monospace,monospace; white-space:pre-wrap; }
+  details summary { cursor:pointer; font-weight:600; margin:.6rem 0 .3rem; }
+  .warn { color:var(--mixed); font-size:.85rem; }
+</style>
+</head>
+<body>
+  <div class="bar">
+    <strong>Scenario builder</strong>
+    <a href="./editor.html">Editor →</a>
+    <a href="./player.html">Player →</a>
+    <a href="./prompts/author-prompt.md">Author prompt →</a>
+  </div>
+  <div class="layout">
+    <section class="col">
+      <h1>Topic &amp; qualifiers</h1>
+      <p class="sub">Describe what the scenario is about and how it should behave. The builder generates a valid, layer-tagged scaffold you refine in the editor — and a filled brief an agent can expand.</p>
+      <label><span>Topic *</span><input id="topic" placeholder="e.g. handling an underperforming team member" autofocus></label>
+      <label><span>Audience</span><input id="audience" placeholder="e.g. first-time managers"></label>
+      <label><span>Learning outcomes — the judgements to improve (one per line)</span><textarea id="outcomes" placeholder="decides when to escalate&#10;separates a one-off from a pattern"></textarea></label>
+      <div class="two">
+        <label style="margin:.7rem 0"><span>Decision points</span>
+          <span class="rangewrap"><input type="range" id="decisions" min="1" max="6" value="3"><output id="decisions-out">3</output></span></label>
+        <label style="margin:.7rem 0"><span>Branch structure</span>
+          <div class="seg" id="style" role="group" aria-label="Branch structure">
+            <button type="button" data-style="spine">Spine</button>
+            <button type="button" data-style="tree">Tree</button>
+            <button type="button" data-style="mixed" aria-pressed="true">Mixed</button>
+          </div></label>
+      </div>
+      <p class="sub" id="style-help"></p>
+      <div class="two">
+        <label style="margin:.7rem 0"><span>Carry a variable forward</span><input id="trackvar" placeholder="e.g. trust (optional)"></label>
+        <label style="margin:.7rem 0"><span>Consequences</span><select id="constype"><option value="auto">Auto (timed reveal)</option><option value="continue">Button</option></select></label>
+      </div>
+      <div class="three">
+        <label style="margin:.7rem 0"><span>Reflections</span><select id="reflections"><option value="true">After each decision</option><option value="false">None</option></select></label>
+        <label style="margin:.7rem 0"><span>Tone</span><input id="tone" placeholder="e.g. realistic"></label>
+        <label style="margin:.7rem 0"><span>Reading level</span><input id="reading" placeholder="e.g. plain"></label>
+      </div>
+      <div class="actions">
+        <button class="primary" id="gen">Generate scaffold</button>
+        <button id="edit">Open in editor →</button>
+        <button id="play">Preview in player →</button>
+      </div>
+    </section>
+
+    <section class="col">
+      <h1>Result</h1>
+      <div class="summary" id="summary"><span class="pill">Fill in a topic and Generate</span></div>
+      <div class="graph-wrap"><svg id="graph" width="100%" height="260" role="img" aria-label="Branch map"></svg></div>
+      <div class="actions">
+        <button class="primary" id="downloadhtml">Download standalone HTML</button>
+        <button id="download">Download JSON</button>
+        <button id="copy">Copy JSON</button>
+        <button id="copybrief">Copy authoring prompt</button>
+      </div>
+      <details open><summary>Authoring prompt (topic + qualifiers filled in)</summary><pre id="brief"></pre></details>
+      <details><summary>Scaffold JSON</summary><pre id="json"></pre></details>
+    </section>
+  </div>
+
+  <script src="./validator.js"></script>
+  <script src="./layer-prompts.js"></script>
+  <script src="./scaffold.js"></script>
+  <script src="./export-html.js"></script>
+  <script>
+  (function () {
+    const $ = s => document.querySelector(s);
+    const P = window.SCENARIO_LAYER_PROMPTS;
+    const EDITOR_KEY = 'grow-scenario-editor:draft';
+    const PLAYER_KEY = 'grow-scenario-player:load';
+    const esc = t => String(t == null ? '' : t).replace(/[&<>]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;' }[c]));
+    let style = 'mixed', scenario = null;
+    const STYLE_HELP = {
+      spine: 'Spine: choices reconverge to a shared path and one outcome. Easiest to author.',
+      tree: 'Tree: choices diverge; weaker choices reach their own earlier endings. Multiple distinct outcomes.',
+      mixed: 'Mixed: reconverges, but carries a variable forward so the ending reflects the whole path.',
+    };
+
+    function cfg() {
+      return {
+        topic: $('#topic').value, audience: $('#audience').value,
+        learningOutcomes: $('#outcomes').value.split('\n').map(s => s.trim()).filter(Boolean),
+        decisions: Number($('#decisions').value), branchStyle: style,
+        trackVariable: $('#trackvar').value.trim(),
+        consequenceType: $('#constype').value, reflections: $('#reflections').value === 'true',
+        tone: $('#tone').value.trim(), readingLevel: $('#reading').value.trim(),
+      };
+    }
+
+    function generate() {
+      const c = cfg();
+      if (!c.topic.trim()) { $('#topic').focus(); flash($('#summary'), 'Add a topic first.'); return null; }
+      scenario = ScenarioScaffold.generate(c, P);
+      const r = ScenarioValidator.validate(scenario);
+      const authorable = r.warnings.filter(w => /Missing "(title|body)"|interpolates|never used/.test(w)).length;
+      $('#summary').innerHTML =
+        `<span class="pill ${r.valid ? 'valid-ok' : 'valid-bad'}">${r.valid ? '✓ valid structure' : '✗ ' + r.errors.length + ' errors'}</span>` +
+        `<span class="pill">${r.stats.nodes} nodes</span><span class="pill">depth ${r.stats.longestPath}</span>` +
+        `<span class="pill">${r.stats.reachableEndings} ending${r.stats.reachableEndings === 1 ? '' : 's'}</span>` +
+        `<span class="pill">${style}</span>` + (authorable ? `<span class="pill warn">${authorable} placeholders to write</span>` : '');
+      $('#json').textContent = JSON.stringify(scenario, null, 2);
+      $('#brief').textContent = buildPrompt(c);
+      renderGraph(scenario);
+      return scenario;
+    }
+
+    function buildPrompt(c) {
+      return [
+        'You are an instructional designer writing a branching learning scenario.',
+        'Expand the SCAFFOLD below into finished scenario prose, keeping it valid against schema.json (version 2).',
+        '',
+        '## Brief',
+        ScenarioScaffold.brief(c),
+        '',
+        '## How to write each layer (apply as you fill every node)',
+        layerDigest(),
+        '',
+        '## Rules',
+        '- Keep the node ids, types, links, variables and branches from the scaffold; replace the [bracketed] placeholders with real text.',
+        '- Each choice is a believable mental model, not a right/wrong answer; never signpost the "correct" one.',
+        '- Consequences reveal what the choice set in motion — show, do not grade.',
+        '- Every decision must map to a learning outcome. Endings should differ in outcome, not just wording.',
+        '- Return ONLY the JSON, valid against schema.json. Validate it with validator.js before returning.',
+        '',
+        '## Scaffold',
+        JSON.stringify(scenario, null, 2),
+      ].join('\n');
+    }
+    function layerDigest() {
+      return Object.entries(P.layers).map(([k, v]) =>
+        `- ${k}: ${v.purpose}`).join('\n');
+    }
+
+    function renderGraph(sc) {
+      const svg = $('#graph'); const T = ScenarioValidator.targetsOf;
+      const byId = id => sc.nodes.find(n => n.id === id);
+      const layer = new Map(); const q = [sc.start]; layer.set(sc.start, 0);
+      while (q.length) { const id = q.shift(); const d = layer.get(id); for (const t of T(byId(id) || {})) if (byId(t) && !layer.has(t)) { layer.set(t, d + 1); q.push(t); } }
+      let maxL = 0; sc.nodes.forEach(n => { if (!layer.has(n.id)) layer.set(n.id, 0); maxL = Math.max(maxL, layer.get(n.id)); });
+      const cols = {}; sc.nodes.forEach(n => (cols[layer.get(n.id)] = cols[layer.get(n.id)] || []).push(n));
+      const colW = 150, rowH = 44, padX = 14, padY = 14; const w = padX * 2 + (maxL + 1) * colW; let h = padY * 2; const pos = {};
+      Object.keys(cols).forEach(l => { cols[l].forEach((n, i) => pos[n.id] = { x: padX + l * colW, y: padY + i * rowH }); h = Math.max(h, padY * 2 + cols[l].length * rowH); });
+      const color = n => n.type === 'ending' ? (n.outcome === 'positive' ? 'var(--positive)' : n.outcome === 'negative' ? 'var(--negative)' : 'var(--mixed)') : n.type === 'choice' ? 'var(--accent)' : 'var(--soft)';
+      let edges = '', nodes = '';
+      sc.nodes.forEach(n => { const p = pos[n.id]; if (!p) return; T(n).forEach(t => { const Q = pos[t]; if (!Q) return; const x1 = p.x + 130, y1 = p.y + 12, x2 = Q.x, y2 = Q.y + 12, mx = (x1 + x2) / 2; edges += `<path d="M${x1} ${y1} C ${mx} ${y1}, ${mx} ${y2}, ${x2} ${y2}" fill="none" stroke="var(--line)" stroke-width="1.4"/>`; }); });
+      sc.nodes.forEach(n => { const p = pos[n.id]; if (!p) return; const lab = (n.title || n.id); const s = lab.length > 17 ? lab.slice(0, 16) + '…' : lab; nodes += `<g transform="translate(${p.x} ${p.y})"><rect width="130" height="24" rx="6" fill="var(--surface)" stroke="${color(n)}" stroke-width="1.4"/><circle cx="10" cy="12" r="3.5" fill="${color(n)}"/><text x="19" y="16">${esc(s)}</text></g>`; });
+      svg.setAttribute('viewBox', `0 0 ${w} ${h}`); svg.setAttribute('width', w); svg.setAttribute('height', h); svg.innerHTML = edges + nodes;
+    }
+
+    function flash(el, msg) { const old = el.innerHTML; el.innerHTML = `<span class="pill warn">${esc(msg)}</span>`; setTimeout(() => { if (el.innerHTML.includes(msg)) el.innerHTML = old; }, 1800); }
+    const ensure = () => scenario || generate();
+
+    // controls
+    $('#decisions').addEventListener('input', e => $('#decisions-out').textContent = e.target.value);
+    $('#style').addEventListener('click', e => { const b = e.target.closest('[data-style]'); if (!b) return; style = b.dataset.style; document.querySelectorAll('#style button').forEach(x => x.setAttribute('aria-pressed', String(x === b))); $('#style-help').textContent = STYLE_HELP[style]; });
+    $('#style-help').textContent = STYLE_HELP.mixed;
+    $('#gen').addEventListener('click', generate);
+    $('#download').addEventListener('click', () => { const sc = ensure(); if (!sc) return; const url = URL.createObjectURL(new Blob([JSON.stringify(sc, null, 2)], { type: 'application/json' })); const a = document.createElement('a'); a.href = url; a.download = (sc.id || 'scenario') + '.json'; a.click(); setTimeout(() => URL.revokeObjectURL(url), 0); });
+    $('#downloadhtml').addEventListener('click', () => { const sc = ensure(); if (!sc) return; const url = URL.createObjectURL(new Blob([ScenarioExportHtml.build(sc)], { type: 'text/html' })); const a = document.createElement('a'); a.href = url; a.download = (sc.id || 'scenario') + '.html'; a.click(); setTimeout(() => URL.revokeObjectURL(url), 0); });
+    $('#copy').addEventListener('click', () => { const sc = ensure(); if (sc) navigator.clipboard.writeText(JSON.stringify(sc, null, 2)).then(() => btnDone('#copy', 'Copied')); });
+    $('#copybrief').addEventListener('click', () => { ensure(); navigator.clipboard.writeText($('#brief').textContent).then(() => btnDone('#copybrief', 'Copied')); });
+    $('#edit').addEventListener('click', () => { const sc = ensure(); if (!sc) return; try { localStorage.setItem(EDITOR_KEY, JSON.stringify(sc)); } catch (e) {} location.href = './editor.html'; });
+    $('#play').addEventListener('click', () => { const sc = ensure(); if (!sc) return; try { localStorage.setItem(PLAYER_KEY, JSON.stringify(sc)); } catch (e) {} window.open('./player.html#load', '_blank'); });
+    function btnDone(sel, text) { const b = $(sel), old = b.textContent; b.textContent = text; setTimeout(() => b.textContent = old, 1200); }
+  })();
+  </script>
+</body>
+</html>

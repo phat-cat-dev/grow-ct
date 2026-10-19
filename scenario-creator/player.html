@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scenario player</title>
+<style>
+  :root {
+    --bg: #eef2f6; --surface: #ffffff; --raised: #f3f6f9; --ink: #1d2730; --soft: #5b6670; --line: #cdd6de;
+    --accent: #2f6d8f; --positive: #2e8b57; --mixed: #b8860b; --negative: #b23b3b; --focus: #2f6d8f;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #11181d; --surface: #182229; --raised: #1f2b33; --ink: #e8eef2; --soft: #9fb0bb; --line: #2c3a44; --accent: #6fb3d2; --positive: #5bbe86; --mixed: #e0b64e; --negative: #e07a7a; --focus: #6fb3d2; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 1.05rem/1.65 system-ui, -apple-system, "Segoe UI", sans-serif; }
+  .bar { position: sticky; top: 0; z-index: 5; display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; padding: .6rem 1rem; background: color-mix(in srgb, var(--surface) 92%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
+  .bar strong { margin-right: auto; font-size: 1rem; }
+  button { font: inherit; cursor: pointer; padding: .5rem .85rem; border: 1px solid var(--line); border-radius: .5rem; background: var(--surface); color: var(--ink); }
+  button.primary { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
+  button:hover:not(:disabled) { border-color: var(--accent); }
+  button:disabled { opacity: .5; cursor: default; }
+  :focus-visible { outline: 3px solid var(--focus); outline-offset: 2px; }
+  main { max-width: 44rem; margin: auto; padding: 2rem 1rem 5rem; }
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: .9rem; padding: clamp(1.1rem, 3vw, 2rem); box-shadow: 0 12px 30px -24px #0007; }
+  .layer-tag { font: 600 .7rem/1 ui-monospace, monospace; letter-spacing: .09em; text-transform: uppercase; color: var(--soft); }
+  h1.title { font-size: clamp(1.5rem, 4vw, 2rem); margin: .3rem 0 .8rem; }
+  .body { white-space: pre-wrap; }
+  .prompt { margin-top: 1rem; padding: .8rem 1rem; border-left: 3px solid var(--accent); background: var(--raised); border-radius: .4rem; font-style: italic; }
+  .choices { display: flex; flex-direction: column; gap: .6rem; margin-top: 1.3rem; }
+  .choices button { text-align: left; padding: .8rem 1rem; line-height: 1.45; }
+  .advance { margin-top: 1.4rem; }
+  .badge { display: inline-block; font: 600 .75rem/1 system-ui; padding: .35rem .6rem; border-radius: 999px; color: #fff; }
+  .badge.positive { background: var(--positive); } .badge.mixed { background: var(--mixed); } .badge.negative { background: var(--negative); }
+  .debrief { margin-top: 1rem; padding: .9rem 1rem; background: var(--raised); border-radius: .5rem; }
+  .debrief h3 { margin: 0 0 .3rem; font-size: .95rem; }
+  .feedback-note { margin: 0 0 1rem; padding: .7rem .9rem; border-radius: .5rem; background: color-mix(in srgb, var(--accent) 10%, var(--surface)); border-left: 3px solid var(--accent); font-size: .98rem; }
+  .review { margin-top: 1.1rem; padding: .9rem 1rem; background: var(--raised); border-radius: .5rem; }
+  .review h3 { margin: 0 0 .5rem; font-size: .95rem; }
+  .rev-row { display: flex; gap: .7rem; align-items: flex-start; padding: .45rem 0; border-top: 1px solid var(--line); }
+  .rev-row:first-of-type { border-top: 0; }
+  .rev-q { flex: none; font: 600 .65rem/1.6 system-ui; text-transform: uppercase; letter-spacing: .04em; padding: .15rem .45rem; border-radius: 999px; color: #fff; min-width: 3.6em; text-align: center; }
+  .rev-q.strong { background: var(--positive); } .rev-q.workable { background: var(--mixed); } .rev-q.weak { background: var(--negative); } .rev-q.none { background: var(--soft); }
+  .rev-choice { color: var(--soft); font-size: .92rem; }
+  .rev-note { font-size: .9rem; margin-top: .15rem; }
+  .meta-list { margin: .4rem 0 0; padding-left: 1.1rem; color: var(--soft); font-size: .95rem; }
+  .intro .lead { color: var(--soft); }
+  .aside { max-width: 44rem; margin: 1rem auto 0; padding: 0 1rem; display: grid; gap: 1rem; grid-template-columns: 1fr 1fr; }
+  .panel { background: var(--surface); border: 1px solid var(--line); border-radius: .7rem; padding: .8rem 1rem; font-size: .9rem; }
+  .panel h3 { margin: 0 0 .4rem; font-size: .8rem; text-transform: uppercase; letter-spacing: .06em; color: var(--soft); }
+  .panel[hidden] { display: none; }
+  .state-row { display: flex; justify-content: space-between; gap: 1rem; font-family: ui-monospace, monospace; }
+  ol.path { margin: 0; padding-left: 1.2rem; color: var(--soft); }
+  ol.path b { color: var(--ink); font-weight: 600; }
+  .errors { max-width: 44rem; margin: 1rem auto; padding: .8rem 1rem; border: 1px solid var(--negative); border-radius: .6rem; background: color-mix(in srgb, var(--negative) 12%, var(--surface)); font-size: .9rem; }
+  .errors ul { margin: .3rem 0 0; padding-left: 1.1rem; }
+  textarea { width: 100%; min-height: 10rem; font: .9rem ui-monospace, monospace; border: 1px solid var(--line); border-radius: .5rem; padding: .6rem; background: var(--surface); color: var(--ink); }
+  dialog { border: 1px solid var(--line); border-radius: .8rem; background: var(--surface); color: var(--ink); max-width: 40rem; width: 92vw; }
+  dialog::backdrop { background: #0008; }
+  .row { display: flex; gap: .5rem; justify-content: flex-end; margin-top: .7rem; }
+  @media (max-width: 640px) { .aside { grid-template-columns: 1fr; } }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+  <div class="bar">
+    <strong id="sc-title">Scenario player</strong>
+    <input type="file" id="file" accept="application/json,.json" hidden>
+    <button id="btn-file">Load file</button>
+    <button id="btn-paste">Paste JSON</button>
+    <button id="btn-example">Load example</button>
+    <button id="btn-state" aria-pressed="false">Show state</button>
+    <button id="btn-html" disabled>Export HTML</button>
+    <button id="btn-restart" class="primary" disabled>Restart</button>
+  </div>
+  <div id="errors" class="errors" hidden></div>
+  <main id="stage"><div class="card"><p>Load a scenario JSON to begin — <button id="btn-example-2">load the worked example</button>, open a file, or paste JSON. Validation runs on load.</p></div></main>
+  <div class="aside">
+    <div class="panel" id="state-panel" hidden><h3>State</h3><div id="state-body"></div></div>
+    <div class="panel" id="path-panel" hidden><h3>Your path</h3><ol class="path" id="path-body"></ol></div>
+  </div>
+
+  <dialog id="paste-dialog">
+    <form method="dialog">
+      <h3 style="margin-top:0">Paste scenario JSON</h3>
+      <textarea id="paste-area" placeholder="Paste the scenario JSON here"></textarea>
+      <div class="row"><button value="cancel">Cancel</button><button value="load" class="primary">Load</button></div>
+    </form>
+  </dialog>
+
+  <script src="./validator.js"></script>
+  <script src="./scenario-runtime.js"></script>
+  <script src="./export-html.js"></script>
+  <script>
+  (function () {
+    const $ = s => document.querySelector(s);
+    const stage = $('#stage'), errorsEl = $('#errors');
+    const motion = matchMedia('(prefers-reduced-motion: reduce)');
+    let scenario = null, byId = new Map(), state = {}, current = null, path = [], timer = null, lastFeedback = '';
+    const Q = { strong: 'Strong', workable: 'OK', weak: 'Weak' };
+
+    function load(data, label) {
+      let parsed;
+      try { parsed = typeof data === 'string' ? JSON.parse(data) : data; }
+      catch (e) { return showErrors(['Could not parse JSON: ' + e.message]); }
+      const report = ScenarioValidator.validate(parsed);
+      if (report.errors.length) {
+        showErrors(report.errors, report.warnings);
+        if (!parsed.start || !Array.isArray(parsed.nodes)) return; // unplayable
+      } else showErrors([], report.warnings);
+      scenario = parsed;
+      byId = new Map(scenario.nodes.map(n => [n.id, n]));
+      $('#sc-title').textContent = scenario.title || label || 'Scenario';
+      document.title = (scenario.title || 'Scenario') + ' — player';
+      $('#btn-restart').disabled = false;
+      $('#btn-html').disabled = false;
+      restart();
+    }
+    function showErrors(errors, warnings) {
+      const parts = [];
+      if (errors && errors.length) parts.push('<strong>Errors (' + errors.length + ')</strong><ul>' + errors.map(li).join('') + '</ul>');
+      if (warnings && warnings.length) parts.push('<strong>Warnings (' + warnings.length + ')</strong><ul>' + warnings.map(li).join('') + '</ul>');
+      errorsEl.innerHTML = parts.join('');
+      errorsEl.hidden = parts.length === 0;
+    }
+    const li = t => '<li>' + escapeHtml(t) + '</li>';
+    const escapeHtml = t => String(t).replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+
+    function restart() {
+      clearTimeout(timer);
+      state = ScenarioRuntime.initState(scenario);
+      path = [];
+      lastFeedback = '';
+      renderIntro();
+      renderState();
+      renderPath();
+    }
+
+    function renderIntro() {
+      current = null;
+      const outcomes = (scenario.learningOutcomes || []).map(o => '<li>' + escapeHtml(o) + '</li>').join('');
+      stage.innerHTML =
+        '<div class="card intro"><span class="layer-tag">Scenario</span>' +
+        '<h1 class="title">' + escapeHtml(scenario.title || '') + '</h1>' +
+        (scenario.intro ? '<p class="lead">' + escapeHtml(scenario.intro) + '</p>' : '') +
+        (scenario.audience ? '<p class="lead"><b>For:</b> ' + escapeHtml(scenario.audience) + '</p>' : '') +
+        (outcomes ? '<p class="lead" style="margin-bottom:.2rem"><b>You\'ll practise:</b></p><ul class="meta-list">' + outcomes + '</ul>' : '') +
+        '<div class="advance"><button class="primary" id="go">Begin</button></div></div>';
+      $('#go').addEventListener('click', () => go(scenario.start));
+    }
+
+    function go(id) {
+      const node = byId.get(id);
+      if (!node) return showErrors(['Reached missing node "' + id + '".']);
+      ScenarioRuntime.applyEffects(state, node.effects);
+      current = node;
+      path.push({ id: node.id, title: node.title });
+      renderNode(node);
+      renderState();
+      renderPath();
+    }
+
+    const text = t => escapeHtml(ScenarioRuntime.interpolate(t || '', state));
+
+    function renderNode(node) {
+      clearTimeout(timer);
+      const layer = node.layer || (ScenarioValidator && null) || '';
+      let html = '<div class="card">';
+      if (layer) html += '<span class="layer-tag">' + escapeHtml(layer) + '</span>';
+      if (lastFeedback) html += '<div class="feedback-note">' + text(lastFeedback) + '</div>';
+      lastFeedback = '';
+      html += '<h1 class="title">' + text(node.title) + '</h1>';
+      html += '<div class="body">' + text(node.body) + '</div>';
+      if (node.prompt) html += '<div class="prompt">' + text(node.prompt) + '</div>';
+
+      if (node.type === 'choice') {
+        html += '<div class="choices">' + node.choices.map((c, i) =>
+          '<button data-choice="' + i + '">' + escapeHtml(c.label) + '</button>').join('') + '</div>';
+      } else if (node.type === 'ending') {
+        if (node.outcome) html = html.replace('<h1', '<span class="badge ' + node.outcome + '">' + node.outcome + '</span><h1');
+        if (node.debrief) html += '<div class="debrief"><h3>Debrief</h3>' + text(node.debrief) + '</div>';
+        html += reviewHtml();
+        html += '<div class="advance"><button class="primary" id="again">Play again</button></div>';
+      } else { // continue / auto
+        const label = node.button || 'Continue';
+        const wait = node.type === 'auto' && !motion.matches ? Math.min(60000, node.delayMs == null ? 1500 : node.delayMs) : 0;
+        html += '<div class="advance"><button class="primary" id="advance"' + (wait ? ' disabled' : '') + '>' + escapeHtml(label) + '</button></div>';
+        html += '</div>';
+        stage.innerHTML = html;
+        const advance = $('#advance');
+        if (wait) { timer = setTimeout(() => { advance.disabled = false; advance.focus(); }, wait); }
+        advance.addEventListener('click', () => go(ScenarioRuntime.resolveNext(node, state)));
+        return;
+      }
+      html += '</div>';
+      stage.innerHTML = html;
+      if (node.type === 'choice') {
+        stage.querySelectorAll('[data-choice]').forEach(btn => btn.addEventListener('click', () => {
+          const choice = node.choices[Number(btn.dataset.choice)];
+          ScenarioRuntime.applyEffects(state, choice.effects);
+          const entry = path[path.length - 1];
+          entry.choice = choice.label; entry.quality = choice.quality; entry.note = choice.rationale || choice.mentalModel || '';
+          lastFeedback = choice.feedback || '';
+          go(choice.next);
+        }));
+      } else if (node.type === 'ending') {
+        $('#again').addEventListener('click', restart);
+      }
+    }
+
+    function renderState() {
+      const vars = scenario && scenario.variables || [];
+      const panel = $('#state-panel');
+      if (!vars.length) { panel.hidden = true; return; }
+      panel.hidden = $('#btn-state').getAttribute('aria-pressed') !== 'true';
+      $('#state-body').innerHTML = vars.map(v =>
+        '<div class="state-row"><span>' + escapeHtml(v.label || v.id) + '</span><b>' + escapeHtml(String(state[v.id])) + '</b></div>').join('');
+    }
+    function reviewHtml() {
+      const decisions = path.filter(p => p.choice);
+      if (!decisions.length) return '';
+      return '<div class="review"><h3>Your decisions</h3>' + decisions.map(p =>
+        '<div class="rev-row"><span class="rev-q ' + (p.quality || 'none') + '">' + (Q[p.quality] || '—') + '</span>' +
+        '<div><b>' + escapeHtml(p.title) + '</b><div class="rev-choice">' + escapeHtml(p.choice) + '</div>' +
+        (p.note ? '<div class="rev-note">' + escapeHtml(p.note) + '</div>' : '') + '</div></div>').join('') + '</div>';
+    }
+    function renderPath() {
+      const panel = $('#path-panel');
+      panel.hidden = !path.length || $('#btn-state').getAttribute('aria-pressed') !== 'true';
+      $('#path-body').innerHTML = path.map(p =>
+        '<li><b>' + escapeHtml(p.title || p.id) + '</b>' + (p.choice ? ' — ' + escapeHtml(p.choice) : '') + '</li>').join('');
+    }
+
+    // controls
+    $('#btn-file').addEventListener('click', () => $('#file').click());
+    $('#file').addEventListener('change', e => {
+      const f = e.target.files[0]; if (!f) return;
+      const r = new FileReader(); r.onload = () => load(r.result, f.name); r.readAsText(f);
+    });
+    $('#btn-paste').addEventListener('click', () => $('#paste-dialog').showModal());
+    $('#paste-dialog').addEventListener('close', function () { if (this.returnValue === 'load') load($('#paste-area').value, 'pasted'); });
+    const loadExample = () => fetch('./examples/performance-conversation.json')
+      .then(r => { if (!r.ok) throw new Error(r.status); return r.text(); })
+      .then(t => load(t, 'performance-conversation'))
+      .catch(() => showErrors(['Could not fetch the example (open over http://, or use Load file / Paste JSON). Try: python -m http.server']));
+    $('#btn-example').addEventListener('click', loadExample);
+    $('#btn-example-2')?.addEventListener('click', loadExample);
+    $('#btn-restart').addEventListener('click', restart);
+    $('#btn-html').addEventListener('click', function () {
+      if (!scenario) return;
+      const html = ScenarioExportHtml.build(scenario);
+      const url = URL.createObjectURL(new Blob([html], { type: 'text/html' }));
+      const a = document.createElement('a'); a.href = url; a.download = (scenario.id || 'scenario') + '.html'; a.click();
+      setTimeout(() => URL.revokeObjectURL(url), 0);
+    });
+    $('#btn-state').addEventListener('click', function () {
+      const on = this.getAttribute('aria-pressed') !== 'true';
+      this.setAttribute('aria-pressed', String(on));
+      this.textContent = on ? 'Hide state' : 'Show state';
+      renderState(); renderPath();
+    });
+
+    // Handoff from the builder / editor: #load reads a scenario from storage.
+    if (location.hash.includes('load')) {
+      try { const stored = localStorage.getItem('grow-scenario-player:load'); if (stored) load(stored, 'handoff'); }
+      catch (e) {}
+    }
+  })();
+  </script>
+</body>
+</html>

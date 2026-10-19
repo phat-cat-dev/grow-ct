@@ -1,0 +1,174 @@
+{
+  "version": 2,
+  "id": "performance-conversation",
+  "title": "The performance conversation",
+  "intro": "For new people-managers. You lead a small team. A usually-reliable team member has slipped. How you open the conversation — and what you do with what you learn — shapes whether you rebuild trust or spend it.",
+  "audience": "First-time team leaders and managers",
+  "learningOutcomes": [
+    "Opens a performance conversation by seeking information before asserting a position",
+    "Separates a one-off dip from a pattern before deciding on consequences",
+    "Adjusts their approach as trust rises or falls during a conversation"
+  ],
+  "branchStyle": "mixed",
+  "variables": [
+    { "id": "trust", "label": "Trust", "type": "number", "default": 0, "description": "Rises when the manager listens and follows through; falls when they assert authority early." }
+  ],
+  "start": "opening",
+  "nodes": [
+    {
+      "id": "opening",
+      "type": "continue",
+      "layer": "opening",
+      "title": "Monday, 9:10am",
+      "purpose": "Orient and invest: hand the learner the manager's role and a concrete stake.",
+      "body": "You manage a team of six. Dani, usually one of your steadiest, has missed two deadlines in a fortnight and was quiet in stand-up. The work matters — a client review is Thursday. You've asked Dani for ten minutes. They're sitting down across from you now.",
+      "button": "Open the conversation",
+      "next": "decision-open"
+    },
+    {
+      "id": "decision-open",
+      "type": "choice",
+      "layer": "decision",
+      "title": "How do you open?",
+      "purpose": "The core fork: three believable mental models for opening a hard conversation. None is flagged as correct.",
+      "body": "Dani looks tired and a little braced. The first thing you say will set the tone.",
+      "choices": [
+        {
+          "label": "\"I need these deadlines met. What's going on?\"",
+          "mentalModel": "Establish authority first — name the standard, then ask.",
+          "quality": "workable",
+          "rationale": "Clear on the standard, but leading with the deadline can make Dani defend rather than explain.",
+          "next": "consequence-authority",
+          "effects": [{ "var": "trust", "op": "subtract", "value": 1 }]
+        },
+        {
+          "label": "\"Let's leave it for now — push through to Thursday and we'll talk after.\"",
+          "mentalModel": "Let the performance issue wait until the pressure is off.",
+          "quality": "weak",
+          "rationale": "Avoids the conversation; the dip stays unexplained and Thursday gets riskier.",
+          "next": "consequence-wait"
+        },
+        {
+          "label": "\"You've seemed stretched lately — what's changed?\"",
+          "mentalModel": "Ask what changed before answering — seek information first.",
+          "quality": "strong",
+          "rationale": "Opens with curiosity; surfaces the cause before deciding on a response.",
+          "next": "consequence-ask",
+          "effects": [{ "var": "trust", "op": "add", "value": 1 }]
+        }
+      ]
+    },
+    {
+      "id": "consequence-authority",
+      "type": "auto",
+      "layer": "consequence",
+      "title": "Dani goes quiet",
+      "purpose": "Show, don't grade: asserting the standard first makes Dani defensive — recoverable, not terminal.",
+      "body": "Dani stiffens. \"I know the deadlines. I'm handling it.\" The room cools. You've made the standard clear, but you still don't know why the work slipped — and Dani isn't volunteering it now.",
+      "delayMs": 1600,
+      "button": "What next?",
+      "next": "reflection-open"
+    },
+    {
+      "id": "consequence-wait",
+      "type": "auto",
+      "layer": "consequence",
+      "title": "Thursday arrives",
+      "purpose": "Show, don't grade: avoidance compounds. A weaker choice leads to a harder situation.",
+      "body": "You both push to Thursday. The review goes ahead but Dani's section is thin and visibly rushed. Afterwards Dani says, quietly, \"I wish I'd said something on Monday.\" You still don't know what was wrong — only that it cost you.",
+      "delayMs": 1600,
+      "button": "What next?",
+      "next": "reflection-open"
+    },
+    {
+      "id": "consequence-ask",
+      "type": "auto",
+      "layer": "consequence",
+      "title": "Dani exhales",
+      "purpose": "Show, don't grade: curiosity opens the real information.",
+      "body": "Dani's shoulders drop. \"Honestly? My mum's been in hospital. I didn't want to make it your problem.\" Now you know this is a one-off, not a pattern — and Dani has trusted you with the reason.",
+      "delayMs": 1600,
+      "button": "What next?",
+      "next": "reflection-open"
+    },
+    {
+      "id": "reflection-open",
+      "type": "continue",
+      "layer": "reflection",
+      "title": "A breath",
+      "purpose": "Pull out the principle: generalise from how the opening went.",
+      "body": "Whatever you now know — or don't — came from how you opened.",
+      "prompt": "What did your opening get you: information, or compliance? Which does Thursday actually need?",
+      "button": "Decide what to do",
+      "next": "decision-respond"
+    },
+    {
+      "id": "decision-respond",
+      "type": "choice",
+      "layer": "decision",
+      "title": "What do you do now?",
+      "purpose": "Second fork. The right move depends on what the opening earned — the scenario routes on carried trust at the next node.",
+      "body": "Thursday is still coming. You have to decide how to handle both Dani and the deadline.",
+      "choices": [
+        {
+          "label": "Offer to reshape the week — redistribute Dani's load and set one realistic target.",
+          "mentalModel": "Support the person and protect the deadline together.",
+          "quality": "strong",
+          "next": "resolve",
+          "effects": [{ "var": "trust", "op": "add", "value": 1 }]
+        },
+        {
+          "label": "Restate the standard and tell Dani to deliver or escalate.",
+          "mentalModel": "Hold the line; performance is their responsibility.",
+          "quality": "workable",
+          "next": "resolve",
+          "effects": [{ "var": "trust", "op": "subtract", "value": 1 }]
+        }
+      ]
+    },
+    {
+      "id": "resolve",
+      "type": "continue",
+      "layer": "consequence",
+      "title": "The week plays out",
+      "purpose": "Carry a variable forward: the ending is chosen by accumulated trust, not just the last click.",
+      "body": "How this lands depends on everything you've spent or built with Dani so far.",
+      "button": "See how it lands",
+      "branches": [
+        { "if": { "var": "trust", "op": "gte", "value": 2 }, "next": "ending-rebuilt" },
+        { "if": { "var": "trust", "op": "lte", "value": -1 }, "next": "ending-spent" }
+      ],
+      "next": "ending-held"
+    },
+    {
+      "id": "ending-rebuilt",
+      "type": "ending",
+      "layer": "ending",
+      "title": "Trust rebuilt",
+      "outcome": "positive",
+      "body": "Dani delivers a tight section on Thursday and thanks you for how you handled Monday. The next time something's wrong, they come to you early. You protected both the person and the work.",
+      "prompt": "Which single moment did the most to get you here?",
+      "debrief": "You sought information before asserting a position, separated a one-off from a pattern, and adjusted as trust grew. That is the whole arc of the outcomes."
+    },
+    {
+      "id": "ending-held",
+      "type": "ending",
+      "layer": "ending",
+      "title": "The line held",
+      "outcome": "mixed",
+      "body": "The deadline is met. Dani is civil but careful around you now — the work got done, and a little distance crept in. Nothing broke; nothing grew.",
+      "prompt": "What would have turned this civil outcome into a trusting one?",
+      "debrief": "You protected the deadline but spent some goodwill getting there. Compare a run where you open with curiosity and keep trust climbing."
+    },
+    {
+      "id": "ending-spent",
+      "type": "ending",
+      "layer": "ending",
+      "title": "Goodwill spent",
+      "outcome": "negative",
+      "body": "Thursday limps over the line. Dani starts quietly looking elsewhere; within a month they ask for a transfer. The deadline was never really the problem — and you never found out what was until it was too late.",
+      "prompt": "Where was the earliest point you could have changed this ending?",
+      "debrief": "Leading with authority and holding the line cost you the information you needed. Replay and open by asking what changed — watch where trust goes."
+    }
+  ]
+}

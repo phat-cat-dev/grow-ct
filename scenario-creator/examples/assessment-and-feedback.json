@@ -1,0 +1,363 @@
+{
+  "version": 2,
+  "id": "assessment-and-feedback",
+  "title": "Assessing Sam",
+  "intro": "For trainees on a Level 3 Award / Level 4 Certificate in Education and Training. You assess a learner and give feedback. How you choose your methods, make your judgement and word your feedback decides both the grade and whether the learner keeps believing they can do this.",
+  "audience": "Trainee tutors and assessors (Level 3 / 4 Education and Training)",
+  "learningOutcomes": [
+    "Selects assessment methods that fit the outcome and develop the learner, not only measure them",
+    "Judges evidence against the criteria (valid, authentic, sufficient) before deciding, without lowering the standard to be kind",
+    "Gives feedback that is specific, balanced and action-focused, and keeps it two-way"
+  ],
+  "branchStyle": "mixed",
+  "variables": [
+    {
+      "id": "learner_confidence",
+      "label": "Learner confidence",
+      "type": "number",
+      "default": 0,
+      "description": "Rises when you assess for learning and give usable feedback; falls when you measure without developing, or lower the standard. Carried forward to shape the ending."
+    }
+  ],
+  "start": "opening",
+  "nodes": [
+    {
+      "id": "opening",
+      "type": "continue",
+      "layer": "opening",
+      "title": "\"Am I doing it right?\"",
+      "purpose": "Orient and invest: hand the trainee the assessor's role and a learner they care about.",
+      "body": "You are a trainee tutor on a Level 3 programme, working toward your own teaching qualification. Sam, one of your learners, is completing a unit on handling customer complaints. Sam is capable but anxious about being assessed, and has asked you more than once, \"Am I doing it right?\" Today you will assess Sam's work and give feedback — and how you do it will shape both the grade and whether Sam keeps believing they can do this. Confidence so far: {{learner_confidence}}.",
+      "button": "Meet Sam",
+      "next": "decision-1"
+    },
+    {
+      "id": "decision-1",
+      "type": "choice",
+      "layer": "decision",
+      "title": "How will you assess Sam?",
+      "purpose": "A genuine fork on assessment method. Each option is a believable view of what assessment is for; none is flagged correct.",
+      "body": "Sam needs to show they can handle a customer complaint. A standardised written knowledge test is ready to use — but it is not your only option.",
+      "choices": [
+        {
+          "label": "Watch Sam handle a role-played complaint, asking questions as they go.",
+          "mentalModel": "Assessment for learning: observe performance in context and question to check understanding.",
+          "quality": "strong",
+          "next": "consequence-1-a",
+          "effects": [
+            {
+              "var": "learner_confidence",
+              "op": "add",
+              "value": 1
+            }
+          ],
+          "rationale": "Watching plus questioning gives valid evidence of the skill and reassures Sam."
+        },
+        {
+          "label": "Set the written test now — it's standardised and quick to mark.",
+          "mentalModel": "Assessment of learning: a single summative test is the fair, objective measure.",
+          "quality": "weak",
+          "next": "consequence-1-b",
+          "effects": [
+            {
+              "var": "learner_confidence",
+              "op": "subtract",
+              "value": 1
+            }
+          ],
+          "rationale": "A summative test alone measures knowledge, not the skill, and develops nothing."
+        },
+        {
+          "label": "Ask Sam to write a reflective account of a complaint they once handled.",
+          "mentalModel": "Self-assessment: let the learner surface their own understanding.",
+          "quality": "workable",
+          "next": "consequence-1-c",
+          "rationale": "Reflection shows insight but is not direct, current evidence of competence."
+        }
+      ]
+    },
+    {
+      "id": "consequence-1-a",
+      "type": "auto",
+      "layer": "consequence",
+      "title": "You see the thinking",
+      "purpose": "Show, don't grade: observation plus questioning reveals real understanding and reassures Sam.",
+      "body": "Sam relaxes into the role-play. Watching, you see exactly where their judgement is sound and where it wobbles — and your questions (\"what made you say that?\") show Sam you're interested in their thinking, not just catching them out.",
+      "delayMs": 1600,
+      "button": "Consider your judgement",
+      "next": "reflection-1"
+    },
+    {
+      "id": "consequence-1-b",
+      "type": "auto",
+      "layer": "consequence",
+      "title": "A pass that tells you little",
+      "purpose": "Show, don't grade: a summative-only choice measures knowledge but not competence, and develops nothing.",
+      "body": "Sam sits the test and scrapes a pass on the knowledge. But you've learned nothing about whether they can actually handle a real complaint — and Sam leaves the room no more confident than they came in.",
+      "delayMs": 1600,
+      "button": "Consider your judgement",
+      "next": "reflection-1"
+    },
+    {
+      "id": "consequence-1-c",
+      "type": "auto",
+      "layer": "consequence",
+      "title": "Their account, not your evidence",
+      "purpose": "Show, don't grade: reflection has value but is not direct evidence of current competence.",
+      "body": "Sam's written reflection is honest and shows some insight. But it's about a past event you didn't see — you have Sam's account of their competence, not direct evidence of it.",
+      "delayMs": 1600,
+      "button": "Consider your judgement",
+      "next": "reflection-1"
+    },
+    {
+      "id": "reflection-1",
+      "type": "continue",
+      "layer": "reflection",
+      "title": "Measure, or develop?",
+      "purpose": "Pull out the principle: assessment can be formative (for learning) or summative (of learning) — the best choices do both.",
+      "body": "Assessment can measure learning or develop it. The strongest choices often do a little of both.",
+      "prompt": "Which purpose was your assessment serving — measuring Sam, or helping Sam learn? Could one method have done both?",
+      "button": "Make your judgement",
+      "next": "decision-2"
+    },
+    {
+      "id": "decision-2",
+      "type": "choice",
+      "layer": "decision",
+      "title": "Is the evidence good enough?",
+      "purpose": "A fork on the assessment judgement itself: hold the standard (VACSR) or lower it to be kind.",
+      "body": "However you gathered it, Sam's evidence is partial: they handled the complaint well but never checked the customer was satisfied before closing — a criterion the unit requires. Sam is watching your face, hopeful.",
+      "choices": [
+        {
+          "label": "Tell Sam it doesn't yet meet one criterion, show which, and agree how they'll close the gap.",
+          "mentalModel": "Hold validity and sufficiency; make the gap a clear next step.",
+          "quality": "strong",
+          "next": "consequence-2-a",
+          "effects": [
+            {
+              "var": "learner_confidence",
+              "op": "add",
+              "value": 1
+            }
+          ],
+          "rationale": "Keeping the judgement valid while naming the next step is both rigorous and fair."
+        },
+        {
+          "label": "Pass it — Sam tried hard and you don't want to knock their confidence.",
+          "mentalModel": "Kindness means not failing a willing learner.",
+          "quality": "weak",
+          "next": "consequence-2-b",
+          "effects": [
+            {
+              "var": "learner_confidence",
+              "op": "subtract",
+              "value": 1
+            }
+          ],
+          "rationale": "A lenient pass is invalid and teaches the learner that \"good enough\" passes."
+        },
+        {
+          "label": "Ask Sam to talk you through the part that's missing, to see if they actually know it.",
+          "mentalModel": "Probe for sufficient, authentic evidence before deciding.",
+          "quality": "strong",
+          "next": "consequence-2-c",
+          "effects": [
+            {
+              "var": "learner_confidence",
+              "op": "add",
+              "value": 1
+            }
+          ],
+          "rationale": "Probing for authentic evidence protects validity and pinpoints what to develop."
+        }
+      ]
+    },
+    {
+      "id": "consequence-2-a",
+      "type": "auto",
+      "layer": "consequence",
+      "title": "A fail turned into a next step",
+      "purpose": "Show, don't grade: holding the standard, explained well, is respected and actionable.",
+      "body": "Sam's face falls for a second, then settles. \"OK — so if I confirm the customer's happy before I close, that covers it?\" You've kept the standard intact and turned a not-yet into a clear, doable next step.",
+      "delayMs": 1600,
+      "button": "Now the feedback",
+      "next": "reflection-2"
+    },
+    {
+      "id": "consequence-2-b",
+      "type": "auto",
+      "layer": "consequence",
+      "title": "A pass that won't stand up",
+      "purpose": "Show, don't grade: a lenient judgement is invalid and teaches the learner the wrong lesson — recoverable, not terminal.",
+      "body": "You mark it a pass. Sam smiles, relieved. But the evidence doesn't show the required competence — if this were sampled by the internal quality assurer or the awarding body, it wouldn't stand up. And Sam has just learned that \"good enough\" is good enough.",
+      "delayMs": 1600,
+      "button": "Now the feedback",
+      "next": "reflection-2"
+    },
+    {
+      "id": "consequence-2-c",
+      "type": "auto",
+      "layer": "consequence",
+      "title": "The evidence appears",
+      "purpose": "Show, don't grade: probing surfaces authentic evidence and a precise development point.",
+      "body": "You ask Sam to talk through the end of the call. It becomes clear they do know to check satisfaction — they just forgot under pressure. Now you have authentic evidence and one precise thing to work on.",
+      "delayMs": 1600,
+      "button": "Now the feedback",
+      "next": "reflection-2"
+    },
+    {
+      "id": "reflection-2",
+      "type": "continue",
+      "layer": "reflection",
+      "title": "Kind and rigorous",
+      "purpose": "Pull out the principle: a valid judgement (valid, authentic, current, sufficient, reliable) and kindness are not opposites.",
+      "body": "A judgement has to be valid, authentic, current, sufficient and reliable. Being rigorous and being kind are not opposites — a sound judgement, explained well, respects the learner.",
+      "prompt": "Of valid, authentic, current, sufficient, reliable — which was really at stake in the decision you just made?",
+      "button": "Give your feedback",
+      "next": "decision-3"
+    },
+    {
+      "id": "decision-3",
+      "type": "choice",
+      "layer": "decision",
+      "title": "How do you give the feedback?",
+      "purpose": "The feedback fork: specific/balanced/two-way, vague praise, or a wall of corrections.",
+      "body": "Now you talk to Sam. The words you choose will either help Sam improve — or just leave them with a feeling.",
+      "choices": [
+        {
+          "label": "Name one specific strength, one specific thing to improve, and the exact next step — then ask Sam what they'll try.",
+          "mentalModel": "Feedback that is specific, balanced, action-focused and two-way.",
+          "quality": "strong",
+          "next": "consequence-3-a",
+          "effects": [
+            {
+              "var": "learner_confidence",
+              "op": "add",
+              "value": 1
+            }
+          ],
+          "rationale": "Specific, balanced, two-way feedback is what actually changes behaviour."
+        },
+        {
+          "label": "Tell Sam it was \"really good, just tighten it up a bit.\"",
+          "mentalModel": "Keep it positive and brief to protect confidence.",
+          "quality": "weak",
+          "next": "consequence-3-b",
+          "effects": [
+            {
+              "var": "learner_confidence",
+              "op": "subtract",
+              "value": 1
+            }
+          ],
+          "rationale": "Vague praise feels kind but gives the learner nothing to act on."
+        },
+        {
+          "label": "List everything that went wrong so Sam knows exactly what to fix.",
+          "mentalModel": "Thorough correction is the most useful feedback.",
+          "quality": "weak",
+          "next": "consequence-3-c",
+          "effects": [
+            {
+              "var": "learner_confidence",
+              "op": "subtract",
+              "value": 1
+            }
+          ],
+          "rationale": "Unrelieved correction overwhelms and buries the one thing that matters."
+        }
+      ]
+    },
+    {
+      "id": "consequence-3-a",
+      "type": "auto",
+      "layer": "consequence",
+      "title": "It lands",
+      "purpose": "Show, don't grade: specific, balanced, forward-looking feedback changes behaviour.",
+      "body": "You say: \"Your tone with an upset customer was genuinely calming — that's a real strength. The one thing to add is checking they're satisfied before you close. Next time, end with 'is there anything else I can help with?' What will you try?\" Sam repeats it back, and you can see it has landed.",
+      "delayMs": 1600,
+      "button": "A week later…",
+      "next": "resolve"
+    },
+    {
+      "id": "consequence-3-b",
+      "type": "auto",
+      "layer": "consequence",
+      "title": "A nice feeling, no change",
+      "purpose": "Show, don't grade: vague praise is comfortable and useless.",
+      "body": "\"Really good, just tighten it up.\" Sam nods, smiles, and leaves — with no idea what \"tighten up\" means. The praise felt nice and changed nothing.",
+      "delayMs": 1600,
+      "button": "A week later…",
+      "next": "resolve"
+    },
+    {
+      "id": "consequence-3-c",
+      "type": "auto",
+      "layer": "consequence",
+      "title": "Buried in the list",
+      "purpose": "Show, don't grade: unrelieved correction overwhelms and hides what matters.",
+      "body": "You run through every slip. Sam writes it all down, shoulders dropping. By the fifth point they've stopped hearing you — and the one thing that mattered most is buried in the list.",
+      "delayMs": 1600,
+      "button": "A week later…",
+      "next": "resolve"
+    },
+    {
+      "id": "resolve",
+      "type": "continue",
+      "layer": "consequence",
+      "title": "A week later",
+      "purpose": "Carry the variable forward: the ending reflects the whole arc of choices, not just the last one.",
+      "body": "Sam comes back to redo the part they missed. How that goes depends on everything you've built or spent along the way. Confidence now: {{learner_confidence}}.",
+      "button": "See how it lands",
+      "branches": [
+        {
+          "if": {
+            "var": "learner_confidence",
+            "op": "gte",
+            "value": 2
+          },
+          "next": "ending-confident"
+        },
+        {
+          "if": {
+            "var": "learner_confidence",
+            "op": "lte",
+            "value": -1
+          },
+          "next": "ending-deflated"
+        }
+      ],
+      "next": "ending-adequate"
+    },
+    {
+      "id": "ending-confident",
+      "type": "ending",
+      "layer": "ending",
+      "title": "A learner who believes they can",
+      "outcome": "positive",
+      "body": "Sam returns having checked customer satisfaction without being told twice — and then asks you to watch again, because your feedback made getting better feel possible. You held the standard and grew the learner at the same time.",
+      "prompt": "Which single moment did the most to get you here?",
+      "debrief": "You assessed for learning as well as of it, kept your judgement valid, and gave feedback Sam could act on — the whole arc of the three outcomes."
+    },
+    {
+      "id": "ending-adequate",
+      "type": "ending",
+      "layer": "ending",
+      "title": "Fine, but flat",
+      "outcome": "mixed",
+      "body": "Sam passes the unit. The work is sound; the relationship is polite but a little flat. The grade is secure — and Sam still isn't sure they're any good at this.",
+      "prompt": "What would have turned \"fine\" into \"confident\"?",
+      "debrief": "You met the standard but left development on the table. Compare a run where your feedback is specific and two-way, and watch confidence climb."
+    },
+    {
+      "id": "ending-deflated",
+      "type": "ending",
+      "layer": "ending",
+      "title": "The paperwork's done; the learner's lost",
+      "outcome": "negative",
+      "body": "Sam completes the unit but stops volunteering, and mentions they might not carry on to the next level. Somewhere between a lenient judgement and feedback that didn't help, Sam decided this wasn't for them.",
+      "prompt": "Where was the earliest point you could have changed this ending?",
+      "debrief": "Measuring without developing, lowering the standard to be kind, and feedback that only praised or only corrected protected your comfort, not Sam's learning. Replay and keep the standard while making the next step clear."
+    }
+  ]
+}
