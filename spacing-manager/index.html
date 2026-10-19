@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Spacing, fonts and headings | Manager workshop</title>
+  <style>
+    :root { --h: 202; --s: 72%; --accent: hsl(var(--h) var(--s) 38%); --ink: #263441; --surface-1: #fafcfe; --surface-2: #edf2f7; --line: #bbc6cf; }
+    body { margin: 0; background: #eef2f6; color: var(--ink); font: 1rem/1.6 system-ui, sans-serif; }
+    main { max-width: 70rem; margin: auto; padding: 3rem 1rem 12rem; }
+    main > h1 { font-size: clamp(2rem, 5vw, 4rem); line-height: 1.1; }
+    .demo-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr)); gap: var(--space-md, 1.5rem); }
+    .demo-card { padding: var(--pad-card, 1.5rem); background: var(--surface-1); border: 1px solid var(--line); border-radius: 1rem; }
+    .demo-card h2 { margin-block-start: 0; }
+    .scheme { margin-block: var(--space-lg, 2rem); }
+  </style>
+</head>
+<body>
+  <main data-spacing-manager-target>
+    <p>GROW / reusable overlay tools</p>
+    <h1>Give ideas room to breathe.</h1>
+    <p>Open Spacing, Fonts or Typography in the floating bar. Typography opens a reading preview and the heading-scheme controls. The centre readout always reports actual rendered sizes. Turn on Apply to page to compare settings here.</p>
+    <div class="demo-grid">
+      <section class="demo-card"><h2>A readable rhythm</h2><p>Change fluid text, padding and layout independently. Narrow the viewport and compare the same settings without losing access to the controls.</p></section>
+      <section class="demo-card"><h2>A different voice</h2><p>Pair a heading face with a readable body font. Caps, heading colour and decoration are separate choices, saved alongside your fluid settings.</p></section>
+    </div>
+    <section class="scheme">
+      <h1>Depth from a single hue</h1>
+      <h2>The grey equivalent of that blue</h2>
+      <h3>Shading gives the sense of layers</h3>
+      <h4>Quiet enough to recede</h4>
+      <h5>A supporting detail line</h5>
+      <h6>Faint section label</h6>
+    </section>
+    <p>Settings are saved locally for this page. Export JSON for storage or CSS for downstream use. The overlay's controls keep a stable size while the specimen and page change.</p>
+  </main>
+  <noscript>This manager requires JavaScript.</noscript>
+  <script src="./spacing-manager.bundle.js" defer></script>
+</body>
+</html>

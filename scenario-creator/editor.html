@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Scenario editor</title>
+<style>
+  :root {
+    --bg:#eef2f6; --surface:#fff; --raised:#f2f6f9; --ink:#1d2730; --soft:#5b6670; --line:#cdd6de;
+    --accent:#2f6d8f; --positive:#2e8b57; --mixed:#b8860b; --negative:#b23b3b;
+    --t-continue:#5b6670; --t-choice:#2f6d8f; --t-auto:#8a6d3b; --t-ending:#2e8b57;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#11181d; --surface:#182229; --raised:#1f2b33; --ink:#e8eef2; --soft:#9fb0bb; --line:#2c3a44; --accent:#6fb3d2; --positive:#5bbe86; --mixed:#e0b64e; --negative:#e07a7a; --t-continue:#9fb0bb; --t-choice:#6fb3d2; --t-auto:#d7b26b; --t-ending:#5bbe86; }
+  }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink); font:14px/1.55 system-ui,-apple-system,"Segoe UI",sans-serif; }
+  .bar { position:sticky; top:0; z-index:10; display:flex; flex-wrap:wrap; gap:.4rem; align-items:center; padding:.5rem .8rem; background:color-mix(in srgb,var(--surface) 92%,transparent); backdrop-filter:blur(10px); border-bottom:1px solid var(--line); }
+  .bar strong { margin-right:auto; }
+  button, select, input, textarea { font:inherit; color:var(--ink); }
+  button { cursor:pointer; padding:.4rem .7rem; border:1px solid var(--line); border-radius:.45rem; background:var(--surface); }
+  button.primary { background:var(--accent); border-color:var(--accent); color:#fff; font-weight:600; }
+  button.danger { color:var(--negative); border-color:color-mix(in srgb,var(--negative) 50%,var(--line)); }
+  button:hover:not(:disabled) { border-color:var(--accent); }
+  button.mini { padding:.2rem .45rem; font-size:12px; }
+  :focus-visible { outline:3px solid var(--accent); outline-offset:1px; }
+  input, select, textarea { width:100%; padding:.4rem .5rem; border:1px solid var(--line); border-radius:.4rem; background:var(--surface); }
+  textarea { min-height:4.5rem; resize:vertical; line-height:1.5; }
+  label { display:block; margin:.5rem 0; }
+  label > span { display:block; font-size:12px; color:var(--soft); margin-bottom:.15rem; }
+  .layout { display:grid; grid-template-columns: 17rem minmax(0,1fr) 22rem; gap:1rem; padding:1rem; align-items:start; }
+  .col { background:var(--surface); border:1px solid var(--line); border-radius:.7rem; padding:.9rem; }
+  .col h2 { font-size:.8rem; text-transform:uppercase; letter-spacing:.06em; color:var(--soft); margin:.2rem 0 .6rem; }
+  .nodelist { display:flex; flex-direction:column; gap:.25rem; max-height:40vh; overflow:auto; }
+  .nodeitem { display:flex; align-items:center; gap:.4rem; padding:.35rem .5rem; border:1px solid var(--line); border-radius:.4rem; background:var(--raised); cursor:pointer; text-align:left; }
+  .nodeitem[aria-current="true"] { box-shadow: inset 0 0 0 2px var(--accent); }
+  .nodeitem .dot { inline-size:.6rem; block-size:.6rem; border-radius:50%; flex:none; }
+  .nodeitem .nm { flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .nodeitem .badge { font-size:10px; color:var(--soft); }
+  .dot.continue { background:var(--t-continue); } .dot.choice { background:var(--t-choice); } .dot.auto { background:var(--t-auto); } .dot.ending { background:var(--t-ending); }
+  .sublist { border:1px dashed var(--line); border-radius:.5rem; padding:.5rem; margin:.3rem 0; }
+  .sublist .row { display:flex; gap:.3rem; align-items:center; margin-bottom:.3rem; }
+  .sublist .grid { display:grid; grid-template-columns: 1fr 1fr; gap:.3rem; }
+  fieldset { border:1px solid var(--line); border-radius:.5rem; margin:.6rem 0; padding:.5rem .6rem; min-width:0; }
+  legend { font-size:12px; color:var(--soft); padding:0 .3rem; }
+  .graph-wrap { overflow:auto; max-height:46vh; border:1px solid var(--line); border-radius:.5rem; background:var(--raised); }
+  svg text { font:11px system-ui; fill:var(--ink); }
+  .g-node { cursor:pointer; }
+  .prompt-card { background:var(--raised); border:1px solid var(--line); border-radius:.6rem; padding:.7rem .8rem; margin-top:.6rem; }
+  .prompt-card h3 { margin:.1rem 0 .3rem; font-size:.95rem; }
+  .prompt-card p.purpose { margin:.2rem 0 .5rem; }
+  .prompt-card ul { margin:.2rem 0 .5rem; padding-left:1.1rem; }
+  .prompt-card .k { font-size:11px; text-transform:uppercase; letter-spacing:.05em; color:var(--soft); margin-top:.4rem; }
+  .validation { margin-top:.6rem; font-size:13px; }
+  .validation .ok { color:var(--positive); font-weight:600; }
+  .validation .bad { color:var(--negative); font-weight:600; }
+  .validation ul { margin:.3rem 0; padding-left:1.1rem; }
+  .validation li.err { color:var(--negative); } .validation li.warn { color:var(--mixed); }
+  .stat { font:12px ui-monospace,monospace; color:var(--soft); }
+  dialog { border:1px solid var(--line); border-radius:.8rem; background:var(--surface); color:var(--ink); max-width:46rem; width:94vw; }
+  dialog::backdrop { background:#0008; }
+  .dlg-row { display:flex; gap:.5rem; justify-content:flex-end; margin-top:.6rem; }
+  @media (max-width: 1040px) { .layout { grid-template-columns: 1fr; } .graph-wrap { max-height:38vh; } }
+</style>
+</head>
+<body>
+  <div class="bar">
+    <strong>Scenario editor</strong>
+    <input type="file" id="file" accept="application/json,.json" hidden>
+    <button id="btn-new">New</button>
+    <button id="btn-file">Load file</button>
+    <button id="btn-paste">Paste / view JSON</button>
+    <button id="btn-example">Load example</button>
+    <button id="btn-copy">Copy JSON</button>
+    <button id="btn-player">Open in player</button>
+    <button id="btn-html">Export HTML</button>
+    <button id="btn-export" class="primary">Download JSON</button>
+  </div>
+
+  <div class="layout">
+    <section class="col" id="left">
+      <h2>Scenario</h2>
+      <label><span>Title</span><input data-meta="title"></label>
+      <label><span>id (kebab-case)</span><input data-meta="id"></label>
+      <label><span>Intro</span><textarea data-meta="intro"></textarea></label>
+      <label><span>Audience</span><input data-meta="audience"></label>
+      <label><span>Branch style</span><select data-meta="branchStyle"><option value="spine">spine — reconverge</option><option value="tree">tree — multiple endings</option><option value="mixed">mixed</option></select></label>
+      <label><span>Learning outcomes (one per line)</span><textarea data-meta="learningOutcomes"></textarea></label>
+      <label><span>Start node</span><select data-meta="start"></select></label>
+      <fieldset><legend>Variables (carry state forward)</legend><div id="vars"></div><button class="mini" id="add-var">+ variable</button></fieldset>
+      <h2 style="margin-top:1rem">Nodes</h2>
+      <div class="nodelist" id="nodelist"></div>
+      <button class="mini" id="add-node" style="margin-top:.5rem">+ node</button>
+    </section>
+
+    <section class="col" id="center">
+      <h2>Branch map <span class="stat" id="stat"></span></h2>
+      <div class="graph-wrap"><svg id="graph" width="100%" height="320" role="img" aria-label="Branching map"></svg></div>
+      <div class="validation" id="validation"></div>
+    </section>
+
+    <section class="col" id="right">
+      <h2>Node</h2>
+      <div id="form"><p class="stat">Select a node to edit it.</p></div>
+      <div id="layer-prompt"></div>
+    </section>
+  </div>
+
+  <dialog id="json-dialog">
+    <form method="dialog">
+      <h3 style="margin-top:0">Scenario JSON</h3>
+      <textarea id="json-area" style="width:100%;min-height:22rem;font:12px ui-monospace,monospace"></textarea>
+      <div class="dlg-row"><button value="cancel">Close</button><button value="load" class="primary">Load from text</button></div>
+    </form>
+  </dialog>
+
+  <script src="./validator.js"></script>
+  <script src="./scenario-runtime.js"></script>
+  <script src="./layer-prompts.js"></script>
+  <script src="./export-html.js"></script>
+  <script>
+  (function () {
+    const $ = s => document.querySelector(s);
+    const PROMPTS = window.SCENARIO_LAYER_PROMPTS;
+    const STORAGE = 'grow-scenario-editor:draft';
+    const esc = t => String(t == null ? '' : t).replace(/[&<>"]/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;' }[c]));
+    const kebab = t => String(t || '').toLowerCase().trim().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'node';
+
+    const BLANK = () => ({
+      version: 2, id: 'new-scenario', title: 'New scenario', intro: '', audience: '',
+      learningOutcomes: [], branchStyle: 'mixed', variables: [], start: 'opening',
+      nodes: [
+        { id:'opening', type:'continue', layer:'opening', title:'Opening', body:'', button:'Begin', next:'decision-1' },
+        { id:'decision-1', type:'choice', layer:'decision', title:'First decision', body:'', choices:[ {label:'Option A', next:'ending-a'}, {label:'Option B', next:'ending-b'} ] },
+        { id:'ending-a', type:'ending', layer:'ending', title:'Ending A', outcome:'positive', body:'', debrief:'' },
+        { id:'ending-b', type:'ending', layer:'ending', title:'Ending B', outcome:'mixed', body:'', debrief:'' }
+      ]
+    });
+
+    let scenario = BLANK();
+    let sel = scenario.start;
+
+    try { const saved = localStorage.getItem(STORAGE); if (saved) scenario = JSON.parse(saved); } catch (e) {}
+
+    const nodeById = id => scenario.nodes.find(n => n.id === id);
+    function persist() { try { localStorage.setItem(STORAGE, JSON.stringify(scenario)); } catch (e) {} }
+
+    function renderAll() { renderMeta(); renderVars(); renderNodeList(); renderStartOptions(); renderGraph(); renderForm(); renderValidation(); persist(); }
+
+    function renderMeta() {
+      document.querySelectorAll('[data-meta]').forEach(el => {
+        const k = el.dataset.meta;
+        if (k === 'learningOutcomes') el.value = (scenario.learningOutcomes || []).join('\n');
+        else if (k !== 'start') el.value = scenario[k] == null ? '' : scenario[k];
+      });
+    }
+    function renderStartOptions() {
+      const sel2 = $('[data-meta="start"]');
+      sel2.innerHTML = scenario.nodes.map(n => `<option value="${esc(n.id)}">${esc(n.id)}</option>`).join('');
+      sel2.value = scenario.start;
+    }
+    function renderVars() {
+      $('#vars').innerHTML = (scenario.variables || []).map((v, i) => `
+        <div class="sublist" data-var="${i}">
+          <div class="grid">
+            <input data-vf="id" value="${esc(v.id)}" placeholder="id (snake_case)">
+            <input data-vf="label" value="${esc(v.label)}" placeholder="label">
+          </div>
+          <div class="grid">
+            <select data-vf="type">${['number','boolean','string'].map(t => `<option ${v.type===t?'selected':''}>${t}</option>`).join('')}</select>
+            <input data-vf="default" value="${esc(v.default)}" placeholder="default">
+          </div>
+          <button class="mini danger" data-del-var="${i}">remove</button>
+        </div>`).join('') || '<p class="stat">No variables.</p>';
+    }
+    function renderNodeList() {
+      $('#nodelist').innerHTML = scenario.nodes.map(n => `
+        <button class="nodeitem" data-node="${esc(n.id)}" aria-current="${n.id===sel}">
+          <span class="dot ${n.type}"></span>
+          <span class="nm">${esc(n.title || n.id)}</span>
+          <span class="badge">${esc(n.type)}${n.id===scenario.start?' ◆':''}</span>
+        </button>`).join('');
+    }
+
+    function renderGraph() {
+      const svg = $('#graph');
+      const T = ScenarioValidator.targetsOf;
+      // BFS layer assignment from start
+      const layer = new Map(); const q = [scenario.start]; layer.set(scenario.start, 0);
+      while (q.length) { const id = q.shift(); const d = layer.get(id);
+        for (const t of T(nodeById(id) || {})) if (nodeById(t) && !layer.has(t)) { layer.set(t, d + 1); q.push(t); } }
+      let maxL = 0; scenario.nodes.forEach(n => { if (!layer.has(n.id)) layer.set(n.id, 0); maxL = Math.max(maxL, layer.get(n.id)); });
+      const cols = {}; scenario.nodes.forEach(n => { const l = layer.get(n.id); (cols[l] = cols[l] || []).push(n); });
+      const colW = 170, rowH = 54, padX = 20, padY = 20; const w = padX * 2 + (maxL + 1) * colW; let h = padY * 2;
+      const pos = {};
+      Object.keys(cols).forEach(l => { cols[l].forEach((n, i) => { pos[n.id] = { x: padX + l * colW, y: padY + i * rowH }; }); h = Math.max(h, padY * 2 + cols[l].length * rowH); });
+      const color = n => n.type === 'ending' ? (n.outcome === 'positive' ? 'var(--positive)' : n.outcome === 'negative' ? 'var(--negative)' : 'var(--mixed)') : `var(--t-${n.type})`;
+      let edges = '', nodes = '';
+      scenario.nodes.forEach(n => {
+        const p = pos[n.id]; if (!p) return;
+        T(n).forEach(t => { const q2 = pos[t]; if (!q2) return;
+          const x1 = p.x + 150, y1 = p.y + 14, x2 = q2.x, y2 = q2.y + 14;
+          const mx = (x1 + x2) / 2;
+          edges += `<path d="M${x1} ${y1} C ${mx} ${y1}, ${mx} ${y2}, ${x2} ${y2}" fill="none" stroke="var(--line)" stroke-width="1.5"/>`;
+        });
+      });
+      scenario.nodes.forEach(n => { const p = pos[n.id]; if (!p) return;
+        const label = (n.title || n.id); const short = label.length > 20 ? label.slice(0, 19) + '…' : label;
+        nodes += `<g class="g-node" data-gnode="${esc(n.id)}" transform="translate(${p.x} ${p.y})">
+          <rect width="150" height="28" rx="6" fill="var(--surface)" stroke="${n.id===sel?'var(--accent)':color(n)}" stroke-width="${n.id===sel?2.5:1.5}"/>
+          <circle cx="12" cy="14" r="4" fill="${color(n)}"/>
+          <text x="22" y="18">${esc(short)}</text></g>`;
+      });
+      svg.setAttribute('viewBox', `0 0 ${w} ${h}`); svg.setAttribute('width', w); svg.setAttribute('height', h);
+      svg.innerHTML = edges + nodes;
+    }
+
+    function opt(list, value) { return list.map(v => `<option value="${esc(v)}" ${v===value?'selected':''}>${esc(v)}</option>`).join(''); }
+    function nodeOptions(value) { return `<option value="">— none —</option>` + scenario.nodes.map(n => `<option value="${esc(n.id)}" ${n.id===value?'selected':''}>${esc(n.id)}</option>`).join(''); }
+    function varOptions(value) { return `<option value="">— var —</option>` + (scenario.variables||[]).map(v => `<option value="${esc(v.id)}" ${v.id===value?'selected':''}>${esc(v.id)}</option>`).join(''); }
+
+    function effectRows(effects, scope) {
+      return `<div class="sublist" data-effects="${scope}">
+        ${(effects||[]).map((e,i) => `<div class="row" data-ei="${i}">
+          <select data-ef="var" style="flex:2">${varOptions(e.var)}</select>
+          <select data-ef="op" style="flex:1">${opt(['set','add','subtract','toggle'], e.op)}</select>
+          <input data-ef="value" style="flex:1" value="${esc(e.value)}" placeholder="value">
+          <button class="mini danger" data-del-effect="${i}">×</button></div>`).join('')}
+        <button class="mini" data-add-effect="${scope}">+ effect</button></div>`;
+    }
+
+    function renderForm() {
+      const n = nodeById(sel);
+      const form = $('#form');
+      if (!n) { form.innerHTML = '<p class="stat">Select a node to edit it.</p>'; renderLayerPrompt(null); return; }
+      let h = '';
+      h += `<label><span>id</span><input data-nf="id" value="${esc(n.id)}"></label>`;
+      h += `<div class="sublist"><div class="grid">
+        <label style="margin:0"><span>type</span><select data-nf="type">${opt(['continue','choice','auto','ending'], n.type)}</select></label>
+        <label style="margin:0"><span>layer</span><select data-nf="layer">${opt(['opening','decision','consequence','reflection','ending','info'], n.layer||'')}</select></label>
+      </div></div>`;
+      h += `<label><span>title</span><input data-nf="title" value="${esc(n.title)}"></label>`;
+      h += `<label><span>body (supports {{var}})</span><textarea data-nf="body">${esc(n.body)}</textarea></label>`;
+      h += `<label><span>purpose (author note)</span><textarea data-nf="purpose">${esc(n.purpose)}</textarea></label>`;
+      h += `<label><span>prompt / reflection</span><textarea data-nf="prompt">${esc(n.prompt)}</textarea></label>`;
+
+      if (n.type === 'choice') {
+        h += `<fieldset><legend>Choices (each a believable mental model)</legend>`;
+        (n.choices||[]).forEach((c, i) => {
+          h += `<div class="sublist" data-choice="${i}">
+            <label style="margin:.2rem 0"><span>label</span><input data-cf="label" value="${esc(c.label)}"></label>
+            <label style="margin:.2rem 0"><span>mental model</span><input data-cf="mentalModel" value="${esc(c.mentalModel)}"></label>
+            <div class="grid">
+              <label style="margin:.2rem 0"><span>next</span><select data-cf="next">${nodeOptions(c.next)}</select></label>
+              <label style="margin:.2rem 0"><span>quality</span><select data-cf="quality"><option value="">—</option>${opt(['strong','workable','weak'], c.quality)}</select></label>
+            </div>
+            <label style="margin:.2rem 0"><span>rationale (debrief)</span><input data-cf="rationale" value="${esc(c.rationale)}"></label>
+            ${effectRows(c.effects, 'choice:'+i)}
+            <button class="mini danger" data-del-choice="${i}">remove choice</button>
+          </div>`;
+        });
+        h += `<button class="mini" id="add-choice">+ choice</button></fieldset>`;
+      } else if (n.type === 'ending') {
+        h += `<div class="grid"><label><span>outcome</span><select data-nf="outcome"><option value="">—</option>${opt(['positive','mixed','negative'], n.outcome)}</select></label></div>`;
+        h += `<label><span>debrief</span><textarea data-nf="debrief">${esc(n.debrief)}</textarea></label>`;
+      } else { // continue / auto
+        h += `<label><span>button label</span><input data-nf="button" value="${esc(n.button)}"></label>`;
+        if (n.type === 'auto') h += `<label><span>delayMs</span><input type="number" data-nf="delayMs" value="${n.delayMs==null?'':n.delayMs}" min="0" max="60000"></label>`;
+        h += `<label><span>next (default route)</span><select data-nf="next">${nodeOptions(n.next)}</select></label>`;
+        h += `<fieldset><legend>Conditional branches (tried before default next)</legend>`;
+        (n.branches||[]).forEach((b, i) => {
+          const c = b.if || {};
+          h += `<div class="sublist" data-branch="${i}"><div class="row">
+            <span class="stat">if</span>
+            <select data-bf="var" style="flex:2">${varOptions(c.var)}</select>
+            <select data-bf="op" style="flex:1">${opt(['eq','ne','gt','gte','lt','lte','truthy','falsy'], c.op)}</select>
+            <input data-bf="value" style="flex:1" value="${esc(c.value)}" placeholder="value"></div>
+            <div class="row"><span class="stat">→</span><select data-bf="next" style="flex:1">${nodeOptions(b.next)}</select>
+            <button class="mini danger" data-del-branch="${i}">×</button></div></div>`;
+        });
+        h += `<button class="mini" id="add-branch">+ branch</button></fieldset>`;
+      }
+      h += `<fieldset><legend>Effects on entering this node</legend>${effectRows(n.effects, 'node')}</fieldset>`;
+      h += `<div class="dlg-row"><button class="danger" id="del-node">Delete node</button></div>`;
+      form.innerHTML = h;
+      renderLayerPrompt(n);
+    }
+
+    function renderLayerPrompt(n) {
+      const box = $('#layer-prompt');
+      if (!n) { box.innerHTML = ''; return; }
+      const layer = n.layer || PROMPTS.typeLayer[n.type] || 'info';
+      const p = PROMPTS.layers[layer];
+      if (!p) { box.innerHTML = ''; return; }
+      const list = (arr) => '<ul>' + (arr||[]).map(x => '<li>' + esc(x) + '</li>').join('') + '</ul>';
+      box.innerHTML = `<div class="prompt-card">
+        <div class="k">Purpose of this layer · ${esc(layer)}</div>
+        <h3>${esc(p.title)}</h3>
+        <p class="purpose">${esc(p.purpose)}</p>
+        <div class="k">Ask yourself</div>${list(p.askYourself)}
+        <div class="k">Write</div>${list(p.write)}
+        <div class="k">Avoid</div>${list(p.avoid)}
+      </div>`;
+    }
+
+    function renderValidation() {
+      const r = ScenarioValidator.validate(scenario);
+      $('#stat').textContent = r.stats ? `${r.stats.nodes} nodes · depth ${r.stats.longestPath} · ${r.stats.reachableEndings}/${r.stats.endings} endings` : '';
+      const v = $('#validation');
+      let h = r.valid ? `<span class="ok">✓ Valid</span>` : `<span class="bad">✗ ${r.errors.length} error${r.errors.length===1?'':'s'}</span>`;
+      if (r.errors.length) h += '<ul>' + r.errors.map(e => `<li class="err">${esc(e)}</li>`).join('') + '</ul>';
+      if (r.warnings.length) h += `<div class="stat">${r.warnings.length} warning${r.warnings.length===1?'':'s'}</div><ul>` + r.warnings.map(w => `<li class="warn">${esc(w)}</li>`).join('') + '</ul>';
+      v.innerHTML = h;
+    }
+
+    // ---- editing: light updates (no form rebuild) vs structural (rebuild) ----
+    function touch(rebuild) { renderNodeList(); renderStartOptions(); renderGraph(); renderValidation(); persist(); if (rebuild) renderForm(); }
+
+    // meta
+    $('#left').addEventListener('input', e => {
+      const m = e.target.dataset.meta; if (!m) return;
+      if (m === 'learningOutcomes') scenario.learningOutcomes = e.target.value.split('\n').map(s => s.trim()).filter(Boolean);
+      else scenario[m] = e.target.value;
+      renderValidation(); persist();
+      if (m === 'title' || m === 'id') {} // graph unaffected
+    });
+    $('#left').addEventListener('change', e => { if (e.target.dataset.meta === 'start') { scenario.start = e.target.value; touch(false); renderNodeList(); } });
+
+    // variables
+    $('#add-var').addEventListener('click', () => { (scenario.variables = scenario.variables || []).push({ id:'var_'+(scenario.variables.length+1), label:'', type:'number', default:0 }); renderVars(); renderValidation(); renderForm(); persist(); });
+    $('#vars').addEventListener('click', e => { const d = e.target.dataset.delVar; if (d != null) { scenario.variables.splice(+d,1); renderVars(); renderValidation(); renderForm(); persist(); } });
+    $('#vars').addEventListener('input', e => { const row = e.target.closest('[data-var]'); if (!row) return; const i = +row.dataset.var; const f = e.target.dataset.vf; if (!f) return;
+      let val = e.target.value; const v = scenario.variables[i];
+      if (f === 'default') { if (v.type === 'number') val = Number(val) || 0; else if (v.type === 'boolean') val = (val === 'true' || val === '1'); }
+      v[f] = val; renderValidation(); persist(); if (f === 'type') renderVars(); });
+
+    // node list
+    $('#nodelist').addEventListener('click', e => { const b = e.target.closest('[data-node]'); if (b) { sel = b.dataset.node; renderNodeList(); renderGraph(); renderForm(); } });
+    $('#graph').addEventListener('click', e => { const g = e.target.closest('[data-gnode]'); if (g) { sel = g.dataset.gnode; renderNodeList(); renderGraph(); renderForm(); } });
+    $('#add-node').addEventListener('click', () => {
+      let i = scenario.nodes.length + 1, id; do { id = 'node-' + i++; } while (nodeById(id));
+      scenario.nodes.push({ id, type:'continue', layer:'info', title:'New node', body:'', button:'Continue', next:'' });
+      sel = id; renderAll();
+    });
+
+    // node form
+    $('#form').addEventListener('input', e => {
+      const n = nodeById(sel); if (!n) return;
+      const nf = e.target.dataset.nf;
+      if (nf) {
+        if (nf === 'id') return; // id handled on change (rewrites refs)
+        if (nf === 'delayMs') n.delayMs = e.target.value === '' ? undefined : Number(e.target.value);
+        else n[nf] = e.target.value;
+        if (nf === 'title') renderNodeList(), renderGraph();
+        renderValidation(); persist(); return;
+      }
+      const cf = e.target.dataset.cf; if (cf) { const i = +e.target.closest('[data-choice]').dataset.choice; n.choices[i][cf] = e.target.value; if (cf==='next') renderGraph(); renderValidation(); persist(); return; }
+      const bf = e.target.dataset.bf; if (bf) { const i = +e.target.closest('[data-branch]').dataset.branch; n.branches[i].if = n.branches[i].if || {}; if (bf==='next') { n.branches[i].next = e.target.value; renderGraph(); } else n.branches[i].if[bf] = bf==='value' ? coerce(e.target.value) : e.target.value; renderValidation(); persist(); return; }
+      const ef = e.target.dataset.ef; if (ef) { const tgt = effectTarget(e.target); const i = +e.target.closest('[data-ei]').dataset.ei; tgt[i][ef] = ef==='value' ? coerce(e.target.value) : e.target.value; renderValidation(); persist(); return; }
+    });
+    $('#form').addEventListener('change', e => {
+      const n = nodeById(sel); if (!n) return;
+      if (e.target.dataset.nf === 'type') { convertType(n, e.target.value); sel = n.id; renderAll(); return; }
+      if (e.target.dataset.nf === 'id') { renameNode(n, e.target.value); return; }
+    });
+    $('#form').addEventListener('click', e => {
+      const n = nodeById(sel); if (!n) return;
+      if (e.target.id === 'add-choice') { (n.choices = n.choices || []).push({ label:'New option', next:'' }); renderForm(); touch(false); return; }
+      if (e.target.dataset.delChoice != null) { n.choices.splice(+e.target.dataset.delChoice, 1); renderForm(); touch(false); return; }
+      if (e.target.id === 'add-branch') { (n.branches = n.branches || []).push({ if:{ var:'', op:'eq', value:'' }, next:'' }); renderForm(); touch(false); return; }
+      if (e.target.dataset.delBranch != null) { n.branches.splice(+e.target.dataset.delBranch, 1); renderForm(); touch(false); return; }
+      if (e.target.dataset.addEffect != null) { const t = effectArrayFor(e.target.dataset.addEffect, n); t.push({ var:'', op:'add', value:1 }); renderForm(); touch(false); return; }
+      if (e.target.dataset.delEffect != null) { const tgt = effectTarget(e.target); tgt.splice(+e.target.dataset.delEffect, 1); renderForm(); touch(false); return; }
+      if (e.target.id === 'del-node') { deleteNode(n); return; }
+    });
+
+    function coerce(v) { if (v === 'true') return true; if (v === 'false') return false; if (v !== '' && !isNaN(Number(v))) return Number(v); return v; }
+    function effectArrayFor(scope, n) { if (scope === 'node') return (n.effects = n.effects || []); const i = +scope.split(':')[1]; return (n.choices[i].effects = n.choices[i].effects || []); }
+    function effectTarget(el) { const n = nodeById(sel); const box = el.closest('[data-effects]'); const scope = box.dataset.effects; return effectArrayFor(scope, n); }
+
+    function convertType(n, type) {
+      n.type = type;
+      if (type === 'choice') { n.choices = n.choices || [{ label:'Option A', next:'' }, { label:'Option B', next:'' }]; delete n.next; delete n.branches; delete n.button; delete n.delayMs; delete n.outcome; delete n.debrief; }
+      else if (type === 'ending') { delete n.next; delete n.choices; delete n.branches; delete n.button; delete n.delayMs; n.outcome = n.outcome || 'mixed'; }
+      else { if (n.next == null) n.next = ''; delete n.choices; delete n.outcome; delete n.debrief; if (!n.button) n.button = 'Continue'; if (type === 'auto' && n.delayMs == null) n.delayMs = 1500; if (type === 'continue') delete n.delayMs; }
+    }
+    function renameNode(n, raw) {
+      const nid = kebab(raw); if (nid === n.id) return;
+      if (nodeById(nid)) { alert('A node with id "' + nid + '" already exists.'); renderForm(); return; }
+      const old = n.id; n.id = nid;
+      if (scenario.start === old) scenario.start = nid;
+      scenario.nodes.forEach(m => {
+        if (m.next === old) m.next = nid;
+        (m.choices||[]).forEach(c => { if (c.next === old) c.next = nid; });
+        (m.branches||[]).forEach(b => { if (b.next === old) b.next = nid; });
+      });
+      sel = nid; renderAll();
+    }
+    function deleteNode(n) {
+      if (scenario.nodes.length <= 2) { alert('A scenario needs at least 2 nodes.'); return; }
+      if (!confirm('Delete node "' + n.id + '"? References to it will be cleared.')) return;
+      scenario.nodes = scenario.nodes.filter(m => m !== n);
+      scenario.nodes.forEach(m => { if (m.next === n.id) m.next = ''; (m.choices||[]).forEach(c => { if (c.next === n.id) c.next = ''; }); (m.branches||[]).forEach(b => { if (b.next === n.id) b.next = ''; }); });
+      if (scenario.start === n.id) scenario.start = scenario.nodes[0].id;
+      sel = scenario.nodes[0].id; renderAll();
+    }
+
+    // toolbar
+    $('#btn-new').addEventListener('click', () => { if (confirm('Start a new scenario? Unsaved work in this editor is replaced.')) { scenario = BLANK(); sel = scenario.start; renderAll(); } });
+    $('#btn-file').addEventListener('click', () => $('#file').click());
+    $('#file').addEventListener('change', e => { const f = e.target.files[0]; if (!f) return; const r = new FileReader(); r.onload = () => loadText(r.result); r.readAsText(f); });
+    $('#btn-paste').addEventListener('click', () => { $('#json-area').value = JSON.stringify(scenario, null, 2); $('#json-dialog').showModal(); });
+    $('#json-dialog').addEventListener('close', function () { if (this.returnValue === 'load') loadText($('#json-area').value); });
+    function loadText(t) { try { const parsed = JSON.parse(t); if (!Array.isArray(parsed.nodes)) throw new Error('no nodes array'); scenario = parsed; sel = scenario.start || (scenario.nodes[0] && scenario.nodes[0].id); renderAll(); } catch (e) { alert('Could not load JSON: ' + e.message); } }
+    $('#btn-example').addEventListener('click', () => fetch('./examples/performance-conversation.json').then(r => { if (!r.ok) throw 0; return r.text(); }).then(loadText).catch(() => alert('Open over http:// to fetch the example, or use Load file. Try: python -m http.server')));
+    $('#btn-copy').addEventListener('click', () => navigator.clipboard.writeText(JSON.stringify(scenario, null, 2)).then(() => { $('#btn-copy').textContent = 'Copied'; setTimeout(() => $('#btn-copy').textContent = 'Copy JSON', 1200); }).catch(() => {}));
+    $('#btn-export').addEventListener('click', () => {
+      const url = URL.createObjectURL(new Blob([JSON.stringify(scenario, null, 2)], { type: 'application/json' }));
+      const a = document.createElement('a'); a.href = url; a.download = (scenario.id || 'scenario') + '.json'; a.click(); setTimeout(() => URL.revokeObjectURL(url), 0);
+    });
+    $('#btn-player').addEventListener('click', () => { try { localStorage.setItem('grow-scenario-player:load', JSON.stringify(scenario)); } catch (e) {} window.open('./player.html#load', '_blank'); });
+    $('#btn-html').addEventListener('click', () => { const url = URL.createObjectURL(new Blob([ScenarioExportHtml.build(scenario)], { type: 'text/html' })); const a = document.createElement('a'); a.href = url; a.download = (scenario.id || 'scenario') + '.html'; a.click(); setTimeout(() => URL.revokeObjectURL(url), 0); });
+
+    renderAll();
+  })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,171 @@
+{
+  "scenario": {
+    "title": "The scenario as a whole",
+    "purpose": "A branching scenario teaches judgement, not facts. Its job is to put the learner in a role where they must DECIDE under realistic constraints, then live with what follows — so they rehearse the thinking a real situation will demand. If a quiz or a page of text would teach it as well, it does not need to be a scenario.",
+    "askYourself": [
+      "What judgement or decision-making skill should the learner be better at afterwards?",
+      "Whose shoes is the learner in, and why would that person care about getting this right?",
+      "What makes this genuinely hard — the trade-offs, the missing information, the competing pressures?",
+      "Could the learner \"win\" by guessing what the author wants, rather than by reasoning well? If so, the design is leaking."
+    ],
+    "write": [
+      "State 1–4 concrete learning outcomes as observable judgements (\"decides when to escalate\", not \"understands escalation\").",
+      "Name the audience and the role they play.",
+      "Make every decision map to at least one outcome; cut decisions that map to none."
+    ],
+    "avoid": [
+      "A single \"correct\" path with obviously wrong distractors.",
+      "Outcomes phrased as knowledge (\"knows the policy\") rather than action (\"applies the policy under time pressure\").",
+      "Branching for novelty — depth should exist because the judgement has real forks, not to pad length."
+    ],
+    "qualityChecks": [
+      "Every decision traces to a learning outcome.",
+      "At least two meaningfully different endings exist (unless a deliberate single-outcome spine).",
+      "A knowledgeable learner and a naive one would end up in different places."
+    ]
+  },
+  "typeLayer": {
+    "continue": "info",
+    "choice": "decision",
+    "auto": "consequence",
+    "ending": "ending"
+  },
+  "layers": {
+    "opening": {
+      "title": "Opening — orient and invest",
+      "purpose": "The opening hands the learner a role and a reason to care. It sets the context, the stakes and the point of view so that the first decision feels like THEIRS. Its purpose is investment: a learner who is not invested is just clicking.",
+      "askYourself": [
+        "In two or three sentences, can the learner tell who they are, where they are, and what is at stake?",
+        "Is there a reason the next decision matters to this person right now?",
+        "Am I telling them the answer, or dropping them into the situation?"
+      ],
+      "write": [
+        "Write in second person or close third (\"You are the duty manager…\").",
+        "Establish stakes concretely (a deadline, a person affected, a limited resource).",
+        "End by pointing straight at the first decision — the button should feel like stepping in."
+      ],
+      "avoid": [
+        "A wall of background the learner must absorb before anything happens.",
+        "Front-loading the \"right\" values so the branches become obvious."
+      ],
+      "qualityChecks": [
+        "Role, context and stakes are clear within the first screen.",
+        "The learner wants to know what happens next."
+      ]
+    },
+    "decision": {
+      "title": "Decision — a genuine fork",
+      "purpose": "A decision is where the learning happens: the learner must weigh options and commit. Its purpose is to surface judgement. Each option should be defensible to SOMEONE, so choosing reveals how the learner is reasoning — not whether they can spot the one green-ticked answer.",
+      "askYourself": [
+        "Which learning outcome does this decision exercise?",
+        "Is there a plausible case for each option? Who would argue for it, and why?",
+        "Does the choice turn on a real trade-off (speed vs. care, individual vs. group, short vs. long term)?",
+        "Would an expert and a novice actually choose differently here?"
+      ],
+      "write": [
+        "Give 2–4 options that are distinct in KIND, not just in wording.",
+        "Keep labels parallel in length and tone so none is tacitly flagged as right.",
+        "Optionally tag each choice with quality (strong / workable / weak) and a short rationale for the debrief — but never show the tag before the learner commits."
+      ],
+      "avoid": [
+        "A \"right answer\" plus obvious throwaways.",
+        "Options that differ only in politeness or phrasing.",
+        "More than four options — it becomes a menu, not a judgement."
+      ],
+      "qualityChecks": [
+        "Each option leads somewhere that makes sense for that choice.",
+        "No option is signposted as correct by its wording or position.",
+        "The fork maps to a named learning outcome."
+      ]
+    },
+    "consequence": {
+      "title": "Consequence — show, don't grade",
+      "purpose": "The consequence shows what the choice set in motion. Its purpose is to make cause and effect legible so the learner updates their model — realistic fallout, not a gold star or a buzzer. Consequences are how a scenario \"teaches back\" without a narrator scolding.",
+      "askYourself": [
+        "What would plausibly happen next because of THIS choice (not a generic result)?",
+        "Does the learner see the link between what they did and what followed?",
+        "Am I rewarding/punishing, or am I revealing? Reveal.",
+        "Does a weaker choice lead to a harder — but still recoverable — situation, so the learner can keep reasoning?"
+      ],
+      "write": [
+        "Describe the immediate, concrete effect in-world (how a person reacts, what the data shows, what time it now is).",
+        "Make different choices produce genuinely different consequences.",
+        "Let a poor choice complicate the path rather than instantly ending it, where realistic."
+      ],
+      "avoid": [
+        "Author voice judging the learner (\"Wrong! You should have…\").",
+        "All branches collapsing to the same consequence text.",
+        "Instant game-over for anything less than optimal, unless the stakes truly are terminal."
+      ],
+      "qualityChecks": [
+        "The consequence is specific to the choice that caused it.",
+        "Cause and effect are clear without a narrator spelling out the moral."
+      ]
+    },
+    "reflection": {
+      "title": "Reflection — pull out the principle",
+      "purpose": "Reflection is the metacognitive pause: it lifts the learner out of the story to notice WHY the last stretch went as it did and to generalise it. Its purpose is transfer — turning one episode into a principle the learner can carry to situations you did not script.",
+      "askYourself": [
+        "What principle or pattern should the learner extract from what just happened?",
+        "Does my prompt make them reason, or can it be answered \"yes/no\"?",
+        "Am I connecting this moment back to the learning outcome in the learner's own words?"
+      ],
+      "write": [
+        "Pose one open question (\"What would have told you earlier that this was the wrong call?\").",
+        "Keep the body short — this is a breath, not a lecture.",
+        "Point the reflection at the outcome being taught, not at trivia of the plot."
+      ],
+      "avoid": [
+        "Rhetorical questions with a single obvious answer.",
+        "Using reflection to deliver the \"lesson\" you did not trust the branches to teach."
+      ],
+      "qualityChecks": [
+        "The prompt is genuinely open and tied to a learning outcome.",
+        "It invites generalisation beyond this specific scenario."
+      ]
+    },
+    "ending": {
+      "title": "Ending — consolidate the arc",
+      "purpose": "An ending resolves a path and debriefs it. Its purpose is consolidation: show the learner the shape of the choices that brought them here, name the outcome honestly, and invite them to replay other paths to see what else was possible. Multiple endings are how a branching scenario says \"your judgement mattered\".",
+      "askYourself": [
+        "Does this ending follow believably from the path that reached it?",
+        "Is the outcome named honestly (positive / mixed / negative) without moralising?",
+        "Have I connected the result back to the learning outcomes?",
+        "Would replaying to reach a different ending teach something new?"
+      ],
+      "write": [
+        "Summarise the outcome in-world, then debrief against the learning outcomes.",
+        "Set `outcome` to positive / mixed / negative so players and authors can see the spread.",
+        "Invite replay: name what a different route might have changed."
+      ],
+      "avoid": [
+        "One ending for every path (then the branching was cosmetic).",
+        "A punitive \"you failed\" with no path forward or insight."
+      ],
+      "qualityChecks": [
+        "The ending is reachable and fits its path.",
+        "The debrief ties back to the learning outcomes.",
+        "Across the scenario, endings differ in outcome, not just wording."
+      ]
+    },
+    "info": {
+      "title": "Info — connective tissue",
+      "purpose": "An info/continue node carries the learner between the parts that do the teaching. Its purpose is momentum and clarity — supply only what the next decision needs. Every info node should earn its place; if it teaches nothing and advances nothing, cut it.",
+      "askYourself": [
+        "Does the learner need this to make the next decision well?",
+        "Could this be folded into the previous consequence or the next decision instead?"
+      ],
+      "write": [
+        "Keep it brief and forward-moving.",
+        "Hand off cleanly to the next decision or beat."
+      ],
+      "avoid": [
+        "Exposition dumps that stall the momentum.",
+        "Info nodes that exist only to pad the path length."
+      ],
+      "qualityChecks": [
+        "Removing it would genuinely hurt clarity or momentum."
+      ]
+    }
+  }
+}

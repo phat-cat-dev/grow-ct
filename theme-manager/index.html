@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Theme manager | Component workshop</title>
+  <link rel="stylesheet" href="./theme-manager.css">
+  <style>
+    body { margin: 0; background: #eef1f5; font: 1rem/1.6 system-ui, sans-serif; }
+    .workshop { max-width: 72rem; margin: auto; padding: 3rem 1rem; }
+    .workshop > header { margin-bottom: 2rem; }
+    .workshop h1 { font-size: clamp(2rem, 5vw, 3.5rem); line-height: 1.1; margin-block: .5rem 1rem; }
+    .workshop .eyebrow { font: .75rem ui-monospace, monospace; text-transform: uppercase; letter-spacing: .15em; }
+    .workshop .lesson { padding: clamp(1.5rem, 4vw, 3rem); margin-block: 2rem; border: 1px solid var(--tm-line); border-radius: 1.25rem; background: var(--tm-surface); }
+    .workshop .lesson-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr)); gap: 1rem; }
+    .workshop .lesson h2 { margin-top: 0; }
+    .workshop .lesson a { color: var(--tm-accent); }
+    .workshop .sample { padding: 1.25rem; border: 1px solid var(--tm-line); border-radius: .75rem; }
+    .workshop .sample strong { color: var(--tm-accent); }
+    .workshop pre { white-space: pre-wrap; overflow-wrap: anywhere; font-size: .85rem; }
+    .workshop .scroll-space { min-height: 40vh; }
+  </style>
+</head>
+<body>
+  <main class="workshop tm-scope" id="theme-workshop">
+    <header>
+      <p class="eyebrow">Component workshop / 01</p>
+      <h1>A little header.<br>A whole theme.</h1>
+      <p>An isolated version of the studio's floating header. Unlock the colour, try a new source, and save a real studio scheme.</p>
+      <p>The original studio is unchanged. This model uses its existing API and colour helpers.</p>
+    </header>
+
+    <div id="theme-manager"></div>
+    <noscript><p>This component requires JavaScript. Run the studio server and enable JavaScript to use the controls.</p></noscript>
+
+    <section class="lesson" aria-labelledby="preview-title">
+      <p class="eyebrow">Live preview</p>
+      <h2 id="preview-title">One source. A consistent surface.</h2>
+      <p>Theme changes are scoped to this workshop, not the document root. Scroll down to see the header stay with you.</p>
+      <div class="lesson-grid">
+        <div class="sample"><strong>01 / Modes</strong><p>Open Mode using the contrast icon to choose Light, Dark, Contrast or System. No-motion is independent; system reduced-motion preferences are always respected.</p></div>
+        <div class="sample"><strong>02 / Source colour</strong><p>Unlock to paste an opaque hex, RGB, HSL or named CSS colour. Enter applies it; Escape restores the current colour.</p></div>
+        <div class="sample"><strong>03 / Studio schemes</strong><p>Open Schemes using the code icon to load, edit and save schemes. Build a scheme into a theme with full CSS and token JSON.</p></div>
+      </div>
+    </section>
+    <section class="lesson" aria-labelledby="react-title">
+      <p class="eyebrow">Thinking in React</p>
+      <h2 id="react-title">State first. Markup second.</h2>
+      <p>The working component follows three steps: an event changes state, render reflects state, and the adapter handles external work.</p>
+      <pre><code>ThemeManager
+  ModePreferences    // light / dark / contrast / system + no-motion
+  SourceColour       // colour + locked
+  SchemeTools        // open + busy + saved schemes
+
+click -&gt; update state -&gt; render -&gt; notify preview</code></pre>
+      <p>In JSX, <code>class</code> becomes <code>className</code>, click listeners become <code>onClick</code>, and our state updates become <code>useState</code> calls. Keep API requests in the adapter rather than in your button markup.</p>
+      <p>See the accompanying README for a small JSX conversion exercise and the mounting contract.</p>
+    </section>
+    <section class="lesson scroll-space" aria-labelledby="isolation-title">
+      <p class="eyebrow">Reusable by design</p>
+      <h2 id="isolation-title">A component, not another global toolbar.</h2>
+      <p>Each instance has unique accessible IDs, its own state, scoped styles and a cleanup function. No React dependency or build step is needed for this first version.</p>
+      <p>Custom CSS is stored and included in server builds, but is deliberately not injected into this isolated preview. Other loaded studio settings are retained when saving.</p>
+    </section>
+  </main>
+  <script type="module">
+    import { mountThemeManager } from './theme-manager.js';
+    import { createStudioAdapter } from './studio-adapter.js';
+    import { notifications } from '../notifications/notification-service.js';
+
+    mountThemeManager(document.getElementById('theme-manager'), {
+      adapter: createStudioAdapter(),
+      preview: document.getElementById('theme-workshop'),
+      notificationService: notifications,
+    });
+  </script>
+</body>
+</html>

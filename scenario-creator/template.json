@@ -1,0 +1,117 @@
+{
+  "version": 2,
+  "id": "your-scenario",
+  "title": "[Your scenario title]",
+  "intro": "[Audience, context and learning intention]",
+  "audience": "[Who is this for]",
+  "learningOutcomes": [
+    "[A judgement the learner should be better at — phrase as an action, e.g. 'decides when to escalate']"
+  ],
+  "branchStyle": "mixed",
+  "variables": [
+    { "id": "example_var", "label": "Example state", "type": "number", "default": 0, "description": "Delete or replace. Carry state forward with effects and branches." }
+  ],
+  "start": "opening",
+  "nodes": [
+    {
+      "id": "opening",
+      "type": "continue",
+      "layer": "opening",
+      "title": "[Title for opening]",
+      "purpose": "Orient and invest: give the learner a role, a context and a stake so the first decision feels like theirs.",
+      "body": "[Drop the learner into the situation in second person. Establish role, context and what is at stake.]",
+      "button": "Step into the scenario",
+      "next": "decision-1"
+    },
+    {
+      "id": "decision-1",
+      "type": "choice",
+      "layer": "decision",
+      "title": "[Title for decision-1]",
+      "purpose": "A genuine fork mapped to a learning outcome. Each option is a believable mental model, not a right/wrong answer.",
+      "body": "[Set up the decision. Make the trade-off real.]",
+      "choices": [
+        { "label": "[Option 1 — a mental model]", "mentalModel": "[The reasoning behind choosing this]", "quality": "strong", "next": "consequence-1-a" },
+        { "label": "[Option 2 — a different mental model]", "mentalModel": "[The reasoning behind choosing this]", "quality": "weak", "next": "consequence-1-b", "effects": [{ "var": "example_var", "op": "add", "value": 1 }] }
+      ]
+    },
+    {
+      "id": "consequence-1-a",
+      "type": "auto",
+      "layer": "consequence",
+      "title": "[Title for consequence-1-a]",
+      "purpose": "Show, don't grade: reveal what this choice set in motion, specific to the choice.",
+      "body": "[Describe the realistic, in-world result of Option 1.]",
+      "delayMs": 1500,
+      "button": "Consider the next step",
+      "next": "reflection-1"
+    },
+    {
+      "id": "consequence-1-b",
+      "type": "auto",
+      "layer": "consequence",
+      "title": "[Title for consequence-1-b]",
+      "purpose": "Show, don't grade: a weaker choice complicates the path but stays recoverable.",
+      "body": "[Describe the realistic, in-world result of Option 2.]",
+      "delayMs": 1500,
+      "button": "Consider the next step",
+      "next": "reflection-1"
+    },
+    {
+      "id": "reflection-1",
+      "type": "continue",
+      "layer": "reflection",
+      "title": "[Title for reflection-1]",
+      "purpose": "Pull out the principle: lift the learner out of the story to generalise what just happened.",
+      "body": "[A short pause.]",
+      "prompt": "[One open question tied to a learning outcome.]",
+      "button": "Make the next decision",
+      "next": "decision-2"
+    },
+    {
+      "id": "decision-2",
+      "type": "choice",
+      "layer": "decision",
+      "title": "[Title for decision-2]",
+      "purpose": "Branch structure: this fork can END after its consequence, RETURN to a shared path, or CARRY a variable forward.",
+      "body": "[The next decision. Raise the stakes or narrow the options.]",
+      "choices": [
+        { "label": "[Option 1]", "next": "ending-strong" },
+        { "label": "[Option 2]", "next": "consequence-2-b" }
+      ]
+    },
+    {
+      "id": "consequence-2-b",
+      "type": "continue",
+      "layer": "consequence",
+      "title": "[Title for consequence-2-b]",
+      "purpose": "Route on carried state: send experienced-choice learners somewhere different.",
+      "body": "[Result of Option 2.]",
+      "button": "See where this leaves you",
+      "branches": [
+        { "if": { "var": "example_var", "op": "gte", "value": 1 }, "next": "ending-mixed" }
+      ],
+      "next": "ending-strong"
+    },
+    {
+      "id": "ending-strong",
+      "type": "ending",
+      "layer": "ending",
+      "title": "[Title for the strong ending]",
+      "outcome": "positive",
+      "body": "[Resolve this path in-world.]",
+      "prompt": "[What would a different route have changed?]",
+      "debrief": "[Tie the outcome back to the learning outcomes.]"
+    },
+    {
+      "id": "ending-mixed",
+      "type": "ending",
+      "layer": "ending",
+      "title": "[Title for the mixed ending]",
+      "outcome": "mixed",
+      "body": "[Resolve this path in-world.]",
+      "prompt": "[What would a different route have changed?]",
+      "debrief": "[Tie the outcome back to the learning outcomes.]"
+    }
+  ]
+}

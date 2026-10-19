@@ -1,0 +1,126 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://grow.local/schemas/branching-scenario-v2.json",
+  "title": "GROW Branching Scenario",
+  "description": "A deep branching learning scenario. Supports the three Artha-style branch structures: end after the consequence (tree), return to a shared path (spine), and carry a variable forward into later scenes (state). Node types: continue, choice, auto, ending. Pedagogical role is carried by `layer`, independent of type.",
+  "type": "object",
+  "required": ["version", "id", "title", "start", "nodes"],
+  "additionalProperties": false,
+  "properties": {
+    "version": { "type": "integer", "enum": [1, 2], "description": "2 is current; 1 (the original reconverging template) validates as a subset." },
+    "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+    "title": { "type": "string", "minLength": 1 },
+    "intro": { "type": "string", "description": "Audience, context and learning intention." },
+    "audience": { "type": "string" },
+    "learningOutcomes": {
+      "type": "array",
+      "description": "Observable judgements the learner should be better at. Each decision should map to one.",
+      "items": { "type": "string" }
+    },
+    "branchStyle": { "type": "string", "enum": ["spine", "tree", "mixed"], "description": "spine = reconverging; tree = divergent with multiple endings; mixed = both. State variables can be carried in any style." },
+    "variables": {
+      "type": "array",
+      "description": "State carried forward across scenes. Choices/nodes mutate them via `effects`; nodes route on them via `branches`; text interpolates them with {{var}}.",
+      "items": { "$ref": "#/definitions/variable" }
+    },
+    "start": { "type": "string", "description": "id of the opening node." },
+    "meta": { "type": "object", "description": "Free-form authoring metadata (author, version notes, tags)." },
+    "nodes": {
+      "type": "array",
+      "minItems": 2,
+      "items": { "$ref": "#/definitions/node" }
+    }
+  },
+  "definitions": {
+    "variable": {
+      "type": "object",
+      "required": ["id", "type"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9_]*$" },
+        "label": { "type": "string" },
+        "type": { "type": "string", "enum": ["number", "boolean", "string"] },
+        "default": { "type": ["number", "boolean", "string"] },
+        "description": { "type": "string" }
+      }
+    },
+    "effect": {
+      "type": "object",
+      "description": "Mutation applied when a node is entered or a choice is taken.",
+      "required": ["var", "op"],
+      "additionalProperties": false,
+      "properties": {
+        "var": { "type": "string" },
+        "op": { "type": "string", "enum": ["set", "add", "subtract", "toggle"] },
+        "value": { "type": ["number", "boolean", "string"] }
+      }
+    },
+    "condition": {
+      "type": "object",
+      "required": ["var", "op"],
+      "additionalProperties": false,
+      "properties": {
+        "var": { "type": "string" },
+        "op": { "type": "string", "enum": ["eq", "ne", "gt", "gte", "lt", "lte", "truthy", "falsy"] },
+        "value": { "type": ["number", "boolean", "string"] }
+      }
+    },
+    "branch": {
+      "type": "object",
+      "description": "Conditional route, evaluated in order before the node's default `next`.",
+      "required": ["if", "next"],
+      "additionalProperties": false,
+      "properties": {
+        "if": { "$ref": "#/definitions/condition" },
+        "next": { "type": "string" }
+      }
+    },
+    "node": {
+      "type": "object",
+      "required": ["id", "type", "title", "body"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$" },
+        "type": { "type": "string", "enum": ["continue", "choice", "auto", "ending"] },
+        "title": { "type": "string" },
+        "body": { "type": "string" },
+        "prompt": { "type": "string", "description": "A reflection / metacognitive prompt shown with the node." },
+        "layer": { "type": "string", "enum": ["opening", "decision", "consequence", "reflection", "ending", "info"], "description": "Pedagogical role (see layer-prompts.json)." },
+        "purpose": { "type": "string", "description": "Author note: what this node is for in the learning." },
+        "button": { "type": "string", "description": "Label for the advance button (continue / auto)." },
+        "next": { "type": "string", "description": "id of the next node (continue / auto). Omitted on choice and ending." },
+        "branches": { "type": "array", "items": { "$ref": "#/definitions/branch" }, "description": "continue / auto: conditional routes tried before `next`." },
+        "effects": { "type": "array", "items": { "$ref": "#/definitions/effect" }, "description": "State mutations applied when this node is entered." },
+        "delayMs": { "type": "integer", "minimum": 0, "maximum": 60000, "description": "auto: pause before the advance button appears." },
+        "outcome": { "type": "string", "enum": ["positive", "mixed", "negative"], "description": "ending: honest result of this path." },
+        "debrief": { "type": "string", "description": "ending: tie the result back to the learning outcomes." },
+        "choices": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 4,
+          "items": { "$ref": "#/definitions/choice" }
+        }
+      },
+      "allOf": [
+        { "if": { "properties": { "type": { "const": "choice" } } }, "then": { "required": ["choices"] } },
+        { "if": { "properties": { "type": { "enum": ["continue", "auto"] } } }, "then": { "required": ["next"] } },
+        { "if": { "properties": { "type": { "const": "ending" } } }, "then": { "not": { "anyOf": [{ "required": ["next"] }, { "required": ["choices"] }] } } }
+      ]
+    },
+    "choice": {
+      "type": "object",
+      "description": "An option framed as a believable mental model, not a right/wrong answer.",
+      "required": ["label", "next"],
+      "additionalProperties": false,
+      "properties": {
+        "label": { "type": "string", "minLength": 1 },
+        "next": { "type": "string" },
+        "mentalModel": { "type": "string", "description": "The reasoning a learner choosing this would be using." },
+        "feedback": { "type": "string", "description": "Optional in-world reaction to this choice." },
+        "quality": { "type": "string", "enum": ["strong", "workable", "weak"], "description": "For the debrief only — never shown before the learner commits." },
+        "rationale": { "type": "string", "description": "Why this option is strong / workable / weak." },
+        "effects": { "type": "array", "items": { "$ref": "#/definitions/effect" }, "description": "State mutations applied when this choice is taken." }
+      }
+    }
+  }
+}
