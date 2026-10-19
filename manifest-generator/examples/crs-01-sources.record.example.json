@@ -1,0 +1,37 @@
+{
+  "state": "closed",
+  "provenance": "human-confirmed",
+  "decidedValue": {
+    "sources": [
+      {
+        "ref": "reference/excelling-at-university.md",
+        "kind": "book",
+        "role": "primary"
+      },
+      {
+        "ref": "source-kb/source-maps/book-excelling-at-university-2026.json",
+        "kind": "source-map",
+        "role": "pathway-tagged book chunks"
+      }
+    ]
+  },
+  "grounding": [
+    {
+      "doc": "design-kb/design-kb.pathways.json",
+      "ref": "pathways[].id = understanding-learning-assessment-feedback",
+      "note": "Layer-1 record: chapters 3-6, 39 tagged book chunks"
+    },
+    {
+      "doc": "source-kb/source-maps/book-excelling-at-university-2026.json",
+      "ref": "pathwayTags = understanding-learning-assessment-feedback",
+      "note": "39 confirmed book chunks tagged to this pathway"
+    }
+  ],
+  "confirmedAt": "gate",
+  "sessionRef": {
+    "venue": "claude-code-plan",
+    "description": "understanding-learning-assessment-feedback-introductory crs-01_sources 2026-10-08"
+  },
+  "seq": 1,
+  "timestamp": "2026-10-19T16:35:55.618Z"
+}

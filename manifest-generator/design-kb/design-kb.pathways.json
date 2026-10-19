@@ -1,0 +1,1037 @@
+{
+  "pathwaysVersion": "2.0.0",
+  "generated": "2026-10-08",
+  "description": "Consolidated Layer-1 pathway grounding: one resolved record per pathway, merging the catalogue registry, the per-pathway tier framing (focus + voice band), and the book-map chunk ids tagged to the pathway (primary = sole tag; shared = co-tagged). Chunk references are ids only; source-kb/source-maps/book-excelling-at-university-2026.json remains the source of truth for chunk text. Read at the generic gates (crs-02, crs-03, crs-04, les-01, wra-*). Subject grounding (benchmarks) is Layer 2, read only at CXP.",
+  "machinery": {
+    "book": "reference/excelling-at-university.md",
+    "bookMap": "source-kb/source-maps/book-excelling-at-university-2026.json",
+    "voiceSpec": "reference/excelling-voice-specification.md",
+    "designKb": "design-kb/",
+    "tierModel": "docs/curriculum/tier-specification.md",
+    "tierMapping": "docs/curriculum/pathway-tier-mapping.md",
+    "scoringModel": "docs/curriculum/scoring-and-summative-model.md"
+  },
+  "pathways": [
+    {
+      "id": "starting-progressing-succeeding",
+      "number": 1,
+      "name": "Starting, Progressing & Succeeding",
+      "chapters": [
+        2,
+        14
+      ],
+      "routes": {
+        "feeds": null,
+        "drawsOn": null
+      },
+      "bookChunks": {
+        "primary": [
+          "ch14/forms-of-graduate-capital",
+          "ch14/graduate-capital-framework",
+          "ch14/opening",
+          "ch14/self-regulated-learning-and-literacies",
+          "ch2/creating-goals",
+          "ch2/defining-success",
+          "ch2/excelling-as-a-mindset",
+          "ch2/learning-objectives-and-keywords",
+          "ch2/opening",
+          "ch2/self-efficacy",
+          "ch2/success-academic-performance",
+          "ch2/summary",
+          "ch2/understanding-your-motivation",
+          "ch2/what-is-excelling"
+        ],
+        "shared": [
+          {
+            "chunk": "ch2/success-personal-development",
+            "with": [
+              "creativity"
+            ]
+          },
+          {
+            "chunk": "ch4/opening",
+            "with": [
+              "reflective-practice",
+              "understanding-learning-assessment-feedback"
+            ]
+          }
+        ]
+      },
+      "tiers": {
+        "introductory": {
+          "displayName": "Introductory",
+          "focus": "Starting",
+          "voiceBand": "§16 Beginner (bands 2-4, default). Confirmed at tier-spec v1.0.",
+          "assumesFromPrevious": null,
+          "status": "planned",
+          "courseSlug": null
+        },
+        "intermediate": {
+          "displayName": "Intermediate",
+          "focus": "Progressing",
+          "voiceBand": "§16 Intermediate (bands 2-4, default). Confirmed at tier-spec v1.0.",
+          "assumesFromPrevious": null,
+          "status": "planned",
+          "courseSlug": null
+        },
+        "advanced": {
+          "displayName": "Advanced",
+          "focus": "Succeeding",
+          "voiceBand": "§16 Advanced (bands 2-4, default). Confirmed at tier-spec v1.0.",
+          "assumesFromPrevious": null,
+          "status": "planned",
+          "courseSlug": null
+        }
+      }
+    },
+    {
+      "id": "understanding-learning-assessment-feedback",
+      "number": 2,
+      "name": "Understanding Learning, Assessment & Feedback",
+      "chapters": [
+        3,
+        4,
+        5,
+        6
+      ],
+      "routes": {
+        "feeds": null,
+        "drawsOn": null
+      },
+      "bookChunks": {
+        "primary": [
+          "ch3/academic-literacy-and-discourse-community",
+          "ch3/formative-and-summative-assessment",
+          "ch3/how-is-learning-designed",
+          "ch3/learning-and-discourse-community",
+          "ch3/learning-framework",
+          "ch3/learning-objectives-and-keywords",
+          "ch3/learning-theory-behaviourism",
+          "ch3/learning-theory-constructivism",
+          "ch3/opening",
+          "ch3/process-of-learning-design",
+          "ch3/summary",
+          "ch3/what-is-knowledge",
+          "ch3/what-is-learning",
+          "ch5/formative-and-summative-assessment",
+          "ch5/forms-of-assessment",
+          "ch5/learning-objectives-and-keywords",
+          "ch5/marking-criteria",
+          "ch5/opening",
+          "ch5/putting-assessment-into-perspective",
+          "ch5/self-and-peer-assessment",
+          "ch5/summary",
+          "ch6/diagnostic-feedback",
+          "ch6/forms-of-feedback",
+          "ch6/how-do-you-make-effective-use-of-feedback",
+          "ch6/learning-objectives-and-keywords",
+          "ch6/opening",
+          "ch6/summary",
+          "ch6/the-feedback-cycle",
+          "ch6/what-is-feedback",
+          "ch6/what-issues-do-tutors-highlight"
+        ],
+        "shared": [
+          {
+            "chunk": "ch12/assessment",
+            "with": [
+              "reflective-practice",
+              "work-based-experiential-learning"
+            ]
+          },
+          {
+            "chunk": "ch4/becoming-a-self-regulating-learner",
+            "with": [
+              "creativity",
+              "reflective-practice"
+            ]
+          },
+          {
+            "chunk": "ch4/learning-objectives-and-keywords",
+            "with": [
+              "reflective-practice"
+            ]
+          },
+          {
+            "chunk": "ch4/opening",
+            "with": [
+              "reflective-practice",
+              "starting-progressing-succeeding"
+            ]
+          },
+          {
+            "chunk": "ch4/reflective-practice",
+            "with": [
+              "reflective-practice"
+            ]
+          },
+          {
+            "chunk": "ch4/self-regulated-learning-as-a-process",
+            "with": [
+              "reflective-practice"
+            ]
+          },
+          {
+            "chunk": "ch4/summary",
+            "with": [
+              "reflective-practice"
+            ]
+          },
+          {
+            "chunk": "ch4/what-is-self-regulated-learning",
+            "with": [
+              "reflective-practice"
+            ]
+          },
+          {
+            "chunk": "ch5/the-dissertation",
+            "with": [
+              "researching-research-methods"
+            ]
+          }
+        ]
+      },
+      "tiers": {
+        "introductory": {
+          "displayName": "Introductory",
+          "focus": "how learning at university works",
+          "voiceBand": "§16 Beginner (bands 2-4, default).",
+          "assumesFromPrevious": null,
+          "status": "planned",
+          "courseSlug": null
+        },
+        "intermediate": {
+          "displayName": "Intermediate",
+          "focus": "working with the system, and managing your own learning",
+          "voiceBand": "§16 Intermediate (bands 2-4, default).",
+          "assumesFromPrevious": null,
+          "status": "planned",
+          "courseSlug": null
+        },
+        "advanced": {
+          "displayName": "Advanced",
+          "focus": "owning your development within the system",
+          "voiceBand": "§16 Advanced (bands 2-4, default).",
+          "assumesFromPrevious": null,
+          "status": "planned",
+          "courseSlug": null
+        }
+      }
+    },
+    {
+      "id": "finding-using-sources",
+      "number": 3,
+      "name": "Finding & Using Sources",
+      "chapters": [
+        7
+      ],
+      "routes": {
+        "feeds": null,
+        "drawsOn": null
+      },
+      "bookChunks": {
+        "primary": [
+          "ch7/effective-searching-principles",
+          "ch7/evaluating-sources",
+          "ch7/extending-your-search",
+          "ch7/identifying-keywords",
+          "ch7/learning-objectives-and-keywords",
+          "ch7/opening",
+          "ch7/planning-your-search",
+          "ch7/summary",
+          "ch7/using-library-discovery-service",
+          "ch7/what-is-searching"
+        ],
+        "shared": []
+      },
+      "tiers": {
+        "introductory": {
+          "displayName": "Introductory",
+          "focus": "searching as a discipline",
+          "voiceBand": "§16 Beginner (bands 2-4, default).",
+          "assumesFromPrevious": null,
+          "status": "planned",
+          "courseSlug": null
+        },
+        "intermediate": {
+          "displayName": "Intermediate",
+          "focus": "search craft",
+          "voiceBand": "§16 Intermediate (bands 2-4, default).",
+          "assumesFromPrevious": null,
+          "status": "planned",
+          "courseSlug": null
+        },
+        "advanced": {
+          "displayName": "Advanced",
+          "focus": "extending and evaluating deeply",
+          "voiceBand": "§16 Advanced (bands 2-4, default).",
+          "assumesFromPrevious": null,
+          "status": "planned",
+          "courseSlug": null
+        }
+      }
+    },
+    {
+      "id": "referencing",
+      "number": 4,
+      "name": "Referencing, Citation & Academic Integrity",
+      "chapters": [
+        10
+      ],
+      "routes": {
+        "feeds": null,
+        "drawsOn": null
+      },
+      "bookChunks": {
+        "primary": [
+          "ch10/defining-academic-integrity",
+          "ch10/how-to-format-references",
+          "ch10/learning-objectives-and-keywords",
+          "ch10/referencing-intro",
+          "ch10/referencing-styles",
+          "ch10/what-references-look-like"
+        ],
+        "shared": [
+          {
+            "chunk": "ch10/opening",
+            "with": [
+              "ai-technology"
+            ]
+          },
+          {
+            "chunk": "ch10/quotation-and-paraphrase",
+            "with": [
+              "academic-writing"
+            ]
+          },
+          {
+            "chunk": "ch10/summary",
+            "with": [
+              "work-based-experiential-learning"
+            ]
+          },
+          {
+            "chunk": "ch10/why-references-matter",
+            "with": [
+              "criticality"
+            ]
+          }
+        ]
+      },
+      "tiers": {
+        "introductory": {
+          "displayName": "Introductory",
+          "focus": "referencing",
+          "voiceBand": "§16 Beginner (bands 2-4, default).",
+          "assumesFromPrevious": null,
+          "status": "in-design",
+          "courseSlug": "referencing-introductory"
+        },
+        "intermediate": {
+          "displayName": "Intermediate",
+          "focus": "citation",
+          "voiceBand": "§16 Intermediate (bands 2-4, default).",
+          "assumesFromPrevious": null,
+          "status": "planned",
+          "courseSlug": null
+        },
+        "advanced": {
+          "displayName": "Advanced",
+          "focus": "academic integrity",
+          "voiceBand": "§16 Advanced (bands 2-4, default).",
+          "assumesFromPrevious": null,
+          "status": "planned",
+          "courseSlug": null
+        }
+      }
+    },
+    {
+      "id": "criticality",
+      "number": 5,
+      "name": "Criticality",
+      "chapters": [
+        8
+      ],
+      "routes": {
+        "feeds": null,
+        "drawsOn": null
+      },
+      "bookChunks": {
+        "primary": [
+          "ch8/active-and-passive-approaches",
+          "ch8/applying-synthesis",
+          "ch8/defining-critical-thought",
+          "ch8/discipline-specific-vocabulary",
+          "ch8/engaging-with-journal-articles",
+          "ch8/evaluating-interpretations",
+          "ch8/forming-judgements",
+          "ch8/language-of-criticality",
+          "ch8/learning-objectives-and-keywords",
+          "ch8/opening",
+          "ch8/summary",
+          "ch8/thinking-critically-about-academic-sources"
+        ],
+        "shared": [
+          {
+            "chunk": "ch10/why-references-matter",
+            "with": [
+              "referencing"
+            ]
+          },
+          {
+            "chunk": "ch8/analysing-an-interpretation",
+            "with": [
+              "creativity"
+            ]
+          },
+          {
+            "chunk": "ch8/opening-up-the-discourse-in-practice",
+            "with": [
+              "creativity"
+            ]
+          }
+        ]
+      },
+      "tiers": {
+        "introductory": {
+          "displayName": "Introductory",
+          "focus": "criticality as a mindset",
+          "voiceBand": "§16 Beginner (bands 2-4, default).",
+          "assumesFromPrevious": null,
+          "status": "planned",
+          "courseSlug": null
+        },
+        "intermediate": {
+          "displayName": "Intermediate",
+          "focus": "the critical skills in action",
+          "voiceBand": "§16 Intermediate (bands 2-4, default).",
+          "assumesFromPrevious": null,
+          "status": "planned",
+          "courseSlug": null
+        },
+        "advanced": {
+          "displayName": "Advanced",
+          "focus": "articulating criticality",
+          "voiceBand": "§16 Advanced (bands 2-4, default).",
+          "assumesFromPrevious": null,
+          "status": "planned",
+          "courseSlug": null
+        }
+      }
+    },
+    {
+      "id": "academic-writing",
+      "number": 6,
+      "name": "Academic Writing",
+      "chapters": [
+        8,
+        9
+      ],
+      "routes": {
+        "feeds": null,
+        "drawsOn": null
+      },
+      "bookChunks": {
+        "primary": [
+          "ch9/common-errors-in-student-writing",
+          "ch9/creating-a-first-draft",
+          "ch9/developing-a-critical-edge",
+          "ch9/developing-structure-and-organisation",
+          "ch9/discipline-writing-examples",
+          "ch9/editing-and-proofreading",
+          "ch9/expression-clarity-and-precision",
+          "ch9/familiarising-yourself-with-discipline-writing",
+          "ch9/four-pillars-of-effective-writing",
+          "ch9/genres-of-writing-overview",
+          "ch9/integrating-academic-sources",
+          "ch9/learning-objectives-and-keywords",
+          "ch9/opening",
+          "ch9/planning",
+          "ch9/summary",
+          "ch9/the-essay",
+          "ch9/the-writing-cycle",
+          "ch9/three-assumptions-about-academic-writing",
+          "ch9/understanding-the-task",
+          "ch9/writing-within-your-discipline"
+        ],
+        "shared": [
+          {
+            "chunk": "ch10/quotation-and-paraphrase",
+            "with": [
+              "referencing"
+            ]
+          },
+          {
+            "chunk": "ch9/literature-review",
+            "with": [
+              "researching-research-methods"
+            ]
+          },
+          {
+            "chunk": "ch9/reflective-writing",
+            "with": [
+              "reflective-practice"
+            ]
+          },
+          {
+            "chunk": "ch9/reports",
+            "with": [
+              "researching-research-methods"
+            ]
+          },
+          {
+            "chunk": "ch9/research-proposal",
+            "with": [
+              "researching-research-methods"
+            ]
+          }
+        ]
+      },
+      "tiers": {
+        "introductory": {
+          "displayName": "Introductory",
+          "focus": "getting a draft down, and getting the basics right",
+          "voiceBand": "§16 Beginner (bands 2-4, default). Confirmed: validated against L01/L02 at tier-spec STEP 5.",
+          "assumesFromPrevious": null,
+          "status": "planned",
+          "courseSlug": null
+        },
+        "intermediate": {
+          "displayName": "Intermediate",
+          "focus": "writing with argument, structure, and sources",
+          "voiceBand": "§16 Intermediate (bands 2-4, default). Confirmed: validated against L01/L02 at tier-spec STEP 5.",
+          "assumesFromPrevious": null,
+          "status": "planned",
+          "courseSlug": null
+        },
+        "advanced": {
+          "displayName": "Advanced",
+          "focus": "writing within your discipline",
+          "voiceBand": "§16 Advanced (bands 2-4, default). Confirmed: validated against L01/L02 at tier-spec STEP 5.",
+          "assumesFromPrevious": null,
+          "status": "planned",
+          "courseSlug": null
+        }
+      }
+    },
+    {
+      "id": "presenting",
+      "number": 7,
+      "name": "Presenting",
+      "chapters": [
+        11
+      ],
+      "routes": {
+        "feeds": null,
+        "drawsOn": null
+      },
+      "bookChunks": {
+        "primary": [
+          "ch11/common-presentation-errors",
+          "ch11/defining-the-presentation",
+          "ch11/designing-visual-aids",
+          "ch11/learning-objectives-and-keywords",
+          "ch11/opening",
+          "ch11/optimising-your-performance-in-group-work",
+          "ch11/planning-structuring-and-designing-your-presentation",
+          "ch11/presentations-and-transferable-skills",
+          "ch11/summary",
+          "ch11/tips-on-structure",
+          "ch11/types-of-presentations-used-for-assessment",
+          "ch11/what-tutors-look-for-in-group-work",
+          "ch11/working-in-groups"
+        ],
+        "shared": [
+          {
+            "chunk": "ch11/personality-types-and-conflict-resolution",
+            "with": [
+              "reflective-practice"
+            ]
+          }
+        ]
+      },
+      "tiers": {
+        "introductory": {
+          "displayName": "Introductory",
+          "focus": "what a presentation is, and how one is put together",
+          "voiceBand": "§16 Beginner (bands 2-4, default). Confirmed 4 Sep 2026 at presenting-introductory A2 (f05d72d); bands 2-4 stand.",
+          "assumesFromPrevious": null,
+          "status": "planned",
+          "courseSlug": null
+        },
+        "intermediate": {
+          "displayName": "Intermediate",
+          "focus": "delivering it well, across different formats",
+          "voiceBand": "§16 Intermediate (bands 2-4, default). Confirmed 4 Sep 2026 at presenting-introductory A2 (f05d72d); bands 2-4 stand.",
+          "assumesFromPrevious": null,
+          "status": "planned",
+          "courseSlug": null
+        },
+        "advanced": {
+          "displayName": "Advanced",
+          "focus": "presenting with authority, and collaborating",
+          "voiceBand": "§16 Advanced (bands 2-4, default). Confirmed 4 Sep 2026 at presenting-introductory A2 (f05d72d); bands 2-4 stand.",
+          "assumesFromPrevious": null,
+          "status": "planned",
+          "courseSlug": null
+        }
+      }
+    },
+    {
+      "id": "revising-exams",
+      "number": 8,
+      "name": "Revising & Exams",
+      "chapters": [
+        13
+      ],
+      "routes": {
+        "feeds": null,
+        "drawsOn": null
+      },
+      "bookChunks": {
+        "primary": [
+          "ch13/active-learning-and-revision-strategy",
+          "ch13/auditory",
+          "ch13/developing-an-effective-revision-strategy",
+          "ch13/exam-anxiety",
+          "ch13/exam-strategy",
+          "ch13/kinaesthetic",
+          "ch13/learning-objectives-and-keywords",
+          "ch13/opening",
+          "ch13/summary",
+          "ch13/the-purpose-of-exams",
+          "ch13/types-of-exams"
+        ],
+        "shared": [
+          {
+            "chunk": "ch13/visual",
+            "with": [
+              "creativity"
+            ]
+          }
+        ]
+      },
+      "tiers": {
+        "introductory": {
+          "displayName": "Introductory",
+          "focus": "understanding exams and the need for strategy",
+          "voiceBand": "§16 Beginner (bands 2-4, default). Provisional: confirm at pathway pressure-test.",
+          "assumesFromPrevious": null,
+          "status": "planned",
+          "courseSlug": null
+        },
+        "intermediate": {
+          "displayName": "Intermediate",
+          "focus": "building a revision strategy",
+          "voiceBand": "§16 Intermediate (bands 2-4, default). Provisional: confirm at pathway pressure-test.",
+          "assumesFromPrevious": null,
+          "status": "planned",
+          "courseSlug": null
+        },
+        "advanced": {
+          "displayName": "Advanced",
+          "focus": "active techniques and exam-day performance",
+          "voiceBand": "§16 Advanced (bands 2-4, default). Provisional: confirm at pathway pressure-test.",
+          "assumesFromPrevious": null,
+          "status": "planned",
+          "courseSlug": null
+        }
+      }
+    },
+    {
+      "id": "researching-research-methods",
+      "number": 9,
+      "name": "Researching & Research Methods",
+      "chapters": [
+        3,
+        5,
+        9,
+        10
+      ],
+      "routes": {
+        "feeds": null,
+        "drawsOn": null
+      },
+      "bookChunks": {
+        "primary": [
+          "ch10/research-and-data-handling"
+        ],
+        "shared": [
+          {
+            "chunk": "ch5/the-dissertation",
+            "with": [
+              "understanding-learning-assessment-feedback"
+            ]
+          },
+          {
+            "chunk": "ch9/literature-review",
+            "with": [
+              "academic-writing"
+            ]
+          },
+          {
+            "chunk": "ch9/reports",
+            "with": [
+              "academic-writing"
+            ]
+          },
+          {
+            "chunk": "ch9/research-proposal",
+            "with": [
+              "academic-writing"
+            ]
+          }
+        ]
+      },
+      "tiers": {
+        "introductory": {
+          "displayName": "Introductory",
+          "focus": "what research is and how a project is shaped",
+          "voiceBand": "§16 Intermediate (bands 3-5, up-skew). Rationale: this pathway's introductory tier already assumes a capable student (see this section's Notes).",
+          "assumesFromPrevious": null,
+          "status": "planned",
+          "courseSlug": null
+        },
+        "intermediate": {
+          "displayName": "Intermediate",
+          "focus": "the research-document genres",
+          "voiceBand": "§16 Advanced (bands 3-5, up-skew). Rationale: this pathway's introductory tier already assumes a capable student (see this section's Notes).",
+          "assumesFromPrevious": null,
+          "status": "planned",
+          "courseSlug": null
+        },
+        "advanced": {
+          "displayName": "Advanced",
+          "focus": "running research with rigour and ethics",
+          "voiceBand": "§16 Masters (bands 3-5, up-skew). Rationale: this pathway's introductory tier already assumes a capable student (see this section's Notes).",
+          "assumesFromPrevious": null,
+          "status": "planned",
+          "courseSlug": null
+        }
+      }
+    },
+    {
+      "id": "reflective-practice",
+      "number": 10,
+      "name": "Reflective Practice",
+      "chapters": [
+        4
+      ],
+      "routes": {
+        "feeds": null,
+        "drawsOn": null
+      },
+      "bookChunks": {
+        "primary": [],
+        "shared": [
+          {
+            "chunk": "ch11/personality-types-and-conflict-resolution",
+            "with": [
+              "presenting"
+            ]
+          },
+          {
+            "chunk": "ch12/assessment",
+            "with": [
+              "understanding-learning-assessment-feedback",
+              "work-based-experiential-learning"
+            ]
+          },
+          {
+            "chunk": "ch12/experiential-learning-and-kolbs-cycle",
+            "with": [
+              "work-based-experiential-learning"
+            ]
+          },
+          {
+            "chunk": "ch12/kolbs-cycle-worked-example",
+            "with": [
+              "work-based-experiential-learning"
+            ]
+          },
+          {
+            "chunk": "ch12/summary",
+            "with": [
+              "work-based-experiential-learning"
+            ]
+          },
+          {
+            "chunk": "ch4/becoming-a-self-regulating-learner",
+            "with": [
+              "creativity",
+              "understanding-learning-assessment-feedback"
+            ]
+          },
+          {
+            "chunk": "ch4/learning-objectives-and-keywords",
+            "with": [
+              "understanding-learning-assessment-feedback"
+            ]
+          },
+          {
+            "chunk": "ch4/opening",
+            "with": [
+              "starting-progressing-succeeding",
+              "understanding-learning-assessment-feedback"
+            ]
+          },
+          {
+            "chunk": "ch4/reflective-practice",
+            "with": [
+              "understanding-learning-assessment-feedback"
+            ]
+          },
+          {
+            "chunk": "ch4/self-regulated-learning-as-a-process",
+            "with": [
+              "understanding-learning-assessment-feedback"
+            ]
+          },
+          {
+            "chunk": "ch4/summary",
+            "with": [
+              "understanding-learning-assessment-feedback"
+            ]
+          },
+          {
+            "chunk": "ch4/what-is-self-regulated-learning",
+            "with": [
+              "understanding-learning-assessment-feedback"
+            ]
+          },
+          {
+            "chunk": "ch9/reflective-writing",
+            "with": [
+              "academic-writing"
+            ]
+          }
+        ]
+      },
+      "tiers": {
+        "introductory": {
+          "displayName": "Introductory",
+          "focus": "what reflection is and why it matters",
+          "voiceBand": "§16 Beginner (bands 2-4, default).",
+          "assumesFromPrevious": null,
+          "status": "planned",
+          "courseSlug": null
+        },
+        "intermediate": {
+          "displayName": "Intermediate",
+          "focus": "structured reflection turned into action",
+          "voiceBand": "§16 Intermediate (bands 2-4, default).",
+          "assumesFromPrevious": null,
+          "status": "planned",
+          "courseSlug": null
+        },
+        "advanced": {
+          "displayName": "Advanced",
+          "focus": "reflection as professional practice",
+          "voiceBand": "§16 Advanced (bands 2-4, default).",
+          "assumesFromPrevious": null,
+          "status": "planned",
+          "courseSlug": null
+        }
+      }
+    },
+    {
+      "id": "work-based-experiential-learning",
+      "number": 11,
+      "name": "Work-Based & Experiential Learning",
+      "chapters": [
+        12
+      ],
+      "routes": {
+        "feeds": null,
+        "drawsOn": null
+      },
+      "bookChunks": {
+        "primary": [
+          "ch12/benefits",
+          "ch12/defining-practice-and-work-based-learning",
+          "ch12/getting-the-most-out-of-it",
+          "ch12/learning-objectives-and-keywords",
+          "ch12/opening"
+        ],
+        "shared": [
+          {
+            "chunk": "ch10/summary",
+            "with": [
+              "referencing"
+            ]
+          },
+          {
+            "chunk": "ch12/assessment",
+            "with": [
+              "reflective-practice",
+              "understanding-learning-assessment-feedback"
+            ]
+          },
+          {
+            "chunk": "ch12/experiential-learning-and-kolbs-cycle",
+            "with": [
+              "reflective-practice"
+            ]
+          },
+          {
+            "chunk": "ch12/kolbs-cycle-worked-example",
+            "with": [
+              "reflective-practice"
+            ]
+          },
+          {
+            "chunk": "ch12/summary",
+            "with": [
+              "reflective-practice"
+            ]
+          }
+        ]
+      },
+      "tiers": {
+        "introductory": {
+          "displayName": "Introductory",
+          "focus": "what practice/work-based learning is",
+          "voiceBand": "§16 Beginner (bands 2-4, default). Provisional: confirm at pathway pressure-test.",
+          "assumesFromPrevious": null,
+          "status": "planned",
+          "courseSlug": null
+        },
+        "intermediate": {
+          "displayName": "Intermediate",
+          "focus": "making the most of it",
+          "voiceBand": "§16 Intermediate (bands 2-4, default). Provisional: confirm at pathway pressure-test.",
+          "assumesFromPrevious": null,
+          "status": "planned",
+          "courseSlug": null
+        },
+        "advanced": {
+          "displayName": "Advanced",
+          "focus": "reflecting on experience",
+          "voiceBand": "§16 Advanced (bands 2-4, default). Provisional: confirm at pathway pressure-test.",
+          "assumesFromPrevious": null,
+          "status": "planned",
+          "courseSlug": null
+        }
+      }
+    },
+    {
+      "id": "ai-technology",
+      "number": 12,
+      "name": "AI & Technology (authored / Track B)",
+      "chapters": null,
+      "routes": {
+        "feeds": null,
+        "drawsOn": null
+      },
+      "bookChunks": {
+        "primary": [],
+        "shared": [
+          {
+            "chunk": "ch10/opening",
+            "with": [
+              "referencing"
+            ]
+          }
+        ]
+      },
+      "tiers": {
+        "introductory": {
+          "displayName": "Introductory",
+          "focus": "understand AI (AI literacy foundations)",
+          "voiceBand": "§16 Beginner (bands 2-4, default). Provisional: confirm at SME sign-off.",
+          "assumesFromPrevious": null,
+          "status": "planned",
+          "courseSlug": null
+        },
+        "intermediate": {
+          "displayName": "Intermediate",
+          "focus": "use AI critically (apply it to study tasks)",
+          "voiceBand": "§16 Intermediate (bands 2-4, default). Provisional: confirm at SME sign-off.",
+          "assumesFromPrevious": null,
+          "status": "planned",
+          "courseSlug": null
+        },
+        "advanced": {
+          "displayName": "Advanced",
+          "focus": "evaluate, create with, and act ethically around AI",
+          "voiceBand": "§16 Advanced (bands 2-4, default). Provisional: confirm at SME sign-off.",
+          "assumesFromPrevious": null,
+          "status": "planned",
+          "courseSlug": null
+        }
+      }
+    },
+    {
+      "id": "creativity",
+      "number": 13,
+      "name": "Creativity (authored / Track B)",
+      "chapters": null,
+      "routes": {
+        "feeds": null,
+        "drawsOn": null
+      },
+      "bookChunks": {
+        "primary": [],
+        "shared": [
+          {
+            "chunk": "ch13/visual",
+            "with": [
+              "revising-exams"
+            ]
+          },
+          {
+            "chunk": "ch2/success-personal-development",
+            "with": [
+              "starting-progressing-succeeding"
+            ]
+          },
+          {
+            "chunk": "ch4/becoming-a-self-regulating-learner",
+            "with": [
+              "reflective-practice",
+              "understanding-learning-assessment-feedback"
+            ]
+          },
+          {
+            "chunk": "ch8/analysing-an-interpretation",
+            "with": [
+              "criticality"
+            ]
+          },
+          {
+            "chunk": "ch8/opening-up-the-discourse-in-practice",
+            "with": [
+              "criticality"
+            ]
+          }
+        ]
+      },
+      "tiers": {
+        "introductory": {
+          "displayName": "Introductory",
+          "focus": "creativity as a foundational academic skill",
+          "voiceBand": "§16 Beginner (bands 2-4, default). Provisional: confirm at SME sign-off.",
+          "assumesFromPrevious": null,
+          "status": "planned",
+          "courseSlug": null
+        },
+        "intermediate": {
+          "displayName": "Intermediate",
+          "focus": "creative methods in academic work",
+          "voiceBand": "§16 Intermediate (bands 2-4, default). Provisional: confirm at SME sign-off.",
+          "assumesFromPrevious": null,
+          "status": "planned",
+          "courseSlug": null
+        },
+        "advanced": {
+          "displayName": "Advanced",
+          "focus": "creativity as innovation, enterprise, and professional attribute",
+          "voiceBand": "§16 Advanced (bands 2-4, default). Provisional: confirm at SME sign-off.",
+          "assumesFromPrevious": null,
+          "status": "planned",
+          "courseSlug": null
+        }
+      }
+    }
+  ]
+}

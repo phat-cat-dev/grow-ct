@@ -1,0 +1,527 @@
+{
+  "kbVersion": "0.1.17",
+  "patterns": [
+    {
+      "id": "activity-patterns/retrieval-practice",
+      "name": "commit-then-reveal retrieval practice",
+      "intent": "formative",
+      "description": "Learner commits to an answer from memory before feedback reveals correctness. Tests recall and application; feedback confirms and explains the reason (§15.5). Works across tiers by adjusting question complexity and distractor plausibility per §7.",
+      "recognition": "Source content poses a question with a definite correct answer — factual recall, concept application, or 'which of these applies' scenarios. The content tests whether the learner has understood, not explores open-ended thinking.",
+      "prosePointer": { "doc": "docs/authoring/lesson-structure-template.md", "ref": "Block N-2: Check your understanding" },
+      "realisations": [
+        { "component": "palette/mcq", "registerNote": "Single-correct MCQ; feedback confirms and gives the reason, never bare Correct/Wrong." },
+        { "component": "palette/sortable", "registerNote": "Ordering/sequencing items where the learner commits to a sequence before feedback reveals correctness." }
+      ],
+      "slotTypes": ["check"],
+      "tierCalibration": [
+        {
+          "tier": "introductory",
+          "fit": "strong",
+          "calibrationPointer": { "doc": "docs/curriculum/tier-specification.md", "ref": "§7 Beginner row" },
+          "note": "Recognition and short-application. Distractors clearly distinguishable to learner who has grasped concept."
+        },
+        {
+          "tier": "intermediate",
+          "fit": "strong",
+          "note": "Application questions require reasoning, not just recognition. Distractors may be plausible to a learner who has partially understood."
+        },
+        {
+          "tier": "advanced",
+          "fit": "strong",
+          "note": "Questions may require synthesis or judgement. Feedback explains nuance, not just correctness."
+        }
+      ],
+      "contextAffinity": {
+        "variationTypes": ["token-substitution", "structured-fields"],
+        "benefitsFromFacets": ["subject", "module"],
+        "note": "Check questions can be context-coupled via stem/distractor substitution when subject/module present."
+      },
+      "servesShapes": ["content-shapes/fact", "content-shapes/concept", "content-shapes/principle"]
+    },
+    {
+      "id": "activity-patterns/sequential-process",
+      "name": "step-by-step process reveal",
+      "intent": "formative",
+      "description": "Multi-step process revealed incrementally, each step building on the last. Learner controls pacing; all steps must be visited for completion. Suits how-to procedures, reading strategies, staged methods.",
+      "recognition": "Source text describes a procedure, method, or staged approach where each step builds on the previous. Steps must be followed in order. Look for sequencing language ('first... then... next... finally') or content that traces a person working through a task step by step.",
+      "prosePointer": { "doc": "docs/authoring/lesson-structure-template.md", "ref": "Option C: Sequential Process" },
+      "realisations": [
+        { "component": "palette/accordion", "registerNote": "Each accordion item is one step; progressive disclosure handles pacing internally." },
+        { "component": "palette/narrative", "registerNote": "Image-per-step slideshow; use when each step has a distinct visual." },
+        { "component": "palette/media", "registerNote": "A recorded demonstration of a procedure; proposed only when the lesson's recorded source supplies the asset or Abbott has commissioned it. B7 records the asset or flags the placeholder (RT-1)." }
+      ],
+      "slotTypes": ["worked-example"],
+      "tierCalibration": [
+        {
+          "tier": "introductory",
+          "fit": "strong",
+          "note": "High scaffolding; step-by-step support matches D4 autonomy band for beginners."
+        },
+        {
+          "tier": "intermediate",
+          "fit": "possible",
+          "note": "Use when demonstrating a process the learner will then adapt."
+        },
+        {
+          "tier": "advanced",
+          "fit": "possible",
+          "note": "Use when demonstrating a process the learner will then adapt."
+        }
+      ],
+      "contextAffinity": {
+        "variationTypes": ["whole-prose"],
+        "benefitsFromFacets": ["subject", "activity"],
+        "note": "Process steps can be context-coupled when subject or activity provides domain-specific worked example."
+      },
+      "servesShapes": ["content-shapes/procedure"]
+    },
+    {
+      "id": "activity-patterns/explore-model",
+      "name": "explore a multi-part model",
+      "intent": "formative",
+      "description": "Learner discovers the parts of a whole — a framework, cycle, diagram, or set of principles — in any order. Each part is self-contained; together they form a coherent model. All parts must be visited for completion.",
+      "recognition": "Source content presents a model, framework, or system with multiple distinct parts where each part is independently comprehensible. Look for cyclical diagrams, labelled regions, parallel principles, or 'four pillars' structures. The parts together form a coherent whole, and while they may have a conventional reading order, understanding any one does not depend on having read the others first.",
+      "prosePointer": { "doc": "docs/authoring/component-specs/media.md", "ref": "§1 Purpose & when to reach for it" },
+      "realisations": [
+        { "component": "palette/hotgraphic", "registerNote": "Cyclical or spatial model with clickable regions; use when the visual arrangement carries meaning." },
+        { "component": "palette/ab-hotgraphic", "registerNote": "Same shape as hotgraphic, built on a live inlined SVG; prefer this over hotgraphic for new authoring once a diagram needs its own hover/focus behaviour or theme-token paint rather than a flat clickable image." },
+        { "component": "palette/narrative", "registerNote": "Staged visual tour; use when each part needs its own image." },
+        { "component": "palette/timeline", "registerNote": "Horizontal stages with conventional reading order; use when parts have a natural sequence (e.g., numbered pillars) but each is independently comprehensible — the order aids navigation, not procedural dependence." },
+        { "component": "palette/flipcard", "registerNote": "Playful reveal for 3–6 items; use when each part is a concept/explanation pair and interaction adds engagement." },
+        { "component": "palette/accordion", "registerNote": "Text-only parts explored via expand/collapse; use when no visual is needed and content volume varies by part." },
+        { "component": "palette/graphic", "registerNote": "A single labelled static figure where no part needs its own reveal (RT-1)." },
+        { "component": "palette/media", "registerNote": "An audio or video explainer; proposed only when the lesson's recorded source supplies the asset or Abbott has commissioned it. B7 records the asset or flags the placeholder (RT-1)." }
+      ],
+      "slotTypes": ["concept-intro", "worked-example"],
+      "tierCalibration": [
+        {
+          "tier": "introductory",
+          "fit": "strong",
+          "note": "Models scaffold understanding by breaking complexity into manageable parts."
+        },
+        {
+          "tier": "intermediate",
+          "fit": "strong",
+          "note": "Models support comparative analysis and framework application."
+        },
+        {
+          "tier": "advanced",
+          "fit": "possible",
+          "note": "Use when introducing a framework the learner will then critique or adapt."
+        }
+      ],
+      "contextAffinity": {
+        "variationTypes": ["whole-prose", "structured-fields"],
+        "benefitsFromFacets": ["subject", "activity"],
+        "note": "Model content can be context-coupled when subject provides discipline-specific examples for each part."
+      },
+      "servesShapes": ["content-shapes/structure", "content-shapes/process", "content-shapes/principle"]
+    },
+    {
+      "id": "activity-patterns/evaluate-versions",
+      "name": "evaluate versions",
+      "intent": "formative",
+      "description": "Learner compares two versions of the same thing — a weaker approach and a stronger approach — and identifies what makes the difference. The comparison is evaluative: one version is better, and the learner should see why.",
+      "recognition": "Source content presents two versions of the same task or output where one is clearly better than the other. Look for weak/strong pairs, before/after editing, draft/revision contrasts. The versions compete — the point is to judge which is stronger and why. This is evaluative comparison, not expository survey; if the alternatives are parallel options appropriate to different contexts (e.g., essay vs reflective register), use survey-alternatives instead.",
+      "prosePointer": { "doc": "docs/authoring/lesson-structure-template.md", "ref": "Option A: Weak/Strong Comparative" },
+      "realisations": [
+        { "component": "palette/annotated", "registerNote": "Phrase-level commentary on weak and strong passages; use when specific wording choices need highlighting." },
+        { "component": "palette/accordion", "registerNote": "Before/after in expand/collapse format; use when the comparison is paragraph-level without phrase-level annotation." },
+        { "component": "palette/narrative", "registerNote": "Image-based comparison; use when the versions being compared are visual artefacts rather than prose, and each needs its own image. Forced sequential progression presents the weaker version first." },
+        { "component": "palette/text", "registerNote": "Two text blocks side by side, for a paired contrast needing no interaction (RT-1)." }
+      ],
+      "slotTypes": ["worked-example"],
+      "tierCalibration": [
+        {
+          "tier": "introductory",
+          "fit": "strong",
+          "note": "Concrete weak/strong pairs scaffold quality judgement for novices."
+        },
+        {
+          "tier": "intermediate",
+          "fit": "strong",
+          "note": "Comparisons can be more nuanced; weaker version may be plausible, not obviously wrong."
+        },
+        {
+          "tier": "advanced",
+          "fit": "possible",
+          "note": "Use when demonstrating subtle distinctions; advanced learners may critique the comparison itself."
+        }
+      ],
+      "contextAffinity": {
+        "variationTypes": ["whole-prose"],
+        "benefitsFromFacets": ["subject", "activity"],
+        "note": "Weak/strong pairs can be context-coupled when subject provides discipline-specific exemplars (writing samples for prose comparison, visual artefacts for image-based comparison)."
+      },
+      "servesShapes": ["content-shapes/contrast"]
+    },
+    {
+      "id": "activity-patterns/survey-alternatives",
+      "name": "survey parallel alternatives",
+      "intent": "formative",
+      "description": "Learner surveys two or more alternatives that are appropriate to different situations rather than competing on quality. Each alternative is valid in its own context; the learner sees when each applies.",
+      "recognition": "Source content presents parallel options suited to different contexts — disciplinary conventions, genre registers, or approaches that vary by situation. None is 'better' overall; each fits a different purpose. Look for 'essay vs reflective', 'how disciplines differ', or 'three approaches to X'. This is expository survey, not evaluative comparison; if one version is clearly stronger than another, use evaluate-versions instead. Comparing how different disciplines or fields handle the same task is always this pattern, even where the learner is asked to evaluate, because the judgement is about fit-to-context rather than quality.",
+      "realisations": [
+        { "component": "palette/tabs", "registerNote": "Random-access panels for 2–4 parallel alternatives; use when the learner may compare or choose between them." },
+        { "component": "palette/accordion", "registerNote": "Expand/collapse for parallel items; use when more than 4 alternatives or when content volume varies significantly." }
+      ],
+      "slotTypes": ["concept-intro", "practical-guidance"],
+      "tierCalibration": [
+        {
+          "tier": "introductory",
+          "fit": "strong",
+          "note": "Clear alternatives help beginners see that different contexts call for different approaches."
+        },
+        {
+          "tier": "intermediate",
+          "fit": "strong",
+          "note": "Learners compare disciplinary or genre conventions with growing sophistication."
+        },
+        {
+          "tier": "advanced",
+          "fit": "strong",
+          "note": "Learners analyse why alternatives suit different contexts and may critique the boundaries."
+        }
+      ],
+      "contextAffinity": {
+        "variationTypes": ["whole-prose", "structured-fields"],
+        "benefitsFromFacets": ["subject", "activity"],
+        "note": "Alternatives can be context-coupled when subject provides discipline-specific examples for each option."
+      },
+      "servesShapes": ["content-shapes/parallel-options"]
+    },
+    {
+      "id": "activity-patterns/recall-reveal",
+      "name": "recall then reveal",
+      "intent": "formative",
+      "description": "Learner sees a prompt — a term, concept, or question — and tries to recall the answer before revealing it. Self-testing without scoring; the learner judges their own recall. All items must be visited for completion.",
+      "recognition": "Source content has paired items where the learner should test their recall before seeing the answer — term/definition pairs, concept/explanation pairs, or 'what does X mean?' prompts. The learner is expected to try to remember, not just read. This is self-testing, not reference lookup; if the learner is consulting definitions they do not know while reading prose, use look-up-definitions instead.",
+      "realisations": [
+        { "component": "palette/flipcard", "registerNote": "Front shows prompt, back shows explanation; flip-to-reveal supports the 'try first' affordance. Primary realisation for 3–6 items." },
+        { "component": "palette/accordion", "registerNote": "Header is prompt, expanded content is explanation; use when items exceed 6 or content volume varies. Secondary realisation." }
+      ],
+      "slotTypes": ["concept-intro", "worked-example"],
+      "tierCalibration": [
+        {
+          "tier": "introductory",
+          "fit": "strong",
+          "note": "Term/definition pairs help beginners consolidate vocabulary and core concepts."
+        },
+        {
+          "tier": "intermediate",
+          "fit": "possible",
+          "note": "Use for consolidation; intermediate learners may find pure recall less engaging than application."
+        },
+        {
+          "tier": "advanced",
+          "fit": "possible",
+          "note": "Use sparingly; advanced content is better served by application or critique than recall."
+        }
+      ],
+      "contextAffinity": {
+        "variationTypes": ["structured-fields"],
+        "benefitsFromFacets": ["subject"],
+        "note": "Term/definition pairs can be context-coupled when subject provides discipline-specific vocabulary."
+      },
+      "servesShapes": ["content-shapes/fact", "content-shapes/concept"]
+    },
+    {
+      "id": "activity-patterns/look-up-definitions",
+      "name": "look up definitions",
+      "intent": "formative",
+      "description": "Learner encounters unfamiliar terms while reading and reveals their definitions on demand. Reference lookup, not self-testing — the learner does not know the term and needs it explained in place. This is an overlay pattern — it enhances prose that already exists in a slot rather than filling a slot of its own.",
+      "recognition": "Source content introduces technical vocabulary that the learner is not expected to know. Look for terms that need defining at first use, discipline-specific jargon, or methodology vocabulary. The learner consults the definition because they do not know it, not to test their recall; if the learner is expected to try to remember before revealing, use recall-reveal instead.",
+      "prosePointer": { "doc": "docs/authoring/component-specs/glossary.md", "ref": "§1 Purpose — three patterns for definitions" },
+      "realisations": [
+        { "component": "palette/glossary", "registerNote": "Inline term markers in prose; definition revealed on selection. Primary realisation — use when 2–8 terms are introduced in teaching prose." },
+        { "component": "palette/accordion", "registerNote": "Standalone browsable list; use for a dedicated glossary section separate from prose, or when terms exceed 8." }
+      ],
+      "tierCalibration": [
+        {
+          "tier": "introductory",
+          "fit": "strong",
+          "note": "Beginners encounter more unfamiliar vocabulary; definitions at point of need reduce cognitive load."
+        },
+        {
+          "tier": "intermediate",
+          "fit": "strong",
+          "note": "Discipline-specific terms still need defining; intermediate learners benefit from in-context definitions."
+        },
+        {
+          "tier": "advanced",
+          "fit": "possible",
+          "note": "Advanced learners may know most terms; use only for genuinely specialised vocabulary."
+        }
+      ],
+      "contextAffinity": {
+        "variationTypes": ["structured-fields"],
+        "benefitsFromFacets": ["subject"],
+        "note": "Definitions can be context-coupled when subject provides discipline-specific vocabulary."
+      },
+      "servesShapes": ["content-shapes/concept"]
+    },
+    {
+      "id": "activity-patterns/write-own-thinking",
+      "name": "write own thinking",
+      "intent": "formative",
+      "description": "Learner articulates their own thought in writing — a reflection, connection, or personal response. No right answer; the value is in the thinking, not in correctness. Response persists for future reference.",
+      "recognition": "Source content prompts the learner to reflect on their own practice, connect new concepts to experience, or articulate a personal stance. Look for 'how does this apply to you?' or 'what would you do?' prompts. The prompt invites genuinely open-ended thinking requiring the learner's own words, not selection from authored options; if the content offers choices with authored consequences, use decision-scenario instead. If there's a correct answer the learner should commit to, use retrieval-practice instead.",
+      "prosePointer": { "doc": "docs/authoring/lesson-structure-template.md", "ref": "Block N-1: Reflective prompt" },
+      "realisations": [
+        { "component": "palette/opentext", "registerNote": "Persistent free-text writing. Primary realisation for reflection prompts. (palette/textinput is deprecated — opentext is canonical for reflective-prompt.)" }
+      ],
+      "slotTypes": ["reflective-prompt"],
+      "tierCalibration": [
+        { "tier": "introductory", "fit": "strong", "note": "Reflective prompts help beginners connect concepts to their own practice." },
+        { "tier": "intermediate", "fit": "strong", "note": "Intermediate learners benefit from articulating nuanced connections." },
+        { "tier": "advanced", "fit": "strong", "note": "Advanced learners engage in deeper reflection and critical self-assessment." }
+      ],
+      "contextAffinity": {
+        "variationTypes": ["token-substitution"],
+        "benefitsFromFacets": ["subject"],
+        "note": "Prompt body is lesson-specific; character framing can vary via token substitution per CP-1f. Currently unenforced in built courses — existing prompts address the learner generically."
+      },
+      "servesShapes": ["content-shapes/reflection"]
+    },
+    {
+      "id": "activity-patterns/decision-scenario",
+      "name": "make decision, see consequence",
+      "intent": "formative",
+      "description": "Learner faces a professional dilemma with multiple defensible responses. Selecting one reveals its consequences — trade-offs, implications, what it achieves and what it costs. Every option is plausible; no correct answer. The learning lies in understanding consequences, not getting the right answer. This pattern is recorded ahead of its first use; first homes are Presenting, Reflective Practice, and Work-Based Learning.",
+      "recognition": "Source content presents a genuine professional dilemma where reasonable people might choose differently. Look for 'what would you do?' scenarios with multiple defensible responses. The content offers authored options with authored consequences; if it invites genuinely open-ended thinking in the learner's own words, use write-own-thinking instead. If one answer is objectively correct and others are wrong, use retrieval-practice instead.",
+      "prosePointer": { "doc": "docs/authoring/component-specs/branching.md", "ref": "§1 Purpose & when to reach for it" },
+      "realisations": [
+        { "component": "palette/branching", "registerNote": "commit mode (default): one choice locks — the decision is final. Use for genuine commitment scenarios. explore mode: choices can be tried in turn — use when comparing approaches is the goal." }
+      ],
+      "slotTypes": ["worked-example", "practical-guidance"],
+      "tierCalibration": [
+        { "tier": "introductory", "fit": "strong", "note": "Beginner scenarios present clearer trade-offs with more scaffolding in the consequences." },
+        { "tier": "intermediate", "fit": "strong", "note": "Intermediate scenarios present genuine dilemmas where reasonable people disagree." },
+        { "tier": "advanced", "fit": "strong", "note": "Advanced scenarios may have more subtle choices with consequences that assume the learner can infer some implications." }
+      ],
+      "contextAffinity": {
+        "variationTypes": ["whole-prose"],
+        "benefitsFromFacets": ["subject", "activity"],
+        "note": "Decision scenarios benefit strongly from discipline-specific professional dilemmas."
+      },
+      "servesShapes": ["content-shapes/judgement"]
+    },
+    {
+      "id": "activity-patterns/action-checklist",
+      "name": "work through action checklist",
+      "intent": "formative",
+      "description": "Learner works through a set of concrete, tickable actions — a working aid, not an assessment. Items are yes/no checks without judgement. Ticks reset on revisit so the list stays usable per task; completion persists. Suits one-pass working checklists during a lesson and reusable pre-submission reviews the learner returns to across tasks.",
+      "recognition": "Source content presents a set of concrete actions the learner should check or complete — 'before you submit, check these' or 'work through each of these steps'. Every item must be answerable yes/no without evaluative judgement; if items are vague or evaluative ('is my writing good?'), rephrase to specify what to do rather than what to assess. If the content measures the learner's belief in their own ability rather than confirming concrete actions, that belongs to the confidence component on the C-PRE/C-POST wrapper pages, not to a lesson slot.",
+      "prosePointer": { "doc": "docs/authoring/component-specs/checklist.md", "ref": "§1 Purpose & when to reach for it" },
+      "realisations": [
+        { "component": "palette/checklist", "registerNote": "4–8 concrete yes/no items. Ticks reset on revisit (CL-2) so the list stays fresh per task; completion persists. No summary, no scoring, no feedback (CL-6) — working aid, not assessment." }
+      ],
+      "slotTypes": ["practical-guidance"],
+      "tierCalibration": [
+        { "tier": "introductory", "fit": "strong", "note": "Concrete checklists provide scaffolding for beginners who need explicit guidance on what to check." },
+        { "tier": "intermediate", "fit": "strong", "note": "Intermediate learners benefit from checklists that build good habits before they become automatic." },
+        { "tier": "advanced", "fit": "possible", "note": "Advanced learners may have internalised many checks; use only when the checklist adds value beyond their existing practice." }
+      ],
+      "contextAffinity": {
+        "variationTypes": ["structured-fields"],
+        "benefitsFromFacets": ["subject", "activity"],
+        "note": "Checklist items can be context-coupled when subject or activity provides discipline-specific checks (e.g., lab report vs essay pre-submission)."
+      },
+      "servesShapes": ["content-shapes/criteria"]
+    },
+    {
+      "id": "activity-patterns/inline-commentary",
+      "name": "read with inline commentary",
+      "intent": "formative",
+      "description": "Learner reads teaching prose with selectable phrases that reveal expert commentary. The commentary explains why specific phrasings are noteworthy — what they accomplish, why they work — without breaking the flow of the prose. Depth at the point it is needed, not a separate analysis section.",
+      "recognition": "Source content is teaching prose where specific phrases warrant explanation without breaking flow. Look for sentences where a particular wording choice, technique, or move deserves deeper commentary than the prose itself can carry. This is analytical commentary (why is this noteworthy?), not definitional; if the content introduces terms the learner does not know, use look-up-definitions instead. This is also not evaluative comparison; if the content presents weak/strong pairs where the learner judges which is better, use evaluate-versions instead.",
+      "prosePointer": { "doc": "docs/authoring/component-specs/annotated.md", "ref": "§1 Purpose & when to reach for it" },
+      "realisations": [
+        { "component": "palette/annotated", "registerNote": "Phrase-level commentary on teaching prose. Note titles label the kind of move (2–4 words); note body explains why. Single-open default keeps focus on one point at a time." }
+      ],
+      "slotTypes": ["concept-intro", "practical-guidance"],
+      "tierCalibration": [
+        { "tier": "introductory", "fit": "possible", "note": "Beginners may need simpler prose without inline depth; use sparingly when specific phrases truly warrant it." },
+        { "tier": "intermediate", "fit": "strong", "note": "Intermediate learners benefit from seeing why specific phrasings work." },
+        { "tier": "advanced", "fit": "strong", "note": "Advanced learners can engage with nuanced commentary on technique and rhetorical moves." }
+      ],
+      "contextAffinity": {
+        "variationTypes": ["whole-prose"],
+        "benefitsFromFacets": ["subject"],
+        "note": "Annotated passages can be context-coupled when subject provides discipline-specific exemplars with commentary on field conventions."
+      },
+      "servesShapes": ["content-shapes/principle"]
+    },
+    {
+      "id": "activity-patterns/match-pairs",
+      "name": "match each item to its partner",
+      "intent": "formative",
+      "description": "Learner links each item to its one correct partner: a citation to its reference-list entry, a term to its definition, an example to the convention it shows. Feedback names the correct pairs, so the learner sees which links held and which did not.",
+      "recognition": "Source content presents two forms of the same thing, or items that each have exactly one partner: an in-text citation and its full reference, a term and its meaning, a source and its format. If several items share each of a few categories, use sort-into-groups instead. If the learner should try to recall a definition before seeing it, use recall-reveal instead.",
+      "prosePointer": { "doc": "docs/authoring/component-specs/matching.md", "ref": "Purpose" },
+      "realisations": [
+        { "component": "palette/matching", "registerNote": "One row per item, each with a dropdown of partner options; 3 to 6 rows; exactly one correct partner per row. Feedback names the correct partner and why, never bare Correct/Wrong." }
+      ],
+      "slotTypes": ["check"],
+      "tierCalibration": [
+        { "tier": "introductory", "fit": "strong", "note": "Clear one-to-one pairs with distinct options." },
+        { "tier": "intermediate", "fit": "strong", "note": "Options may be plausible near-misses that require close reading." },
+        { "tier": "advanced", "fit": "possible", "note": "Use where pairing tests a fine distinction, not bare recall." }
+      ],
+      "contextAffinity": {
+        "variationTypes": ["token-substitution", "structured-fields"],
+        "benefitsFromFacets": ["subject"],
+        "note": "Pairs can be context-specific: citations and references from the learner's own discipline."
+      },
+      "servesShapes": ["content-shapes/pairs"]
+    },
+    {
+      "id": "activity-patterns/spot-the-error",
+      "name": "spot the error",
+      "intent": "formative",
+      "description": "Learner examines an example that contains a mistake or omission and identifies what is wrong. It builds the checking habit the book asks for, such as catching a reference with a missing element before submission.",
+      "recognition": "Source content warns about common mistakes, inaccuracies or missing elements, or shows a flawed example. The learner's task is to find the fault. If two versions are set side by side as weaker and stronger, use evaluate-versions instead.",
+      "prosePointer": { "doc": "docs/authoring/component-specs/mcq.md", "ref": "Purpose" },
+      "realisations": [
+        { "component": "palette/mcq", "registerNote": "Stem presents the flawed example; options name candidate faults, one correct. Feedback explains the fault and how to fix it." },
+        { "component": "palette/gmcq", "registerNote": "Options are images of examples, such as formatted reference entries; the learner selects the one containing the error. Use when layout or formatting carries the error." },
+        { "component": "palette/hotspot", "registerNote": "The flawed example is a single document image (e.g. a formatted reference); the learner selects the region containing the fault, such as a missing element. Use when the fault is positional on the image itself rather than nameable as a short text option." }
+      ],
+      "slotTypes": ["check"],
+      "tierCalibration": [
+        { "tier": "introductory", "fit": "strong", "note": "One clear fault per example." },
+        { "tier": "intermediate", "fit": "strong", "note": "Faults may be subtler, such as punctuation or order." },
+        { "tier": "advanced", "fit": "strong", "note": "Several possible faults; the learner judges which matters most." }
+      ],
+      "contextAffinity": {
+        "variationTypes": ["token-substitution", "structured-fields"],
+        "benefitsFromFacets": ["subject"],
+        "note": "Flawed examples can be context-specific: references in the learner's own discipline's style."
+      },
+      "servesShapes": ["content-shapes/error"]
+    },
+    {
+      "id": "activity-patterns/sort-into-groups",
+      "name": "sort items into groups",
+      "intent": "formative",
+      "description": "Learner assigns each item to one of a small set of categories, such as quotation, paraphrase or summary. It shows whether the learner holds the criteria that separate the categories.",
+      "recognition": "Source content names categories with their members, or the criteria that separate them: 'types of', 'kinds of', 'can be grouped into'. Several items share each category. If each item has one unique partner, use match-pairs instead.",
+      "prosePointer": { "doc": "docs/authoring/component-specs/matching.md", "ref": "Purpose" },
+      "realisations": [
+        { "component": "palette/matching", "registerNote": "Interim realisation until a drag-into-groups component exists. Each item is a row; every row's options are the same category names. 4 to 8 items, 2 to 4 categories; set _allowOnlyUniqueAnswers false." }
+      ],
+      "slotTypes": ["check", "practical-guidance", "concept-intro"],
+      "tierCalibration": [
+        { "tier": "introductory", "fit": "strong", "note": "Categories with clear, stated criteria." },
+        { "tier": "intermediate", "fit": "strong", "note": "Items near a category boundary." },
+        { "tier": "advanced", "fit": "possible", "note": "Use where the learner must apply contested criteria." }
+      ],
+      "contextAffinity": {
+        "variationTypes": ["token-substitution", "structured-fields"],
+        "benefitsFromFacets": ["subject"],
+        "note": "Items to sort can be context-specific: sources or examples from the learner's own discipline."
+      },
+      "servesShapes": ["content-shapes/classification"]
+    },
+    {
+      "id": "activity-patterns/build-from-parts",
+      "name": "build a whole from its parts",
+      "intent": "formative",
+      "description": "Learner assembles a correct whole from given parts in the required form, such as putting the elements of a reference into their required order. It tests producing the form, not only recognising it.",
+      "recognition": "Source content sets out a required form: a template, format or fixed order of elements that the learner must produce, such as the author, year, title and publisher order of a reference. If the order reflects steps performed over time, use sequential-process instead. If the learner only needs to recognise the parts, use explore-model instead.",
+      "prosePointer": { "doc": "docs/authoring/component-specs/sortable.md", "ref": "Purpose" },
+      "realisations": [
+        { "component": "palette/sortable", "registerNote": "Interim realisation until a drag-the-words component exists. Parts authored in correct order; the component shuffles; whole-order scoring. State the keyboard method in the instruction text." }
+      ],
+      "slotTypes": ["check", "practical-guidance", "concept-intro"],
+      "tierCalibration": [
+        { "tier": "introductory", "fit": "strong", "note": "Few parts with a clear fixed order." },
+        { "tier": "intermediate", "fit": "strong", "note": "More parts, or forms that vary by source type." },
+        { "tier": "advanced", "fit": "possible", "note": "Use where the form itself is being learnt, such as an unfamiliar style." }
+      ],
+      "contextAffinity": {
+        "variationTypes": ["token-substitution", "structured-fields"],
+        "benefitsFromFacets": ["subject"],
+        "note": "Parts can be context-specific: a reference from the learner's own discipline."
+      },
+      "servesShapes": ["content-shapes/assembly", "content-shapes/structure"]
+    },
+    {
+      "id": "activity-patterns/summative-mixed",
+      "name": "multi-item mixed-format assessment",
+      "intent": "summative",
+      "description": "End-of-tier assessment mixing MCQ and ordering items. Items sample outcomes across lessons; parity held across contexts (§7). Marking delayed until all answered (_suppressMarking); consolidated debrief provides remediation pointers.",
+      "recognition": "Content samples learning outcomes from across multiple lessons in a tier, requiring a mix of recognition items (single-correct) and sequencing items (ordering). Use when the assessment needs to verify breadth of understanding across a tier, not depth on a single topic.",
+      "prosePointer": { "doc": "docs/project/project-backlog.md", "ref": "2026-08-14 resultsdebrief/pass-reveal verification" },
+      "realisations": [
+        { "component": "palette/mcq", "registerNote": "Single-correct recognition/application items." },
+        { "component": "palette/sortable", "registerNote": "Ordering/sequencing items." }
+      ],
+      "slotTypes": ["summative-item"],
+      "tierCalibration": [
+        {
+          "tier": "introductory",
+          "fit": "strong",
+          "calibrationPointer": { "doc": "docs/curriculum/tier-specification.md", "ref": "§7 Beginner row" },
+          "note": "Recognition and short-application. Distractors clearly distinguishable. 70% pass threshold per S-3."
+        }
+      ],
+      "contextAffinity": {
+        "variationTypes": ["token-substitution", "structured-fields"],
+        "benefitsFromFacets": ["subject", "module"],
+        "note": "Assessment items can be context-coupled via stem/option substitution. Parity check (§7) binds difficulty across contexts."
+      },
+      "summative": {
+        "scoringModel": "Percentage of correct items; 70% pass threshold per S-3. Unlimited attempts with remediation-first feedback.",
+        "parityNote": "Same tier, different context = equivalently demanding. Parity check: would a learner who passes sibling context also pass this one, and vice versa?",
+        "furnitureCompatibility": ["palette/resultsdebrief", "palette/passreveal"]
+      }
+    },
+    {
+      "id": "activity-patterns/place-on-a-scale",
+      "name": "place an item on a scale",
+      "intent": "formative",
+      "description": "Learner places an item on a numeric or qualitative scale, such as a source's credibility or how close a paraphrase is to plagiarism. Feedback explains the target range, not just whether the placement fell inside it.",
+      "recognition": "Source content asks the learner to judge where something sits along a continuum rather than choose between discrete categories — a source's credibility, how close a paraphrase sits to the original, how well a piece of work meets a criterion. Look for judgement-on-a-continuum language ('how credible', 'how close', 'to what extent'). If the choice is between discrete categories rather than a position on a scale, use retrieval-practice or sort-into-groups instead.",
+      "prosePointer": { "doc": "docs/authoring/component-specs/slider.md", "ref": "§1 Purpose & when to reach for it" },
+      "realisations": [
+        { "component": "palette/slider", "registerNote": "The learner drags to a position on the scale; feedback explains the target range, not just whether the placement was correct (RT-1)." }
+      ],
+      "slotTypes": ["check", "practical-guidance", "concept-intro"],
+      "tierCalibration": [
+        { "tier": "introductory", "fit": "possible", "note": "Beginners may find placing a precise position harder than a discrete choice; use only where the continuum itself is the teaching point." },
+        { "tier": "intermediate", "fit": "strong", "note": "Judging degree — how credible, how close to plagiarism — matches intermediate learners' growing capacity for nuanced judgement." },
+        { "tier": "advanced", "fit": "strong", "note": "Advanced learners can weigh several factors to place a considered position on the scale." }
+      ],
+      "contextAffinity": {
+        "variationTypes": ["structured-fields", "whole-prose"],
+        "benefitsFromFacets": ["subject"],
+        "note": "The item being scaled (a source, a paraphrase, a piece of work) can be context-coupled when subject provides a discipline-specific exemplar."
+      },
+      "servesShapes": ["content-shapes/judgement", "content-shapes/criteria"]
+    },
+    {
+      "id": "activity-patterns/label-a-structure",
+      "name": "label a structure",
+      "intent": "formative",
+      "description": "Learner identifies one or more labelled regions on an authored image showing a structure, diagram or layout, selecting the region(s) that answer a question about it. The task is finding a specific part on sight, not touring every part in turn or assembling parts into an order.",
+      "recognition": "Source content shows a structure, diagram, or annotated layout where the learner's task is to find and select the specific part(s) that answer a question — for example, 'which paragraph contains the topic sentence?' or 'which section of this reference is missing an element?'. This tests whether the learner can locate a part on sight. If instead every part should be visited in turn to build understanding of the whole, with no single part being the 'answer', use explore-model. If the task is assembling given parts into a required order or form, use build-from-parts.",
+      "prosePointer": { "doc": "docs/authoring/component-specs/hotspot.md", "ref": "§1 Purpose & when to reach for it" },
+      "realisations": [
+        { "component": "palette/hotspot", "registerNote": "Regions placed by percentage over the authored image; one or more correct, 2-5 decoys. Keep regions at or above the 44x44px list-mode threshold where possible so the small-screen fallback list stays legible." }
+      ],
+      "slotTypes": ["check", "practical-guidance", "concept-intro"],
+      "tierCalibration": [
+        { "tier": "introductory", "fit": "strong", "note": "Few, clearly separated regions with an unambiguous correct answer." },
+        { "tier": "intermediate", "fit": "strong", "note": "More regions, or regions that require reading surrounding context to distinguish." },
+        { "tier": "advanced", "fit": "possible", "note": "Use where several regions are each partly relevant and the learner must judge which best answers the question." }
+      ],
+      "contextAffinity": {
+        "variationTypes": ["structured-fields"],
+        "benefitsFromFacets": ["subject"],
+        "note": "The authored image and its regions are typically discipline-specific (a sample document, diagram, or reference in the learner's own subject); the mechanics do not vary."
+      },
+      "servesShapes": ["content-shapes/structure"]
+    }
+  ]
+}

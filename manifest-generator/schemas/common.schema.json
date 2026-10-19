@@ -1,0 +1,247 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://excelling.cardiffmet/schemas/common.schema.json",
+  "title": "Common definitions \u2014 citations, facet sets, versioning",
+  "$defs": {
+    "kbVersion": {
+      "type": "string",
+      "description": "Store version, semver.",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "citation": {
+      "description": "One grounding reference. kb form cites a store entry by id+version; prose form cites a document by stable anchor (never line numbers, per F9).",
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "store",
+            "id"
+          ],
+          "properties": {
+            "store": {
+              "enum": [
+                "design-kb",
+                "source-kb",
+                "institutional-kb",
+                "course-design"
+              ]
+            },
+            "id": {
+              "type": "string",
+              "description": "Namespaced entry id, e.g. palette/flipcard, gates/A3, qaa/criminology-2022"
+            },
+            "version": {
+              "type": "string",
+              "description": "Entry or store version at citation time."
+            },
+            "note": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "required": [
+            "doc",
+            "ref"
+          ],
+          "properties": {
+            "doc": {
+              "type": "string",
+              "description": "Repo-relative path of the prose source."
+            },
+            "ref": {
+              "type": "string",
+              "description": "Stable anchor: decision id (FC-2), section heading, or date+title. Never a line number."
+            },
+            "note": {
+              "type": "string"
+            }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "level": {
+      "type": "string",
+      "description": "Institutional academic level (CQFW/FHEQ vocabulary). Property of contexts and source material, NEVER an alias for tier (tier-spec decision #6).",
+      "pattern": "^L[3-8]$"
+    },
+    "facetSet": {
+      "type": "object",
+      "description": "Context as tags, not a cascade (S1-D3 as twice amended). Facet groups: CORE (pathway, tier \u2014 mandatory); CONTEXTUAL (subject(s), level \u2014 non-institutional; a course may carry levels with no institutional attachment); INSTITUTIONAL (institution, faculty, school, module); FLOATING (activity \u2014 institutional when module-tied, contextual when subject-only). Institutional facets do not BRING level; they may CONSTRAIN it (module pins a singleton; faculty/school may narrow to a range). Nothing beyond the core = baseline.",
+      "required": [
+        "pathway",
+        "tier"
+      ],
+      "properties": {
+        "pathway": {
+          "type": "string"
+        },
+        "tier": {
+          "enum": [
+            "introductory",
+            "intermediate",
+            "advanced"
+          ]
+        },
+        "subject": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/subjectClassification"
+          },
+          "minItems": 1,
+          "description": "One or more CAH-aligned classifications ('subject matter(s)'). Internally hierarchical within an otherwise flat facet model \u2014 flat across facets, laddered within this axis (recorded property, S1-D9). Institutional presence never displaces subject tags: a module carries these AS WELL AS its institutional facets."
+        },
+        "level": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/level"
+          },
+          "minItems": 1,
+          "uniqueItems": true,
+          "description": "Independent contextual facet, multi-valued: an introductory-tier course may hold {L3,L4,L7} \u2014 all honest beginner entry points under experience-anchored tiers. Exists above and independently of institutional facets."
+        },
+        "institution": {
+          "type": "string",
+          "description": "Confirmed as string identifier (S4-D5, 27 Aug 2026; provisional lifted at the S4b proving ground). which institution the institutional facets belong to; institutional-kb is multi-institution. Convention: defaults to cardiff-met when any institutional facet is present and this is omitted."
+        },
+        "faculty": {
+          "type": "string"
+        },
+        "school": {
+          "type": "string"
+        },
+        "module": {
+          "type": "string",
+          "description": "Institutional module identifier. At most one."
+        },
+        "activity": {
+          "type": "string",
+          "description": "Activity-floor tagging: a single activity may carry its own facet set distinct from its course's."
+        }
+      },
+      "if": {
+        "required": [
+          "module"
+        ]
+      },
+      "then": {
+        "properties": {
+          "level": {
+            "maxItems": 1
+          }
+        },
+        "description": "A module is pitched at exactly one level; module-borne level is a singleton."
+      },
+      "additionalProperties": false
+    },
+    "provenance": {
+      "enum": [
+        "human-specified",
+        "human-amended",
+        "human-confirmed",
+        "ai-default-stood",
+        "ai-proposal-stood",
+        "advisory-stated",
+        "fixed-default",
+        "deferred"
+      ],
+      "description": "Eight-value enum (GI-2 amendment, 27 Aug 2026). human-confirmed at phase close is distinguished via confirmedAt. ai-proposal-stood: for gates with defaultType ai-proposal-stands where the AI's proposal stood on silence, distinct from ai-default-stood which is for fixed-value defaultType gates. advisory-stated: for advisory-hardness gates stated at the moment they apply, never opened for confirmation, never entering the assumptions tally."
+    },
+    "gateState": {
+      "enum": [
+        "pending",
+        "proposed",
+        "assumed",
+        "closed",
+        "deferred",
+        "skipped"
+      ],
+      "description": "Five-value model (13 Aug), superseding the 4 Aug four-value vocabulary. Sixth value added 17 Sep 2026 (Abbott's ruling, Prompt 35, following Prompt 34's stop-and-report on the same question): skipped records a gate whose reachabilityFacet condition (design-kb.gates.schema.json) was not met \u2014 the gate was never reached, not decided against. Not a variety of closed: no decidedValue, no provenance, no new required field \u2014 the reason is already data on the gate's own store definition, cited via the record's existing grounding array. Not reachable by human choice. Does not block phase close (gate-conversation-model-draft-v1.md \u00a74 names only proposed and undemoted-deferred as blockers)."
+    },
+    "cahLevel": {
+      "type": "object",
+      "description": "One level of the CAH hierarchy: a code and its display label, as two distinct fields (S1-D9 shape settled, DL-1 AMENDMENT + open-decisions.md, Prompt 67, 18 Sep 2026). code does the matching (e.g. against tools/subject/core/vocab/cah.json, formerly vocab-kb/cah.json; moved under TLS-1, HMD-1, adp-0204); label is for rendering only and never matched against.",
+      "required": [
+        "code",
+        "label"
+      ],
+      "properties": {
+        "code": {
+          "type": "string",
+          "description": "CAH code, e.g. CAH15-01."
+        },
+        "label": {
+          "type": "string",
+          "description": "Display label for the code, e.g. 'sociology, social policy and anthropology'."
+        }
+      },
+      "additionalProperties": false
+    },
+    "subjectClassification": {
+      "type": "object",
+      "description": "CAH-aligned subject hierarchy (S1-D9, shape settled per DL-1 AMENDMENT resolution, Prompt 67, 18 Sep 2026): group=CAH1 broad group, discipline=CAH2, subject=CAH3, each a cahLevel (code+label). Any prefix valid \u2014 a discipline-level course sets group+discipline only; subject alone is valid (parents derivable from CAH). Codes do the matching; labels are for display only. Matching walks UP the hierarchy, most specific first.",
+      "properties": {
+        "group": {
+          "$ref": "#/$defs/cahLevel"
+        },
+        "discipline": {
+          "$ref": "#/$defs/cahLevel"
+        },
+        "subject": {
+          "$ref": "#/$defs/cahLevel"
+        }
+      },
+      "anyOf": [
+        {
+          "required": [
+            "group"
+          ]
+        },
+        {
+          "required": [
+            "discipline"
+          ]
+        },
+        {
+          "required": [
+            "subject"
+          ]
+        }
+      ],
+      "additionalProperties": false
+    },
+    "sourceLocator": {
+      "type": "object",
+      "description": "Pointer to a source, never its text (F9). At least one of url/repoPath.",
+      "properties": { "url": { "type": "string" }, "repoPath": { "type": "string" }, "note": { "type": "string" } },
+      "anyOf": [ { "required": ["url"] }, { "required": ["repoPath"] } ],
+      "additionalProperties": false
+    },
+    "sourceAnchors": {
+      "type": "array",
+      "description": "Citation targets within a source. Stable anchors (section headings/numbers), never line or bare page numbers (F9).",
+      "items": {
+        "type": "object",
+        "required": ["ref"],
+        "properties": { "ref": { "type": "string" }, "note": { "type": "string" } },
+        "additionalProperties": false
+      }
+    },
+    "sourceBasis": {
+      "enum": ["document-in-hand", "unverified"],
+      "description": "S1-D12's documented/inferred logic applied to sourcing (S4-D6): unverified = entry authored before the document was inspected (structural claims are memory- or report-sourced; VERIFY-ON-RETURN); flips to document-in-hand at population with the document open."
+    },
+    "sourceFacets": {
+      "type": "object",
+      "description": "Entry-side retrieval metadata (S1-D2/D3/D9; S4-D4). subject matches by CAH walk-up, most specific first; level by non-empty intersection. pathway/tier are course facets, not source facets - deliberately absent.",
+      "properties": {
+        "subject": { "type": "array", "items": { "$ref": "#/$defs/subjectClassification" }, "minItems": 1 },
+        "level": { "type": "array", "items": { "$ref": "#/$defs/level" }, "minItems": 1, "uniqueItems": true }
+      },
+      "additionalProperties": false
+    }
+  }
+}

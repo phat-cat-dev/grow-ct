@@ -1,0 +1,32 @@
+{
+  "kbVersion": "0.1.0",
+  "tiers": [
+    {
+      "id": "tier-bands/introductory",
+      "tier": "introductory",
+      "anchorPointer": { "doc": "docs/curriculum/tier-specification.md", "ref": "§5 D1 Introductory column" },
+      "verbBandPointer": { "doc": "docs/curriculum/tier-specification.md", "ref": "§6 via §3 default anchor" },
+      "assessmentCalibrationPointer": { "doc": "docs/curriculum/tier-specification.md", "ref": "§7 Introductory row" },
+      "indicativeLevels": ["L3", "L4", "L7"],
+      "notes": "Experience-anchored: no prior experience of the practice assumed. May have met it in passing but has not done it deliberately. Teach from first principles. Cognitive demand: recognition, recall, description, guided application. indicativeLevels are NOT progression — self-judged beginners arrive from many levels; an introductory tier may hold L3, L4, L7 simultaneously."
+    },
+    {
+      "id": "tier-bands/intermediate",
+      "tier": "intermediate",
+      "anchorPointer": { "doc": "docs/curriculum/tier-specification.md", "ref": "§5 D1 Intermediate column" },
+      "verbBandPointer": { "doc": "docs/curriculum/tier-specification.md", "ref": "§6 via §3 default anchor" },
+      "assessmentCalibrationPointer": { "doc": "docs/curriculum/tier-specification.md", "ref": "§7 Intermediate row" },
+      "indicativeLevels": ["L4", "L5", "L6"],
+      "notes": "SEED: not exercised by dummy. Experience-anchored: working foundation in place; build without re-teaching basics. Cognitive demand: analysis and evaluation. Full population should verify indicativeLevels against real pathway usage."
+    },
+    {
+      "id": "tier-bands/advanced",
+      "tier": "advanced",
+      "anchorPointer": { "doc": "docs/curriculum/tier-specification.md", "ref": "§5 D1 Advanced column" },
+      "verbBandPointer": { "doc": "docs/curriculum/tier-specification.md", "ref": "§6 via §3 default anchor" },
+      "assessmentCalibrationPointer": { "doc": "docs/curriculum/tier-specification.md", "ref": "§7 Advanced row" },
+      "indicativeLevels": ["L5", "L6", "L7"],
+      "notes": "SEED: not exercised by dummy. Experience-anchored: fluent command assumed; ready for complex, contested, self-directed use. Cognitive demand: synthesis, critique, judgement. Full population should verify indicativeLevels against real pathway usage."
+    }
+  ]
+}

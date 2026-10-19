@@ -1,0 +1,248 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://excelling.cardiffmet/schemas/design-kb.gates.schema.json",
+  "title": "design-kb: gate definitions",
+  "description": "The gate inventory in machine form. Session 1 fixes the SHAPE; Session 2's cluster formalisation supplies authoritative content. Includes the context-facet gate (hard-stop, top of every course conversation) and S1-D2/D3 source-consultation triggers.",
+  "type": "object",
+  "required": [
+    "kbVersion",
+    "gates"
+  ],
+  "properties": {
+    "kbVersion": {
+      "$ref": "common.schema.json#/$defs/kbVersion"
+    },
+    "gates": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "phase",
+          "kind",
+          "hardness",
+          "defaultType",
+          "sequence"
+        ],
+        "properties": {
+          "kind": {
+            "enum": [
+              "human",
+              "agent+human",
+              "auto"
+            ],
+            "description": "Gate realignment A2 (gate-redesign-2026-10-06.md): who acts. `human` = AI asks, person answers. `agent+human` = agent generates, person resolves (choose/amend/confirm; regenerate+steer always available). `auto` = reserved placeholder, auto-passes with a default, no human input in tier-1. No pure-`agent` gate in tier-1."
+          },
+          "response": {
+            "type": "object",
+            "description": "A2: how a human resolves this gate. Present on `human` and `agent+human` gates; absent on `auto`.",
+            "properties": {
+              "mode": {
+                "enum": [
+                  "answer",
+                  "choose",
+                  "amend",
+                  "confirm"
+                ]
+              },
+              "prompt": {
+                "type": "string"
+              },
+              "destination": {
+                "type": "string",
+                "description": "Where the answer lands in the course-design answer-sheet."
+              }
+            },
+            "additionalProperties": false
+          },
+          "generation": {
+            "type": "object",
+            "description": "A2: what the agent produces. Present on `agent+human` gates. `sources`/`parameters` absorb the old sourceConsultation intent; `produces` points at this gate's decidedValueShape.",
+            "properties": {
+              "trigger": {
+                "type": "string"
+              },
+              "produces": {
+                "type": "string"
+              },
+              "sources": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "parameters": {
+                "type": "object"
+              }
+            },
+            "additionalProperties": false
+          },
+          "reserved": {
+            "type": "boolean",
+            "description": "A4/A8: true marks a reserved placeholder gate that auto-passes with a default now and is defined in a later pass (e.g. the CXS context slots, cxp-03 exemplar-programmes)."
+          },
+          "id": {
+            "type": "string",
+            "pattern": "^(onb|cxs|crs|les|wra|cxp)-[0-9]{2}_[a-z][a-z0-9-]*$",
+            "description": "Phase-prefixed slug form under the 2026-10-07 gate realignment (gate-redesign-2026-10-06.md): one of the six phase prefixes onb|cxs|crs|les|wra|cxp, a two-digit sequence, an underscore, and a kebab slug (e.g. crs-02_thematic-scope, onb-01_theme-preset). The old bare `gates/X` and ctx-/act- forms are retired by Round C."
+          },
+          "name": {
+            "type": "string"
+          },
+          "phase": {
+            "enum": [
+              "ONB",
+              "CXS",
+              "CRS",
+              "LES",
+              "WRA",
+              "CXP"
+            ]
+          },
+          "cluster": {
+            "type": "string",
+            "description": "Conversational movement, e.g. identity, architecture, furniture (phase A three-cluster structure)."
+          },
+          "hardness": {
+            "enum": [
+              "hard-stop",
+              "soft",
+              "advisory"
+            ]
+          },
+          "defaultType": {
+            "enum": [
+              "fixed-value",
+              "ai-proposal-stands",
+              "none"
+            ]
+          },
+          "sequence": {
+            "type": "integer",
+            "minimum": 0,
+            "description": "RJ-0059: this gate's position in the course-design conversation's run order, lowest first. The sole source of order; a command reads this field through the shared gate-order tool rather than keeping its own list."
+          },
+          "repeatsPer": {
+            "enum": [
+              "lesson",
+              "context-pack"
+            ],
+            "description": "RJ-0059: a gate decided more than once per course. 'lesson' (LES, les-01_lesson-proposal) runs once per lesson, keyed <slug>-<lessonKey>-les-01. 'context-pack' (CXP per-pack gates cxp-01_subject, cxp-02_qualifiers, cxp-04_context-generation; gate-redesign-2026-10-06.md, 8 Oct 2026, D1) runs once per context pack, keyed <slug>-<subject>-<phase-nn>. cxp-03_exemplar-programmes is subject-independent and stays once-per-course, so carries no repeatsPer."
+          },
+          "procedureFlags": {
+            "type": "object",
+            "description": "RJ-0059: per-gate procedure steps that gate.md's own step text makes conditional on the gate, read by the shared gate-order tool instead of gate.md keeping its own list.",
+            "properties": {
+              "varietyView": {
+                "type": "boolean",
+                "description": "gate.md step 3: list every pattern id and realisation already recorded at the same gate for every other lesson in this course, present only on B2, B3, B4, B5, S1."
+              },
+              "candidates": {
+                "type": "boolean",
+                "description": "gate.md step 4: activity-gate slot choices, present only on B2, B3, B4, B5, S1, W1."
+              }
+            },
+            "additionalProperties": false
+          },
+          "sourceConsultation": {
+            "type": "object",
+            "description": "S1-D2/D3/D8: which facet presences oblige knowledge-store lookup before this gate's proposal. Authority levels map to stores: sector+subject -> source-kb (external published); institutional+module -> institutional-kb (institution-supplied, multi-institution).",
+            "properties": {
+              "triggeringFacets": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "subject",
+                    "level",
+                    "institution",
+                    "faculty",
+                    "school",
+                    "module",
+                    "activity"
+                  ]
+                }
+              },
+              "authorityLevels": {
+                "type": "array",
+                "items": {
+                  "enum": [
+                    "sector",
+                    "subject",
+                    "institutional",
+                    "module"
+                  ]
+                }
+              },
+              "onNoMatch": {
+                "type": "string",
+                "description": "Behaviour when no source matches \u2014 DESIGN HELD FOR SESSION 3; record intent only."
+              }
+            },
+            "additionalProperties": false
+          },
+          "prosePointer": {
+            "$ref": "common.schema.json#/$defs/citation"
+          },
+          "consequenceNote": {
+            "type": "string",
+            "description": "What this gate constrains downstream; only where it earns its place."
+          },
+          "reachabilityFacet": {
+            "enum": [
+              "subject",
+              "level",
+              "institution",
+              "faculty",
+              "school",
+              "module",
+              "activity"
+            ],
+            "description": "RULED 17 Sep 2026 (Abbott, superseding PR-S-27's prose-only position): optional. Present means this gate is reached only when the named facet is present in the facet set CTX closed (S1-D4); absent means always reached, true of all 18 gates that predate gates/EXM. Governs whether the gate is reached, not its hardness once reached. Same facet vocabulary as sourceConsultation.triggeringFacets \u2014 no separate vocabulary. Deliberately a single facet-presence test: no operators, negation, or multiple clauses; a condition language is out of scope until something other than EXM needs one."
+          },
+          "dependsOn": {
+            "type": "array",
+            "description": "AMENDMENT (dimension 5, S2, 26 Aug 2026): static propagation edges - the sweep net's sole authority for WHO a reopen sweep visits. Class-level, conservative, deliberately over-inclusive; absence of a manifest citation never exempts a record from the sweep. dependencyClass IS the default verdict: constitutive->invalidate, substantive->flag-for-review, nominal->stand-with-warning. Grain is the edge, not the gate (B4-on-B2 constitutive, B4-on-A2 substantive). A discovered missing edge is a design-kb bug warranting its own records entry.",
+            "items": {
+              "type": "object",
+              "required": [
+                "gate",
+                "dependencyClass"
+              ],
+              "properties": {
+                "gate": {
+                  "type": "string",
+                  "pattern": "^(onb|cxs|crs|les|wra|cxp)-[0-9]{2}_[a-z][a-z0-9-]*$"
+                },
+                "dependencyClass": {
+                  "enum": [
+                    "constitutive",
+                    "substantive",
+                    "nominal"
+                  ]
+                },
+                "note": {
+                  "type": "string"
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "propagationScope": {
+            "enum": [
+              "listed",
+              "universal"
+            ],
+            "description": "AMENDMENT (dimension 5, S2, 26 Aug 2026): universal = this gate grounds the entire conversation (CTX, per S1-D4); it carries NO dependsOn edges and no static classes - sweep verdicts are proposed per event via the change-kind tracer on the sourceConsultation facet->store mapping read consultation-out. Absent = listed."
+          },
+          "decidedValueShape": {
+            "type": "object",
+            "description": "LCR-1 (docs/project/open-decisions.md, Prompt 143): a Draft-07 JSON Schema fragment that a closed record's decidedValue must validate against, applied by validate-design-schemas.py --course-design. Present only on gates whose decidedValue carries fields a lesson check reads (A3, B1, B2, B4 at landing). Absent means no shape is enforced beyond the record's own schema. Keyed to the gate's own id (bare for course-level gates, matched by suffix for slug-prefixed per-lesson gates per GF-1) rather than expressed as a schema conditional in course-design.schema.json, because a record's own subschema there has no sibling visibility of its parent gateId, and GF-1's slug-prefixed per-lesson form (gates/<slug>-L<NN>-B<n>) cannot be matched by const in any case."
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

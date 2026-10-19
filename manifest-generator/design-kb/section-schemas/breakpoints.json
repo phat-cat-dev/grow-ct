@@ -1,0 +1,23 @@
+{
+  "section": "breakpoints",
+  "schemaVersion": "0.1.0",
+  "note": "Responsive breakpoints. Grounded in ab-breakpoints.less (ported from cm-global.css, 10 Oct 2026). Min-width stops: sm 576 · md 768 · lg 992 · xl 1200 · xxl 1400 · xxxl 1600 (xxxl is the one Adapt/Bootstrap lack). Each is a themeable SEED (-> L4 default --ab-base-pf-default-bp-<n>, exposed in templates) with a ref-seed TOKEN giving the L3 pivot --ab-base-bp-<n>; the live file also keeps a flat --ab-bp-<n> alias (custom-prop mirror for JS/container-query use) and the compile-time @ab-bp-<n> LESS vars (the authoritative source for @media, since custom properties cannot drive media queries — a runtime theme override of a breakpoint reaches the mirror/tokens but NOT @media, which stays compile-time).",
+
+  "seeds": {
+    "bp-sm":   { "kind": "length", "default": "576px",  "themeable": true, "template": { "label": "Breakpoint sm (phone landscape)", "input": "length", "presets": ["full"] } },
+    "bp-md":   { "kind": "length", "default": "768px",  "themeable": true, "template": { "label": "Breakpoint md (tablet)",          "input": "length", "presets": ["full"] } },
+    "bp-lg":   { "kind": "length", "default": "992px",  "themeable": true, "template": { "label": "Breakpoint lg (small laptop)",     "input": "length", "presets": ["full"] } },
+    "bp-xl":   { "kind": "length", "default": "1200px", "themeable": true, "template": { "label": "Breakpoint xl (desktop)",          "input": "length", "presets": ["full"] } },
+    "bp-xxl":  { "kind": "length", "default": "1400px", "themeable": true, "template": { "label": "Breakpoint xxl (large desktop)",    "input": "length", "presets": ["full"] } },
+    "bp-xxxl": { "kind": "length", "default": "1600px", "themeable": true, "template": { "label": "Breakpoint xxxl (wide display)",    "input": "length", "presets": ["full"] } }
+  },
+
+  "tokens": {
+    "bp-sm":   { "pivot": "--ab-base-bp-sm",   "kind": "ref-seed", "ref": "bp-sm",   "themeable": false, "template": null },
+    "bp-md":   { "pivot": "--ab-base-bp-md",   "kind": "ref-seed", "ref": "bp-md",   "themeable": false, "template": null },
+    "bp-lg":   { "pivot": "--ab-base-bp-lg",   "kind": "ref-seed", "ref": "bp-lg",   "themeable": false, "template": null },
+    "bp-xl":   { "pivot": "--ab-base-bp-xl",   "kind": "ref-seed", "ref": "bp-xl",   "themeable": false, "template": null },
+    "bp-xxl":  { "pivot": "--ab-base-bp-xxl",  "kind": "ref-seed", "ref": "bp-xxl",  "themeable": false, "template": null },
+    "bp-xxxl": { "pivot": "--ab-base-bp-xxxl", "kind": "ref-seed", "ref": "bp-xxxl", "themeable": false, "template": null }
+  }
+}

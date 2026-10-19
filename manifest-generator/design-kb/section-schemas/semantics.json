@@ -1,0 +1,45 @@
+{
+  "section": "semantics",
+  "schemaVersion": "0.1.0",
+  "kind": "nested",
+  "note": "Semantic cue sets — a NESTED (tree) section schema, distinct from the flat seed/token sections. Layer 1 = colour category (positive/neutral/negative), HSL-derived so it rides the theme. Layer 2+ = sub-categories distinguished by icon (and name), inheriting the parent's colour. Extensible: a child may itself carry children. Authored in content as COMPOUND classes gated under html.ab-theme — `.positive.advise`, `.negative.warn` — where the layer-1 class paints the card + colour and the layer-2 class swaps the icon. Colour defaults derive via the formulas below (theme-formula-map.md 2.6); icons are per-node tokens; every value is a pivot hook (L5/L6 override wins over the formula). Worked implementation: ab-semantics.less. Fold-tool auto-generation of this nested shape is a follow-up (the fold tool currently projects flat sections).",
+
+  "shared": {
+    "semantic-s": { "kind": "percent", "default": "55%", "themeable": true, "template": { "label": "Semantic saturation", "input": "percent", "presets": ["full"] } },
+    "semantic-l": { "kind": "percent", "default": "42%", "themeable": true, "template": { "label": "Semantic lightness",  "input": "percent", "presets": ["full"] } }
+  },
+
+  "derive": {
+    "note": "Per layer-1 set X, from its hue + the shared dials. Emitted as --ab-base-pf-default-<X>-<token>, hooked to --ab-base-<X>-<token>.",
+    "bg":          "hsl(<hue> calc(semantic-s * 0.5) 94%)",
+    "border":      "hsl(<hue> semantic-s semantic-l)",
+    "ink":         "hsl(<hue> semantic-s 28%)",
+    "icon-colour": "hsl(<hue> semantic-s semantic-l)"
+  },
+
+  "sets": {
+    "positive": {
+      "hue":  { "kind": "number", "default": 145, "themeable": true, "template": { "label": "Positive hue", "input": "number", "min": 0, "max": 360, "presets": ["full"] } },
+      "icon": { "default": "check_circle", "themeable": true },
+      "children": {
+        "correct": { "icon": { "default": "check_circle", "themeable": true } },
+        "advise":  { "icon": { "default": "lightbulb",    "themeable": true } }
+      }
+    },
+    "negative": {
+      "hue":  { "kind": "number", "default": 5, "themeable": true, "template": { "label": "Negative hue", "input": "number", "min": 0, "max": 360, "presets": ["full"] } },
+      "icon": { "default": "cancel", "themeable": true },
+      "children": {
+        "incorrect": { "icon": { "default": "cancel",  "themeable": true } },
+        "warn":      { "icon": { "default": "warning", "themeable": true } }
+      }
+    },
+    "neutral": {
+      "hue":  { "kind": "number", "default": 38, "themeable": true, "template": { "label": "Neutral hue (amber)", "input": "number", "min": 0, "max": 360, "presets": ["full"] } },
+      "icon": { "default": "info", "themeable": true },
+      "children": {
+        "observe": { "icon": { "default": "visibility", "themeable": true } }
+      }
+    }
+  }
+}

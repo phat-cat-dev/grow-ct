@@ -1,0 +1,3293 @@
+
+{
+  "kbVersion": "0.1.1",
+  "sourceId": "book/excelling-at-university-2026",
+  "kind": "book",
+  "chunks": [
+    {
+      "id": "ch10/opening",
+      "heading": "Chapter 10: Academic Integrity and Referencing",
+      "locator": {
+        "pages": "184"
+      },
+      "sectionKind": "framing",
+      "pathwayTags": [
+        {
+          "pathway": "ai-technology",
+          "evidence": "With the advent of generative artificial intelligence like ChatGPT, it is vital for all students, undergraduates, and postgraduates, to have a sound understanding of academic integrity and what it means in practice for you, as a student."
+        },
+        {
+          "pathway": "referencing",
+          "evidence": "We then move on to a more detailed discussion of referencing, the practice most associated with academic integrity."
+        }
+      ],
+      "boundaryNote": "This chunk is the chapter's untitled opening: the two paragraphs of running text between the chapter title and the 'Learning Objectives' heading. It has no heading of its own; the heading field carries the chapter's own title, exactly as the book gives it. Proposed as framing under the SMAP-1 AMENDMENT (Prompt 141), since it carries no content shape: Abbott's grounds for the amendment state it feeds the overview and the practice-connection boxes.",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch10/learning-objectives-and-keywords",
+      "heading": "Learning Objectives",
+      "locator": {
+        "pages": "184-185"
+      },
+      "sectionKind": "framing",
+      "pathwayTags": [
+        {
+          "pathway": "referencing",
+          "evidence": "an appreciation of the value of effective referencing, not simply in acknowledging the sources you use, but as a tool in helping you to address marking criteria"
+        }
+      ],
+      "boundaryNote": "Combines two adjacent headings into one framing chunk: 'Learning Objectives' (the heading field's exact text) and the 'Keywords' heading immediately after it, whose own line reads 'academic integrity; values; referencing; plagiarism; in-text references; citations; references list; quoting; paraphrasing'. Proposed as framing under the SMAP-1 AMENDMENT (Prompt 141): Abbott's grounds state the objectives matter for design because A3 sets course outcomes against them.",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch10/defining-academic-integrity",
+      "heading": "Defining academic integrity",
+      "locator": {
+        "pages": "185-187"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "Academic integrity refers to the *values* that underpin not only the scholarly work of such a community, but also the work you complete on your learning journey as you move from the edge to its centre, from being a novice to an expert."
+        },
+        {
+          "shapeId": "content-shapes/classification",
+          "quote": "Different universities will have different interpretations of these values, but the International Center for Academic Integrity (ICAI, 2021) has helpfully identified six of what it calls the 'fundamental' values of academic integrity."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "referencing",
+          "evidence": "An example of honesty in practice is the need to reference your sources accurately (more on this below)."
+        }
+      ],
+      "boundaryNote": "Chose content-shapes/classification for the ICAI six-value list rather than content-shapes/structure, since the six values are a categorised list, not a sequence or a component breakdown.",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch10/research-and-data-handling",
+      "heading": "Research and the handling of data",
+      "locator": {
+        "pages": "187-188"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/procedure",
+          "quote": "If you need to share any collected data, it is your responsibility to secure the consent of the participants. This is usually done by getting each participant to sign a consent form; your university may provide this form or you will need to create one for yourself."
+        },
+        {
+          "shapeId": "content-shapes/classification",
+          "quote": "It identifies six (UKRI, 2021), all of which contribute to the maintenance of research integrity:"
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "researching-research-methods",
+          "evidence": "We often get asked by students about the use of data collected in the course of research, as well as the broader issue of research ethics."
+        }
+      ],
+      "status": "confirmed"
+    },
+    {
+      "id": "ch10/referencing-intro",
+      "heading": "Referencing",
+      "locator": {
+        "pages": "188"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "Put simply, referencing refers to the practice of acknowledging where the knowledge you are using in your work comes from."
+        },
+        {
+          "shapeId": "content-shapes/principle",
+          "quote": "Yet referencing is about much more than avoiding plagiarism. When looked at in the context of marking criteria, referencing becomes a highly valuable tool which can help you to evidence your competencies against it."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "referencing",
+          "evidence": "The clearest example of where academic integrity meets learning at university is in referencing."
+        }
+      ],
+      "status": "confirmed"
+    },
+    {
+      "id": "ch10/referencing-styles",
+      "heading": "Referencing styles",
+      "locator": {
+        "pages": "188-189"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/classification",
+          "quote": "In our experience, the most commonly used referencing styles are (in no particular order): Author-date (usually referred to as 'Harvard' in UK institutions) – used widely across a number of disciplines; MHRA (Modern Humanities Research Association) – mainly used in humanities disciplines; Chicago (Chicago University Press) – again, often used in humanities disciplines; APA (American Psychological Association) – principally, psychology, but also social sciences and some business-related disciplines; Vancouver – for medical/clinical-related disciplines; IEEE (Institute of Electrical and Electronic Engineers) – for engineering, computer science, and related disciplines; and OSCOLA (Oxford University Standard for Citation of Legal Authorities) – for law."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "referencing",
+          "evidence": "Much depends on the discipline in which you're studying; but, that said, on some programmes, particularly at postgraduate level, you might be expected to use more than one style."
+        }
+      ],
+      "boundaryNote": "Not cross-tagged to finding-using-sources: this section is about citation format choice, not source discovery.",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch10/what-references-look-like",
+      "heading": "What do references look like?",
+      "locator": {
+        "pages": "189-191"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/structure",
+          "quote": "Note that the author's surname comes first, followed by their initial. The title of the chapter is in normal font but the title of the edited book is in *italics*."
+        },
+        {
+          "shapeId": "content-shapes/error",
+          "quote": "Avoid – at all costs! – copying and pasting references in from your library's discovery service or any pdf document. If you create the list in this way, it's highly likely that you will introduce inaccuracies or inconsistencies."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "referencing",
+          "evidence": "The references are easy to spot: they're within the brackets, as indicated above. These are called in-text references or citations."
+        }
+      ],
+      "boundaryNote": "Chose content-shapes/structure over content-shapes/assembly for the annotated-exemplar quote, since the point being taught is the fixed order and formatting of a reference's parts, not the act of combining separate elements.",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch10/why-references-matter",
+      "heading": "Why are references so important?",
+      "locator": {
+        "pages": "191-193"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/principle",
+          "quote": "Acknowledging that an idea, a theory or an interpretation belongs to another author is ethically appropriate and forms a core part of 'academic integrity'; if you don't credit the original author then you are presenting that idea, theory or interpretation as your own, when, of course, it isn't."
+        },
+        {
+          "shapeId": "content-shapes/judgement",
+          "quote": "When assessing student work, many tutors turn to the references list first, to get an impression of the scope of the student's research."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "referencing",
+          "evidence": "First, in-text references and, more importantly, the references list at the end of your work, indicate to your tutor (the reader) the scope of your research."
+        },
+        {
+          "pathway": "criticality",
+          "evidence": "Your use of in-text references also helps to highlight for the tutor that critical edge we spoke of in an earlier chapter."
+        }
+      ],
+      "status": "confirmed"
+    },
+    {
+      "id": "ch10/quotation-and-paraphrase",
+      "heading": "Quotation and paraphrase",
+      "locator": {
+        "pages": "193-195"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/contrast",
+          "quote": "When compared to quoting, as described above, paraphrasing is clearly far more skilful."
+        },
+        {
+          "shapeId": "content-shapes/process",
+          "quote": "All you're doing when paraphrasing text is (i) identifying the key point the author is making, (ii) disregarding anything that is surplus to this point, and then (iii) writing it out in your own words."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "academic-writing",
+          "evidence": "Paraphrasing is a vital part of effective writing. It allows you to demonstrate your competencies against those key aspects of the marking criteria we've been talking about: knowledge and understanding, and critical engagement with discourse."
+        },
+        {
+          "pathway": "referencing",
+          "evidence": "You also need to include in-text references when you quote directly from a source and when you paraphrase."
+        }
+      ],
+      "status": "confirmed"
+    },
+    {
+      "id": "ch10/how-to-format-references",
+      "heading": "How do you format references?",
+      "locator": {
+        "pages": "195-198"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/parallel-options",
+          "quote": "Let's look at how we set out references for three source types: books, journal articles, and web pages."
+        },
+        {
+          "shapeId": "content-shapes/assembly",
+          "quote": "To do this, we need the following elements: author surname and initial; year of publication; title of work, and any subtitle; place of publication; and publisher."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "referencing",
+          "evidence": "So much for the principles behind effective referencing practice; how do you actually set out the references you need to include in your work?"
+        }
+      ],
+      "status": "confirmed"
+    },
+    {
+      "id": "ch10/summary",
+      "heading": "Summary",
+      "locator": {
+        "pages": "198-199"
+      },
+      "sectionKind": "framing",
+      "pathwayTags": [
+        {
+          "pathway": "referencing",
+          "evidence": "When it comes to referencing, we've looked at its importance in relation to avoiding plagiarism."
+        },
+        {
+          "pathway": "work-based-experiential-learning",
+          "evidence": "If you act like an academic, you'll become an academic; and you'll be able to take this understanding of the values that make up academic integrity into the workplace."
+        }
+      ],
+      "boundaryNote": "This chunk is the chapter's Summary section. Proposed as framing under the SMAP-1 AMENDMENT (Prompt 141), since it carries no content shape: Abbott's grounds for the amendment state the summary feeds W-CLOSE.",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch4/opening",
+      "heading": "Chapter 4: Becoming a Self-Regulating Learner",
+      "locator": {
+        "pages": "44-45"
+      },
+      "sectionKind": "framing",
+      "pathwayTags": [
+        {
+          "pathway": "understanding-learning-assessment-feedback",
+          "evidence": "When engaging in learning, tutors expect you not only to direct its course by taking control of it; they want you to monitor your own performance, to reflect on it, and then to put in place strategies to bring about an improvement."
+        },
+        {
+          "pathway": "reflective-practice",
+          "evidence": "As a graduate, you will be expected to engage in professional development processes driven by the core elements of self-regulated learning, such as reflective practice."
+        },
+        {
+          "pathway": "starting-progressing-succeeding",
+          "evidence": "Making the leap from this environment to one in which you make the key decisions over your learning represents one of the most significant challenges you'll face as you transition into higher education."
+        }
+      ],
+      "boundaryNote": "This chunk is the chapter's untitled opening: the four paragraphs of running text between the chapter title and the 'Learning Objectives' heading (recounted directly against this chapter's own text; Chapter 10's own opening chunk has two paragraphs, not four \u2014 the count is not assumed to carry over). It has no heading of its own; the heading field carries the chapter's own title, exactly as ch10/opening does. Framing under the same SMAP-1 AMENDMENT (Prompt 141) basis as ch10/opening (adp-0223, RJ-0101). Secondary pathwayTag starting-progressing-succeeding added (Task #11): the chunk's second paragraph is explicitly about the school/college-to-university transition in learner autonomy, a direct match for that pathway's subject matter, even though chapter 4's primary mapping is understanding-learning-assessment-feedback. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch4/learning-objectives-and-keywords",
+      "heading": "Learning Objectives",
+      "locator": {
+        "pages": "45"
+      },
+      "sectionKind": "framing",
+      "pathwayTags": [
+        {
+          "pathway": "understanding-learning-assessment-feedback",
+          "evidence": "a clear understanding of self-regulated learning, its significance in learning in higher education, and its value to excelling at university"
+        },
+        {
+          "pathway": "reflective-practice",
+          "evidence": "an awareness of the importance of reflective practice in self-regulated learning"
+        }
+      ],
+      "boundaryNote": "Combines two adjacent headings into one framing chunk, as ch10/learning-objectives-and-keywords does: 'Learning Objectives' (the heading field's exact text) and the 'Keywords' heading immediately after it, whose own line reads 'self-regulated learning; reflective practice; mindset, motivation and goals; learning strategies; self-efficacy and efficacy beliefs.' Framing under the same SMAP-1 AMENDMENT (Prompt 141) basis as ch10's own chunk (adp-0223, RJ-0101).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch4/what-is-self-regulated-learning",
+      "heading": "What is self-regulated learning?",
+      "locator": {
+        "pages": "45-50"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "Self-regulated learning is a process whereby a learner takes control of their learning by setting goals, monitors the behaviours used in pursuit of those goals, and evaluates academic performance through reflective practice."
+        },
+        {
+          "shapeId": "content-shapes/contrast",
+          "quote": "Jess' approach to completing the task is almost the polar opposite of Natalie's."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "understanding-learning-assessment-feedback",
+          "evidence": "Self-regulated learning is a process whereby a learner takes control of their learning by setting goals, monitors the behaviours used in pursuit of those goals, and evaluates academic performance through reflective practice."
+        },
+        {
+          "pathway": "reflective-practice",
+          "evidence": "She reflects on her performance by recognising the importance of linking information together."
+        }
+      ],
+      "boundaryNote": "The section's two worked scenarios (Natalie, the weaker example, then Jess) ground the contrast shape; the formal definition the section builds to is quoted for the concept shape rather than either scenario's own prose, since the definition is what the section is teaching, not the examples themselves.",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch4/self-regulated-learning-as-a-process",
+      "heading": "Self-regulated learning as a process",
+      "locator": {
+        "pages": "50-53"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/process",
+          "quote": "By behaviour, we're referring to the performance of those strategies identified in the forethought stage."
+        },
+        {
+          "shapeId": "content-shapes/reflection",
+          "quote": "How willing are you to adapt the way you work if you think you're not meeting your goals?"
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "understanding-learning-assessment-feedback",
+          "evidence": "Self-regulated learning is made up of three distinct phases:"
+        },
+        {
+          "pathway": "reflective-practice",
+          "evidence": "evaluation is about reflective practice: the action of looking back critically at past performances, including actions and decisions, with a view to bring about an improvement in performance through greater understanding of the self (i.e., you)."
+        }
+      ],
+      "boundaryNote": "content-shapes/process chosen over content-shapes/procedure for the forethought/behaviour/evaluation model: the three phases describe how self-regulation unfolds over time, not a sequence of steps the learner performs to complete a single task.",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch4/reflective-practice",
+      "heading": "Reflective practice",
+      "locator": {
+        "pages": "53-55"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/structure",
+          "quote": "We suggest adopting a fairly simple one for this purpose: a three-stage model incorporating (i) an account of the experience ('describe'), (ii) an assessment of it ('reflect'), and (iii) an outcome stage ('take action'), in which you identify some actions to take based on the reflection to bring about an improvement in your performance (similar to those proposed by Driscoll (2007) and Jasper (2013)) (Figure 4.1)."
+        },
+        {
+          "shapeId": "content-shapes/principle",
+          "quote": "It's important to look at the positives first, even if they're overshadowed by the negatives. No piece of reflection should be entirely positive or negative."
+        },
+        {
+          "shapeId": "content-shapes/reflection",
+          "quote": "What went well? What didn't go as planned?"
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "understanding-learning-assessment-feedback",
+          "evidence": "Many of you will already be familiar with reflective practice; it's often used as a form of formative assessment on degree programmes"
+        },
+        {
+          "pathway": "reflective-practice",
+          "evidence": "Development as a learner \u2013 and, ultimately, your development into a graduate \u2013 is driven by self-reflection."
+        }
+      ],
+      "boundaryNote": "content-shapes/structure chosen over content-shapes/procedure for the describe/reflect/take-action model: the three stages are presented here as a model to understand (its parts and their fixed order), the same choice ch10/what-references-look-like made for an annotated-exemplar structure, before Jess's worked example later in the chunk applies it as a sequence.",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch4/becoming-a-self-regulating-learner",
+      "heading": "Becoming a self-regulating learner",
+      "locator": {
+        "pages": "55-58"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/procedure",
+          "quote": "Devise strategies relevant to the task and to the goals you've set."
+        },
+        {
+          "shapeId": "content-shapes/reflection",
+          "quote": "Did you monitor your performance as you were completing the task?"
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "understanding-learning-assessment-feedback",
+          "evidence": "It's one thing to make you aware of self-regulated learning, but it's another thing entirely for you to actually become a self-regulating learner."
+        },
+        {
+          "pathway": "reflective-practice",
+          "evidence": "Evaluate your performance through reflective practice against the goals you've set."
+        },
+        {
+          "pathway": "creativity",
+          "evidence": "The key point here is to remember to monitor your performance. If one strategy isn't working effectively, amend it; choose another that you think might be more effective."
+        }
+      ],
+      "boundaryNote": "content-shapes/procedure chosen over content-shapes/principle for the five broad areas: the text frames them as action items to focus on ('we think it's important for you to focus on five broad areas'), each a step the learner performs, not a value or a reason to weigh. Secondary pathwayTag creativity added (Task #11): this chunk's monitoring-and-amending-strategy content (pp.56-57) directly matches creativity/05's 'amending a strategy that is not working' point, even though chapter 4's primary mapping is understanding-learning-assessment-feedback. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch4/summary",
+      "heading": "Summary",
+      "locator": {
+        "pages": "58"
+      },
+      "sectionKind": "framing",
+      "pathwayTags": [
+        {
+          "pathway": "understanding-learning-assessment-feedback",
+          "evidence": "In this chapter, we've explored self-regulated learning. We've built on elements of the discussion about excelling in Chapter 2: mindset, motivation, and goal setting are all key to self-regulated learning"
+        },
+        {
+          "pathway": "reflective-practice",
+          "evidence": "Reflective practice forms a key part of self-regulated learning: engage in it meaningfully if you want to develop as a learner and to excel in your academic work."
+        }
+      ],
+      "boundaryNote": "This chunk is the chapter's Summary section. Framing under the same SMAP-1 AMENDMENT (Prompt 141) basis as ch10/summary, since it carries no content shape of its own (adp-0223, RJ-0101).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch12/opening",
+      "heading": "Chapter 12: Learning by Doing \u2013 Practice- and Work-Based Learning",
+      "locator": {
+        "pages": "220"
+      },
+      "sectionKind": "framing",
+      "pathwayTags": [
+        {
+          "pathway": "work-based-experiential-learning",
+          "evidence": "In many disciplines, you'll be expected to engage in practice or work-based learning."
+        }
+      ],
+      "boundaryNote": "This chunk is the chapter's untitled opening: the three paragraphs of running text between the chapter title and the 'Learning Objectives' heading. It has no heading of its own; the heading field carries the chapter's own title, exactly as ch10/opening and ch4/opening do. Framing under the same SMAP-1 AMENDMENT (Prompt 141) basis as those two chunks.",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch12/learning-objectives-and-keywords",
+      "heading": "Learning Objectives",
+      "locator": {
+        "pages": "221"
+      },
+      "sectionKind": "framing",
+      "pathwayTags": [
+        {
+          "pathway": "work-based-experiential-learning",
+          "evidence": "an understanding of the value of practice- and work-based learning to your personal development"
+        }
+      ],
+      "boundaryNote": "Combines two adjacent headings into one framing chunk, as ch10's and ch4's own chunks do: 'Learning Objectives' (the heading field's exact text) and the 'Keywords' heading immediately after it, whose own line reads 'practice-based learning; work-based learning; experiential learning; Experiential Learning Cycle'. Framing under the same SMAP-1 AMENDMENT (Prompt 141) basis as ch10/learning-objectives-and-keywords and ch4/learning-objectives-and-keywords.",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch12/defining-practice-and-work-based-learning",
+      "heading": "Defining practice- and work-based learning",
+      "locator": {
+        "pages": "221-223"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "Broadly speaking, this type of learning is focused on professional practice; it involves the application of theory or knowledge learnt in classroom settings to the way you do something, whether you're a student nurse or teacher, or you're an artist developing your craft."
+        },
+        {
+          "shapeId": "content-shapes/classification",
+          "quote": "In the list below, we've tried to highlight the main ones."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "work-based-experiential-learning",
+          "evidence": "Practice- and work-based learning covers a broad range of activities relevant to an equally wide set of disciplines."
+        }
+      ],
+      "boundaryNote": "The nine named activity types (laboratory work, studio/workshop, field work, simulation, project-based, placements/internships, professional practice conferral, workplace observations, apprenticeships) are kept as one classification chunk, consistent with the ch10 precedent of folding a list into one shape rather than one chunk per item.",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch12/benefits",
+      "heading": "What are the benefits to you of practice or work-based learning?",
+      "locator": {
+        "pages": "223-224"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/classification",
+          "quote": "You can use examples drawn from these experiences to enhance your CV and graduate profile when it comes to apply for graduate positions."
+        },
+        {
+          "shapeId": "content-shapes/principle",
+          "quote": "Practice- and work-based learning offer opportunities for you to apply theoretical knowledge. In this way, they help to deepen your knowledge and understanding by making such theory 'real' through its application in workplace settings."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "work-based-experiential-learning",
+          "evidence": "The first point to make about its purpose is that it offers authentic, real-world learning experiences which open you up to the workplace environment in which you intend to move into as a graduate."
+        }
+      ],
+      "status": "confirmed"
+    },
+    {
+      "id": "ch12/assessment",
+      "heading": "How is practice- and work-based learning assessed by tutors?",
+      "locator": {
+        "pages": "224-225"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/principle",
+          "quote": "In general, assessment criteria reflect the workplace environment in which the learning is taking place, including its inherent uncertainty and complexity."
+        },
+        {
+          "shapeId": "content-shapes/process",
+          "quote": "Assessment usually revolves around reflective practice. It's by reflecting on these experiences that you gain insights into your own performance and the workplace environment in which you're working."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "work-based-experiential-learning",
+          "evidence": "The next fundamental question is how do tutors assess what you do in practice- and work-based learning?"
+        },
+        {
+          "pathway": "understanding-learning-assessment-feedback",
+          "evidence": "Each workplace has its own culture that makes it difficult to implement standardised assessment criteria."
+        },
+        {
+          "pathway": "reflective-practice",
+          "evidence": "Reflective activities linked to this type of learning are usually underpinned by David Kolb's (1984) 'Experiential Learning Cycle'."
+        }
+      ],
+      "status": "confirmed"
+    },
+    {
+      "id": "ch12/experiential-learning-and-kolbs-cycle",
+      "heading": "Experiential learning and Kolb's Experiential Learning Cycle",
+      "locator": {
+        "pages": "225-226"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "Experiential learning refers to the idea of learning through experience."
+        },
+        {
+          "shapeId": "content-shapes/structure",
+          "quote": "**Figure 12.1** Kolb's experiential learning cycle: Experiencing \u2192 Reflecting \u2192 Thinking \u2192 Acting (and back to Experiencing)."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "work-based-experiential-learning",
+          "evidence": "As a concept, it embraces both practice- and work-based learning, since both ultimately rest on experiences \u2013 in the sense of the actions you take \u2013 as the currency of learning."
+        },
+        {
+          "pathway": "reflective-practice",
+          "evidence": "The most well-known proponent of experiential learning is David Kolb who developed the four-stage Experiential Learning Cycle, depicted in Figure 12.1."
+        }
+      ],
+      "boundaryNote": "Split from the worked-example chunk below because this part introduces the model; the worked example applies it. Matches the ch10 precedent's practice of giving a substantial subsection its own chunk rather than merging unlike content. Enriched grounding (Abbott's ruling, 4 October 2026): the model named here is Kolb, D. (1984) Experiential Learning: Experience as the Source of Learning and Development. Englewood Cliffs, NJ: Prentice-Hall \u2013 four modes concrete experience/reflective observation/abstract conceptualisation/active experimentation, all p.30; Kolb's own definition of learning, \"Learning is the process whereby knowledge is created through the transformation of experience\", p.38. Page numbers taken from Kolb (1984) itself, per Abbott's own copy; also recorded in ing:doc:experiential-learning-kolb-1984 (wkspc2600-UNI/library/ingested/theory/ingest-theory-experiential-learning-kolb-1984.md), which read Kolb (1984) direct, chapter 2, pp.20-38.",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch12/kolbs-cycle-worked-example",
+      "heading": "Experiential learning and Kolb's Experiential Learning Cycle",
+      "locator": {
+        "pages": "226-229"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/process",
+          "quote": "Let's look at how John, our education student, uses it to structure his reflection on a recent school placement."
+        },
+        {
+          "shapeId": "content-shapes/structure",
+          "quote": "In the first stage, 'experiencing', John sets out the experience, beginning with his preparation for the lesson. In the second stage, 'reflecting', he considers what happened and why."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "work-based-experiential-learning",
+          "evidence": "What does this example tell us about how to use Kolb's cycle to structure reflection on experiences?"
+        },
+        {
+          "pathway": "reflective-practice",
+          "evidence": "In keeping with the principles of reflective writing, Kolb's cycle gives John a structure to organise his thoughts."
+        }
+      ],
+      "boundaryNote": "John's four sub-headed stages (Experiencing/Reflecting/Thinking/Acting) plus the two closing analysis paragraphs are kept as one chunk \u2013 they are one continuous worked example and its unpacking, not separable teaching points. content-shapes/process chosen over content-shapes/procedure: this narrates how the cycle unfolded for John (described), rather than instructing the reader to perform steps themselves. Enriched grounding (Abbott's ruling, 4 October 2026): Kolb (1984) pp.30-31 gives the two dialectic dimensions the cycle rests on \u2013 grasping experience (concrete experience \u2194 abstract conceptualisation) and transforming experience (active experimentation \u2194 reflective observation) \u2013 against which John's four stages can be checked. Page numbers per Kolb (1984) itself, per Abbott's own copy; also recorded in ing:doc:experiential-learning-kolb-1984 (same file as ch12/experiential-learning-and-kolbs-cycle's note). Caution for Phase B authoring: that same ingestion document names reading the cycle as a fixed sequence as a documented misapplication of Kolb's model (critiqued by Morris, 2020) \u2013 John's four sub-headed stages should be taught as the chapter presents them, not strengthened into a claim that the cycle must run in one fixed order.",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch12/getting-the-most-out-of-it",
+      "heading": "Getting the most out of practice- and work-based learning",
+      "locator": {
+        "pages": "229"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/principle",
+          "quote": "**Immerse yourself in the experience.** If these experiences are going to be useful to you, there's no other way!"
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "work-based-experiential-learning",
+          "evidence": "John's lesson on digital communities and the Blitz points to some of the ways you can maximise the value of practice- and work-based learning experiences to you and your personal development."
+        }
+      ],
+      "boundaryNote": "Five numbered items, each a guideline with its own reason \u2013 one principle chunk, consistent with the ch10 precedent of folding a numbered how-to list into one shape rather than one chunk per list item.",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch12/summary",
+      "heading": "Summary",
+      "locator": {
+        "pages": "229-230"
+      },
+      "sectionKind": "framing",
+      "pathwayTags": [
+        {
+          "pathway": "work-based-experiential-learning",
+          "evidence": "Practice- and work-based learning has become an important part of the learning experience in higher education as more tutors seek to develop links with industry and professional practice."
+        },
+        {
+          "pathway": "reflective-practice",
+          "evidence": "Learning of this type is about experience; reflecting on these experiences using Kolb's 'Experiential Learning Cycle' will reveal many new insights about yourself and your ability to work effectively in professional contexts."
+        }
+      ],
+      "boundaryNote": "This chunk is the chapter's Summary section. Framing under the same SMAP-1 AMENDMENT (Prompt 141) basis as ch10/summary and ch4/summary, since it carries no content shape of its own.",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch8/opening",
+      "heading": "Chapter 8: Critical thought and developing a critical edge in writing",
+      "locator": {
+        "pages": "113-114"
+      },
+      "sectionKind": "framing",
+      "pathwayTags": [
+        {
+          "pathway": "criticality",
+          "evidence": "The literacy of \\*criticality is the one we get asked about by students more than any other."
+        }
+      ],
+      "boundaryNote": "This chunk is the chapter's untitled opening: the three paragraphs of running text between the chapter title and the 'Learning Objectives' heading. It has no heading of its own; the heading field carries the chapter's own title, exactly as the book gives it. Proposed as framing under the SMAP-1 AMENDMENT (Prompt 141), consistent with ch10/opening and ch4/opening. Confirmed by Abbott 8 October 2026 (blanket ruling covering this chunk and all other canon-adp-promotion chunks added the same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch8/learning-objectives-and-keywords",
+      "heading": "Learning Objectives",
+      "locator": {
+        "pages": "114"
+      },
+      "sectionKind": "framing",
+      "pathwayTags": [
+        {
+          "pathway": "criticality",
+          "evidence": "insights into the techniques available for developing a 'critical edge' in your writing."
+        }
+      ],
+      "boundaryNote": "Combines two adjacent headings into one framing chunk: 'Learning Objectives' (the heading field's exact text) and the 'Keywords' heading immediately after it, whose own line reads 'discourse; critical thought; being critical; active and passive engagement with academic sources; language of criticality; critical edge; analysis; evaluation; synthesis; judgement'. Proposed as framing under the SMAP-1 AMENDMENT (Prompt 141), consistent with ch10's equivalent chunk. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch8/defining-critical-thought",
+      "heading": "Defining 'critical thought'",
+      "locator": {
+        "pages": "114-117"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "'Being critical' – to use a slightly different phrase to 'critical thought' or 'critical thinking skills' – is a mindset, a way of thinking and acting that is characteristic of the approach of a successful, self-regulating student to learning."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "criticality",
+          "evidence": "'Being critical' – to use a slightly different phrase to 'critical thought' or 'critical thinking skills' – is a mindset, a way of thinking and acting that is characteristic of the approach of a successful, self-regulating student to learning."
+        }
+      ],
+      "boundaryNote": "Includes the John library-search worked example (pp.116-117) as part of this chunk rather than splitting it out: the example directly illustrates the chunk's own concept (critical thought as mindset, not switched on and off) rather than introducing a new teaching point. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch8/thinking-critically-about-academic-sources",
+      "heading": "Thinking critically about academic sources",
+      "locator": {
+        "pages": "117-118"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/principle",
+          "quote": "When beginning your research, therefore, your goal should be to open up the relevant discourse."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "criticality",
+          "evidence": "When beginning your research, therefore, your goal should be to open up the relevant discourse."
+        }
+      ],
+      "status": "confirmed"
+    },
+    {
+      "id": "ch8/opening-up-the-discourse-in-practice",
+      "heading": "Opening up the discourse in practice",
+      "locator": {
+        "pages": "118-119"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/process",
+          "quote": "As a less experienced learner, and with the principle of 'building knowledge' in mind, John begins by looking at the textbook he found, *Creativity in Primary Education*, edited by Anthony Wilson (3rd ed., 2015)."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "criticality",
+          "evidence": "As a less experienced learner, and with the principle of 'building knowledge' in mind, John begins by looking at the textbook he found, *Creativity in Primary Education*, edited by Anthony Wilson (3rd ed., 2015)."
+        },
+        {
+          "pathway": "creativity",
+          "evidence": "As a less experienced learner, and with the principle of 'building knowledge' in mind, John begins by looking at the textbook he found, *Creativity in Primary Education*, edited by Anthony Wilson (3rd ed., 2015)."
+        }
+      ],
+      "boundaryNote": "content-shapes/process chosen over content-shapes/procedure: this narrates how John's own research unfolded (described, worked example), rather than instructing the reader to perform steps themselves. creativity pathwayTag added per canon-adp's creativity eau map (pp.116-120): the worked example's own textbook title names creativity/imagination as its subject matter directly, usable as a ready subject example for an education context, not teaching of creativity as a skill; evidence corrected during Task #12 final validation to quote the chunk's own verbatim text rather than a paraphrase of it (the original evidence string was not a substring of the book and failed the verbatim cross-check). Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch8/analysing-an-interpretation",
+      "heading": "Analysing an interpretation",
+      "locator": {
+        "pages": "119-120"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "Analysis refers to the breaking down or opening up of an interpretation, a body of evidence, or a data set through close examination."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "criticality",
+          "evidence": "Analysis refers to the breaking down or opening up of an interpretation, a body of evidence, or a data set through close examination."
+        },
+        {
+          "pathway": "creativity",
+          "evidence": "Higgins (2008), for example, noted the broader importance of creativity to the development of imagination, while others, such as Trivedi (2017), have looked at it in relation to a child's cognitive development."
+        }
+      ],
+      "boundaryNote": "The book marks this term with a leading asterisk (a glossary-term marker, e.g. '\\*Analysis refers to...'); the marker is dropped from the quote as markdown artefact, not part of the sentence's own wording. creativity pathwayTag per canon-adp's creativity eau map (Higgins/Trivedi analysis of imagination, pp.118-120). Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch8/evaluating-interpretations",
+      "heading": "Evaluating interpretations",
+      "locator": {
+        "pages": "120-121"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "Evaluation refers to the practice of assessing the *relative* value (i.e., importance or significance) of a factor (such as teachers' conception of creativity) against that of other factors (i.e., a range of alternative factors, including, in this example, the conception of imagination)."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "criticality",
+          "evidence": "Evaluation refers to the practice of assessing the *relative* value (i.e., importance or significance) of a factor (such as teachers' conception of creativity) against that of other factors (i.e., a range of alternative factors, including, in this example, the conception of imagination)."
+        }
+      ],
+      "boundaryNote": "Same leading-asterisk glossary-marker convention as ch8/analysing-an-interpretation; dropped from the quote on the same grounds. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch8/engaging-with-journal-articles",
+      "heading": "Engaging with journal articles",
+      "locator": {
+        "pages": "121-123"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/structure",
+          "quote": "These sections, in the order in which you'll meet them as you read through an article, are set out in Table 8.1."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "criticality",
+          "evidence": "These sections, in the order in which you'll meet them as you read through an article, are set out in Table 8.1."
+        }
+      ],
+      "boundaryNote": "Table 8.1 (structural elements of a journal article) and the John/Sungurtekin worked example that follows are kept in this one chunk: the worked example directly applies the table's six-section structure, rather than introducing a separate teaching point. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch8/active-and-passive-approaches",
+      "heading": "Active and passive approaches to engaging with discourse",
+      "locator": {
+        "pages": "123-127"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/contrast",
+          "quote": "This exemplar illustrates what we call the *passive* approach to engaging with discourse. Susie has done what many new or less experienced students do when writing: she's prioritised reporting to the reader all the different interpretations she's found ahead of presenting her own view."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "criticality",
+          "evidence": "This exemplar illustrates what we call the *passive* approach to engaging with discourse. Susie has done what many new or less experienced students do when writing: she's prioritised reporting to the reader all the different interpretations she's found ahead of presenting her own view."
+        }
+      ],
+      "boundaryNote": "The chapter's own '### Writing critically' heading (p.123) carries only a single brief transitional paragraph before this subheading; that paragraph is folded into this chunk rather than given its own framing chunk, since SMAP-1 AMENDMENT (Prompt 141) names exactly three framing contexts (a chapter's opening, its learning-objectives-and-keywords section, its summary) and a mid-chapter parent-heading transition is not a fourth. content-shapes/contrast chosen for the Susie/John paired exemplars (passive vs active approach to the same source material), which this chunk and its worked examples exist specifically to set up. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch8/forming-judgements",
+      "heading": "Forming judgements",
+      "locator": {
+        "pages": "127-128"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/structure",
+          "quote": "X is more important (or significant or valuable – etc.) than Y because …."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "criticality",
+          "evidence": "X is more important (or significant or valuable – etc.) than Y because …."
+        }
+      ],
+      "boundaryNote": "Quote is the formula itself, given by the book as its own set-off line; content-shapes/structure chosen since it names the fixed two-part form a judgement takes, not a process to follow. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch8/applying-synthesis",
+      "heading": "Applying synthesis in your writing",
+      "locator": {
+        "pages": "128-129"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "Synthesis refers to the ability to draw together different interpretations or evidence in the formation and expression of your own argument."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "criticality",
+          "evidence": "Synthesis refers to the ability to draw together different interpretations or evidence in the formation and expression of your own argument."
+        }
+      ],
+      "status": "confirmed"
+    },
+    {
+      "id": "ch8/language-of-criticality",
+      "heading": "The language of criticality",
+      "locator": {
+        "pages": "129-131"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/classification",
+          "quote": "There are others in the exemplar: 'although', 'in addition', and 'therefore'. And there are more that aren't used by John, some of which are set out in Table 8.2."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "criticality",
+          "evidence": "There are others in the exemplar: 'although', 'in addition', and 'therefore'. And there are more that aren't used by John, some of which are set out in Table 8.2."
+        }
+      ],
+      "boundaryNote": "content-shapes/classification chosen for Table 8.2's categorised list of criticality-language terms, consistent with ch10/defining-academic-integrity's precedent for a book-given categorised list. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch8/discipline-specific-vocabulary",
+      "heading": "Discipline-specific vocabulary",
+      "locator": {
+        "pages": "131-133"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "What constitutes discipline-specific vocabulary? Included here are individual words or terms that carry meaning within the disciplinary discourse."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "criticality",
+          "evidence": "What constitutes discipline-specific vocabulary? Included here are individual words or terms that carry meaning within the disciplinary discourse."
+        }
+      ],
+      "boundaryNote": "Includes the closing Task box (p.132-133, a second John extract for the reader to analyse unaided) in this same chunk: it is practice on this chunk's own concept, not a new teaching point. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch8/summary",
+      "heading": "Summary",
+      "locator": {
+        "pages": "133-134"
+      },
+      "sectionKind": "framing",
+      "pathwayTags": [
+        {
+          "pathway": "criticality",
+          "evidence": "The main point of this chapter is to get across to you that if you're going to excel you must see 'being critical' as a mindset, a key part of self-regulated learning, that will shape your approach to studying."
+        }
+      ],
+      "boundaryNote": "This chunk is the chapter's Summary section. Framing under the same SMAP-1 AMENDMENT (Prompt 141) basis as ch10/summary and ch4/summary, since it carries no content shape of its own. References (p.134) dropped entirely, matching ch4/ch10/ch12 precedent of not chunking reference lists. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch2/opening",
+      "heading": "Chapter 2: Excelling at university: Mindset, motivation, and goals",
+      "locator": {
+        "pages": "9-10"
+      },
+      "sectionKind": "framing",
+      "pathwayTags": [
+        {
+          "pathway": "starting-progressing-succeeding",
+          "evidence": "All of these factors influence your chances of finding success \u2013 and therefore excelling \u2013 in your studies, but they're also of critical importance to your development as an individual."
+        }
+      ],
+      "boundaryNote": "This chunk is the chapter's untitled opening: the three paragraphs of running text between the chapter title and the 'Learning Objectives' heading. It has no heading of its own; the heading field carries the chapter's own title, exactly as the book gives it. Framing under the SMAP-1 AMENDMENT (Prompt 141), consistent with ch4/ch8/ch10/ch12's opening chunks. Confirmed by Abbott 8 October 2026 (blanket ruling covering this chunk and all other canon-adp-promotion chunks added the same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch2/learning-objectives-and-keywords",
+      "heading": "Learning Objectives",
+      "locator": {
+        "pages": "10"
+      },
+      "sectionKind": "framing",
+      "pathwayTags": [
+        {
+          "pathway": "starting-progressing-succeeding",
+          "evidence": "an awareness of the importance of developing a mindset geared to success;"
+        }
+      ],
+      "boundaryNote": "Combines two adjacent headings into one framing chunk: 'Learning Objectives' (the heading field's exact text) and the 'Keywords' heading immediately after it, whose own line reads 'assessment criteria; self-efficacy; self-regulated learning; mastery experiences; graduate attributes; mindset; motivation; goal setting'. Framing under the SMAP-1 AMENDMENT (Prompt 141), consistent with ch8's equivalent chunk. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch2/defining-success",
+      "heading": "Defining success and the notion of 'excelling'",
+      "locator": {
+        "pages": "10-11"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/classification",
+          "quote": "Setting aside these nuances, success at university can be seen broadly in two different ways: (i) in relation to academic performance (i.e., specifically, the marks you get); and (ii) in relation to personal development, as you seek to develop the attributes associated with graduate identity by engaging in the different learning experiences associated with your course."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "starting-progressing-succeeding",
+          "evidence": "Setting aside these nuances, success at university can be seen broadly in two different ways: (i) in relation to academic performance (i.e., specifically, the marks you get); and (ii) in relation to personal development, as you seek to develop the attributes associated with graduate identity by engaging in the different learning experiences associated with your course."
+        }
+      ],
+      "boundaryNote": "This is the two-way classification of 'success' (academic performance vs personal development) that structures the rest of the chapter's first half; the two subsections that follow (Success: Academic performance; Success: Personal development) are each given their own chunk rather than folded in here, since each carries substantial content of its own. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch2/success-academic-performance",
+      "heading": "Success: Academic performance",
+      "locator": {
+        "pages": "11-13"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "Success in relation to academic performance can therefore be seen as the steps you take on that journey as you work towards mastery of your discipline. It's about setting goals and achieving them."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "starting-progressing-succeeding",
+          "evidence": "Success in relation to academic performance can therefore be seen as the steps you take on that journey as you work towards mastery of your discipline. It's about setting goals and achieving them."
+        }
+      ],
+      "boundaryNote": "Includes the Jess database-workshop worked example and its two Task boxes (pp.12-13) in this same chunk rather than splitting it out: the example and tasks directly illustrate this chunk's own concept (success as steps towards mastery) rather than introducing a new teaching point, matching the John/Susie precedent in ch8. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch2/success-personal-development",
+      "heading": "Success: Personal development",
+      "locator": {
+        "pages": "13-15"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "Learning at university is shaped by an employability agenda. Employability has been defined by one leading academic as a set of 'achievements': the development of skills, understanding and personal attributes which when combined make it more likely that you, as a graduate, will find the sort of employment you're looking for (Yorke, 2006)."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "starting-progressing-succeeding",
+          "evidence": "Learning at university is shaped by an employability agenda. Employability has been defined by one leading academic as a set of 'achievements': the development of skills, understanding and personal attributes which when combined make it more likely that you, as a graduate, will find the sort of employment you're looking for (Yorke, 2006)."
+        },
+        {
+          "pathway": "creativity",
+          "evidence": "*Creativity*, for example, in the sense of thinking innovatively in order to solve problems, features prominently among graduate attributes today, as does *adaptability* and *flexibility*."
+        }
+      ],
+      "boundaryNote": "Includes the Jess group-task reflection worked example (pp.14-15) in this same chunk as illustration of 'personal development' success, matching the fold-in-worked-example precedent used throughout. creativity pathwayTag added for the p.14 sentence naming creativity/adaptability/flexibility as graduate attributes, per canon-adp's creativity eau map (this is the p.14 touchpoint that map records as falling within Chapter 2, not Chapter 1 as its own bare page-number listing first suggested). Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch2/what-is-excelling",
+      "heading": "What is 'excelling'?",
+      "locator": {
+        "pages": "15-16"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "Excelling is about exceeding expectations: achieving those goals and more. In other words, performing better than you had expected."
+        },
+        {
+          "shapeId": "content-shapes/structure",
+          "quote": "Finding success and excelling at university is about three, inter-related factors: (i) your \\*mindset, (ii) your motivation, and (iii) the goals you set for yourself."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "starting-progressing-succeeding",
+          "evidence": "Finding success and excelling at university is about three, inter-related factors: (i) your \\*mindset, (ii) your motivation, and (iii) the goals you set for yourself."
+        }
+      ],
+      "boundaryNote": "The structure shape's quote keeps the book's own backslash-asterisk glossary-term marker before 'mindset' verbatim (a markdown escape artefact, not part of the sentence's own wording, documented rather than silently dropped) because the marker sits mid-sentence here, not at a quote's opening word as in ch8/analysing-an-interpretation's precedent; stripping it mid-string would break the quote's verbatim contiguity with the source rather than merely trim a leading character. Includes the Jess-excelled worked example (p.16) as illustration of the concept shape. This chunk's structure shape (mindset/motivation/goals) is the three-part spine the rest of the chapter follows; the next three headings (Excelling as a mindset, Understanding your motivation, Creating goals) each expand one of these three factors. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch2/excelling-as-a-mindset",
+      "heading": "Excelling as a mindset",
+      "locator": {
+        "pages": "16-19"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/classification",
+          "quote": "Research has highlighted two different types of mindset: fixed and growth (Yeager & Dweck, 2012)."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "starting-progressing-succeeding",
+          "evidence": "Research has highlighted two different types of mindset: fixed and growth (Yeager & Dweck, 2012)."
+        }
+      ],
+      "boundaryNote": "Includes the Tom (fixed mindset) and Saeideh (growth mindset) paired worked examples and the football analogy (pp.17-19) in this same chunk: both exist specifically to illustrate this chunk's fixed/growth classification, matching the Susie/John fold-in precedent in ch8/active-and-passive-approaches. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch2/self-efficacy",
+      "heading": "Self-efficacy",
+      "locator": {
+        "pages": "19-21"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "Self-efficacy refers to your belief in your own capacity to work effectively in order to complete a task or achieve a specific goal (Bandura, 1977)."
+        },
+        {
+          "shapeId": "content-shapes/classification",
+          "quote": "How do you build up self-efficacy? Research has suggested that self-efficacy can be developed in four main ways:"
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "starting-progressing-succeeding",
+          "evidence": "Self-efficacy refers to your belief in your own capacity to work effectively in order to complete a task or achieve a specific goal (Bandura, 1977)."
+        }
+      ],
+      "boundaryNote": "The classification shape's quote introduces the four-item numbered list of ways to build self-efficacy (overcoming challenges; seeing a friend succeed; positive feedback; minimising stress), folded into one shape rather than one chunk per list item, matching the ch12 precedent for numbered lists. Includes the two Task boxes (pp.19-21) as reflective practice on this chunk's own content. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch2/understanding-your-motivation",
+      "heading": "Understanding your motivation",
+      "locator": {
+        "pages": "21-23"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/contrast",
+          "quote": "Broadly speaking, our primary motivation when it comes to studying at university can be linked either to *performance*, in the sense of what marks you receive for assessments, or *learning*, as in the mastery of the discipline, as well as your broader personal development."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "starting-progressing-succeeding",
+          "evidence": "Broadly speaking, our primary motivation when it comes to studying at university can be linked either to *performance*, in the sense of what marks you receive for assessments, or *learning*, as in the mastery of the discipline, as well as your broader personal development."
+        }
+      ],
+      "boundaryNote": "Includes the Tom (performance motivation) and Saeideh (learning motivation) paired worked examples and the Task box (pp.21-23) in this same chunk, matching the fold-in-worked-example precedent used throughout this chapter and in ch8. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch2/creating-goals",
+      "heading": "Creating goals",
+      "locator": {
+        "pages": "23-25"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/contrast",
+          "quote": "This statement represents a performance goal. Mastery goals, on the other hand, are less specific and more far-reaching."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "starting-progressing-succeeding",
+          "evidence": "This statement represents a performance goal. Mastery goals, on the other hand, are less specific and more far-reaching."
+        }
+      ],
+      "boundaryNote": "Includes the Tom/Saeideh targeted-vs-mastery goal-setting link (p.24), the Task box, and the goal re-phrasing exercise with its worked example answers (pp.24-25) in this same chunk, matching the fold-in-worked-example precedent used throughout this chapter. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch2/summary",
+      "heading": "Summary",
+      "locator": {
+        "pages": "25-26"
+      },
+      "sectionKind": "framing",
+      "pathwayTags": [
+        {
+          "pathway": "starting-progressing-succeeding",
+          "evidence": "In this chapter, we've looked at what it means to be successful and, more than that, to excel at university."
+        }
+      ],
+      "boundaryNote": "This chunk is the chapter's Summary section. Framing under the same SMAP-1 AMENDMENT (Prompt 141) basis as ch4/ch8/ch10/ch12's summary chunks, since it carries no content shape of its own. References (p.26) dropped entirely, matching the same precedent. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch3/opening",
+      "heading": "Chapter 3: Defining 'learning' at university",
+      "locator": {
+        "pages": "27-28"
+      },
+      "sectionKind": "framing",
+      "pathwayTags": [
+        {
+          "pathway": "understanding-learning-assessment-feedback",
+          "evidence": "What defines learning at university?"
+        }
+      ],
+      "boundaryNote": "This chunk is the chapter's untitled opening: the paragraphs of running text between the chapter title and the 'Learning Objectives' heading. Framing under the SMAP-1 AMENDMENT (Prompt 141), consistent with ch2/ch4/ch8/ch10/ch12's opening chunks. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch3/learning-objectives-and-keywords",
+      "heading": "Learning Objectives",
+      "locator": {
+        "pages": "28"
+      },
+      "sectionKind": "framing",
+      "pathwayTags": [
+        {
+          "pathway": "understanding-learning-assessment-feedback",
+          "evidence": "an insight into the different academic literacies, as they are related to the discourse community;"
+        }
+      ],
+      "boundaryNote": "Combines two adjacent headings into one framing chunk: 'Learning Objectives' and the 'Keywords' heading immediately after it, whose own line reads 'discourse; discourse community; constructing knowledge; sense-making; student-centred learning; constructivism; active learning; learning journey'. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch3/learning-and-discourse-community",
+      "heading": "Learning and the 'discourse community'",
+      "locator": {
+        "pages": "28-30"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "The discourse community is an important concept for you to understand, for it neatly captures the essence of what distinguishes learning at university from learning in other contexts."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "understanding-learning-assessment-feedback",
+          "evidence": "The discourse community is an important concept for you to understand, for it neatly captures the essence of what distinguishes learning at university from learning in other contexts."
+        }
+      ],
+      "boundaryNote": "The quote is chosen from the sentence immediately following the book's own leading backslash-asterisk glossary marker before 'discourse community' (p.28), avoiding the marker rather than needing to strip or keep it. Includes Figure 3.1 (the discourse-community-as-circle diagram, p.29-30) as illustration of this chunk's own concept. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch3/what-is-knowledge",
+      "heading": "What is 'knowledge'?",
+      "locator": {
+        "pages": "30-31"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "Knowledge is the outcome of the interactions within the discourse community. While data, facts, information, or evidence forms an important element of knowledge, it is also made up of the understanding and insights that emerge out of the debate that takes place within the community."
+        },
+        {
+          "shapeId": "content-shapes/classification",
+          "quote": "Knowledge is therefore better understood as *interpretations* of data, facts, information, or evidence found within a discourse community. Some important points to note about 'knowledge':"
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "understanding-learning-assessment-feedback",
+          "evidence": "Knowledge is therefore better understood as *interpretations* of data, facts, information, or evidence found within a discourse community."
+        }
+      ],
+      "boundaryNote": "The classification shape's quote is the sentence pair introducing the four-item bulleted list of points about knowledge (contested; not fixed; constructed; interpretations linked to each other), folded into one shape rather than one chunk per bullet, matching the ch2/self-efficacy and ch12 precedent for numbered/bulleted lists. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch3/academic-literacy-and-discourse-community",
+      "heading": "Academic literacy and the discourse community",
+      "locator": {
+        "pages": "31-32"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "Your ability to engage effectively with the business of the community is called \\*academic literacy (Wingate, 2018)."
+        },
+        {
+          "shapeId": "content-shapes/classification",
+          "quote": "Academic literacy is therefore an umbrella term for all of the literacies discussed in this book which you need to develop as you go about working within your discipline. Each literacy involves a number of different activities."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "understanding-learning-assessment-feedback",
+          "evidence": "Your ability to engage effectively with the business of the community is called \\*academic literacy (Wingate, 2018)."
+        }
+      ],
+      "boundaryNote": "The concept shape's quote keeps the book's own backslash-asterisk glossary-term marker before 'academic literacy' verbatim, since it sits mid-sentence rather than at the quote's opening word (same convention as ch2/what-is-excelling's \\*mindset quote). The classification shape's quote introduces the two example literacy lists that follow (research; critical thought), each folded into this same chunk rather than split out, matching the bulleted-list precedent. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch3/what-is-learning",
+      "heading": "What is learning?",
+      "locator": {
+        "pages": "32-34"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/classification",
+          "quote": "If academic literacy is about the way you work within a discourse community, what, then, is learning itself? Learning is essentially made up of two elements:"
+        },
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "Deep-level learning is learning based on the development of wider, interrelated understanding."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "understanding-learning-assessment-feedback",
+          "evidence": "If academic literacy is about the way you work within a discourse community, what, then, is learning itself? Learning is essentially made up of two elements:"
+        }
+      ],
+      "boundaryNote": "The concept shape's quote drops the book's leading backslash-asterisk glossary marker before 'Deep-level', consistent with the drop-at-the-start-of-a-quote precedent (ch8/analysing-an-interpretation), since here the marker sits at the very first word of the quote rather than mid-sentence. Its paired sentence in the source ('In contrast, *surface-level learning is more...') is not quoted, because the book's own inline page-break marker ('<!-- p.33 -->') splits that sentence mid-word, which would otherwise have to be reproduced literally to stay verbatim; the heart-anatomy worked example (p.33) that illustrates both deep and surface learning, and Jess' Instagram-research/mind-map worked example (p.33-34, Figure 3.2), are both folded into this chunk as illustration. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch3/how-is-learning-designed",
+      "heading": "How is learning designed?",
+      "locator": {
+        "pages": "35-36"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/contrast",
+          "quote": "Learning in higher education is designed to be \\*student-centred as opposed to \\*tutor-centred."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "understanding-learning-assessment-feedback",
+          "evidence": "Learning in higher education is designed to be \\*student-centred as opposed to \\*tutor-centred."
+        }
+      ],
+      "boundaryNote": "Keeps both of the book's own backslash-asterisk glossary markers verbatim (before 'student-centred' and 'tutor-centred'), since both sit mid-sentence rather than at the quote's opening word, matching the \\*academic literacy and \\*mindset precedent. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch3/learning-theory-constructivism",
+      "heading": "Constructivism",
+      "locator": {
+        "pages": "36-37"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "Constructivism is based on the principle that students need to participate actively in their learning in order to learn at deeper levels."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "understanding-learning-assessment-feedback",
+          "evidence": "Constructivism is based on the principle that students need to participate actively in their learning in order to learn at deeper levels."
+        }
+      ],
+      "boundaryNote": "The parent '#### Learning theory: How do tutors expect you to learn?' heading (p.36) carries only a brief transitional paragraph before this subheading; that paragraph is folded into this chunk rather than given its own framing chunk, matching the ch8 'Writing critically' parent-heading precedent (a mid-chapter parent-heading transition is not one of SMAP-1 AMENDMENT's three framing contexts). Includes the Jess/Claire paragraph-ordering workshop worked example (pp.36-37) as illustration. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch3/learning-theory-behaviourism",
+      "heading": "Behaviourism",
+      "locator": {
+        "pages": "37-38"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "This theory is based on the principle that behaviour can be developed through teacher-led 'training': through repeated action, driven by clear output-focused outcomes, you, the student, can be trained to do something in a different way."
+        },
+        {
+          "shapeId": "content-shapes/contrast",
+          "quote": "By the end of the session, you will be able to do something effectively \u2013 like using the library's discovery service. Constructivist learning is more about helping you to uncover meaning for yourself."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "understanding-learning-assessment-feedback",
+          "evidence": "This theory is based on the principle that behaviour can be developed through teacher-led 'training': through repeated action, driven by clear output-focused outcomes, you, the student, can be trained to do something in a different way."
+        }
+      ],
+      "boundaryNote": "Includes the library discovery-service training-session worked example (p.37) as illustration of the concept shape. The contrast shape's quote is the closing comparison back to constructivism (p.38) that directly follows the behaviourism/library example. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch3/process-of-learning-design",
+      "heading": "The process of learning design",
+      "locator": {
+        "pages": "37-39"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/process",
+          "quote": "Once the learning outcomes are in place, tutors then work backwards to the start of the session, ensuring that the content is aligned properly with them. Alignment is key in successful learning design."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "understanding-learning-assessment-feedback",
+          "evidence": "Once the learning outcomes are in place, tutors then work backwards to the start of the session, ensuring that the content is aligned properly with them. Alignment is key in successful learning design."
+        }
+      ],
+      "boundaryNote": "Includes the three intended-learning-outcome verb examples (p.38) and the 'Reviewing learning outcomes' Task box (pp.38-39) in this same chunk as illustration of the backward-design process. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch3/learning-framework",
+      "heading": "Learning in practice: The learning framework",
+      "locator": {
+        "pages": "39-41"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/structure",
+          "quote": "There are a number of core elements to learning at university which we'll meet as we move through the topics in this book. These elements are interrelated, not least because they all form part of an overall scheme of learning aimed at helping you to meet the ILOs of your module(s) and then your programme."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "understanding-learning-assessment-feedback",
+          "evidence": "There are a number of core elements to learning at university which we'll meet as we move through the topics in this book. These elements are interrelated, not least because they all form part of an overall scheme of learning aimed at helping you to meet the ILOs of your module(s) and then your programme."
+        }
+      ],
+      "boundaryNote": "Covers the module handbook, formal teaching elements (lectures/tutorials/labs), Figure 3.3, and the synchronous/asynchronous and add-on-provision distinctions (pp.39-41). The formative/summative assessment passage that follows in the same section is given its own chunk (ch3/formative-and-summative-assessment) rather than folded in here, since it is this pathway's own core subject matter, not illustration of the framework structure. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch3/formative-and-summative-assessment",
+      "heading": "Learning in practice: The learning framework",
+      "locator": {
+        "pages": "41-42"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/contrast",
+          "quote": "formative assessment, which usually occurs midway through a module, is intended to prepare you for a \\*summative assessment task towards the end of the module. It's a trial run, to give you a chance to identify literacies or aspects of your practice you need to improve on if you're going to perform well in the summative task."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "understanding-learning-assessment-feedback",
+          "evidence": "formative assessment, which usually occurs midway through a module, is intended to prepare you for a \\*summative assessment task towards the end of the module. It's a trial run, to give you a chance to identify literacies or aspects of your practice you need to improve on if you're going to perform well in the summative task."
+        }
+      ],
+      "boundaryNote": "No heading of its own: this is a sub-passage of the same 'Learning in practice: The learning framework' section as ch3/learning-framework, split out as its own chunk because it is the chapter's one passage of direct, named substance for this pathway's 'assessment' component (formative vs summative), rather than framework-structure illustration. The quote drops the leading word 'A' because the book's own inline page-break marker ('A <!-- p.42 --> formative assessment...') splits the sentence immediately after it; starting the quote at 'formative' keeps it an exact contiguous substring of the source. Keeps the backslash-asterisk marker before 'summative' verbatim, mid-sentence, matching the \\*academic literacy precedent. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch3/summary",
+      "heading": "Summary",
+      "locator": {
+        "pages": "42-43"
+      },
+      "sectionKind": "framing",
+      "pathwayTags": [
+        {
+          "pathway": "understanding-learning-assessment-feedback",
+          "evidence": "In this chapter, we've looked at learning at university: what it is, how it's conceived, how it is designed by tutors, and how you, as a student, are expected to engage with it."
+        }
+      ],
+      "boundaryNote": "This chunk is the chapter's Summary section. Framing under the same SMAP-1 AMENDMENT (Prompt 141) basis as ch2/ch4/ch8/ch10/ch12's summary chunks, since it carries no content shape of its own. References (p.43) dropped entirely, matching the same precedent. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch5/opening",
+      "heading": "Chapter 5: Understanding Assessment",
+      "locator": {
+        "pages": "59-60"
+      },
+      "sectionKind": "framing",
+      "pathwayTags": [
+        {
+          "pathway": "understanding-learning-assessment-feedback",
+          "evidence": "Now it's time to look at the literacies that make up the broader idea of 'academic literacy', your ability to contribute to the work of the discourse community you've joined, in more detail."
+        }
+      ],
+      "boundaryNote": "This chunk is the chapter's untitled opening: the paragraphs of running text between the chapter title and the 'Learning Objectives' heading. Framing under the SMAP-1 AMENDMENT (Prompt 141), consistent with ch2/ch3/ch4/ch8/ch10/ch12's opening chunks. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch5/learning-objectives-and-keywords",
+      "heading": "Learning Objectives",
+      "locator": {
+        "pages": "60"
+      },
+      "sectionKind": "framing",
+      "pathwayTags": [
+        {
+          "pathway": "understanding-learning-assessment-feedback",
+          "evidence": "an understanding of the differences between formative and summative assessment, and the unique value of formative assessment;"
+        }
+      ],
+      "boundaryNote": "Combines two adjacent headings into one framing chunk: 'Learning Objectives' and the 'Keywords' heading immediately after it, whose own line reads 'formative assessment; summative assessment; marking criteria; assessment genre; authentic assessment; student-centred assessment; self and peer assessment'. Unlike ch2/ch3/ch8, this chapter sets these out as two separate markdown headings with a plain bullet list rather than a blockquote; the two-heading combine precedent still applies since neither carries a content shape of its own. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch5/putting-assessment-into-perspective",
+      "heading": "Putting assessment into perspective",
+      "locator": {
+        "pages": "60-62"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "Assessment – and, to some extent, feedback, even if it's only acquired through self-reflection – is all around you in higher education."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "understanding-learning-assessment-feedback",
+          "evidence": "Assessment – and, to some extent, feedback, even if it's only acquired through self-reflection – is all around you in higher education."
+        }
+      ],
+      "boundaryNote": "Covers the section's broadening of 'assessment' beyond formal tests (quizzes, tutorial questions) and the tutor's-eye-view of why assessment is designed this way, folding in the 'assessment is *for learning*' framing citation as illustration of the same point rather than a separate chunk, matching the ch3/ch8 precedent for citation-supported sentences. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch5/formative-and-summative-assessment",
+      "heading": "Formative and summative assessment",
+      "locator": {
+        "pages": "62-65"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "It's informal, in that although it's assessment, the mark you get doesn't contribute towards your final mark for the module (i.e., the mark that counts towards your final degree classification). It's often 'low-stakes', meaning that the task itself is less complex and it might not take as long to complete."
+        },
+        {
+          "shapeId": "content-shapes/contrast",
+          "quote": "Summative assessment is clearly important because it's your performance in this type of task that determines the mark you receive. If you want to excel in summative assessment, you must engage fully with the formative assessment task(s) which come before it."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "understanding-learning-assessment-feedback",
+          "evidence": "Summative assessment is clearly important because it's your performance in this type of task that determines the mark you receive. If you want to excel in summative assessment, you must engage fully with the formative assessment task(s) which come before it."
+        }
+      ],
+      "boundaryNote": "Folds in the full Natalie/Jess contrasting-approaches worked example (pp.63-64) as illustration of the formative/summative contrast, matching the ch2/ch3/ch8 precedent of folding named-student worked examples into the chunk for the teaching point they illustrate rather than splitting them out. This section is the chapter's primary assessment-literacy teaching content (the differences between formative and summative assessment named in the chapter's own Learning Objectives), distinct from the lighter definitional mention of the same terms already chunked in ch3.",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch5/forms-of-assessment",
+      "heading": "Forms of assessment",
+      "locator": {
+        "pages": "65-66"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/classification",
+          "quote": "Assessment – whether formative or summative – can take a variety of different forms. When designing assessment, tutors ensure that it is relevant, in the sense that it resonates with the ILOs of the module, as well as its discipline-specific content."
+        },
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "Tutors also aim to create assessment that is *authentic*."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "understanding-learning-assessment-feedback",
+          "evidence": "Tutors also aim to create assessment that is *authentic*."
+        }
+      ],
+      "boundaryNote": "Covers the section's account of relevant/authentic assessment design and the examples of non-traditional assessment genres (boardroom pitch, lesson plan, virtual school, museum handbook) folded in as illustration of 'authentic', matching the fold-in-worked-example precedent. The *authentic* term keeps its paired markdown italics verbatim, consistent with the ch2/ch3 convention for real source italics (distinct from the single backslash-escaped glossary-marker convention). Stops short of the dissertation and self/peer-assessment passages later in the same unbroken section, which are split into their own chunks below because each is a distinct, separately pathway-relevant topic rather than further illustration of 'forms'. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch5/the-dissertation",
+      "heading": "Forms of assessment",
+      "locator": {
+        "pages": "66"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "This is an extended piece of research of approximately 10,000 words. The dissertation draws on all of the literacies discussed in this book but on a grander scale."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "understanding-learning-assessment-feedback",
+          "evidence": "This is an extended piece of research of approximately 10,000 words. The dissertation draws on all of the literacies discussed in this book but on a grander scale."
+        },
+        {
+          "pathway": "researching-research-methods",
+          "evidence": "The dissertation represents the ultimate test of your competencies in relation to these literacies."
+        }
+      ],
+      "boundaryNote": "Split out from ch5/forms-of-assessment as its own chunk despite sharing the same 'Forms of assessment' heading (no sub-heading distinguishes it in the source), matching the ch3/learning-framework + ch3/formative-and-summative-assessment precedent for a shared-heading split. Carries a secondary researching-research-methods pathwayTag per the established chapter-mapping recon ('Ch5 dissertation p.66'), since this passage is the book's direct treatment of the dissertation as a research genre (undergraduate ~10,000 words, master's ~20,000 words, PhD thesis ~75,000 words, dissertation proposals as a staged sub-task), distinct from its role here as one of several 'forms of assessment'. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch5/self-and-peer-assessment",
+      "heading": "Forms of assessment",
+      "locator": {
+        "pages": "66-67"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "In self-assessment, you're required to apply the marking criteria to your own work. This isn't about the tutors being lazy; they're not passing off their responsibilities on to you!"
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "understanding-learning-assessment-feedback",
+          "evidence": "In self-assessment, you're required to apply the marking criteria to your own work. This isn't about the tutors being lazy; they're not passing off their responsibilities on to you!"
+        }
+      ],
+      "boundaryNote": "Split out from ch5/forms-of-assessment as its own chunk, same shared-heading basis as ch5/the-dissertation above: this is the section's final, distinct sub-topic (self and peer assessment), not further illustration of 'forms' generally. Folds in the brief account of peer assessment (another student or presentation-audience applying the marking criteria, usually contributing only a small proportion of the final mark) as the same teaching point's counterpart, matching the fold-in-related-point precedent used elsewhere for closely paired concepts sharing one paragraph. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch5/marking-criteria",
+      "heading": "How do tutors assess your work?",
+      "locator": {
+        "pages": "67-73"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "Marking criteria are the measures used by tutors to determine what mark should be given to your work."
+        },
+        {
+          "shapeId": "content-shapes/structure",
+          "quote": "Each criterion is normally separated into levels, with a range of marks attached to each one, next to descriptors setting out the features of the work at each level."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "understanding-learning-assessment-feedback",
+          "evidence": "Marking criteria are the measures used by tutors to determine what mark should be given to your work."
+        }
+      ],
+      "boundaryNote": "Covers the whole 'How do tutors assess your work?' section: the concept and level/descriptor structure of marking criteria, Table 5.1's simplified Level 4 criteria (knowledge and understanding; communication; critical evaluation) and its worked walk-through, and the full radon-gas 'Applying assessment criteria' Task box plus the closing Peer Assessment Task box, all folded in as illustration of the same marking-criteria teaching point rather than split into separate chunks, matching the fold-in-worked-example/table precedent established at ch5/formative-and-summative-assessment and earlier chapters. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch5/summary",
+      "heading": "Summary",
+      "locator": {
+        "pages": "73-74"
+      },
+      "sectionKind": "framing",
+      "pathwayTags": [
+        {
+          "pathway": "understanding-learning-assessment-feedback",
+          "evidence": "Understanding the role of assessment in learning and what tutors are looking for in assessed work, as seen in marking criteria, is vital if you're going to excel."
+        }
+      ],
+      "boundaryNote": "This chunk is the chapter's Summary section. Framing under the same SMAP-1 AMENDMENT (Prompt 141) basis as ch2/ch3/ch4/ch8/ch10/ch12's summary chunks, since it carries no content shape of its own. References (p.74) dropped entirely, matching the same precedent. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch6/opening",
+      "heading": "Chapter 6: Making Effective Use of Feedback",
+      "locator": {
+        "pages": "75"
+      },
+      "sectionKind": "framing",
+      "pathwayTags": [
+        {
+          "pathway": "understanding-learning-assessment-feedback",
+          "evidence": "Feedback is an integral element of learning in higher education."
+        }
+      ],
+      "boundaryNote": "This chunk is the chapter's untitled opening: the paragraphs of running text between the chapter title and the 'Learning Objectives' heading. Framing under the SMAP-1 AMENDMENT (Prompt 141), consistent with ch2/ch3/ch4/ch5/ch8/ch10/ch12's opening chunks. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch6/learning-objectives-and-keywords",
+      "heading": "Learning Objectives",
+      "locator": {
+        "pages": "76"
+      },
+      "sectionKind": "framing",
+      "pathwayTags": [
+        {
+          "pathway": "understanding-learning-assessment-feedback",
+          "evidence": "greater awareness of the importance of engaging with feedback and then making use of it as a means of improving academic performance;"
+        }
+      ],
+      "boundaryNote": "Combines two adjacent headings into one framing chunk: 'Learning Objectives' and the 'Keywords' heading immediately after it, whose own line reads 'feedback; feedback dialogue; corrective and diagnostic feedback; feedback cycle; action plan; self-regulated learning'. Same two-separate-headings convention as ch5 (not the blockquote style of ch2/ch3/ch8). Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch6/what-is-feedback",
+      "heading": "What is feedback?",
+      "locator": {
+        "pages": "76-78"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "Feedback can be broadly defined as comments on or insights into your academic performance, usually but not exclusively provided by your tutor."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "understanding-learning-assessment-feedback",
+          "evidence": "Feedback can be broadly defined as comments on or insights into your academic performance, usually but not exclusively provided by your tutor."
+        }
+      ],
+      "boundaryNote": "Folds in the full worked example of Jess' marketing-essay feedback (the tutor's verbatim comment plus its line-by-line unpacking of 'well-organised', 'well-researched' and 'be more critical' against marking-criteria language) as illustration of the concept, matching the fold-in-worked-example precedent used throughout ch2/ch3/ch5. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch6/what-issues-do-tutors-highlight",
+      "heading": "What sort of issues do tutors highlight in feedback?",
+      "locator": {
+        "pages": "78-80"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/classification",
+          "quote": "Based on our own experience of giving feedback – as well as many discussions with academic staff about this very topic – issues that recur across disciplines include:"
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "understanding-learning-assessment-feedback",
+          "evidence": "Based on our own experience of giving feedback – as well as many discussions with academic staff about this very topic – issues that recur across disciplines include:"
+        }
+      ],
+      "boundaryNote": "Covers the five bolded issue categories as one classification shape rather than one chunk per category (range of academic sources; critical engagement; writing conventions; structure and organisation; referencing and academic integrity), matching the ch2/self-efficacy and ch3/what-is-knowledge precedent for folding bulleted/bolded-run lists into a single chunk. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch6/diagnostic-feedback",
+      "heading": "Diagnostic feedback",
+      "locator": {
+        "pages": "80"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "Feedback is corrective, in that it tells you where or how you might have gone wrong (assuming you got a mark you're disappointed with); but it's perhaps more appropriate to see feedback as being *diagnostic*."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "understanding-learning-assessment-feedback",
+          "evidence": "Feedback is corrective, in that it tells you where or how you might have gone wrong (assuming you got a mark you're disappointed with); but it's perhaps more appropriate to see feedback as being *diagnostic*."
+        }
+      ],
+      "boundaryNote": "The *diagnostic* term keeps its paired markdown italics verbatim, consistent with the real-source-italics convention (ch2/ch3/ch5 *authentic* etc.), distinct from the single backslash-escaped glossary-marker convention. Folds in the Jess/Natalie dialogue-framing contrast as illustration. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch6/forms-of-feedback",
+      "heading": "Forms of feedback",
+      "locator": {
+        "pages": "80-81"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "Tutors are encouraged to think creatively about how feedback is presented."
+        },
+        {
+          "shapeId": "content-shapes/contrast",
+          "quote": "If you do get audio or video feedback, it doesn't mean that it's worth less than traditional, written feedback."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "understanding-learning-assessment-feedback",
+          "evidence": "If you do get audio or video feedback, it doesn't mean that it's worth less than traditional, written feedback."
+        }
+      ],
+      "boundaryNote": "Covers the section's account of traditional written/annotated feedback against newer audio or video feedback, framed as a contrast in value-does-not-diminish terms rather than a strict either/or. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch6/how-do-you-make-effective-use-of-feedback",
+      "heading": "How do you make effective use of feedback?",
+      "locator": {
+        "pages": "81-82"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "Feedback is intended to feed *forward*, in the sense that it is provided in order to help bring about an improvement in your academic performance."
+        },
+        {
+          "shapeId": "content-shapes/contrast",
+          "quote": "A student with a fixed mindset might be inclined to either ignore feedback entirely or take only a superficial look at the comments explaining the positive and negative features of the work."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "understanding-learning-assessment-feedback",
+          "evidence": "For a student with a growth mindset, feedback provides vital information needed to drive that growth."
+        }
+      ],
+      "boundaryNote": "The contrast shape's quote states only the fixed-mindset half; its growth-mindset counterpart ('For a student with a growth mindset, feedback provides vital information needed to drive that growth') is carried as the pathwayTag evidence rather than a second shape entry, since the schema's shape quote is capped at two sentences and the two mindset sentences are not adjacent in the source (separated by two further sentences on the fixed-mindset student). Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch6/the-feedback-cycle",
+      "heading": "The feedback cycle",
+      "locator": {
+        "pages": "82-93"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/process",
+          "quote": "This cycle is inspired by lots of research into how to help students to develop their feedback literacy, in particular by Carless and Boud (2018). The cycle is made up of four stages:"
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "understanding-learning-assessment-feedback",
+          "evidence": "This cycle is inspired by lots of research into how to help students to develop their feedback literacy, in particular by Carless and Boud (2018). The cycle is made up of four stages:"
+        }
+      ],
+      "boundaryNote": "Covers the whole 'feedback cycle' section: the four named stages (Review, Interpret, Articulate, Apply), Figure 6.1's circular diagram description, the full radon-gas annotated-exemplar worked example with its summary tutor comments, Tables 6.2-6.4 (positive/negative comments and their marking-criteria links), the detailed stage-by-stage walk-through, and the closing 'Thinking about feedback' Task box, all folded into one chunk as illustration of the same four-stage process, matching the fold-in-worked-example/table precedent established at ch5/marking-criteria. This is the chapter's longest section by some margin (pp.82-93 of a pp.75-94 chapter) but contains no separately pathway-relevant sub-topic distinct from the process itself, unlike ch5's 'Forms of assessment' section which was split for the dissertation and self/peer-assessment sub-topics. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch6/summary",
+      "heading": "Summary",
+      "locator": {
+        "pages": "93-94"
+      },
+      "sectionKind": "framing",
+      "pathwayTags": [
+        {
+          "pathway": "understanding-learning-assessment-feedback",
+          "evidence": "Engaging with feedback (by employing the feedback cycle) is vital if you're going to excel in your academic work."
+        }
+      ],
+      "boundaryNote": "This chunk is the chapter's Summary section. Framing under the same SMAP-1 AMENDMENT (Prompt 141) basis as ch2/ch3/ch4/ch5/ch8/ch10/ch12's summary chunks, since it carries no content shape of its own. References (p.94) dropped entirely, matching the same precedent. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch7/opening",
+      "heading": "Chapter 7: Research – Developing Effective Search Strategies",
+      "locator": {
+        "pages": "95"
+      },
+      "sectionKind": "framing",
+      "pathwayTags": [
+        {
+          "pathway": "finding-using-sources",
+          "evidence": "Research is arguably the most important of all academic literacies."
+        }
+      ],
+      "boundaryNote": "This chunk is the chapter's untitled opening: the paragraphs of running text between the chapter title and the 'Learning Objectives' heading, entirely on p.95 (the p.96 page-break marker falls just before the Learning Objectives heading). Framing under the SMAP-1 AMENDMENT (Prompt 141), consistent with ch2/ch3/ch4/ch5/ch6/ch8/ch10/ch12's opening chunks. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch7/learning-objectives-and-keywords",
+      "heading": "Learning Objectives",
+      "locator": {
+        "pages": "96"
+      },
+      "sectionKind": "framing",
+      "pathwayTags": [
+        {
+          "pathway": "finding-using-sources",
+          "evidence": "an understanding of the principles that underpin effective searching;"
+        }
+      ],
+      "boundaryNote": "Combines two adjacent headings into one framing chunk: 'Learning Objectives' and the 'Keywords' heading immediately after it, whose own line reads 'searching; search strategy; keywords; synonyms; limiters; source type; evaluative criteria; extending searches; databases; Google extensions'. Same two-separate-headings convention as ch5/ch6 (not the blockquote style of ch2/ch3/ch8). Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch7/what-is-searching",
+      "heading": "What do we mean by 'searching'?",
+      "locator": {
+        "pages": "96-97"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "At a basic level, searching can be defined simply as 'looking for information'."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "finding-using-sources",
+          "evidence": "At a basic level, searching can be defined simply as 'looking for information'."
+        }
+      ],
+      "boundaryNote": "Covers the section's everyday-versus-academic framing of searching (trivia/Google examples contrasted with the exploratory, iterative, strategy-driven nature of academic searching). Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch7/effective-searching-principles",
+      "heading": "Effective searching: Identifying key principles",
+      "locator": {
+        "pages": "97-102"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/process",
+          "quote": "If we break down what we've taken from these examples, we can identify the different stages of effective searching practice:"
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "finding-using-sources",
+          "evidence": "If we break down what we've taken from these examples, we can identify the different stages of effective searching practice:"
+        }
+      ],
+      "boundaryNote": "Covers the whole section: the full contrasting Natalie/Jess search-practice worked examples (pp.97-101), the five numbered stages of effective searching practice distilled from them (Plan; Identify keywords; Understand your discovery service; Evaluate sources; Extend your search), and the closing 'What approach do you take to searching?' Task box, all folded into one chunk as illustration of the same five-stage process, matching the fold-in-worked-example precedent established throughout ch2/ch3/ch5/ch6. This is the chapter's longest section (pp.97-102 of a pp.95-112 chapter). Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch7/planning-your-search",
+      "heading": "Planning your search",
+      "locator": {
+        "pages": "102-103"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "As we've seen with Jess' example, effective searching begins with careful and considered planning."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "finding-using-sources",
+          "evidence": "As we've seen with Jess' example, effective searching begins with careful and considered planning."
+        }
+      ],
+      "boundaryNote": "Covers the section's account of using reflection on existing knowledge to set search objectives and consider source type and publication date before searching. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch7/identifying-keywords",
+      "heading": "Identifying keywords",
+      "locator": {
+        "pages": "103-104"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "Keywords – those words or short phrases you use when searching – act as the drivers of the searches you do."
+        },
+        {
+          "shapeId": "content-shapes/classification",
+          "quote": "A synonym is a word that essentially means the same as another word: for example, a synonym for 'car' is 'automobile'."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "finding-using-sources",
+          "evidence": "Keywords – those words or short phrases you use when searching – act as the drivers of the searches you do."
+        }
+      ],
+      "boundaryNote": "The classification shape's quote is chosen to avoid the source's own single, unpaired glossary-marker asterisk immediately before 'synonyms' in the preceding sentence ('Librarians will also encourage you to think about *synonyms for your keywords.') - unlike the backslash-escaped mid-sentence markers seen in ch2/ch3 (e.g. \\*academic literacy), this chapter's markers are a bare single asterisk with no closing partner and no backslash, a different in-source convention first observed this chapter. Quoting the very next, unmarked sentence instead ('A synonym is a word...') keeps the shape's quote clean while still evidencing the same synonyms teaching point. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch7/using-library-discovery-service",
+      "heading": "Using your library discovery service",
+      "locator": {
+        "pages": "104-108"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "Searching here follows similar principles to the everyday searching you might do on Google."
+        },
+        {
+          "shapeId": "content-shapes/classification",
+          "quote": "The AND is what librarians call a 'Boolean operator'."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "finding-using-sources",
+          "evidence": "The AND is what librarians call a 'Boolean operator'."
+        }
+      ],
+      "boundaryNote": "Covers the whole section: discovery-service search-box basics, the full 'Searching in practice: Using Boolean logic' Task box (AND/NOT/OR/quotation-marks/parentheses/asterisk-wildcard operators), the limiters list (date, subject, availability), and the 'Searching in practice (continued)' Task box applying those limiters, all folded into one chunk as illustration of the classification shape, matching the fold-in-worked-example/table precedent. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch7/evaluating-sources",
+      "heading": "Evaluating sources",
+      "locator": {
+        "pages": "108-109"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/classification",
+          "quote": "Our library's discovery service produces results that include the following source types: journal articles, books, newspaper articles, conference proceedings, theses or dissertations, book chapters, and reviews."
+        },
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "Other criteria to use include *currency* (i.e. the date of publication)."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "finding-using-sources",
+          "evidence": "Other criteria to use include *currency* (i.e. the date of publication)."
+        }
+      ],
+      "boundaryNote": "The concept shape's quote keeps the paired markdown italics around *currency* verbatim, matching the real-source-italics convention (ch2/ch3/ch5/ch6 *authentic*/*diagnostic* etc.) - this is a genuine opening-and-closing italic pair, distinct from the bare single-asterisk glossary marker noted at ch7/identifying-keywords. Folds in the Natalie/Jess contrast reprise and the discussion of *authority* and *relevance* as further illustration of the same evaluative-criteria concept. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch7/extending-your-search",
+      "heading": "Extending your search",
+      "locator": {
+        "pages": "109-112"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "Databases are essentially collections of references that have been indexed or classified using their authors, titles, content, year of publication – and so on."
+        },
+        {
+          "shapeId": "content-shapes/contrast",
+          "quote": "You're more likely to use Google Scholar as you try to broaden out your reading."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "finding-using-sources",
+          "evidence": "You're more likely to use Google Scholar as you try to broaden out your reading."
+        }
+      ],
+      "boundaryNote": "Covers the whole section: databases (folding in the 'Exploring relevant databases' Task box), and the Google Books/Google Scholar comparison, including citation searching. The concept shape's quote is the unmarked restatement sentence that immediately follows the source's own single-asterisk-marked 'Librarians will point you first and foremost to *databases.' - chosen for the same reason as ch7/identifying-keywords, to keep the shape quote clean of the bare marker. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch7/summary",
+      "heading": "Summary",
+      "locator": {
+        "pages": "112"
+      },
+      "sectionKind": "framing",
+      "pathwayTags": [
+        {
+          "pathway": "finding-using-sources",
+          "evidence": "Effective searching is a science: it's complex and based on the development of a structured approach which we've called a 'search strategy'."
+        }
+      ],
+      "boundaryNote": "This chunk is the chapter's Summary section, which closes the chapter directly (no References subsection follows it in this chapter, unlike ch3/ch5/ch6). Framing under the same SMAP-1 AMENDMENT (Prompt 141) basis as ch2/ch3/ch4/ch5/ch6/ch8/ch10/ch12's summary chunks, since it carries no content shape of its own. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch9/opening",
+      "heading": "Chapter 9: Writing for Assessment",
+      "locator": {
+        "pages": "135-137"
+      },
+      "sectionKind": "framing",
+      "pathwayTags": [
+        {
+          "pathway": "academic-writing",
+          "evidence": "Since most assessment tasks require written responses and it's through assessed work that you get your marks and then your degree classification, the ability to write effectively for assessment is key to excelling."
+        }
+      ],
+      "boundaryNote": "This chunk is the chapter's untitled opening: the paragraphs of running text between the chapter title and the 'Learning Objectives' heading, pp.135-137. Framing under the SMAP-1 AMENDMENT (Prompt 141), consistent with ch2/ch3/ch4/ch5/ch6/ch7/ch8/ch10/ch12's opening chunks. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch9/learning-objectives-and-keywords",
+      "heading": "Learning Objectives",
+      "locator": {
+        "pages": "135-136"
+      },
+      "sectionKind": "framing",
+      "pathwayTags": [
+        {
+          "pathway": "academic-writing",
+          "evidence": "By the end of this chapter, you will have gained:"
+        }
+      ],
+      "boundaryNote": "Combines two adjacent headings into one framing chunk: 'Learning Objectives' and the 'Keywords' heading immediately after it, whose own line reads 'writing within disciplines; writing conventions; genres of writing; structure; expression; writing process; language of criticality'. Same two-separate-headings convention as ch5/ch6/ch7. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch9/three-assumptions-about-academic-writing",
+      "heading": "Writing in theory",
+      "locator": {
+        "pages": "136-137"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "In our experience, students tend to make assumptions about writing for assessment which can act as significant obstacles to their attempts at improving the quality of their writing."
+        },
+        {
+          "shapeId": "content-shapes/contrast",
+          "quote": "Needless to say, all three assumptions are false! 'Academic writing', as a concept, is not a monolithic thing that sits astride all disciplines; it's more nuanced than that, with different genres of writing existing next to each other, linked to the different types of assessment you'll meet as you move through your course."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "academic-writing",
+          "evidence": "By the end of the chapter, you'll have a much clearer understanding of the principles of writing for assessment and the practice of improving your writing."
+        }
+      ],
+      "boundaryNote": "Covers the 'Writing in theory' section's three named false assumptions about academic writing (genre-in-itself; different from other writing; inherently complex) and their refutation. The contrast shape's quote is the refutation sentence plus its immediately adjacent follow-on sentence (both on p.136). Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch9/writing-within-your-discipline",
+      "heading": "Writing within your discipline",
+      "locator": {
+        "pages": "137-138"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "It's now generally acknowledged by academics researching writing practices in higher education that support for students aimed at enhancing the ability to communicate in writing needs to be situated within the discipline in which you are studying (Halliday & Hasan, 1985; Somerville & Creme, 2005)."
+        },
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "To many people, all history is the same – it's the study of the past. Yet within the broader discipline area of history are a number of different 'sub-disciplines' associated with distinct time periods; for example, medieval history, from c.500 up to c.1500, early modern history, from c.1500 up to c.1700, and modern, from c.1700 up to 1945."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "academic-writing",
+          "evidence": "But it is important to acknowledge that writing in any discipline is defined by its own set of conventions related to such things as writing style, vocabulary, and structure."
+        }
+      ],
+      "boundaryNote": "Second concept shape folds in the book's own history sub-disciplines illustration (medieval/early modern/modern history, Chamberlain vs Suetonius quote-handling example) as the worked example for this teaching point, per the established worked-example fold-in precedent. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch9/discipline-writing-examples",
+      "heading": "Example 1 – chemistry/sciences",
+      "locator": {
+        "pages": "138-144"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/classification",
+          "quote": "Let's take a look at examples of writing from three very different disciplines: chemistry; education (primary); and history."
+        },
+        {
+          "shapeId": "content-shapes/contrast",
+          "quote": "It shares the same objective as Example 1: to draw meaning out of the results of the research by setting them in a broader context provided by the relevant discourse. However, the way that it does this, the style of the writing, and the extent to which it establishes these links differs."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "academic-writing",
+          "evidence": "Each discipline is therefore unique and so it's important for students to be able to recognise and understand the conventions that shape writing within it."
+        }
+      ],
+      "boundaryNote": "Folds the chapter's three full worked examples (Example 1 chemistry/sciences pp.138-140, Example 2 education/social sciences pp.140-142, Example 3 history/humanities pp.142-144, each with its own quoted extract and tutor commentary) into a single chunk for the one teaching point they jointly illustrate: that writing conventions differ by discipline. Heading field is set to the first example's own sub-heading since no single higher-level heading groups all three in the source; this mirrors the Task-box/worked-example fold-in precedent used throughout (ch6/the-feedback-cycle, ch7/effective-searching-principles), extended here to span multiple ####-level sub-headings rather than Task boxes under one heading. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch9/familiarising-yourself-with-discipline-writing",
+      "heading": "Familiarising yourself with writing in your discipline",
+      "locator": {
+        "pages": "144-145"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "It's very important for you to get to know how knowledge is articulated within your discipline."
+        },
+        {
+          "shapeId": "content-shapes/classification",
+          "quote": "As you do so, consider the following aspects of the writing, all of which we've identified in the discussion above:"
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "academic-writing",
+          "evidence": "Excelling in writing is not only about getting across your ideas clearly; it's about doing so in a way that is consistent with the conventions associated with writing in your discipline."
+        }
+      ],
+      "boundaryNote": "The classification shape's quote is the sentence introducing the four numbered aspects (writing style, evidence, discipline-specific vocabulary, discourse) rather than the numbered list items themselves, since those are cross-references back to Examples 1-3 rather than freestanding prose. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch9/genres-of-writing-overview",
+      "heading": "Genres of writing",
+      "locator": {
+        "pages": "145"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "It's now just as important that students demonstrate what might be called 'writing agility', an ability to write successfully across genres by completing different types of assessment."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "academic-writing",
+          "evidence": "In the following discussion, we look at a sample of genres, the ones we think a discussion of will be most useful to you: the essay; a research proposal; a literature review; a report; and reflective writing."
+        }
+      ],
+      "boundaryNote": "Short transitional section introducing the five genres that structure the rest of 'Writing in theory'; each genre is then given its own dedicated chunk below. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch9/the-essay",
+      "heading": "The essay",
+      "locator": {
+        "pages": "145-149"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/process",
+          "quote": "All essays follow a simple and logical structure which you'll have come across before: it needs a beginning (an introduction), a middle (the body of the essay), and an end (the conclusion)."
+        },
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "The argument emerges first and foremost out of the structure of the writing. Here, we have three separate points about the positive influence AI might have, each made in its own paragraph."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "academic-writing",
+          "evidence": "The essay can be defined as a continuous piece of writing which sets out a response, usually in the form of an argument, to a question or assessment task."
+        }
+      ],
+      "boundaryNote": "Folds in the full worked example of the AI-impact-on-learning essay (introduction, three-paragraph body, conclusion, each with the book's own analysis) as the illustration of introduction/body/conclusion structure, per the worked-example fold-in precedent. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch9/research-proposal",
+      "heading": "Research proposal",
+      "locator": {
+        "pages": "150-157"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/process",
+          "quote": "The proposal is often made up of a series of questions which have been carefully created to encourage you to engage with the topic and its associated discourse at a deeper level – but in a guided and structured way."
+        },
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "Much research across the disciplines cannot be described as 'original', in the sense that it is entirely new. Rather than talking about originality, therefore, we prefer talking about the *freshness* of a perspective."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "academic-writing",
+          "evidence": "By answering each of these questions as fully as you can, you're creating a framework for the entire project."
+        },
+        {
+          "pathway": "researching-research-methods",
+          "evidence": "A research proposal forms part of a larger research project, like a dissertation."
+        }
+      ],
+      "boundaryNote": "Folds in the full France/ultranationalism worked-example proposal (pp.154-156, including Table 9.1's general-to-specific mapping and the indicative bibliography) as the illustration of the proposal questions discussed. The concept shape's quote keeps the paired markdown italics around *freshness* verbatim, matching the real-source-italics convention (ch2/ch3/ch5/ch6/ch7's *authentic*/*diagnostic*/*currency* etc.); it is drawn from two sentences adjacent in the source, distinct from the earlier, non-adjacent 'This isn't true' sentence in the same paragraph. Dual-tagged researching-research-methods per the task's own chapter-mapping scope. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch9/literature-review",
+      "heading": "Literature review",
+      "locator": {
+        "pages": "157-160"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "The literature review provides a review of the literature relevant to your research. It does this by establishing key works and authors, important themes, key debates, and controversial elements of the discourse, what topics are currently being looked at, and gaps in the literature."
+        },
+        {
+          "shapeId": "content-shapes/process",
+          "quote": "When writing a literature review, your objective should be to critique the discourse – to analyse, evaluate and synthesise it in such a way as to make the value of your research absolutely clear."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "academic-writing",
+          "evidence": "It's not just a description of who said what, when."
+        },
+        {
+          "pathway": "researching-research-methods",
+          "evidence": "Most of you reading this will encounter the literature review as part of a dissertation (or any longer piece of research-based writing), whether that's at undergraduate or postgraduate level."
+        }
+      ],
+      "boundaryNote": "Folds in the full plagiarism/stress literature-review worked example (pp.158-159, including its language-of-criticality analysis of 'However'/'Furthermore'/'Moreover' and of the verbs 'highlighted'/'attributed') as illustration. Dual-tagged researching-research-methods per the task's own chapter-mapping scope. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch9/reports",
+      "heading": "Reports",
+      "locator": {
+        "pages": "160-161"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/structure",
+          "quote": "In the sciences, the report resembles a research article, in that it is structured along similar lines, as set out in Table 9.2."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "academic-writing",
+          "evidence": "In science-related disciplines, for example, you'll be assessed at some point on your ability to write up a report on practical work (e.g., in the laboratory)."
+        },
+        {
+          "pathway": "researching-research-methods",
+          "evidence": "You'll still include core elements – introduction, methodology, results, and discussion – but it will include several other elements, depending on context."
+        }
+      ],
+      "boundaryNote": "Folds in Table 9.2's full report-structure breakdown (title/abstract/introduction/methodology/results/discussion/conclusion/references list) as the structure shape's supporting detail. Dual-tagged researching-research-methods per the task's own chapter-mapping scope. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch9/reflective-writing",
+      "heading": "Reflective writing",
+      "locator": {
+        "pages": "161-164"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/process",
+          "quote": "In the example that follows, we'll be using the three-step, ERA cycle (Jasper, 2013): Experience; Reflect; Take action."
+        },
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "Reflective writing is still meant to be critical. One mistake students often make is that they concentrate on describing the experience without offering any critique of their own performance, actions, or decisions."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "academic-writing",
+          "evidence": "Reflective writing stands out from the other genres of writing discussed here because it is (i) less formal in style and expression and (ii) focused almost exclusively on experience."
+        },
+        {
+          "pathway": "reflective-practice",
+          "evidence": "Will doesn't simply describe what happened; he does attempt a critical assessment of his own actions within this scenario."
+        }
+      ],
+      "boundaryNote": "Folds in the full Will/marshmallow-challenge ERA-cycle worked example (Experience/Reflect/Take action, pp.162-163, plus the book's own analysis of it) as the illustration of the reflective-writing genre. Dual-tagged reflective-practice per the task's own chapter-mapping scope, even though the catalogue's primary chapter list for reflective-practice is chapter 4 only - this is an incidental secondary tag on the strength of this passage's direct, substantial treatment of the reflective-writing genre, matching the ch5/the-dissertation precedent for secondary pathway tags. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch9/four-pillars-of-effective-writing",
+      "heading": "The four pillars of effective writing",
+      "locator": {
+        "pages": "164"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/classification",
+          "quote": "If you look at the relevant marking criteria for each of the genres we've discussed, you'll notice that certain features recur."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "academic-writing",
+          "evidence": "Think carefully about the following four features, regardless of the genre in which you're working:"
+        }
+      ],
+      "boundaryNote": "Covers the four cross-genre features (clarity and precision of expression; structure; effective engagement with relevant discourse; presentation) that close the 'Writing in theory' half of the chapter and bridge into 'Writing in practice'. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch9/the-writing-cycle",
+      "heading": "Writing in practice",
+      "locator": {
+        "pages": "164-165"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/process",
+          "quote": "Writing is a process consisting of distinct stages. The most important of these stages is planning."
+        },
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "A general principle which is always worth having in mind is that *it's better to have a draft of something to work with than nothing at all*."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "academic-writing",
+          "evidence": "The writing cycle represents the process in which you need to engage in order to have the best possible chance of creating a really effective piece of writing."
+        }
+      ],
+      "boundaryNote": "Opens 'Writing in practice' with Emma's blank-page scenario (folded in as the worked example motivating the five-stage writing cycle of Figure 9.1: Understanding the task, Planning, Creating a first draft, Editing, Proofreading, each of which gets its own dedicated chunk below). Concept shape's quote keeps the paired markdown italics verbatim, matching the established real-source-italics convention. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch9/understanding-the-task",
+      "heading": "Understanding the task",
+      "locator": {
+        "pages": "165-167"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "Consider carefully (i) the steer of a question and (ii) its keywords. The steer of the question refers to the opening phrase which points to the approach you need to take when answering it, as well as any specific 'skills' being tested."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "academic-writing",
+          "evidence": "It's vital that you fully understand the question you're being asked or, more broadly, the assessment instructions, if your writing is going to be effective."
+        }
+      ],
+      "boundaryNote": "Folds in both the coastal-erosion 'To what extent' example and Emma's 'Assess the potential value of social media...' steer/keywords worked example as illustration of the same concept. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch9/planning",
+      "heading": "Planning",
+      "locator": {
+        "pages": "167-169"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/process",
+          "quote": "Planning acts as the bridge between the research you do – identifying and engaging with suitable academic sources found via your library's discovery service – and the actual writing."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "academic-writing",
+          "evidence": "A good plan, one that's well-thought through, with detailed supporting knowledge, can make the next stage, writing a first draft, much easier."
+        }
+      ],
+      "boundaryNote": "Folds in Emma's full plan example (introduction/main part/conclusion for the SME social-media essay) as illustration. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch9/creating-a-first-draft",
+      "heading": "Creating a first draft",
+      "locator": {
+        "pages": "169-170"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "Remember Emma: you're not writing the finished version of the essay; the objective here is get a draft of it down, on the screen, as soon as you can."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "academic-writing",
+          "evidence": "You need a decent draft to work with in the following stages of the cycle."
+        }
+      ],
+      "boundaryNote": "Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch9/editing-and-proofreading",
+      "heading": "Editing",
+      "locator": {
+        "pages": "170-172"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/contrast",
+          "quote": "Proofreading is more about polishing the text, eliminating typos and superficial errors that are easy to correct. Editing is about deleting text, adding it, changing the expression you use, creating new paragraphs, and so on."
+        },
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "It's at this stage where you can make significant improvements to the first draft."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "academic-writing",
+          "evidence": "The final stage, once you've edited the draft and you're feeling more confident about your work, is proofreading."
+        }
+      ],
+      "boundaryNote": "Deliberately merges the 'Editing' and the brief following 'Proofreading' sub-heading into one chunk: the editing/proofreading distinction is itself drawn within the Editing section's own text (the contrast shape's quote), and the dedicated Proofreading section (p.172) is a short, single-paragraph coda restating that same distinction rather than introducing an independent teaching point, so it is folded in here rather than split out, unlike the shared-heading-split precedent used elsewhere (which splits one heading into several chunks for genuinely distinct sub-topics, the reverse of what's needed here). Folds in the unedited/edited SMM paragraph comparison (pp.170-172) as the worked example for the contrast shape. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch9/common-errors-in-student-writing",
+      "heading": "Common errors in student writing",
+      "locator": {
+        "pages": "172-174"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/classification",
+          "quote": "What follows is a list of the most commonly occurring errors in ascending order:"
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "academic-writing",
+          "evidence": "By far the most common error we see in student work is the comma splice, where two sentences are connected by a comma rather than a full stop (or perhaps a semi-colon)."
+        }
+      ],
+      "boundaryNote": "Folds the five ranked errors (comma splice; sentence structure; use of articles; semi-colon/colon confusion; misuse of the apostrophe) into one classification chunk, consistent with the fold-enumerated-list-items-into-one-chunk precedent used for ch6/what-issues-do-tutors-highlight. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch9/expression-clarity-and-precision",
+      "heading": "Expression: improving clarity and precision",
+      "locator": {
+        "pages": "174-177"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/process",
+          "quote": "One of the simplest yet most effective ways of structuring your sentences is to use the SVO model:"
+        },
+        {
+          "shapeId": "content-shapes/contrast",
+          "quote": "By combining the two sentences and using 'the owner' as the subject (in other words, using the active rather than passive voice), sentence (b) has greater impact."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "academic-writing",
+          "evidence": "The most obvious way lies in the vocabulary used."
+        }
+      ],
+      "boundaryNote": "Folds in the SVO-model worked examples and the active/passive 'Ollie completed the project' and SME/Facebook worked examples as illustration of the two shapes. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch9/developing-structure-and-organisation",
+      "heading": "Developing structure and organisation",
+      "locator": {
+        "pages": "177-179"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "Structure operates at two levels: the macro level refers to the arrangement of the points in the main part of the work or the overall organisation of your response; the micro level, on the other hand, refers to the structure of individual paragraphs, including the introduction and conclusion."
+        },
+        {
+          "shapeId": "content-shapes/structure",
+          "quote": "Certain structural elements are very important: the first sentence, for example, is key in conveying to the reader a clear sense of (i) what the paragraph is about and (ii) how it is related to the paragraphs either side of it, and to the overall argument in the piece of work."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "academic-writing",
+          "evidence": "We've already stressed the importance of planning in our discussion of the writing cycle."
+        }
+      ],
+      "boundaryNote": "Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch9/integrating-academic-sources",
+      "heading": "Integrating academic sources",
+      "locator": {
+        "pages": "179-180"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/process",
+          "quote": "Paragraph structure provides one way of integrating academic sources into your work. Another is to use a popular technique called 'voices'."
+        },
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "The first sentence provides the author's voice, a clear statement of the subject of the paragraph."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "academic-writing",
+          "evidence": "This means *using* the sources to support or enhance your argument."
+        }
+      ],
+      "boundaryNote": "Folds in the full Zamani/SME worked-example paragraph (pp.179-180) and its 'voices' analysis as illustration. PathwayTag evidence keeps the paired markdown italics around *using* verbatim, matching the established real-source-italics convention. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch9/developing-a-critical-edge",
+      "heading": "Developing a critical edge",
+      "locator": {
+        "pages": "181"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "Being critical when it comes to engaging with academic sources begins the moment you pick up (or open) one to read."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "academic-writing",
+          "evidence": "Second, flag up where you are being critical by making use of the language of criticality."
+        }
+      ],
+      "boundaryNote": "Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch9/summary",
+      "heading": "Summary",
+      "locator": {
+        "pages": "181-182"
+      },
+      "sectionKind": "framing",
+      "pathwayTags": [
+        {
+          "pathway": "academic-writing",
+          "evidence": "In this chapter, we've looked at the theory and practice of writing for assessment."
+        }
+      ],
+      "boundaryNote": "This chunk is the chapter's Summary section; a References subsection follows it (not chunked, per established precedent). Framing under the same SMAP-1 AMENDMENT (Prompt 141) basis as ch2/ch3/ch4/ch5/ch6/ch7/ch8/ch10/ch12's summary chunks, since it carries no content shape of its own. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch11/opening",
+      "heading": "Chapter 11: Creating Effective Presentations and Working in Groups",
+      "locator": {
+        "pages": "200"
+      },
+      "sectionKind": "framing",
+      "pathwayTags": [
+        {
+          "pathway": "presenting",
+          "evidence": "In this chapter, we look in more detail at the process by which you can create an effective presentation."
+        }
+      ],
+      "boundaryNote": "Chapter opening, framing under SMAP-1 AMENDMENT (Prompt 141). Chapter 11 maps to the presenting pathway only (catalogue/pathways.json: presenting -> chapters=[11]). Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch11/learning-objectives-and-keywords",
+      "heading": "Learning Objectives",
+      "locator": {
+        "pages": "200-201"
+      },
+      "sectionKind": "framing",
+      "pathwayTags": [
+        {
+          "pathway": "presenting",
+          "evidence": "an understanding of the presentation as a form of assessment used by tutors in higher education;"
+        }
+      ],
+      "boundaryNote": "Combines the chapter's separate Learning Objectives and Keywords headings into one chunk, per established convention (Ch5/Ch6/Ch7/Ch9 also use this two-heading style). Framing under SMAP-1 AMENDMENT. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch11/defining-the-presentation",
+      "heading": "Defining the presentation",
+      "locator": {
+        "pages": "201-202"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "The difference with presentations is that you are expected to communicate your ideas orally, in front of audience, and you might also be expected to create visual aids, like a PowerPoint slideshow, to complement spoken content."
+        },
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "It is therefore by creating a well-researched and confidently delivered presentation that you can exercise greater ownership of your understanding and disciplinary knowledge."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "presenting",
+          "evidence": "As such, presentations serve as a key way of developing your academic voice."
+        }
+      ],
+      "boundaryNote": "Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch11/presentations-and-transferable-skills",
+      "heading": "Presentations and transferable skills",
+      "locator": {
+        "pages": "202"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "Presentations stand out from other forms of assessment because of their importance in developing transferable skills."
+        },
+        {
+          "shapeId": "content-shapes/fact",
+          "quote": "In short, presentations, when used in a selection process, function as a statement of your graduate identity."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "presenting",
+          "evidence": "Employers increasingly look to recruit graduates who can demonstrate excellent communication skills."
+        }
+      ],
+      "boundaryNote": "Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch11/types-of-presentations-used-for-assessment",
+      "heading": "Presentations and assessment",
+      "locator": {
+        "pages": "203-205"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/classification",
+          "quote": "This type of presentation is the most common. It involves you creating and then delivering a presentation on your own, usually in front of a tutorial or seminar group."
+        },
+        {
+          "shapeId": "content-shapes/classification",
+          "quote": "Often a cause of much anxiety among students, tutors use group presentations to help you to develop the interpersonal skills needed in the workplace."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "presenting",
+          "evidence": "It's up to you to establish what exactly you need to do to excel by considering the marking criteria carefully."
+        }
+      ],
+      "boundaryNote": "Folds all six presentation-type sub-headings (Individual/Poster/Group/Professional-or-practice-based/Interview-based/Technology-based) into one chunk, since they jointly illustrate a single teaching point (the range of presentation types used for assessment) under the parent 'Presentations and assessment' heading. Precedent: multiple #### sub-headings folded under one chunk, as at ch9/discipline-writing-examples and reused here. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch11/planning-structuring-and-designing-your-presentation",
+      "heading": "Planning, structuring, and designing your presentation",
+      "locator": {
+        "pages": "205-208"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/process",
+          "quote": "Natalie's poor performance highlights the different steps you need to take if you're going to create an effective presentation."
+        },
+        {
+          "shapeId": "content-shapes/procedure",
+          "quote": "**Read the assessment instructions carefully.**"
+        },
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "The first point to acknowledge about Natalie's experience is that many of you will find public speaking and delivering presentations nerve-wracking, particularly when the audience is made up of what Natalie calls 'important people'."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "presenting",
+          "evidence": "Let's consider an account of Natalie's approach. What does it tell us about the steps you need to take in order to create an effective presentation?"
+        }
+      ],
+      "boundaryNote": "Folds the full worked example of Natalie's social-media-marketing presentation and the subsequent five-step analysis (read instructions/research/plan/design visual aids/practise) into this one chunk, per the established fold-in-worked-example precedent. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch11/designing-visual-aids",
+      "heading": "Designing visual aids",
+      "locator": {
+        "pages": "208-209"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/principle",
+          "quote": "The first and most important is 'less is more'."
+        },
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "Visual aids are an integral element of presentations; but they support rather than replace the spoken part."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "presenting",
+          "evidence": "Your presentation should not be about the visual aids; it's about the content, your argument, and the way you present it and yourself."
+        }
+      ],
+      "boundaryNote": "Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch11/tips-on-structure",
+      "heading": "Tips on structure",
+      "locator": {
+        "pages": "209-210"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/structure",
+          "quote": "The introduction should also set out the presentation's aims and objectives; in doing this, it should effectively signpost content."
+        },
+        {
+          "shapeId": "content-shapes/structure",
+          "quote": "The conclusion provides the final opportunity to articulate your argument and reinforce the key points of your presentation."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "presenting",
+          "evidence": "It's at the planning stage that you determine the overall structure of the presentation; this can be refined later on, as you practise delivering it."
+        }
+      ],
+      "boundaryNote": "Covers the Introduction/Main body/Conclusion sub-structure of 'Tips on structure' as one chunk, consistent with earlier chapters' treatment of a single short structural section. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch11/common-presentation-errors",
+      "heading": "Common presentation errors",
+      "locator": {
+        "pages": "210-212"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/error",
+          "quote": "He turns to the screen and begins to read off the slide with his back to the audience."
+        },
+        {
+          "shapeId": "content-shapes/error",
+          "quote": "This puts him into another panic as he clicks backwards and forwards to try to get to the right slide."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "presenting",
+          "evidence": "There are a number of mistakes to highlight here."
+        }
+      ],
+      "boundaryNote": "Folds the full worked example of Nasser's presentation under the single 'Common presentation errors' heading, per fold-in-worked-example precedent. First use of content-shapes/error in this chapter (the chapter's own worked-example-of-mistakes format is the natural fit for this shapeId). Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch11/working-in-groups",
+      "heading": "Working in groups",
+      "locator": {
+        "pages": "212-213"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "Group work, like presentations, is very closely linked to your graduate identity because it requires behaviours and competencies required in the workplace."
+        },
+        {
+          "shapeId": "content-shapes/contrast",
+          "quote": "For tutors, the value of group work lies in the processes behind the creation of that product rather than the product itself, but for students who are focused on marks and performance, this can be difficult to understand."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "presenting",
+          "evidence": "This type of project can often be a very frustrating experience for students, for reasons highlighted below in the exemplar."
+        }
+      ],
+      "boundaryNote": "Covers the two introductory paragraphs under the 'Working in groups' heading only, stopping before the 'What are tutors looking for...' sub-heading which is chunked separately. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch11/what-tutors-look-for-in-group-work",
+      "heading": "What are tutors looking for from your participation in group work?",
+      "locator": {
+        "pages": "213-215"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/classification",
+          "quote": "Below is a list of personality traits and behaviours you might like to think about as you reflect on your own experience of group work."
+        },
+        {
+          "shapeId": "content-shapes/contrast",
+          "quote": "It should also be noted that there is a difference between *hearing* and *listening*."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "presenting",
+          "evidence": "Tutors' expectations mirror those of employers."
+        }
+      ],
+      "boundaryNote": "Covers the eight named traits/behaviours (Communication and listening/Collaborating/Flexibility/Resilience/Leadership/Accountability/Innovative thinking/Organisational and time-management), folded into one classification chunk per the fold-enumerated-list-items precedent (first used ch6/what-issues-do-tutors-highlight). Stops before 'With these personality traits and behaviours in mind, let's take a look at the example of Ross', which begins the distinct OCEAN-model/conflict-resolution teaching point chunked separately below under a shared-heading-split (no new heading exists at that transition in source). Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch11/personality-types-and-conflict-resolution",
+      "heading": "What are tutors looking for from your participation in group work?",
+      "locator": {
+        "pages": "215-218"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "These factors are sometimes collectively called the OCEAN model (McCrae & Costa, 1999); the acronym refers to each of the factors: openness, conscientiousness, extraversion, agreeableness, and neuroticism."
+        },
+        {
+          "shapeId": "content-shapes/classification",
+          "quote": "Openness corresponds to creative thinkers or 'innovators'; conscientiousness refers to organisers; extraversion are those people who are good at communicating; agreeableness is characteristic of mediators; and neuroticism refers to those who are realists."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "presenting",
+          "evidence": "One way you can enhance your performance in group work and maximise the value of the experience to your personal development is by building an awareness of different personality types."
+        },
+        {
+          "pathway": "reflective-practice",
+          "evidence": "Using a three-stage reflective cycle, like the ERA one we met in Chapter 9 (Jasper, 2013), reflect on your performance."
+        }
+      ],
+      "boundaryNote": "Shared-heading-split from ch11/what-tutors-look-for-in-group-work (same source heading governs both; precedent established Ch3, reused Ch5): this chunk covers the shift from the traits classification to the OCEAN personality-type model, the Ross/David/Sandra/Lucia conflict-resolution worked example, and the closing reflective Task box. Secondary pathwayTag reflective-practice added for the Task box's explicit instruction to use a three-stage (ERA) reflective cycle, even though chapter 11 is outside that pathway's primary chapter list [4] - same incidental-tag precedent as ch5/the-dissertation and ch9/reflective-writing. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch11/optimising-your-performance-in-group-work",
+      "heading": "Optimising your performance in group work",
+      "locator": {
+        "pages": "218"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/process",
+          "quote": "How can you ensure that you perform as well as possible in group work? We would make several suggestions, based on our discussion of group work."
+        },
+        {
+          "shapeId": "content-shapes/procedure",
+          "quote": "Mediate between team members when necessary."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "presenting",
+          "evidence": "Focus on communication. Make sure that your views are clear and that they are heard, and do your best to encourage other team members to do the same."
+        }
+      ],
+      "boundaryNote": "Folds the six numbered recommendations into one chunk, per the fold-enumerated-list-items precedent. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch11/summary",
+      "heading": "Summary",
+      "locator": {
+        "pages": "218-219"
+      },
+      "sectionKind": "framing",
+      "pathwayTags": [
+        {
+          "pathway": "presenting",
+          "evidence": "Presentations form a key part of your learning experience at university."
+        }
+      ],
+      "boundaryNote": "This chunk is the chapter's Summary section; a References subsection follows it (not chunked, per established precedent). Framing under SMAP-1 AMENDMENT. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch13/opening",
+      "heading": "Chapter 13: Revision and Exam Strategies",
+      "locator": {
+        "pages": "231"
+      },
+      "sectionKind": "framing",
+      "pathwayTags": [
+        {
+          "pathway": "revising-exams",
+          "evidence": "This chapter will explore revision strategy and techniques for heightening its effectiveness."
+        }
+      ],
+      "boundaryNote": "Chapter opening, framing under SMAP-1 AMENDMENT (Prompt 141). Chapter 13 maps to the revising-exams pathway (catalogue/pathways.json: revising-exams -> chapters=[13]). Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch13/learning-objectives-and-keywords",
+      "heading": "Learning Objectives",
+      "locator": {
+        "pages": "231-232"
+      },
+      "sectionKind": "framing",
+      "pathwayTags": [
+        {
+          "pathway": "revising-exams",
+          "evidence": "an understanding of the importance of seeing exams as learning tools designed to support academic and personal development, rather than as obstacles to excelling;"
+        }
+      ],
+      "boundaryNote": "Combines the chapter's separate Learning Objectives and Keywords headings into one chunk, per established convention (Ch5/Ch6/Ch7/Ch9/Ch11 also use this two-heading style). Framing under SMAP-1 AMENDMENT. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch13/the-purpose-of-exams",
+      "heading": "The purpose of exams",
+      "locator": {
+        "pages": "232-233"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "For the tutor, exams are a leveller, in that they allow the tutor to review student performance at the level of the cohort (i.e. all of the students taking the module), with all students undertaking the assessment at the same time and in the same conditions."
+        },
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "As such, exams provide a unique experience of working effectively in time-sensitive conditions."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "revising-exams",
+          "evidence": "Exams take different forms, depending on the discipline in which you're studying, your year of study, and the intended learning outcomes of the relevant module."
+        }
+      ],
+      "boundaryNote": "Covers the general discussion of what exams test and why, stopping before the classification of exam types, which is chunked separately below under a shared-heading-split (no new heading marks that transition in source). Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch13/types-of-exams",
+      "heading": "The purpose of exams",
+      "locator": {
+        "pages": "233-234"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/classification",
+          "quote": "Essay question exams are perhaps the most challenging, since they require an argument and critical engagement with knowledge and discourse."
+        },
+        {
+          "shapeId": "content-shapes/classification",
+          "quote": "Technical exams require you to demonstrate both an understanding of procedure and conceptual understanding."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "revising-exams",
+          "evidence": "There is an emphasis, for example, within multiple-choice question exams (MCQs) on the recall of disciplinary knowledge, whereas in essay question exams, there is a greater need to demonstrate an ability to build an argument and engage critically with disciplinary knowledge and discourse."
+        }
+      ],
+      "boundaryNote": "Shared-heading-split from ch13/the-purpose-of-exams (same source heading governs both; precedent established Ch3, reused Ch5/Ch11): this chunk covers the five bold-labelled exam-type classifications (Essay question/Multiple-choice question/Open book/Short answer/Technical exams), folded into one classification chunk per the fold-enumerated-list-items precedent, since none of the five carries its own heading in source. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch13/exam-anxiety",
+      "heading": "Exam anxiety",
+      "locator": {
+        "pages": "234-236"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "At its worst, exam anxiety can have a paralysing effect; yet there are techniques for minimising any stress you might feel, beginning with the way you plan and conduct your revision."
+        },
+        {
+          "shapeId": "content-shapes/process",
+          "quote": "Alleviating exam anxiety is about putting into place a revision strategy that gives you enough time to deepen your disciplinary knowledge and understanding, and, at the same time, boost your confidence about your chances of excelling."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "revising-exams",
+          "evidence": "To sum up, Natalie lacks a revision strategy."
+        }
+      ],
+      "boundaryNote": "Folds the full worked example of Natalie's disorganised week-before-exam revision under the single 'Exam anxiety' heading, per the established fold-in-worked-example precedent. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch13/developing-an-effective-revision-strategy",
+      "heading": "Developing an effective revision strategy",
+      "locator": {
+        "pages": "236-238"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/process",
+          "quote": "An effective revision strategy is built upon these two elements: (i) your use of time and (ii) your ability to identify gaps in your knowledge and understanding."
+        },
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "The ability to stay focused on objectives whilst managing these pressures is called **cognitive resilience**."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "revising-exams",
+          "evidence": "The process underpinning its development can be broken down into five main stages."
+        }
+      ],
+      "boundaryNote": "Folds the five-stage revision-strategy process and the closing Task box ('Developing your own revision strategy') under this one chunk, per the established fold-in-worked-example/task-box precedent. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch13/active-learning-and-revision-strategy",
+      "heading": "Active learning and revision strategy",
+      "locator": {
+        "pages": "237-239"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "Adopting an approach based on **active learning** principles would have the opposite effect."
+        },
+        {
+          "shapeId": "content-shapes/contrast",
+          "quote": "Whereas Natalie relied on reading, without putting herself under any pressure to recreate or even recall relevant knowledge, Jess takes the time to ensure that any passive learning exercise, like reading, is accompanied by another revision technique which requires her to apply that knowledge in some way."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "revising-exams",
+          "evidence": "The challenge is to turn a passive revision strategy into an active one."
+        }
+      ],
+      "boundaryNote": "Folds the full worked example of Jess' active revision approach (contrasted with Natalie's passive one) and the closing three-category framing (Figure 13.1: Visual/Auditory/Kinaesthetic) under this one chunk, per the fold-in-worked-example precedent. The three categories themselves are chunked separately below as their own #### headings. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch13/visual",
+      "heading": "Visual",
+      "locator": {
+        "pages": "239-242"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/classification",
+          "quote": "Visual learning techniques incorporate imagery, lettering, colour, pattern and spatial understanding."
+        },
+        {
+          "shapeId": "content-shapes/classification",
+          "quote": "Mind mapping involves setting out processes and structures of disciplinary knowledge and understanding through visual representation."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "revising-exams",
+          "evidence": "Posters and infographics translate complex disciplinary knowledge into accessible visual representations."
+        },
+        {
+          "pathway": "creativity",
+          "evidence": "Placing a central idea at the core and developing branching subtopics creates clear visual pathways between related elements of knowledge."
+        }
+      ],
+      "boundaryNote": "Folds the five bold-labelled visual-technique sub-items (Mind mapping/Visual note-taking/Flashcards/Visual mnemonics and acronyms/Posters and infographics) under this one #### heading, per the fold-enumerated-list-items precedent, since none carries its own heading in source. Secondary pathwayTag creativity added for the Mind mapping technique specifically (p.239), the designated evidence anchor for this chapter's incidental creativity-pathway tag per this task's own scope (Track B authored pathway, catalogue/pathways.json creativity.chapters=None, so this is an incidental source-text anchor rather than a primary-chapter mapping - same incidental-tag precedent as ch5/the-dissertation, ch9/reflective-writing, ch11/personality-types-and-conflict-resolution). Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch13/auditory",
+      "heading": "Auditory",
+      "locator": {
+        "pages": "240-241"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/classification",
+          "quote": "Auditory learning approaches draw on listening and speaking as ways of engaging with disciplinary knowledge."
+        },
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "Reading aloud is an effective strategy for reinforcing memory and deepening your understanding of key concepts."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "revising-exams",
+          "evidence": "Interacting with other students through structured discussion strengthens your grasp of complex ideas."
+        }
+      ],
+      "boundaryNote": "Folds the three bold-labelled auditory-technique sub-items (Reading aloud/Audio recordings/Discussion groups) under this one #### heading, per the fold-enumerated-list-items precedent. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch13/kinaesthetic",
+      "heading": "Kinaesthetic",
+      "locator": {
+        "pages": "241-243"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/classification",
+          "quote": "Kinaesthetic techniques use physical movement and tactile sensations to enhance learning and memory retention."
+        },
+        {
+          "shapeId": "content-shapes/classification",
+          "quote": "Physical movement during revision sessions provides effective means of enhancing cognitive resilience."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "revising-exams",
+          "evidence": "By integrating multiple physical approaches into your revision strategy, you develop strong frameworks for accessing academic knowledge."
+        }
+      ],
+      "boundaryNote": "Folds the four bold-labelled kinaesthetic-technique sub-items (Spatial placing/Role-playing/Physical movement/Interactive models) and the closing Task box ('Using active revision techniques') under this one #### heading, per the fold-enumerated-list-items and fold-in-task-box precedents. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch13/exam-strategy",
+      "heading": "Exam strategy",
+      "locator": {
+        "pages": "243-245"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/contrast",
+          "quote": "Jess' approach is clearly all that Natalie's isn't."
+        },
+        {
+          "shapeId": "content-shapes/procedure",
+          "quote": "Keep an eye on the clock at all times; take a watch with you."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "revising-exams",
+          "evidence": "What do these scenarios tell us about exam strategy?"
+        }
+      ],
+      "boundaryNote": "Folds the contrasting worked examples of Natalie's and Jess' exam-day approaches and the closing six numbered recommendations under this one heading, per the fold-in-worked-example and fold-enumerated-list-items precedents. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch13/summary",
+      "heading": "Summary",
+      "locator": {
+        "pages": "245"
+      },
+      "sectionKind": "framing",
+      "pathwayTags": [
+        {
+          "pathway": "revising-exams",
+          "evidence": "It's important for you to see exams as learning tools, just as we've said in relation to assessment tasks more broadly."
+        }
+      ],
+      "boundaryNote": "This chunk is the chapter's Summary section; no References subsection follows it in this chapter (Chapter 13 cites no sources). Framing under SMAP-1 AMENDMENT. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch14/opening",
+      "heading": "Chapter 14: Conclusion – Becoming a Graduate",
+      "locator": {
+        "pages": "246"
+      },
+      "sectionKind": "framing",
+      "pathwayTags": [
+        {
+          "pathway": "starting-progressing-succeeding",
+          "evidence": "This book is about excelling at university: what you need to do in order to exceed your own expectations about what you can achieve while studying in higher education."
+        }
+      ],
+      "boundaryNote": "Chapter opening, framing under SMAP-1 AMENDMENT (Prompt 141). Chapter 14 maps to the starting-progressing-succeeding pathway alongside Chapter 2 (catalogue/pathways.json: starting-progressing-succeeding -> chapters=[2, 14]). Note for the whole chapter: Chapter 14 (the book's Conclusion) contains no ### or #### sub-headings anywhere in source except 'References'; chunk 'heading' fields below are therefore short verbatim phrases drawn from the prose itself rather than markdown headings, consistent with the schema's actual requirement (validated by tools/validate-design-schemas.py as a verbatim substring check against source text, not a markdown-heading-specific check - confirmed by reading the validator's own source, tools/validate-design-schemas.py:1438). Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch14/self-regulated-learning-and-literacies",
+      "heading": "Self-regulated learning",
+      "locator": {
+        "pages": "246-247"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "Self-regulated learning, as an approach towards the learning on your course, is vital if you're going to excel."
+        },
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "In other words, you need to recognise the broader value of each literacy and what part it plays in making you a highly employable graduate."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "starting-progressing-succeeding",
+          "evidence": "Become a self-regulating learner first and then you'll find it easier to become a graduate."
+        }
+      ],
+      "boundaryNote": "Folds the two paragraphs recapping self-regulated learning and the literacies-as-more-than-study-skills idea into one chunk; source itself ties the two together as 'these two related concepts' in the sentence immediately preceding them. No sub-heading exists in source at this point (see ch14/opening boundaryNote); heading field 'Self-regulated learning' is a verbatim phrase from the first sentence of this chunk's own text. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch14/graduate-capital-framework",
+      "heading": "graduate capital",
+      "locator": {
+        "pages": "247-248"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "In addition to these elements, graduate capital is also built out of social and cultural awareness, self-identity, and your psychological make-up."
+        },
+        {
+          "shapeId": "content-shapes/concept",
+          "quote": "He conceived of a set of interrelated forms of capital which together underpin your graduate employability: human, social, cultural, identity, and psychological (as set out in Figure 14.1)."
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "starting-progressing-succeeding",
+          "evidence": "You develop your graduate capital in part by engaging in your course but also by recognising the value of the literacies you're practising and the learning experiences you have to your graduate identity."
+        }
+      ],
+      "boundaryNote": "Covers the introduction of Michael Tomlinson's (2017) graduate capital framework, stopping before the five individual capital types, which are chunked separately below. No sub-heading exists in source at this point (see ch14/opening boundaryNote); heading field 'graduate capital' is a verbatim phrase (bolded in source as **graduate capital**) distinct from the later 'Tomlinson's graduate capital framework' phrase used for the next chunk. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    },
+    {
+      "id": "ch14/forms-of-graduate-capital",
+      "heading": "Tomlinson's graduate capital framework",
+      "locator": {
+        "pages": "248-251"
+      },
+      "shapes": [
+        {
+          "shapeId": "content-shapes/classification",
+          "quote": "Human capital sits at the core of Tomlinson's framework; it includes the knowledge and competencies acquired through formal education which allow you to apply discipline-specific theory and transferable skills in professional contexts."
+        },
+        {
+          "shapeId": "content-shapes/classification",
+          "quote": "Psychological capital is about your mental capacity: your resilience in the context of change, for example, your adaptability and emotional intelligence \u2013 and so on."
+        },
+        {
+          "shapeId": "content-shapes/reflection",
+          "quote": "In light of Tomlinson's framework, how would you assess your graduate employability?"
+        }
+      ],
+      "pathwayTags": [
+        {
+          "pathway": "starting-progressing-succeeding",
+          "evidence": "This discussion of graduate capital and employability provides a fitting way to conclude this book."
+        }
+      ],
+      "boundaryNote": "Folds the five bold-labelled capital types (Human/Social/Cultural/Identity/Psychological), the closing Task box ('Assessing your employability through your graduate capital', which tests the reader against each of the five types in turn), and the book's final closing paragraph into one chunk, since none carries its own sub-heading in source and all three continue the same teaching point through to the chapter's (and book's) end. This chapter has no 'References' chunk of its own content (a References list follows, not chunked, per established precedent) and no 'Summary' heading, consistent with it being the book's Conclusion chapter rather than a standard topic chapter; this chunk therefore serves the chapter's closing function without being marked sectionKind:framing, since it carries real shape content. Heading field 'Tomlinson's graduate capital framework' is a verbatim phrase from the Figure 14.1 caption. Confirmed by Abbott 8 October 2026 (blanket ruling, same sitting).",
+      "status": "confirmed"
+    }
+  ]
+}

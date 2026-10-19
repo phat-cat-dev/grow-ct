@@ -1,0 +1,100 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://excelling.cardiffmet/schemas/design-kb.activity-patterns.schema.json",
+  "title": "design-kb: activity patterns",
+  "description": "Pedagogical constructs the AI proposes activities IN TERMS OF, then realises through palette components. Covers formative activities and assessment-type activities (SUMM and future activity-based summative variants). A pattern is pedagogy; a component is mechanism; a slot is location — proposals cite all three. Summative patterns must calibrate to the tier parity standard (tier-spec §7) via tier-bands pointers.",
+  "type": "object",
+  "required": ["kbVersion", "patterns"],
+  "properties": {
+    "kbVersion": { "$ref": "common.schema.json#/$defs/kbVersion" },
+    "patterns": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "intent", "description", "recognition", "realisations"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^activity-patterns/[a-z0-9-]+$" },
+          "name": { "type": "string", "description": "e.g. commit-then-reveal retrieval practice; scenario-based application; case analysis; staged synthesis task." },
+          "intent": { "enum": ["formative", "summative", "either"] },
+          "description": { "type": "string", "description": "One short paragraph: what the learner does and why it works. Depth lives in the prose pointer." },
+          "recognition": { "type": "string", "description": "How a designer identifies this pattern in source material — what to look for in the content that signals this pattern applies." },
+          "prosePointer": { "$ref": "common.schema.json#/$defs/citation" },
+          "realisations": {
+            "type": "array",
+            "minItems": 1,
+            "description": "How this pattern is built: which components serve it and any register note (FC-2 style: register may live in instruction text, not config).",
+            "items": {
+              "type": "object",
+              "required": ["component"],
+              "properties": {
+                "component": { "type": "string", "pattern": "^palette/[a-z0-9-]+$" },
+                "registerNote": { "type": "string" }
+              },
+              "additionalProperties": false
+            }
+          },
+          "slotTypes": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Which archetype slot types this pattern fills (worked-example, check, summative-item, interior-content...)."
+          },
+          "tierCalibration": {
+            "type": "array",
+            "description": "Per-tier fit and pitch notes; summative patterns MUST point at the §7 parity row via tier-bands.",
+            "items": {
+              "type": "object",
+              "required": ["tier"],
+              "properties": {
+                "tier": { "enum": ["introductory", "intermediate", "advanced"] },
+                "fit": { "enum": ["strong", "possible", "avoid"] },
+                "calibrationPointer": { "$ref": "common.schema.json#/$defs/citation" },
+                "note": { "type": "string" }
+              },
+              "additionalProperties": false
+            }
+          },
+          "contextAffinity": {
+            "type": "object",
+            "description": "How this pattern takes context (S1-D2/D3 hooks feed on this).",
+            "properties": {
+              "variationTypes": {
+                "type": "array",
+                "items": { "enum": ["shell-coupled", "token-substitution", "structured-fields", "whole-prose"] },
+                "description": "Which coupling depths the pattern supports — case analysis wants whole-prose source material; a definitional check may only tokenise."
+              },
+              "benefitsFromFacets": {
+                "type": "array",
+                "items": { "enum": ["subject", "level", "institution", "faculty", "school", "module", "activity"] },
+                "description": "Facets whose presence should trigger proposing this pattern with sourced material (e.g. module present -> case-analysis against the module's own docs)."
+              },
+              "note": { "type": "string" }
+            },
+            "additionalProperties": false
+          },
+          "summative": {
+            "type": "object",
+            "description": "Present when intent includes summative. Future activity-based SUMM incarnations = a new summative-page archetype in skeletons PAIRED with patterns here; this object carries the pattern side.",
+            "properties": {
+              "scoringModel": { "type": "string", "description": "How attempts score/complete; pointer-level, detail in prose." },
+              "parityNote": { "type": "string", "description": "How the §7 parity check applies to this pattern across contexts." },
+              "furnitureCompatibility": {
+                "type": "array",
+                "items": { "type": "string", "pattern": "^palette/[a-z0-9-]+$" },
+                "description": "Standard SUMM furniture this pattern works with (resultsdebrief, passreveal) or is incompatible with — incompatibilities are design flags for the S gate."
+              }
+            },
+            "additionalProperties": false
+          },
+          "servesShapes": {
+            "type": "array",
+            "items": { "type": "string", "pattern": "^content-shapes/[a-z0-9-]+$" },
+            "uniqueItems": true,
+            "description": "Which content-shapes (design-kb.content-shapes.json) this pattern serves. Optional: a pattern that samples outcomes rather than a shape (e.g. summative-mixed) leaves it out."
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

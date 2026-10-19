@@ -1,0 +1,479 @@
+{
+  "kbVersion": "0.1.10",
+  "entries": [
+    {
+      "id": "palette/text",
+      "name": "text",
+      "kind": "component",
+      "origin": "core",
+      "contentFit": [
+        { "shape": "teaching-prose", "register": "Mid-register §11 clarity, §13 conciseness. Why-before-how §11.8." },
+        { "shape": "learning-outcomes", "register": "Formal register, Bloom verbs per tier §16." },
+        { "shape": "orientation", "register": "Mid-register, contractions permitted, second-person address §15.1." },
+        { "shape": "summary", "register": "Bridge to next topic. Never restates LOs verbatim." },
+        { "shape": "visual-overview", "register": "Text only, no content-level visual. VO-1 treatment 5: a deliberate choice, not a fallback, where the theme's background imagery and prose carry the page without competing for visual space." }
+      ],
+      "specPointer": { "doc": "docs/authoring/component-specs/text.md", "ref": "Purpose" },
+      "version": "0.1.0"
+    },
+    {
+      "id": "palette/accordion",
+      "name": "accordion",
+      "kind": "component",
+      "origin": "core",
+      "contentFit": [
+        { "shape": "sequential-process", "register": "Step-by-step reveal; each item is one step. §15.4 instruction register." },
+        { "shape": "definitions", "register": "Self-contained first sentence, no contractions. Glossary-style." }
+      ],
+      "specPointer": { "doc": "docs/authoring/component-specs/accordion.md", "ref": "Purpose" },
+      "version": "0.1.0"
+    },
+    {
+      "id": "palette/mcq",
+      "name": "mcq",
+      "kind": "component",
+      "origin": "core",
+      "contentFit": [
+        { "shape": "retrieval-practice", "register": "Formative check. Feedback confirms and gives the reason (§15.5); never bare Correct/Wrong. Final-attempt feedback follows the four-move shape (AUD-AWM-SUMM-2)." },
+        { "shape": "summative-item", "register": "Assessment context. No per-item feedback during attempt when _suppressMarking=true." }
+      ],
+      "tierSuitability": ["introductory", "intermediate", "advanced"],
+      "configNotes": [
+        "_attempts: formative mcq = option count minus 1 (D4 ruling, 13 Sep 2026, supersedes the previous flat '2 for formative'); -1 for summative (unlimited, remediation-first) unchanged",
+        "_isRandom: true shuffles options; verified harmless for single-correct MCQs",
+        "Summative: _canShowFeedback/Marking: true but _suppressMarking: true on article delays until all answered",
+        "Completion on submission of the final attempt, not on correctness, is the framework default (questionModel.js checkQuestionCompletion: _isCorrect || _attemptsLeft === 0), not a behaviour change introduced by D4",
+        "_canShowModelAnswer is button-gated (questionModel.js getButtonState -> BUTTON_STATE.SHOW_CORRECT_ANSWER) and is NOT the mechanism for revealing the correct answer on the final attempt; the reveal is authored into the final-attempt feedback text (_incorrectFinal / _feedback._incorrect.final), which fires automatically at _attemptsLeft === 0"
+      ],
+      "specPointer": { "doc": "docs/authoring/component-specs/mcq.md", "ref": "Purpose" },
+      "version": "0.1.0"
+    },
+    {
+      "id": "palette/sortable",
+      "name": "sortable",
+      "kind": "component",
+      "origin": "abbott",
+      "contentFit": [
+        { "shape": "ordering-task", "register": "Sequence or rank items. Instruction field §15.4." },
+        { "shape": "summative-item", "register": "Assessment context; same config pattern as mcq." }
+      ],
+      "tierSuitability": ["introductory", "intermediate", "advanced"],
+      "configNotes": [
+        "_isRandom: true shuffles initial order; learner drags to correct sequence",
+        "Pilot verified: 2 sortables in SUMM-a-01 work alongside 6 MCQs"
+      ],
+      "specPointer": { "doc": "docs/authoring/component-specs/sortable.md", "ref": "Purpose" },
+      "version": "0.1.0"
+    },
+    {
+      "id": "palette/textinput",
+      "name": "textinput",
+      "kind": "component",
+      "origin": "core",
+      "build": "deprecated",
+      "contentFit": [
+        { "shape": "reflective-prompt", "register": "No right answer framing §15.3. 1-3 genuine metacognition questions." }
+      ],
+      "configNotes": [
+        "_isOptional: true — never blocks completion",
+        "_questionWeight: 0, _canShowFeedback/Marking/ModelAnswer: false",
+        "_recordInteraction: true for SCORM tracking",
+        "PENDING MIGRATION: opentext.md §11 plans replacement with adapt-abbott-opentext"
+      ],
+      "specPointer": { "doc": "docs/authoring/component-specs/textinput.md", "ref": "Purpose" },
+      "version": "0.1.0"
+    },
+    {
+      "id": "palette/confidence",
+      "name": "confidence",
+      "kind": "component",
+      "origin": "abbott",
+      "contentFit": [
+        { "shape": "self-efficacy-rating", "register": "PRE: rate against outcomes just seen. POST: five-pattern comparison feedback WR-2d." }
+      ],
+      "configNotes": [
+        "_mode: pre or post",
+        "_selfAssessmentGroupId pairs PRE and POST across C-PRE/C-POST pages",
+        "Max 10 items per WR-2a",
+        "_itemFeedbackOverrides for per-item five-pattern feedback (rose, stayedHigh, dropped, stayedLow, noMovement)"
+      ],
+      "specPointer": { "doc": "docs/authoring/component-specs/confidence.md", "ref": "Purpose" },
+      "version": "0.1.0"
+    },
+    {
+      "id": "palette/assessmentresults",
+      "name": "assessmentResults",
+      "kind": "component",
+      "origin": "core",
+      "contentFit": [
+        { "shape": "summative-results", "register": "Band feedback per S-3. No contractions #15 (summative feedback)." }
+      ],
+      "configNotes": [
+        "_assessmentId must match the assessment article ID",
+        "Band thresholds: 70% pass per S-3",
+        "_retry.button for retry action when enabled"
+      ],
+      "specPointer": { "doc": "docs/authoring/component-specs/assessmentresults.md", "ref": "Purpose" },
+      "version": "0.1.0"
+    },
+    {
+      "id": "palette/references",
+      "name": "references",
+      "kind": "component",
+      "origin": "abbott",
+      "contentFit": [
+        { "shape": "further-reading", "register": "Links open in new tab. Instruction field mid-register." }
+      ],
+      "configNotes": [
+        "_items[].type: book | article | external",
+        "Links must use target=_blank (not within SCORM package)",
+        "Per PLR-1: variable/optional per-pathway, same design-palette logic as VO-1"
+      ],
+      "specPointer": { "doc": "docs/authoring/component-specs/references.md", "ref": "Purpose" },
+      "version": "0.1.0"
+    },
+    {
+      "id": "palette/hotgraphic",
+      "name": "hotgraphic",
+      "kind": "component",
+      "origin": "core",
+      "contentFit": [
+        { "shape": "visual-overview", "register": "Spatial overview with whole-shape-at-once visibility. VO-1 treatment 1. Modes: cyclical, sequential, or any arrangement where the base image carries the structure. Higher cost than timeline (requires authored graphic); use when spatial arrangement is worth the image production." },
+        { "shape": "hotspot-exploration", "register": "Interactive diagram with click-to-reveal regions." }
+      ],
+      "configNotes": [
+        "_graphic.src: base image; _items[]: hotspot definitions",
+        "_isNarrativeOnMobile: true provides mobile fallback as narrative",
+        "Pilot uses for writing-cycle diagram in W-OPEN signpost"
+      ],
+      "specPointer": { "doc": "docs/authoring/component-specs/hotgraphic.md", "ref": "Purpose" },
+      "version": "0.1.0"
+    },
+    {
+      "id": "palette/narrative",
+      "name": "narrative",
+      "kind": "component",
+      "origin": "core",
+      "contentFit": [
+        { "shape": "visual-overview", "register": "Staged processes with per-stage visual identity. VO-1 treatment 2." },
+        { "shape": "sequential-visual", "register": "Image-per-item slideshow; each step pairs image with text." }
+      ],
+      "configNotes": [
+        "_items[]: each with title, body, strapline, _graphic",
+        "_setCompletionOn: allItems (must view each slide)",
+        "No authored lesson instance exists yet in pilot — spec is illustrative",
+        "A real image in _graphic.src is required for every item; never proposed with a placeholder (RT-1)"
+      ],
+      "specPointer": { "doc": "docs/authoring/component-specs/narrative.md", "ref": "Purpose" },
+      "version": "0.1.0"
+    },
+    {
+      "id": "palette/timeline",
+      "name": "timeline",
+      "kind": "component",
+      "origin": "abbott",
+      "contentFit": [
+        { "shape": "visual-overview", "register": "Linear/staged processes, non-cyclical. VO-1 treatment 3. §15.4 instruction, §11 clarity for stage titles, §4 why-explaining for body." }
+      ],
+      "accessibility": "<ol>/<li> per stage; native button with aria-expanded, aria-controls to detail region.",
+      "configNotes": [
+        "Stage count 3–8 (fewer rarely justifies; more loses overview value)",
+        "_expandBehaviour: 'single' (default, deliberate) vs 'independent'; single keeps overview scannable",
+        "No _id per item — index-keyed; reordering _items between sessions breaks restoration (same hazard as flipcard)"
+      ],
+      "specPointer": { "doc": "docs/authoring/component-specs/timeline.md", "ref": "Purpose" },
+      "version": "0.1.0"
+    },
+    {
+      "id": "palette/resultsdebrief",
+      "name": "resultsdebrief",
+      "kind": "extension",
+      "origin": "abbott",
+      "contentFit": [
+        { "shape": "summative-furniture", "register": "Consolidated study-plan injection post-assessment. Lesson-group remediation pointers." }
+      ],
+      "configNotes": [
+        "_assessmentId (singular) — config inconsistency with passreveal's _assessmentIds[] noted in doc-audit F7 standing note",
+        "_resultsDebrief._items[]: lesson groups with titles and remediation text",
+        "Injects after assessment complete; verified 14 Aug (debrief injection count === 1)"
+      ],
+      "specPointer": { "doc": "docs/authoring/extension-specs/passreveal.md", "ref": "Purpose", "note": "F1: no resultsdebrief.md spec exists; cite passreveal.md + backlog 14 Aug records" },
+      "decisionPointers": [
+        { "doc": "docs/project/project-backlog.md", "ref": "2026-08-14 resultsdebrief/pass-reveal verification" }
+      ],
+      "version": "0.1.0"
+    },
+    {
+      "id": "palette/passreveal",
+      "name": "passreveal",
+      "kind": "extension",
+      "origin": "abbott",
+      "contentFit": [
+        { "shape": "summative-furniture", "register": "Model-answer gating. Hidden until pass; revealed after to support reflection." }
+      ],
+      "configNotes": [
+        "_assessmentIds[] (array) — config inconsistency with resultsdebrief's _assessmentId noted",
+        "Guard chain: extension enabled → assessment ID match → isPass true",
+        "Sets _canShowModelAnswer: true on pass; idempotent"
+      ],
+      "specPointer": { "doc": "docs/authoring/extension-specs/passreveal.md", "ref": "Purpose" },
+      "decisionPointers": [
+        { "doc": "docs/project/open-decisions.md", "ref": "PR-1c" }
+      ],
+      "version": "0.1.0"
+    },
+    {
+      "id": "palette/annotated",
+      "name": "annotated",
+      "kind": "component",
+      "origin": "abbott",
+      "contentFit": [
+        { "shape": "exemplar-analysis", "register": "Weak/strong writing pairs with phrase-level commentary. §15.2 evaluative about work not person; §4 explain why; §13 mid-register." },
+        { "shape": "prose-with-inline-commentary", "register": "Teaching prose where specific phrases warrant explanation without breaking flow. §13 mid-register; §4 explain why in _note.body." }
+      ],
+      "configNotes": [
+        "_passage[]: array of segments; segments with _note are annotated, others are plain prose",
+        "Single-open by default: opening a new note closes any open one",
+        "Completion = all annotated segments visited"
+      ],
+      "specPointer": { "doc": "docs/authoring/component-specs/annotated.md", "ref": "Purpose" },
+      "version": "0.1.0"
+    },
+    {
+      "id": "palette/branching",
+      "name": "branching",
+      "kind": "component",
+      "origin": "abbott",
+      "contentFit": [
+        { "shape": "decision-scenario", "register": "Professional dilemma with plausible choices; consequence prose is instructive not punitive. §13 teaching prose, §4 explain why, §15.4 instruction." }
+      ],
+      "configNotes": [
+        "_selectionBehaviour: commit (default, one choice locks) or explore (compare all)",
+        "No correct answer — every choice is plausible (BR-6)",
+        "Completion fires on first selection, not all-visited",
+        "Index-keyed persistence: reordering _items breaks restore"
+      ],
+      "specPointer": { "doc": "docs/authoring/component-specs/branching.md", "ref": "Purpose" },
+      "version": "0.1.0"
+    },
+    {
+      "id": "palette/checklist",
+      "name": "checklist",
+      "kind": "component",
+      "origin": "abbott",
+      "contentFit": [
+        { "shape": "working-checklist", "register": "Concrete yes/no actions the learner ticks through. §15.4 instruction register. CL-7: every item concrete, no evaluative items." },
+        { "shape": "pre-submission-review", "register": "Reusable review list the learner returns to before submitting work. §15.4 instruction register; ticks reset on revisit (CL-2) so it stays fresh per task." }
+      ],
+      "configNotes": [
+        "4–8 items enforced by schema",
+        "Ticks do NOT persist (CL-2): reset on revisit, completion persists",
+        "No summary/scoring/feedback — working aid, not assessment (CL-6)",
+        "STATUS: built-unused, but routable — activity-patterns/action-checklist (added 2 Sep 2026, commit bfa51d3) names this component in its realisations; no course has adopted it yet (5.92, ruled 8 Sep 2026: keep). Correction, 14 Sep 2026: this note previously read 'no activity-patterns entry lists it in realisations, so it is not routable', which was wrong when written on 8 Sep 2026 (commit 5eea913) — the action-checklist pattern already existed six days earlier and is unchanged since. Not superseded; the earlier claim never checked the store it was describing."
+      ],
+      "specPointer": { "doc": "docs/authoring/component-specs/checklist.md", "ref": "Purpose" },
+      "version": "0.1.0"
+    },
+    {
+      "id": "palette/flipcard",
+      "name": "flipcard",
+      "kind": "component",
+      "origin": "abbott",
+      "contentFit": [
+        { "shape": "paired-reveal", "register": "Term or concept on front, explanation on back. §11 clarity for front; §4 why-explaining for back; tier-appropriate depth §16." },
+        { "shape": "visual-overview", "register": "VO-1 treatment 4: playful/interactive reveal for 3–6 items." }
+      ],
+      "configNotes": [
+        "_flipBehaviour: independent (default) or single (one card open at a time)",
+        "3–6 cards per instance; larger sets lose flip affordance value",
+        "Index-keyed persistence: reordering _items breaks restore (FC-1)"
+      ],
+      "specPointer": { "doc": "docs/authoring/component-specs/flipcard.md", "ref": "Purpose" },
+      "version": "0.1.0"
+    },
+    {
+      "id": "palette/glossary",
+      "name": "glossary",
+      "kind": "component",
+      "origin": "abbott",
+      "contentFit": [
+        { "shape": "inline-definitions", "register": "Definition at point of need in teaching prose. §15.7: first sentence self-contained, no contractions in definitions. 2–8 terms per passage." }
+      ],
+      "configNotes": [
+        "_passage[]: segments with _term carry definitions; mark first use only",
+        "Three-way routing: glossary (passage) vs accordion (standalone) vs parenthetical (text)",
+        "Single-open by default; completion = all terms visited"
+      ],
+      "specPointer": { "doc": "docs/authoring/component-specs/glossary.md", "ref": "Purpose" },
+      "version": "0.1.0"
+    },
+    {
+      "id": "palette/opentext",
+      "name": "opentext",
+      "kind": "component",
+      "origin": "abbott",
+      "contentFit": [
+        { "shape": "reflective-prompt", "register": "No right answer framing §15.3. Learner-authored writing that persists. Replaces textinput for reflections." },
+        { "shape": "notes", "register": "Working notes variant. Never completion-bearing." }
+      ],
+      "configNotes": [
+        "_variant: reflection (default, optionally completion-bearing) or notes (never completion-bearing)",
+        "_maxCharacters: 4000 default (suspend_data budget constraint RTR-1e)",
+        "Autosave on blur and debounced typing; no submit gesture required",
+        "Extends ComponentModel not QuestionModel — no marking, no interactions record"
+      ],
+      "specPointer": { "doc": "docs/authoring/component-specs/opentext.md", "ref": "Purpose" },
+      "version": "0.1.0"
+    },
+    {
+      "id": "palette/tabs",
+      "name": "tabs",
+      "kind": "component",
+      "origin": "abbott",
+      "contentFit": [
+        { "shape": "parallel-content", "register": "2–4 parallel chunks with random access. §13 teaching prose, §11 clarity for tab labels. Tabs imply unordered; use timeline if order matters." }
+      ],
+      "configNotes": [
+        "2–4 tabs enforced by schema; concise tab labels (1–3 words)",
+        "First tab selected on load counts as visited",
+        "Completion = all tabs visited; index-keyed persistence"
+      ],
+      "specPointer": { "doc": "docs/authoring/component-specs/tabs.md", "ref": "Purpose" },
+      "version": "0.1.0"
+    },
+    {
+      "id": "palette/matching",
+      "name": "matching",
+      "kind": "component",
+      "origin": "core",
+      "contentFit": [
+        { "shape": "pairing-task", "register": "Pairing prompts to answers from a per-row option set: terms to definitions, examples to categories, causes to effects (§1). Feedback follows the shared two-tier pattern with a _partlyCorrect branch authored, since partial credit is common (§3 guardrail 4)." },
+        { "shape": "summative-item", "register": "Assessment context; formative/summative bundle set as a unit (§3 guardrail 5), same discipline as mcq/sortable." }
+      ],
+      "accessibility": "Native <select> dropdowns per row; ariaQuestion populated when body carries HTML or scene-setting so the screen reader announces a clean question (§6).",
+      "configNotes": [
+        "Each row has its own _options array; options need not be identical across rows (§3 guardrail 1)",
+        "Exactly one _isCorrect: true per row (§3 guardrail 2)",
+        "_allowOnlyUniqueAnswers: false by default; set true when each option should be used once (§3 guardrail 3, §7)",
+        "No authored lesson instance exists yet; c-225 is Adapt demo scaffold content, not a voice model (Grounded in note)"
+      ],
+      "specPointer": { "doc": "docs/authoring/component-specs/matching.md", "ref": "Purpose" },
+      "version": "0.1.0"
+    },
+    {
+      "id": "palette/gmcq",
+      "name": "gmcq",
+      "kind": "component",
+      "origin": "core",
+      "contentFit": [
+        { "shape": "visual-discrimination", "register": "Visual discrimination task: diagrams, charts, or patterns that cannot be adequately distinguished by text alone (§1). Shares mcq's question mechanics (feedback, attempts, scoring, _selectable); the structural difference is that _items carry _graphic objects." },
+        { "shape": "summative-item", "register": "Assessment context; formative/summative bundle set as a unit, same discipline as mcq (§3 guardrail 4)." }
+      ],
+      "accessibility": "alt text on every option image is mandatory so screen-reader users can discriminate between options; generic alt like 'Option 1' defeats the component's purpose (§6).",
+      "configNotes": [
+        "_shouldBeSelected count must match intent: single-select exactly one true; multi-select set _selectable to the number of correct options (§3 guardrail 1)",
+        "Per-item feedback is single-select only; ignored on multi-select (§3 guardrail 5)",
+        "_columns defaults to 0 (component decides); set explicitly for consistent layout (§7)",
+        "No authored lesson instance exists yet; c-210 is Adapt demo scaffold content, not a voice model (Grounded in note)"
+      ],
+      "specPointer": { "doc": "docs/authoring/component-specs/gmcq.md", "ref": "Purpose" },
+      "version": "0.1.0"
+    },
+    {
+      "id": "palette/graphic",
+      "name": "graphic",
+      "kind": "component",
+      "origin": "core",
+      "contentFit": [
+        { "shape": "static-image", "register": "The static-image container for any image that stands alone or pairs with a text component: diagrams, charts, photographs, illustrations the learner views but does not interact with; no stepped reveal, hotspot interaction, or slideshow behaviour (§1)." },
+        { "shape": "decorative-pairing", "register": "A purely decorative image paired with a text component that carries the meaning; set _isOptional: true so it doesn't block completion (§3 guardrail 6)." }
+      ],
+      "accessibility": "alt text is the primary accessibility feature and must convey the same information a sighted learner would gain; longdescription for complex diagrams renders below the image and is visible to all users (§6).",
+      "configNotes": [
+        "Minimal schema: no _items, no _feedback, no interaction; the work is in the _graphic object and the alt text (§2)",
+        "small and large image versions are both required by the schema (§3 guardrail 4)",
+        "Completes on scroll-in by default; no 'must view' mechanic (§7)",
+        "No authored lesson instance exists yet; demo scaffold instances have blank alt text (Grounded in note)"
+      ],
+      "specPointer": { "doc": "docs/authoring/component-specs/graphic.md", "ref": "Purpose" },
+      "version": "0.1.0"
+    },
+    {
+      "id": "palette/media",
+      "name": "media",
+      "kind": "component",
+      "origin": "core",
+      "contentFit": [
+        { "shape": "video-audio", "register": "The audio/video player for content the learner plays: explainer videos, recorded lectures, audio explanations, demonstrations; used when the medium genuinely adds value, not as a default (§1)." }
+      ],
+      "accessibility": "Captions are mandatory (_media.cc populated, _useClosedCaptions: true); transcript is strongly recommended (_transcript._inlineTranscript: true with full inlineTranscriptBody) (§6).",
+      "configNotes": [
+        "Every video should have a transcript in addition to captions: essential for deaf learners, useful for all learners who skim or search (§3 guardrail 2)",
+        "Choose _setCompletionOn deliberately: play / ended / inview each carry different completion implications (§3 guardrail 4)",
+        "Avoid _preventForwardScrubbing unless genuinely required (§3 guardrail 5)",
+        "No authored lesson instance exists yet; c-135 is Adapt demo scaffold content, not a voice model (Grounded in note)"
+      ],
+      "specPointer": { "doc": "docs/authoring/component-specs/media.md", "ref": "Purpose" },
+      "version": "0.1.0"
+    },
+    {
+      "id": "palette/slider",
+      "name": "slider",
+      "kind": "component",
+      "origin": "core",
+      "contentFit": [
+        { "shape": "numeric-scale", "register": "A numeric-scale question: estimating a quantity, placing a value on a continuum, or selecting a rating, where the correct answer is a single value or an accepted range (§1)." },
+        { "shape": "summative-item", "register": "Assessment context; formative/summative bundle set as a unit, same discipline as mcq (§3 guardrail 3)." }
+      ],
+      "accessibility": "ariaScaleName is required and describes what the scale measures for screen-reader users; the slider can be operated with arrow keys (§6).",
+      "configNotes": [
+        "Set either _correctAnswer or _correctRange, not both; _correctAnswer (a string) takes precedence if populated (§3 guardrail 1)",
+        "_scaleStart and _scaleEnd must include the correct answer (§3 guardrail 4)",
+        "No _partlyCorrect branch: unlike mcq, the learner is either in the range or out (§7)",
+        "No authored lesson instance exists yet; c-230 is Adapt demo scaffold content, not a voice model (Grounded in note)"
+      ],
+      "specPointer": { "doc": "docs/authoring/component-specs/slider.md", "ref": "Purpose" },
+      "version": "0.1.0"
+    },
+    {
+      "id": "palette/hotspot",
+      "name": "hotspot",
+      "kind": "component",
+      "origin": "abbott",
+      "build": "pending",
+      "contentFit": [
+        { "shape": "label-a-structure", "register": "Learner identifies one or more labelled regions on an authored image (a diagram, map, or structural view). Region text follows §15.4 instruction register; each region's accessible name is built from the areaLabel global template ('Area N of M: text')." },
+        { "shape": "spot-the-error", "register": "Realises spot-the-error for image-based content: finding a fault in a document image (for example, a reference missing an element), rather than choosing among worded options as mcq/gmcq do." }
+      ],
+      "tierSuitability": ["introductory", "intermediate", "advanced"],
+      "accessibility": "Alt text and long description are both required on the authored image (properties.schema _graphic.longdescription: required:true), stricter than adapt-contrib-graphic where longdescription is optional; reading order is question -> alt text -> long description, both authored. Regions are native radio/checkbox inputs inside fieldset/legend (never a role=radiogroup div), each carrying its own accessible name; focus outline meets 3:1 contrast (@item-color-focus, traced); selection is shown by outline plus icon, never colour alone.",
+      "configNotes": [
+        "2-8 regions total (1 or more correct, 2-5 decoys); shape is fixed to 'rect', the only value properties.schema currently permits",
+        "Region validation (count, overlap, in-bounds) and geometry warnings (regions under 12% width or 8% height) are unit-tested in hotspotLogic.js but NOT wired into any build-time or runtime check yet — authoring currently relies on the author following the guardrails, not on automated enforcement (see hotspot.md §7)",
+        "List-mode fallback (plain stacked list, 44px minimum tap target) triggers automatically when any region would render under 44x44 CSS px, computed from the rendered image size, not a media query",
+        "_isRadio (single- vs multi-select) is computed at runtime by ItemsQuestionModel.init() from _selectable, never authored directly",
+        "Built on ItemsQuestionModel/QuestionView with zero overrides to attempts, marking, model-answer, or SCORM 'choice' interaction behaviour — same base as mcq/gmcq"
+      ],
+      "specPointer": { "doc": "docs/authoring/component-specs/hotspot.md", "ref": "Purpose" },
+      "version": "0.1.0"
+    },
+    {
+      "id": "palette/ab-hotgraphic",
+      "name": "ab-hotgraphic",
+      "kind": "component",
+      "origin": "abbott",
+      "contentFit": [
+        { "shape": "visual-overview", "register": "Spatial overview with whole-shape-at-once visibility, VO-1 treatment 1 — same shape as hotgraphic, rebuilt on a live inlined SVG so the diagram's own hover/focus and the --ab-* theme cascade apply to it, rather than an opaque <img>." },
+        { "shape": "hotspot-exploration", "register": "Interactive diagram with click/keyboard-activated regions resolved from the authored SVG (data-ab-hotspot / id / explicit selector), not fixed pin coordinates over a flat image." }
+      ],
+      "configNotes": [
+        "_diagram.src: the inlined SVG, a course asset; _items[]._hotspot: binds each item to a node in it ({_id|_selector}, plus _action: popup|inlineReveal|none)",
+        "A diagram's own class vocabulary (wedge/label/label-sub paint hooks, data-ab-hotspot regions) is the interface layer — a new diagram costs a theme-level token block (src/extensions/adapt-ab-theme/less/ab-hotgraphic.less), never new component code",
+        "No _isNarrativeOnMobile equivalent: narrow widths swap to the always-correct accessible <ol> list via a container query, never a second authored layout",
+        "First consumer: ULAF cycle diagram in W-OPEN signpost (ulaf-cycle.svg), replacing the stock hotgraphic instance there"
+      ],
+      "specPointer": { "doc": "docs/authoring/component-specs/ab-hotgraphic.md", "ref": "Purpose" },
+      "version": "0.1.0"
+    }
+  ]
+}

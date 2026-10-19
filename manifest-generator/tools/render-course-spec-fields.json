@@ -1,0 +1,62 @@
+{
+  "_comment": "RJ-0080 (adp-0223); six-phase realignment 8 Oct 2026. Section 5's own words: 'the field lists are kept as data beside the render tool (one list per produce step), so a change to the generator or to land.md that adds a read without adding it to the list fails a test.' Every gate/field pair below is taken directly from the named tool's or command's own code in the six-phase model, read in full this job, never from memory. '[]' in a field path means 'for each item in this array'.",
+
+  "scaffold": {
+    "command": "/scaffold",
+    "tool": "tools/generate-course-shell.js",
+    "fields": [
+      {
+        "gate": "onb-04_naming",
+        "field": "(existence, closed)",
+        "note": "requireGate(manifest,'onb-04_naming'): the gate must exist with a closed record carrying a decidedValue; the slug and display name are read from it."
+      },
+      {
+        "gate": "onb-04_naming",
+        "field": "decidedValue.slug",
+        "note": "fallback read only when manifest.slug (top-level, not a gate field) is absent; fails by name if both are absent."
+      },
+      {
+        "gate": "onb-04_naming",
+        "field": "decidedValue.pathwayName",
+        "note": "first half of the derived page/course display title (pathwayName: tierName); tolerated absent (filter(Boolean))."
+      },
+      {
+        "gate": "onb-04_naming",
+        "field": "decidedValue.tierName",
+        "note": "second half of the derived display title; tolerated absent (filter(Boolean)) - a field the generator reads but onb-04_naming's own decidedValueShape does not require."
+      },
+      {
+        "gate": "crs-04_lesson-map",
+        "field": "decidedValue.lessons[].key",
+        "note": "requireGate(manifest,'crs-04_lesson-map'); fails by name if lessons is missing or empty. Each key becomes a lesson page."
+      }
+    ]
+  },
+
+  "land": {
+    "command": "/land",
+    "tool": ".claude/commands/land.md",
+    "fields": [
+      {
+        "gate": "les-01_lesson-proposal",
+        "field": "decidedValue.coupledSlots[].slot",
+        "note": "les-01 (MK-1): this lesson's own coupledSlots, read at /land time to decide the _classes slot marker on each block it writes."
+      },
+      {
+        "gate": "les-01_lesson-proposal",
+        "field": "decidedValue.coupledSlots[].variationType",
+        "note": "MK-1: a slot whose variationType is not shell-coupled gets the marker; same coupledSlots entry."
+      },
+      {
+        "gate": "crs-04_lesson-map",
+        "field": "decidedValue.lessons[].outcomes",
+        "note": "les-01 authors the lesson's learning-outcomes component from its crs-04 entry's outcomes (BW-1/LF-1 carried to crs-04); its formative check names one via 'tests' (AL-6)."
+      },
+      {
+        "gate": "crs-03_course-outcomes",
+        "field": "decidedValue.courseOutcomes[].id",
+        "note": "wra-03 summative items ('tests') and wra-04 confidence statements ('rates') each name a course outcome id here."
+      }
+    ]
+  }
+}

@@ -1,0 +1,149 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://excelling.cardiffmet/schemas/vocab-kb.schema.json",
+  "title": "vocab-kb: controlled vocabulary stores",
+  "description": "Schema for tools/subject/core/vocab/cah.json (formerly vocab-kb/cah.json; moved under TLS-1, HMD-1, adp-0204) (HESA Common Aggregation Hierarchy, landed Prompt 67, 18 Sep 2026, completed under HSV-1, 26 Sep 2026). A vocab-kb store is a flat code+label vocabulary that other stores' subjectClassification fields (common.schema.json) match against by code. This schema fixes the CAH shape specifically: a source header recording provenance, plus three code arrays (cah1/cah2/cah3) each holding one CAH level, a placeholders array for non-selectable rows such as CAHZ5, and a previousSource header preserving the store's prior provenance once superseded. Row shapes are inlined rather than local $defs+$ref (house convention: schemas in this directory only $ref into common.schema.json, never into themselves, because this file's own absolute $id makes a same-document $ref resolve as a network fetch rather than a local lookup offline).",
+  "type": "object",
+  "required": ["source", "cah1", "cah2", "cah3", "placeholders"],
+  "properties": {
+    "source": {
+      "type": "object",
+      "description": "Provenance for the vocabulary as a whole: issuer, the vocabulary's own version, its licence, where and how it was retrieved, and the source files it was built from.",
+      "required": ["issuer", "vocabulary", "version", "url", "retrieved", "licence", "provenance", "files"],
+      "properties": {
+        "issuer": { "type": "string", "description": "Publishing body, e.g. HESA." },
+        "vocabulary": { "type": "string", "description": "Name of the vocabulary, e.g. Common Aggregation Hierarchy (CAH)." },
+        "version": { "type": "string", "description": "The vocabulary's own version/edition, as published, e.g. 1.3.4." },
+        "url": { "type": "string", "description": "Where the file was retrieved from. Not necessarily the issuer's own domain (F9 pointer discipline; a mirror is acceptable if provenance is recorded)." },
+        "retrieved": { "type": "string", "format": "date", "description": "Date the vocabulary was retrieved." },
+        "licence": {
+          "type": "object",
+          "description": "The vocabulary's own licence, if HESA states one for it.",
+          "required": ["value", "url", "note"],
+          "properties": {
+            "value": { "type": ["string", "null"], "description": "The licence identifier, e.g. CC-BY-4.0, or null if HESA states none." },
+            "url": { "type": ["string", "null"], "description": "The page stating the licence (or its absence), or null." },
+            "note": { "type": ["string", "null"], "description": "Free-text explaining the licence value, e.g. that HESA's page states none." }
+          },
+          "additionalProperties": false
+        },
+        "provenance": { "type": "string", "description": "How this copy reached the repo, e.g. supplied by Abbott, downloaded from HESA." },
+        "files": {
+          "type": "array",
+          "description": "The source CSV(s) this store was built from: name, content hash, and data-row count, so a re-run can be checked for drift.",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["name", "sha256", "dataRows"],
+            "properties": {
+              "name": { "type": "string", "description": "The source file's own name, e.g. CAH_Groupings.csv." },
+              "sha256": { "type": "string", "description": "SHA-256 of the file's bytes with a trailing newline stripped." },
+              "dataRows": { "type": "integer", "minimum": 0, "description": "Row count excluding the header." }
+            },
+            "additionalProperties": false
+          }
+        },
+        "note": { "type": "string", "description": "Free-text provenance detail, e.g. why a mirror was used, cross-checks performed." }
+      },
+      "additionalProperties": false
+    },
+    "previousSource": {
+      "type": "object",
+      "description": "The store's prior source header, kept once superseded rather than deleted (HSV-1). Carries the same shape the source header had before, plus supersededBy naming the ruling that replaced it.",
+      "required": ["issuer", "vocabulary", "version", "url", "retrieved", "supersededBy"],
+      "properties": {
+        "issuer": { "type": "string" },
+        "vocabulary": { "type": "string" },
+        "version": { "type": "string" },
+        "url": { "type": "string" },
+        "retrieved": { "type": "string", "format": "date" },
+        "note": { "type": "string" },
+        "supersededBy": { "type": "string", "description": "The id of the ruling that superseded this source, e.g. HSV-1." }
+      },
+      "additionalProperties": false
+    },
+    "cah1": {
+      "type": "array",
+      "description": "CAH1 broad subject groups. Top of the hierarchy; no parent.",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "description": "A CAH1 row: code and label only, no parent.",
+        "required": ["code", "label"],
+        "properties": {
+          "code": { "type": "string", "description": "CAH1 code, e.g. CAH15." },
+          "label": { "type": "string", "description": "Display label, e.g. social sciences." }
+        },
+        "additionalProperties": false
+      }
+    },
+    "cah2": {
+      "type": "array",
+      "description": "CAH2 disciplines. Each carries a parent resolving to a cah1 code.",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "description": "A CAH2 row: code, label, and the parent CAH1 code.",
+        "required": ["code", "label", "parent"],
+        "properties": {
+          "code": { "type": "string", "description": "CAH2 code, e.g. CAH15-01." },
+          "label": { "type": "string", "description": "Display label, e.g. sociology, social policy and anthropology." },
+          "parent": { "type": "string", "description": "CAH1 code this row sits under. Structural-invariant checked (resolves to an existing cah1 row), not enforceable by JSON Schema alone." }
+        },
+        "additionalProperties": false
+      }
+    },
+    "cah3": {
+      "type": "array",
+      "description": "CAH3 subjects. Each carries a parent resolving to a cah2 code. Complete since HSV-1 (26 Sep 2026): every CAH3 code HESA's groupings data names, superseding the partial landing recorded in cah3Note (Prompt 67, DL-1 SHAPE RESOLUTION).",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "description": "A CAH3 row: code, label, and the parent CAH2 code.",
+        "required": ["code", "label", "parent"],
+        "properties": {
+          "code": { "type": "string", "description": "CAH3 code, e.g. CAH04-01-01." },
+          "label": { "type": "string", "description": "Display label, e.g. psychology (non-specific)." },
+          "parent": { "type": "string", "description": "CAH2 code this row sits under. Structural-invariant checked (resolves to an existing cah2 row), not enforceable by JSON Schema alone." }
+        },
+        "additionalProperties": false
+      }
+    },
+    "placeholders": {
+      "type": "array",
+      "description": "Non-selectable rows recorded apart from cah1/cah2/cah3 so the level counts stay the real ones, e.g. CAHZ5 'Not applicable'.",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["code", "label", "levels", "selectable"],
+        "properties": {
+          "code": { "type": "string" },
+          "label": { "type": "string" },
+          "levels": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "type": "string", "enum": ["cah1", "cah2", "cah3"] },
+            "description": "Which level array(s) this code would otherwise have appeared in."
+          },
+          "selectable": { "const": false, "description": "Always false: a placeholder is never offered as a choice." }
+        },
+        "additionalProperties": false
+      }
+    },
+    "cah3Note": {
+      "type": "string",
+      "description": "Historical note explaining cah3's former partial coverage (Prompt 67, DL-1 SHAPE RESOLUTION) and any per-discipline absences. Kept verbatim once superseded; see cah3NoteSuperseded."
+    },
+    "cah3NoteSuperseded": {
+      "type": "object",
+      "description": "Marks cah3Note as superseded without deleting it.",
+      "required": ["by", "date"],
+      "properties": {
+        "by": { "type": "string", "description": "The id of the ruling that superseded cah3Note, e.g. HSV-1." },
+        "date": { "type": "string", "format": "date" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

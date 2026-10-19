@@ -1,0 +1,103 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://adaptlearning.org/schemas/catalogue/correspondences.json",
+  "title": "catalogue.correspondences",
+  "description": "catalogue/context/correspondences.json: the correspondences well — the assembled matrix that reads each of the 11 cards (F..L8) through each of the 14 academic-practice pathways, grounding every reading in FHEQ/CQFW statement ids and placing conceptual models, professional frameworks, qualification frameworks, cross-cutting themes and the 54 subject benchmarks against the same card grid. Extracted from the rendered Pathway Table of Correspondences (docs/curriculum/pathway-table-of-correspondences.html) by tools/extract-correspondences.py; a generator renders that HTML back FROM this store. Concept-ordered: provenance (version/built/source), then the reading dimensions (meta), the pathway strands (pathways), the theme lenses (themes), the subject benchmarks (benchmarks), and the card grid itself (rows). DUAL AXES: meta[0]/meta[1] are Tier and Indicative level, and every row.meta carries both; the tier<->level relationship is the card grid itself, stated once here. Deep nested reading content is intentionally permissive so nothing useful is lost.",
+  "type": "object",
+  "required": ["correspondencesVersion", "meta", "pathways", "themes", "benchmarks", "rows"],
+  "additionalProperties": true,
+  "properties": {
+    "correspondencesVersion": {
+      "type": "string",
+      "description": "Semver of this store's shape; bump on any shape change."
+    },
+    "built": {
+      "type": ["string", "null"],
+      "description": "Human date the underlying table was built, carried from the source."
+    },
+    "source": {
+      "type": "object",
+      "description": "Provenance pointer to the rendered table this was extracted from.",
+      "properties": {
+        "doc": { "type": "string" },
+        "ref": { "type": "string" },
+        "note": { "type": "string" }
+      }
+    },
+    "meta": {
+      "type": "array",
+      "description": "The reading dimensions, in order. meta[0]=Tier and meta[1]=Indicative level are the DUAL AXES carried by every row; meta[2..] are the practice/knowledge/practitioner-identity triad and the metacognitive stance.",
+      "minItems": 2,
+      "items": { "type": "string" }
+    },
+    "pathways": {
+      "type": "array",
+      "description": "The academic-practice pathways, each a strand read down the card grid.",
+      "items": {
+        "type": "object",
+        "required": ["no", "name"],
+        "properties": {
+          "no": { "type": "integer" },
+          "name": { "type": "string" },
+          "readings": { "type": "boolean" }
+        }
+      }
+    },
+    "themes": {
+      "type": "array",
+      "description": "The lenses placed against the rows: development models, metacognition models, professional frameworks, qualification frameworks and cross-cutting themes. group partitions them; run is the citation; subs are sub-series where a lens has them.",
+      "items": {
+        "type": "object",
+        "required": ["key", "name", "group"],
+        "properties": {
+          "key": { "type": "string" },
+          "name": { "type": "string" },
+          "run": { "type": "string" },
+          "note": { "type": "string" },
+          "group": { "type": "string", "enum": ["model", "metacog", "prof", "qf", "theme"] },
+          "subs": {}
+        }
+      }
+    },
+    "benchmarks": {
+      "type": "array",
+      "description": "The 54 QAA subject benchmarks, read the same three ways where the benchmark speaks. subjectIds are grounding pointers into the standards runs.",
+      "items": {
+        "type": "object",
+        "required": ["slug", "name"],
+        "properties": {
+          "slug": { "type": "string" },
+          "name": { "type": "string" },
+          "run": { "type": "string" },
+          "subject": { "type": "string" },
+          "subjectIds": { "type": "array", "items": { "type": "string" } },
+          "note": { "type": "string" }
+        }
+      }
+    },
+    "rows": {
+      "type": "array",
+      "description": "The card grid, foundation to level 8. Each row is one card position. row.meta gives the generic (pathway-independent) reading across the meta dimensions; row.cells is keyed by pathway number ('1'..'14') and holds that card read through each pathway strand (capability, kind-of-knowledge, FHEQ statement ids, then the practice / knowledge / practitioner-identity readings with their FHEQ descriptors); row.themes is keyed by theme key; row.bm is keyed by benchmark slug.",
+      "items": {
+        "type": "object",
+        "required": ["row", "meta", "cells"],
+        "additionalProperties": true,
+        "properties": {
+          "row": { "type": "string", "description": "Card position label (F, i1..i3, d1..d3, e1..e3, L8)." },
+          "meta": {
+            "type": "array",
+            "description": "The generic reading across the meta dimensions; meta[0] Tier and meta[1] Indicative level are the dual axes for this card.",
+            "items": { "type": ["string", "null"] }
+          },
+          "cells": {
+            "type": "object",
+            "description": "Keyed by pathway number as a string; each value is the card read through that pathway strand (an array of reading parts).",
+            "additionalProperties": true
+          },
+          "themes": { "type": "object", "additionalProperties": true },
+          "bm": { "type": "object", "additionalProperties": true }
+        }
+      }
+    }
+  }
+}

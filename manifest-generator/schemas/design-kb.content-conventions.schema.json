@@ -1,0 +1,112 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://excelling.cardiffmet/schemas/design-kb.content-conventions.schema.json",
+  "title": "design-kb: content conventions",
+  "description": "Rules for what content must DO regardless of which component realises it \u2014 sibling to design-kb.activity-patterns.json in shape (kbVersion + a flat array of typed entries, additionalProperties false throughout), not an extension of it: activity-patterns answers 'which component realises this', these entries answer 'what must the content do regardless of component'. Opened 14 Sep 2026 with Phase 4 cluster 2's six content-convention rulings (A12, A37, A30, A32, A31, A13); scope is not limited to that cluster \u2014 later Phase 4 clusters (knowledge-check spec, summative, terminology, generation defects) land here too, so scope.kind distinguishes role-bound conventions from cross-cutting ones that name no single role.",
+  "type": "object",
+  "required": ["kbVersion", "conventions"],
+  "properties": {
+    "kbVersion": { "$ref": "common.schema.json#/$defs/kbVersion" },
+    "conventions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "action", "status", "scope", "name", "rulings", "sourcePointer"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^content-conventions/[a-z0-9-]+$"
+          },
+          "action": {
+            "type": "string",
+            "pattern": "^A[0-9]+$",
+            "description": "Traceability to the action row this entry rules on, in docs/project/audit-2026-09/audit-actions-arising.md."
+          },
+          "status": {
+            "enum": ["open", "ruled, implementation open", "taxonomy settled, implementation open", "landed"],
+            "description": "Verbatim vocabulary from audit-actions-arising.md line 10, reused rather than a parallel enum so the two files never drift into two different status languages for the same fact."
+          },
+          "scope": {
+            "type": "object",
+            "description": "What this convention governs. kind=role for entries bound to one of the twelve content roles (cluster 2's six all are); kind=cross-cutting for future entries that name no single role (e.g. a terminology convention spanning every role). NB for the next author: kind=cross-cutting has no instance yet \u2014 all six entries this store opened with (14 Sep 2026) are kind=role. The cross-cutting shape is provided ahead of need for the clusters it is named for (knowledge-check spec, summative, terminology, generation defects), not proven by any real entry; treat it as designed-for, not tested, until the first cross-cutting entry lands.",
+            "required": ["kind"],
+            "properties": {
+              "kind": { "enum": ["role", "cross-cutting"] },
+              "role": {
+                "enum": ["orientation", "learning-outcomes", "concept", "worked-example", "practical-guidance", "knowledge-check", "reflective", "reflective-task", "summary", "references", "summative", "furniture"],
+                "description": "Required when kind=role. Same twelve-role enum as design-kb.skeletons.json (duplicated inline rather than cross-file $ref, matching that schema's own convention of repeating the enum at each point of use rather than centralising it)."
+              },
+              "topic": {
+                "type": "string",
+                "description": "Required when kind=cross-cutting. Free-text naming what the convention spans, e.g. terminology, generation-defects."
+              },
+              "unit": {
+                "enum": ["block", "section"],
+                "default": "block",
+                "description": "The structural unit the convention attaches to. Defaults to block; A30 is the first entry that must attach at section level (the rule holds across the section's blocks jointly, not on any one block in isolation)."
+              }
+            },
+            "if": {
+              "properties": { "kind": { "const": "role" } },
+              "required": ["kind"]
+            },
+            "then": { "required": ["role"] },
+            "else": { "required": ["topic"] },
+            "additionalProperties": false
+          },
+          "name": {
+            "type": "string",
+            "description": "Short title, e.g. Concept-group heading convention."
+          },
+          "namedPattern": {
+            "type": "string",
+            "description": "Optional: a named pattern this convention establishes or references, e.g. diagnostic-concept (A37). Distinct from activity-patterns/* ids \u2014 this names a content-shape pattern, not a component realisation."
+          },
+          "rulings": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "type": "string" },
+            "description": "The ruling text, ordered. Several actions carry numbered sub-rulings (e.g. A12's three, A13's two); each is its own array item, in the order ruled."
+          },
+          "calibratingCase": {
+            "type": "object",
+            "description": "A concrete case the rule cannot be honestly stated without, per A12's own ruling (a substantive-restatement test needs a case that distinguishes it from literal-identity, not a one-line fact). Optional \u2014 only used where the ruling itself requires a calibrating example to be legible.",
+            "required": ["description", "sourcePointer"],
+            "properties": {
+              "description": { "type": "string" },
+              "sourcePointer": { "$ref": "common.schema.json#/$defs/citation" }
+            },
+            "additionalProperties": false
+          },
+          "dependsOn": {
+            "type": "array",
+            "items": { "type": "string", "pattern": "^A[0-9]+$" },
+            "description": "Action ids this ruling depends on and cannot be read independently of, e.g. A30 depends on A37 and A55."
+          },
+          "amends": {
+            "type": "array",
+            "items": { "$ref": "common.schema.json#/$defs/citation" },
+            "description": "Docs this ruling supersedes or amends without editing them this sitting \u2014 the entry records the supersession, the doc itself is edited later. Precedent: design-kb.skeletons.json's wrapper-close archetype notes, which record superseding open-decisions.md content without editing that file in the same sitting."
+          },
+          "leftOpen": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Questions the ruling explicitly declines to settle, stated so a reader does not mistake silence for an oversight."
+          },
+          "records": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Standalone correction notes carried by the ruling that are not themselves rulings, e.g. A32's eight-vs-twelve-role taxonomy correction, A13's note that AWM has zero forward moves."
+          },
+          "sourcePointer": {
+            "$ref": "common.schema.json#/$defs/citation",
+            "description": "Points at the action's own row in audit-actions-arising.md \u2014 the durable, repo-tracked record of the ruling \u2014 never at ephemeral working files outside the repo."
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

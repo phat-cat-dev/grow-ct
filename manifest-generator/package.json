@@ -1,0 +1,20 @@
+{
+  "name": "manifest-generator",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Standalone Stage-A gate->manifest generator (extracted from adapt3). No Adapt framework / grunt / adapt-install dependency. Wired into grow-ct as a toolchain.",
+  "type": "commonjs",
+  "scripts": {
+    "new-course": "node tools/new-course.js",
+    "validate": "python3 tools/validate-design-schemas.py",
+    "validate-record": "python3 tools/validate-gate-record.py",
+    "gate-order": "node tools/gate-order.js",
+    "phase-confirm": "node tools/phase-confirm.js",
+    "completeness": "node tools/manifest-completeness.js",
+    "render": "node tools/render-course-spec.js",
+    "demo": "node tools/new-course.js --slug=example-course --answers=examples/onb-answers.example.json && node tools/render-course-spec.js --course=example-course"
+  },
+  "dependencies": {
+    "fs-extra": "^11.2.0"
+  }
+}

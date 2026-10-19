@@ -1,0 +1,86 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://excelling.cardiffmet/schemas/hecos-kb.schema.json",
+  "title": "hecos-kb: the HESA HECoS subject vocabulary store",
+  "description": "Schema for tools/subject/core/vocab/hecos.json (formerly vocab-kb/hecos.json; moved under TLS-1, HMD-1, adp-0204) (HESA Higher Education Classification of Subjects, landed HSV-1, 26 Sep 2026). One entry per HECoS code: its term, definition, scope note, its CAH3 classification (cross-checked against tools/subject/core/vocab/cah.json by the validator, not enforceable by JSON Schema alone), its non-preferred terms and its related codes. A separate nonVocabularyMappings list holds codes named in HESA's mapping data that are absent from HESA's vocabulary data itself (e.g. 200001), so they are never mistaken for a selectable term. House convention: this schema $refs only into common.schema.json, never into itself, for the same offline-resolution reason vocab-kb.schema.json documents.",
+  "type": "object",
+  "required": ["source", "terms", "nonVocabularyMappings"],
+  "properties": {
+    "source": {
+      "type": "object",
+      "description": "Provenance for the vocabulary as a whole: issuer, release, licence, where and how it was retrieved, and the source files it was built from.",
+      "required": ["issuer", "vocabulary", "release", "retrieved", "licence", "provenance", "files"],
+      "properties": {
+        "issuer": { "type": "string", "description": "Publishing body, e.g. HESA." },
+        "vocabulary": { "type": "string", "description": "Name of the vocabulary, e.g. Higher Education Classification of Subjects (HECoS)." },
+        "release": { "type": ["string", "null"], "description": "HESA's own release/version label for HECoS, or null if HESA's pages give none." },
+        "retrieved": { "type": "string", "format": "date", "description": "Date the vocabulary was retrieved." },
+        "licence": {
+          "type": "object",
+          "description": "The vocabulary's own licence, if HESA states one for it.",
+          "required": ["value", "url", "note"],
+          "properties": {
+            "value": { "type": ["string", "null"], "description": "The licence identifier, e.g. CC-BY-4.0, or null if HESA states none." },
+            "url": { "type": ["string", "null"], "description": "The page stating the licence (or its absence), or null." },
+            "note": { "type": ["string", "null"], "description": "Free-text explaining the licence value." }
+          },
+          "additionalProperties": false
+        },
+        "provenance": { "type": "string", "description": "How this copy reached the repo, e.g. supplied by Abbott, downloaded from HESA." },
+        "files": {
+          "type": "array",
+          "description": "The source CSV(s) this store was built from: name, content hash, and data-row count, so a re-run can be checked for drift.",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": ["name", "sha256", "dataRows"],
+            "properties": {
+              "name": { "type": "string" },
+              "sha256": { "type": "string", "description": "SHA-256 of the file's bytes with a trailing newline stripped." },
+              "dataRows": { "type": "integer", "minimum": 0, "description": "Row count excluding the header." }
+            },
+            "additionalProperties": false
+          }
+        },
+        "note": { "type": "string", "description": "Free-text provenance detail, e.g. that HESA's pages give no HECoS version or release date." }
+      },
+      "additionalProperties": false
+    },
+    "terms": {
+      "type": "array",
+      "description": "One entry per HECoS code in HESA's vocabulary data. Zero entries is a fail, never a vacuous pass.",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "description": "A HECoS term row.",
+        "required": ["code", "term", "definition", "scopeNote", "cah3", "nonPreferredTerms", "relatedCodes"],
+        "properties": {
+          "code": { "type": "string", "description": "HECoS subject code, e.g. 100003." },
+          "term": { "type": "string", "description": "HESA's own term, stored exactly as supplied: never rewritten, recased or corrected." },
+          "definition": { "type": "string", "description": "HESA's own definition, stored exactly as supplied." },
+          "scopeNote": { "type": ["string", "null"], "description": "HESA's own scope note, or null where HESA supplies none." },
+          "cah3": { "type": "string", "description": "The CAH3 code this term maps to. Structural-invariant checked (resolves to an existing cah3 row in tools/subject/core/vocab/cah.json), not enforceable by JSON Schema alone." },
+          "nonPreferredTerms": { "type": "array", "items": { "type": "string" }, "description": "Alternate terms HESA records for this code. Empty list where HESA records none." },
+          "relatedCodes": { "type": "array", "items": { "type": "string" }, "description": "Other HECoS codes HESA records as related to this one. Empty list where HESA records none." }
+        },
+        "additionalProperties": false
+      }
+    },
+    "nonVocabularyMappings": {
+      "type": "array",
+      "description": "HECoS codes named in HESA's mapping data that are absent from HESA's vocabulary data itself, e.g. 200001. Never among terms; always non-selectable.",
+      "items": {
+        "type": "object",
+        "required": ["code", "label", "cah3", "selectable"],
+        "properties": {
+          "code": { "type": "string" },
+          "label": { "type": "string", "description": "HESA's own label for the code, stored exactly as supplied." },
+          "cah3": { "type": "string" },
+          "selectable": { "const": false, "description": "Always false: a non-vocabulary mapping is never offered as a choice." }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

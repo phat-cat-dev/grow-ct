@@ -1,0 +1,75 @@
+{
+  "section": "accent-spectrum",
+  "schemaVersion": "0.1.0",
+  "kind": "spectrum",
+  "note": "The 12-family accent spectrum — a SPECTRUM section schema, a third shape beside the flat seed/token sections (colour.json) and the nested tree (semantics.json). It is NOT the UI primary/accent chain (that is colour.json's accent* tokens, the chosen primary at the role lightnesses); this is the full named-colour palette an author reaches for directly. The whole spectrum cascades off ONE authorable choice, the primary dark-neutral `dark-color-1`: its hue names the family it lands in, its saturation is the shared chroma every family is rendered at, and its computed shade-depth sets the ladder anchor (and the per-rung offset) for all 12. Choosing a dark-blue therefore populates `accent-blue-dark-80` (its own anchor) AND the entire blue ladder AND the other 11 families, with no further input. A-v2 rungs (ruled 12 Oct 2026): band labels are the fixed round set 10..90, the anchor's label snaps to the nearest 10 (a dark-neutral at 84% shade is labelled `-dark-80`), and every rung's VALUE = label + offset (offset = anchor-shade - round10(anchor-shade)), so the labels stay clean and identical across families while the values ride true to the user's exact colour. The light ladder is the mirror (same offset, mixed toward white instead of black). The 20 CM curated colours fold in as NAMED OVERRIDES that pin specific family rungs where the house palette differs from the formula default. Token grammar (theme-formula-map.md 4): L5 authorable template `--ab-theme-pf-<theme>-tmp-<subtheme>-<n>-<formula>-accent-<family>-<dark|light>-<NN>` (shipped default: theme=default, subtheme=default, n=1, formula=mono; the colour-theory rotation sets complementary/split-a/split-b/triad-a/triad-b/analogous-lo/analogous-hi are OPTIONAL engine output — generated as L4 defaults and hooked at L3 alongside mono, present on the cascade whether or not a theme touches them, R2 12 Oct 2026). L4 default `--ab-base-pf-default-accent-<family>-<dark|light>-<NN>`, L3 pivot `--ab-base-accent-<family>-<dark|light>-<NN>` = var(L5, L4). Published to a LOCKED user scheme the template markers drop: `--ab-thm-<theme>-<subtheme>-<n>-<formula>-accent-…` (theme-pf -> thm, tmp removed — the -pf-/-tmp- role markers earn their place only in the authoring layers). Fold-tool auto-generation of this spectrum shape is a follow-up (the fold tool currently projects flat sections; semantics + spectrum are hand-compiled pending that). Worked implementation: ab-palette.less / ab-schemes.less (pending). Formula: theme-formula-map.md 2.8.",
+
+  "darkNeutrals": {
+    "note": "The authorable dark-neutrals — the ONLY hand-set values for the whole spectrum. Deliberately NOT under a top-level `seeds`/`tokens` key: the fold tool's flat loop (fold-section-schemas.js) would otherwise mis-emit them as flat colour tokens, and this spectrum shape's fold support is a follow-up (as with semantics.json's `shared`/`sets`). Greys stay achromatic and are NOT families here (they live on the neutral spine, colour.json / theme-formula-map.md 2.2). dark-color-1 is mandatory and drives everything; dark-color-2/-3 optionally pin a second/third family (by colour-theory rotation off dark-color-1, or a manual hex).",
+    "black-subtle": { "kind": "color", "default": "#1a1a1a", "themeable": true,  "template": { "label": "Black (subtle)", "input": "color", "presets": ["full"] } },
+    "dark-grey":    { "kind": "color", "default": "#6d6d6d", "themeable": true,  "template": { "label": "Dark grey",      "input": "color", "presets": ["full"] } },
+    "dark-color-1": { "kind": "color", "default": "#0a2a3d", "themeable": true,  "required": true,  "template": { "label": "Primary dark-neutral (drives the whole spectrum)", "input": "color", "presets": ["basic", "standard", "full"] } },
+    "dark-color-2": { "kind": "color", "default": null,      "themeable": true,  "required": false, "template": { "label": "Second dark-neutral (optional — pins a second family)", "input": "color", "presets": ["standard", "full"] } },
+    "dark-color-3": { "kind": "color", "default": null,      "themeable": true,  "required": false, "template": { "label": "Third dark-neutral (optional — pins a third family)",  "input": "color", "presets": ["full"] } }
+  },
+
+  "whiteSubtle": {
+    "note": "The near-white endpoint (light-mode page surface), DERIVED not hand-set, with an end-user choice surfaced in the template (theme-formula-map.md 2.9). Both sources start at the plain invert of their source; nudge shifts from there.",
+    "source": { "kind": "enum", "values": ["mirror", "primary"], "default": "mirror", "themeable": true, "template": { "label": "White-subtle source", "input": "select", "options": [{ "value": "mirror", "label": "Mirror (lightness invert of black-subtle)" }, { "value": "primary", "label": "Primary-influenced (faint tint of dark-color-1)" }], "presets": ["standard", "full"] } },
+    "nudge":  { "kind": "percent", "default": "0%", "themeable": true, "template": { "label": "White-subtle nudge (+/- lightness)", "input": "percent", "presets": ["full"] } }
+  },
+
+  "greyScale": {
+    "note": "The grey ladder, built off dark-grey via the A-v2 band mechanics (round labels 10..90, offset on the grey's own depth) — a first-class laddered family used heavily in dark mode (theme-formula-map.md 2.9).",
+    "mode": { "kind": "enum", "values": ["pure", "neutral-tinted"], "default": "pure", "themeable": true, "template": { "label": "Grey scale", "input": "select", "options": [{ "value": "pure", "label": "Pure (S=0, true neutral grey)" }, { "value": "neutral-tinted", "label": "Neutral-tinted (~4-6% of the set neutral hue)" }], "presets": ["standard", "full"] } }
+  },
+
+  "greyscaleTransform": {
+    "note": "STUB (theme-level, theme-formula-map.md 5): render a whole theme/sub-theme in greys, as a design mode and a delivery mode. Desaturation is LUMINANCE-CORRECTED (perceptual grey), not plain S->0. Shape (theme-level mode and/or a formula=greyscale set) and luminance weights to be designed when built; recorded so the capability is not lost.",
+    "status": "stub",
+    "desaturation": "luminance-corrected"
+  },
+
+  "shared": {
+    "note": "Derived once from dark-color-1, then shared by every family. hue(x)/sat(x)/shadeDepth(x) read the respective channel off the chosen colour; shadeDepth is the % mix toward black that reproduces its lightness (a dark-blue at ~16% L reads as ~84).",
+    "primary-h":    { "kind": "derive", "expr": "hue(dark-color-1)",                      "note": "also becomes colour.json user-h (the UI primary) and the 2.3 brand-dark anchor hue" },
+    "accent-s":     { "kind": "derive", "expr": "sat(dark-color-1)",                      "note": "shared chroma — every family is rendered at this saturation unless a named override pins its own" },
+    "anchor-shade": { "kind": "derive", "expr": "shadeDepth(dark-color-1)",               "note": "e.g. 84" },
+    "anchor-band":  { "kind": "derive", "expr": "round10(anchor-shade)",                  "note": "e.g. 80 — the label the anchor snaps to" },
+    "offset":       { "kind": "derive", "expr": "anchor-shade - anchor-band",             "note": "e.g. +4 — added to every band's label to get its true value, both ladders" }
+  },
+
+  "families": [
+    { "name": "red",     "hue": 0 },
+    { "name": "orange",  "hue": 30 },
+    { "name": "amber",   "hue": 55 },
+    { "name": "lime",    "hue": 90 },
+    { "name": "green",   "hue": 130 },
+    { "name": "emerald", "hue": 160 },
+    { "name": "teal",    "hue": 185 },
+    { "name": "azure",   "hue": 205 },
+    { "name": "blue",    "hue": 225 },
+    { "name": "indigo",  "hue": 265 },
+    { "name": "violet",  "hue": 295 },
+    { "name": "rose",    "hue": 330 }
+  ],
+
+  "bands": {
+    "note": "Fixed round labels, identical across all families and both ladders. The dark ladder mixes the family base toward black; the light ladder mixes it toward white (the mirror). A band's true mix-% = its label + shared.offset.",
+    "dark":  [10, 20, 30, 40, 50, 60, 70, 80, 90],
+    "light": [10, 20, 30, 40, 50, 60, 70, 80, 90]
+  },
+
+  "derive": {
+    "note": "Per family F (fixed hue Hf) and band label L. base is F's representative colour at the shared chroma; the ladders are shade/tint mixes off it. The family dark-color-1 names (nearest Hf) may additionally PIN its anchor rung to dark-color-1 for bit-exactness; the formula default is in the character of the choice, not necessarily identical.",
+    "base":          "hsl(Hf accent-s 50%)",
+    "dark-<L>":      "color-mix(in srgb, base, black calc(L + offset) * 1%)",
+    "light-<L>":     "color-mix(in srgb, base, white calc(L + offset) * 1%)",
+    "primary-anchor": "accent-<familyOf(primary-h)>-dark-<anchor-band> = dark-color-1"
+  },
+
+  "overrides": {
+    "note": "The 20 CM curated accent colours (ab-palette.less) are NAMED OVERRIDES: each pins one family rung to the house value where it differs from the formula default. Example shape — a user profile sets `--ab-theme-pf-default-tmp-default-accent-blue-dark-80: var(--cm-corporate-navy)`. Overrides are applied on top of the cascaded default; an unoverridden rung keeps its derived value.",
+    "families-with-curated-colours": ["red", "orange", "amber", "green", "emerald", "teal", "azure", "blue", "indigo", "violet", "rose"]
+  }
+}

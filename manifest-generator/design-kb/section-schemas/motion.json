@@ -1,0 +1,25 @@
+{
+  "section": "motion",
+  "schemaVersion": "0.1.0",
+  "note": "Transition/animation durations + easings. The current components use literal durations (0.2s, 0.15s) and per-component vars (@flipcard-duration, @timeline-duration, the now-fixed tabs 0.2s); this schema defines the shared target tokens they should read. Every animated token is guarded by prefers-reduced-motion (per the AB base intake 'ab-motion: guard with prefers-reduced-motion').",
+
+  "seeds": {
+    "duration-fast": { "kind": "time", "default": "0.15s", "themeable": true,  "template": { "label": "Fast transition", "input": "number", "presets": ["full"] } },
+    "duration-base": { "kind": "time", "default": "0.2s",  "themeable": true,  "template": { "label": "Base transition", "input": "number", "presets": ["standard", "full"] } },
+    "duration-slow": { "kind": "time", "default": "0.4s",  "themeable": false, "template": null },
+    "easing-standard": { "kind": "easing", "default": "ease", "themeable": false, "template": null },
+    "easing-emphasis": { "kind": "easing", "default": "cubic-bezier(0.2, 0, 0, 1)", "themeable": false, "template": null }
+  },
+
+  "tokens": {
+    "duration-fast":   { "pivot": "--ab-base-duration-fast",   "kind": "ref-seed", "ref": "duration-fast",   "themeable": false, "template": null },
+    "duration-base":   { "pivot": "--ab-base-duration-base",   "kind": "ref-seed", "ref": "duration-base",   "themeable": false, "template": null },
+    "duration-slow":   { "pivot": "--ab-base-duration-slow",   "kind": "ref-seed", "ref": "duration-slow",   "themeable": false, "template": null },
+    "easing-standard": { "pivot": "--ab-base-easing-standard", "kind": "ref-seed", "ref": "easing-standard", "themeable": false, "template": null },
+    "easing-emphasis": { "pivot": "--ab-base-easing-emphasis", "kind": "ref-seed", "ref": "easing-emphasis", "themeable": false, "template": null }
+  },
+
+  "guard": {
+    "reducedMotion": "Every component consuming these wraps motion in @media (prefers-reduced-motion: reduce) { transition: none; animation: none; } — the fold tool emits a reduced-motion guard note, it does not disable the tokens themselves."
+  }
+}

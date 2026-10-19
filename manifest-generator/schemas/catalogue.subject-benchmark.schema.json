@@ -1,0 +1,167 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://excelling.cardiffmet/schemas/catalogue.subject-benchmark.schema.json",
+  "title": "catalogue: single subject benchmark",
+  "description": "catalogue/context/subject/benchmarks/<subject>.json holds one subject's benchmark as a self-contained authoring reference, parallel to catalogue/pathways/<pathway>.json but with extra layers. Built from the QAA Subject Benchmark Statement ingest (source.ingestDoc) and the subject's Adapt pathway map (source.adaptMap). The issuer's own text is copyright-held and never copied here: every statement carries our paraphrase and our practitioner/beneficiary rewrites, not the source quote. The spine is pathwayMapping: for each of the 13 Adapt pathways, how this subject's benchmark relates to it and which statements to use, with an agentInstruction on each. Deep, section-shaped objects (identity, purpose, statements[], pathwayMapping values, digest, ...) are brought across in full from the ingest and are intentionally permissive (additionalProperties allowed) so nothing useful is lost.",
+  "type": "object",
+  "required": ["subjectBenchmarkId", "subject", "issuer", "source", "statements", "pathwayMapping"],
+  "properties": {
+    "subjectBenchmarkId": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$",
+      "description": "Short id, e.g. psychology-2023. Matches this entry's id in catalogue/context/subject/benchmarks.json and the data file's basename."
+    },
+    "subject": {
+      "type": "object",
+      "required": ["name", "codes"],
+      "properties": {
+        "name": { "type": "string" },
+        "codes": {
+          "type": "array",
+          "description": "HECoS and CAH codes the statement states for this subject, so a subject context resolves to its benchmark.",
+          "items": {
+            "type": "object",
+            "required": ["scheme", "code", "label"],
+            "properties": {
+              "scheme": { "enum": ["hecos", "cah"] },
+              "code": { "type": "string" },
+              "label": { "type": "string" }
+            },
+            "additionalProperties": true
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "issuer": { "type": "string" },
+    "title": { "type": "string" },
+    "edition": { "type": "string" },
+    "published": { "type": "string" },
+    "status": { "type": "string" },
+    "levelsCovered": { "type": "array" },
+    "awardsCovered": { "type": "array" },
+    "nations": { "type": "array" },
+    "source": {
+      "type": "object",
+      "required": ["ingestId", "licence"],
+      "properties": {
+        "ingestId": { "type": "string" },
+        "ingestDoc": { "type": "object" },
+        "adaptMap": { "type": "object" },
+        "heldText": { "type": "string" },
+        "licence": { "type": "string" }
+      },
+      "additionalProperties": true
+    },
+    "identity": { "type": "object" },
+    "purpose": { "type": "object" },
+    "statedSubjects": { "type": "array" },
+    "structure": {
+      "type": "array",
+      "description": "S3 component map: the whole statement's paragraphs by number, heading and our-words gloss (the roadmap).",
+      "items": { "type": "object" }
+    },
+    "frameworkAlignment": {
+      "type": "object",
+      "description": "S5: the qualification-framework levels this statement cites (FHEQ, FQHEIS) and the crosswalks between them. Not used by the build yet; held for when framework alignment is brought in."
+    },
+    "tierReadings": {
+      "type": ["object", "null"],
+      "description": "Per-tier synthesis readings from the subject-benchmark card (integrations/cards/wide/benchmarks/<slug>.yaml). Our own words, never issuer text. Each row carries BOTH axes - our tier (introductory/intermediate/advanced) and the indicative FHEQ level - with a practice/knowledge/identity triad aggregating the statements its groundingIds cite. null when no card exists for the subject. The tier<->level overlap formula lives in the shared cross-cutting store, not per row.",
+      "properties": {
+        "rows": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["rowId", "tier", "fheqLevel"],
+            "properties": {
+              "rowId": {
+                "type": "string",
+                "description": "The card's own row key, e.g. d3, e2 (letter = tier, digit = position in tier)."
+              },
+              "tier": { "enum": ["introductory", "intermediate", "advanced"] },
+              "fheqLevel": { "type": "integer" },
+              "practice": {
+                "type": ["string", "null"],
+                "description": "What a graduate at this tier DOES, in the subject's terms."
+              },
+              "knowledge": {
+                "type": ["string", "null"],
+                "description": "What a graduate at this tier KNOWS, in the subject's terms."
+              },
+              "identity": {
+                "type": ["string", "null"],
+                "description": "Who a graduate at this tier IS as a practitioner (values, ethics, professional self)."
+              },
+              "groundingIds": {
+                "type": "array",
+                "items": { "type": "string" },
+                "description": "Statement ids (resolving in statements[]) this reading synthesises."
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        "note": {
+          "type": "string",
+          "description": "Coverage caveats, e.g. which FHEQ levels the benchmark does and does not speak at."
+        },
+        "source": { "type": "object" }
+      },
+      "additionalProperties": true
+    },
+    "themes": { "type": "array" },
+    "relations": { "type": "array" },
+    "currency": { "type": "object" },
+    "terminology": { "type": "object" },
+    "digest": {
+      "type": "object",
+      "description": "Our-words subject summary from the SB sections: definition, distinctive features, content and delivery (incl. teaching and assessment), the threshold/typical/excellent standards, professional bodies, cross-cutting references, and the subject-specific and transferable skills as beneficiary-facing can-do statements.",
+      "additionalProperties": true
+    },
+    "statements": {
+      "type": "array",
+      "description": "S4: every benchmark statement, brought across in full minus the copyright source quote. Each carries our paraphrase, the relevant metadata (statementType, rung, force, level, domain, about, verbs, award, themes, ...) and, where present, audienceVersions (forPractitioner / forBeneficiary rewrites). rung and award tie statements to tiers (threshold -> introductory, typical -> intermediate, excellent -> advanced).",
+      "items": {
+        "type": "object",
+        "required": ["id"],
+        "properties": {
+          "id": { "type": "string" },
+          "paraphrase": { "type": "string" },
+          "statementType": { "type": "string" },
+          "rung": { "type": ["string", "null"] },
+          "award": { "type": "array" },
+          "audienceVersions": {
+            "type": "object",
+            "properties": {
+              "forPractitioner": { "type": "object" },
+              "forBeneficiary": { "type": "object" }
+            },
+            "additionalProperties": true
+          }
+        },
+        "additionalProperties": true
+      }
+    },
+    "pathwayMapping": {
+      "type": "object",
+      "description": "The spine. One key per Adapt pathway id (adapt-<pathway>). Brought across from source.adaptMap: coverage counts, a summary of how this subject's benchmark bears on the pathway, and the mapped statements, each with extract (our paraphrase), agentInstruction, strength (direct/indirect), blockType and orientation (academic/professional).",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["summary", "statements"],
+        "properties": {
+          "coverage": { "type": "object" },
+          "summary": { "type": "object" },
+          "statements": { "type": "array", "items": { "type": "object" } }
+        },
+        "additionalProperties": true
+      }
+    },
+    "mapAgentInstructions": {
+      "type": "array",
+      "description": "Top-level guidance from the pathway map, e.g. where a pathway has no statement in this benchmark and content must not be invented from it.",
+      "items": { "type": "string" }
+    }
+  },
+  "additionalProperties": false
+}

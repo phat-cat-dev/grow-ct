@@ -1,0 +1,1487 @@
+{
+  "kbVersion": "0.10.0",
+  "gates": [
+    {
+      "id": "onb-01_theme-preset",
+      "name": "Theme preset",
+      "phase": "ONB",
+      "kind": "human",
+      "hardness": "hard-stop",
+      "defaultType": "none",
+      "response": {
+        "mode": "choose",
+        "prompt": "Use a theme-preset? (e.g. academic-practice-pathways, or none)",
+        "destination": "decidedValue.preset"
+      },
+      "consequenceNote": "A7-round: optional. A preset bundle (academic-practice-pathways first) scopes onb-02's themes and pre-loads crs-01_sources (assumed-approved, amendable). 'none' = fully custom path.",
+      "decidedValueShape": {
+        "type": "object",
+        "required": [
+          "preset"
+        ],
+        "properties": {
+          "preset": {
+            "type": "string",
+            "description": "A preset id, or 'none'."
+          }
+        },
+        "additionalProperties": false
+      },
+      "prosePointer": {
+        "doc": "docs/authoring/gate-redesign-2026-10-06.md",
+        "ref": "A-round"
+      },
+      "sequence": 0
+    },
+    {
+      "id": "onb-02_course-theme",
+      "name": "Course theme",
+      "phase": "ONB",
+      "kind": "agent+human",
+      "hardness": "hard-stop",
+      "defaultType": "none",
+      "dependsOn": [
+        {
+          "gate": "onb-01_theme-preset",
+          "dependencyClass": "constitutive",
+          "note": "The preset scopes which themes are offered."
+        }
+      ],
+      "response": {
+        "mode": "choose",
+        "prompt": "Select the course theme (preset: a defined pathway; no preset: give a one-sentence topic area for the agent to shape).",
+        "destination": "decidedValue.theme"
+      },
+      "generation": {
+        "trigger": "onb-01 closed",
+        "produces": "decidedValue.theme",
+        "sources": [
+          "catalogue/pathways.json",
+          "crs-01 source set (no-preset path)"
+        ],
+        "parameters": {
+          "presetPath": "dropdown of the preset's themes",
+          "noPresetPath": "user gives a one-sentence topic; agent derives the theme; user confirms"
+        }
+      },
+      "consequenceNote": "Preset chosen -> dropdown of that preset's themes (academic-practice-pathways: the 13, soon 14, pathways). No preset -> user gives a one-sentence topic area, agent turns it into the theme, user confirms.",
+      "decidedValueShape": {
+        "type": "object",
+        "required": [
+          "theme"
+        ],
+        "properties": {
+          "theme": {
+            "type": "string"
+          },
+          "themeSource": {
+            "enum": [
+              "preset",
+              "derived"
+            ]
+          }
+        },
+        "additionalProperties": false
+      },
+      "prosePointer": {
+        "doc": "docs/authoring/gate-redesign-2026-10-06.md",
+        "ref": "A-round"
+      },
+      "sequence": 1
+    },
+    {
+      "id": "onb-03_pitch",
+      "name": "Pitch",
+      "phase": "ONB",
+      "kind": "human",
+      "hardness": "hard-stop",
+      "defaultType": "none",
+      "response": {
+        "mode": "answer",
+        "prompt": "Set the pitch (tier).",
+        "destination": "decidedValue.pitch"
+      },
+      "consequenceNote": "The tier band. Loosely maps to FHEQ levels (introductory ~L3-low L5; intermediate ~L4-L6; advanced ~L5-L7). no-tier tooling not yet wired. Future per-level targeting lives in cxs-01 (institutional).",
+      "decidedValueShape": {
+        "type": "object",
+        "required": [
+          "pitch"
+        ],
+        "properties": {
+          "pitch": {
+            "enum": [
+              "introductory",
+              "intermediate",
+              "advanced",
+              "no-tier"
+            ]
+          }
+        },
+        "additionalProperties": false
+      },
+      "prosePointer": {
+        "doc": "docs/authoring/gate-redesign-2026-10-06.md",
+        "ref": "A-round"
+      },
+      "sequence": 2
+    },
+    {
+      "id": "onb-04_naming",
+      "name": "Naming",
+      "phase": "ONB",
+      "kind": "agent+human",
+      "hardness": "hard-stop",
+      "defaultType": "none",
+      "dependsOn": [
+        {
+          "gate": "onb-02_course-theme",
+          "dependencyClass": "constitutive",
+          "note": "Name/slug derive from theme."
+        },
+        {
+          "gate": "onb-03_pitch",
+          "dependencyClass": "constitutive",
+          "note": "Name/slug derive from pitch."
+        }
+      ],
+      "response": {
+        "mode": "confirm",
+        "prompt": "Confirm (or amend) the proposed course name and slug.",
+        "destination": "decidedValue"
+      },
+      "generation": {
+        "trigger": "onb-02 and onb-03 closed",
+        "produces": "decidedValue.slug + display name",
+        "sources": [],
+        "parameters": {
+          "derive": "name + slug from theme + pitch"
+        }
+      },
+      "consequenceNote": "Agent derives course name + slug from theme + pitch; on confirm, tooling creates the folder and answer-sheet file. No files can be created until answered. (Carries old crs-03_vocabulary shape.)",
+      "decidedValueShape": {
+        "type": "object",
+        "required": [
+          "pathwayName",
+          "tierName",
+          "slug"
+        ],
+        "properties": {
+          "pathwayName": {
+            "type": "string"
+          },
+          "tierName": {
+            "type": "string"
+          },
+          "slug": {
+            "type": "string",
+            "pattern": "^[a-z0-9-]+$"
+          },
+          "shortSlug": {
+            "type": "string",
+            "pattern": "^[a-z0-9-]+$",
+            "description": "Short slug <theme(6)>-<tier|level>-<context(6)>, context omitted for the base course, e.g. undlaf-intro (base) / undlaf-intro-psycho (psychology build). Used for export-bundle folder/file names (course-export.js, 9 Oct 2026)."
+          }
+        }
+      },
+      "prosePointer": {
+        "doc": "docs/authoring/gate-redesign-2026-10-06.md",
+        "ref": "A-round"
+      },
+      "sequence": 3
+    },
+    {
+      "id": "cxs-01_institutional-context",
+      "name": "Institutional context",
+      "phase": "CXS",
+      "kind": "auto",
+      "reserved": true,
+      "hardness": "advisory",
+      "defaultType": "none",
+      "consequenceNote": "Reserved: future institutional/module process (the plug point for a module's own framing, and future per-level targeting). Auto-passes 'none'.",
+      "prosePointer": {
+        "doc": "docs/authoring/gate-redesign-2026-10-06.md",
+        "ref": "A-round"
+      },
+      "sequence": 4
+    },
+    {
+      "id": "cxs-02_subject-context",
+      "name": "Subject context",
+      "phase": "CXS",
+      "kind": "auto",
+      "reserved": true,
+      "hardness": "advisory",
+      "defaultType": "none",
+      "consequenceNote": "Reserved: future human CAH 1-3 grouping select, which parameterises the agent source sweep. Auto-passes 'none'.",
+      "prosePointer": {
+        "doc": "docs/authoring/gate-redesign-2026-10-06.md",
+        "ref": "A-round"
+      },
+      "sequence": 5
+    },
+    {
+      "id": "cxs-03_qualifiers",
+      "name": "Qualifiers",
+      "phase": "CXS",
+      "kind": "auto",
+      "reserved": true,
+      "hardness": "advisory",
+      "defaultType": "none",
+      "consequenceNote": "Reserved: future human select (<=3 from docs/authoring/qualifier-list-2026-10-04.md). Auto-passes 'none'.",
+      "prosePointer": {
+        "doc": "docs/authoring/gate-redesign-2026-10-06.md",
+        "ref": "A-round"
+      },
+      "sequence": 6
+    },
+    {
+      "id": "cxs-04_referencing-style",
+      "name": "Referencing style",
+      "phase": "CXS",
+      "kind": "auto",
+      "reserved": true,
+      "hardness": "advisory",
+      "defaultType": "none",
+      "consequenceNote": "Referencing is ALWAYS set here. Auto-passes the default 'Harvard (Cite Them Right)'; this is the token source CXP inherits (referencing = token-substitution coupling). The one CXS gate with a live default, not 'none'.",
+      "prosePointer": {
+        "doc": "docs/authoring/gate-redesign-2026-10-06.md",
+        "ref": "A-round"
+      },
+      "sequence": 7
+    },
+    {
+      "id": "cxs-05_external-standards",
+      "name": "External standards",
+      "phase": "CXS",
+      "kind": "auto",
+      "reserved": true,
+      "hardness": "advisory",
+      "defaultType": "none",
+      "consequenceNote": "Reserved: future human select; fed by the standing benchmark/standards corpus. Auto-passes 'none'.",
+      "prosePointer": {
+        "doc": "docs/authoring/gate-redesign-2026-10-06.md",
+        "ref": "A-round"
+      },
+      "sequence": 8
+    },
+    {
+      "id": "cxs-06_resources",
+      "name": "Resources drawer",
+      "phase": "CXS",
+      "kind": "auto",
+      "reserved": true,
+      "hardness": "advisory",
+      "defaultType": "none",
+      "consequenceNote": "Reserved: the course's resources drawer (course.json _resources). The old A7 resources gate has no live counterpart in the six-phase model; kept here as a reserved placeholder for a future process, auto-passes 'none'. Added 8 October 2026 (Abbott: keep a reserved gate for the resources drawer, in CXS). While reserved it writes nothing; the shell ships the adapt-contrib-resources extension at its own default until a live process fills this gate.",
+      "prosePointer": {
+        "doc": "docs/authoring/gate-redesign-2026-10-06.md",
+        "ref": "A-round"
+      },
+      "sequence": 9
+    },
+    {
+      "id": "crs-01_sources",
+      "name": "Sources",
+      "phase": "CRS",
+      "kind": "human",
+      "hardness": "hard-stop",
+      "defaultType": "none",
+      "dependsOn": [
+        {
+          "gate": "onb-02_course-theme",
+          "dependencyClass": "constitutive",
+          "note": "Sources are themed to the pathway; theme must be set first."
+        }
+      ],
+      "response": {
+        "mode": "answer",
+        "prompt": "Name the themed source set the agent searches (book default; add/remove).",
+        "destination": "decidedValue.sources"
+      },
+      "consequenceNote": "After theme+pitch. Points the agent at the theme's pathway doc-set (core + source-map + adapt-integration) and the book (default). Preset pre-loads assumed-approved (amend/remove); no preset -> user supplies, or agent suggests if theme matches the library. Feeds every agent search (CRS, LES, CXP). Standing benchmark corpus is always-on in addition.",
+      "decidedValueShape": {
+        "type": "object",
+        "required": [
+          "sources"
+        ],
+        "properties": {
+          "sources": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": [
+                "ref"
+              ],
+              "properties": {
+                "ref": {
+                  "type": "string"
+                },
+                "kind": {
+                  "type": "string"
+                },
+                "role": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "prosePointer": {
+        "doc": "docs/authoring/gate-redesign-2026-10-06.md",
+        "ref": "A-round"
+      },
+      "sequence": 10
+    },
+    {
+      "id": "crs-02_thematic-scope",
+      "name": "Thematic scope",
+      "phase": "CRS",
+      "kind": "agent+human",
+      "hardness": "hard-stop",
+      "defaultType": "none",
+      "dependsOn": [
+        {
+          "gate": "crs-01_sources",
+          "dependencyClass": "constitutive",
+          "note": "Scope is read from the chosen source set."
+        }
+      ],
+      "sourceConsultation": {
+        "triggeringFacets": [
+          "level"
+        ],
+        "authorityLevels": [
+          "sector"
+        ]
+      },
+      "response": {
+        "mode": "confirm",
+        "prompt": "Confirm/amend the thematic scope and the 5-10 thematic strands (regenerate with steer available).",
+        "destination": "decidedValue"
+      },
+      "generation": {
+        "trigger": "crs-01 closed",
+        "produces": "decidedValue (scope + subThemes)",
+        "sources": [
+          "crs-01 source set: pathway core Part A + source-map"
+        ],
+        "parameters": {
+          "method": "docs/authoring/source-to-structure-method.md",
+          "subThemes": "propose 5-10 strands"
+        }
+      },
+      "consequenceNote": "Chapters/sections in scope, tier-band window, prior-experience anchor, + 5-10 thematic strands (candidate lesson topics). Most consequential upstream gate. Strands: human approve/amend/remove/regenerate.",
+      "decidedValueShape": {
+        "type": "object",
+        "required": [
+          "sourceType",
+          "sectionsInScope",
+          "tierWindow",
+          "priorExperienceAnchor"
+        ],
+        "properties": {
+          "sourceType": {
+            "enum": [
+              "book-derived",
+              "authored"
+            ]
+          },
+          "chapter": {
+            "type": "string"
+          },
+          "sectionsInScope": {
+            "type": "array"
+          },
+          "sectionsOutOfScope": {
+            "type": "array"
+          },
+          "tierWindow": {
+            "type": "object",
+            "required": [
+              "taskComplexity"
+            ],
+            "properties": {
+              "goal": {
+                "type": "string"
+              },
+              "cognitiveDemand": {
+                "type": "string"
+              },
+              "taskComplexity": {
+                "type": "string"
+              },
+              "autonomy": {
+                "type": "string"
+              },
+              "voiceBand": {
+                "type": "string"
+              },
+              "outcomeVerbs": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "priorExperienceAnchor": {
+            "type": "string"
+          },
+          "subThemes": {
+            "type": "array",
+            "minItems": 5,
+            "maxItems": 10,
+            "description": "Thematic strands: 5-10 sub-themes, candidate lesson topics (A5).",
+            "items": {
+              "type": "object",
+              "required": [
+                "id",
+                "label"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "label": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "prosePointer": {
+        "doc": "docs/authoring/gate-redesign-2026-10-06.md",
+        "ref": "A-round"
+      },
+      "sequence": 11
+    },
+    {
+      "id": "crs-03_course-outcomes",
+      "name": "Course outcomes",
+      "phase": "CRS",
+      "kind": "agent+human",
+      "hardness": "hard-stop",
+      "defaultType": "none",
+      "dependsOn": [
+        {
+          "gate": "crs-02_thematic-scope",
+          "dependencyClass": "constitutive",
+          "note": "COE-1: outcomes depend on scope (constitutive)."
+        }
+      ],
+      "response": {
+        "mode": "confirm",
+        "prompt": "Confirm/amend the 3-5 course outcomes and their confidence statements + measuring MCQs.",
+        "destination": "decidedValue"
+      },
+      "generation": {
+        "trigger": "crs-02 closed",
+        "produces": "decidedValue (courseOutcomes + courseOutcomeBanks)",
+        "sources": [
+          "thematic scope",
+          "pathway core A10 capabilities"
+        ],
+        "parameters": {
+          "count": "3-5, 3 default, reason if 4-5"
+        }
+      },
+      "consequenceNote": "3-5 course outcomes (3 default; reason if 4-5). Also produces, per outcome at CRS, a confidence statement + 3 general MCQ sets (courseOutcomeBanks) used on the SUMM page (OBK-1). Lesson-outcome banks are produced later at les-01.",
+      "decidedValueShape": {
+        "type": "object",
+        "properties": {
+          "courseOutcomes": {
+            "type": "array",
+            "minItems": 3,
+            "maxItems": 5,
+            "items": {
+              "type": "object",
+              "required": [
+                "id",
+                "text"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "text": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "courseOutcomeCountReason": {
+            "type": "string"
+          },
+          "courseOutcomeBanks": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "outcomeId",
+                "confidenceStatement",
+                "mcqSets"
+              ],
+              "properties": {
+                "outcomeId": {
+                  "type": "string"
+                },
+                "confidenceStatement": {
+                  "type": "object",
+                  "required": [
+                    "text",
+                    "status"
+                  ],
+                  "properties": {
+                    "text": {
+                      "type": "string"
+                    },
+                    "status": {
+                      "type": "string",
+                      "enum": [
+                        "drafted",
+                        "confirmed"
+                      ]
+                    }
+                  }
+                },
+                "mcqSets": {
+                  "type": "array",
+                  "minItems": 3,
+                  "maxItems": 3,
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "coupling",
+                      "crossLessonApplication",
+                      "feedbackOnEveryAnswer",
+                      "status"
+                    ],
+                    "properties": {
+                      "coupling": {
+                        "type": "string"
+                      },
+                      "crossLessonApplication": {
+                        "type": "boolean"
+                      },
+                      "feedbackOnEveryAnswer": {
+                        "type": "boolean"
+                      },
+                      "status": {
+                        "type": "string",
+                        "enum": [
+                          "drafted",
+                          "confirmed"
+                        ]
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "additionalProperties": false,
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "courseOutcomes": {
+                  "minItems": 4
+                }
+              },
+              "required": [
+                "courseOutcomes"
+              ]
+            },
+            "then": {
+              "required": [
+                "courseOutcomeCountReason"
+              ]
+            }
+          }
+        ]
+      },
+      "prosePointer": {
+        "doc": "docs/authoring/gate-redesign-2026-10-06.md",
+        "ref": "A-round"
+      },
+      "sequence": 12
+    },
+    {
+      "id": "crs-04_lesson-map",
+      "name": "Lesson map",
+      "phase": "CRS",
+      "kind": "agent+human",
+      "hardness": "hard-stop",
+      "defaultType": "none",
+      "dependsOn": [
+        {
+          "gate": "crs-03_course-outcomes",
+          "dependencyClass": "constitutive",
+          "note": "Lessons serve the course outcomes."
+        },
+        {
+          "gate": "crs-02_thematic-scope",
+          "dependencyClass": "constitutive",
+          "note": "Lessons derive from scope + strands."
+        }
+      ],
+      "response": {
+        "mode": "confirm",
+        "prompt": "Agree the lesson map; per lesson approve/amend/reject+regenerate; add/remove lessons.",
+        "destination": "decidedValue"
+      },
+      "generation": {
+        "trigger": "crs-03 closed",
+        "produces": "decidedValue (lessons + progression)",
+        "sources": [
+          "course outcomes",
+          "thematic strands",
+          "source search"
+        ],
+        "parameters": {
+          "mapping": "no rigid 1-per-outcome/strand; propose freely",
+          "sourceBinding": "bind each lesson's book source section(s) here"
+        }
+      },
+      "consequenceNote": "Per lesson: key, title, topic, brief description, lesson outcomes, source section(s); + cross-lesson progression. Last CRS step before the course spec. Feeds the course pack. (Carries old gates/A3 shape; lesson outcomes folded in from old B1.)",
+      "decidedValueShape": {
+        "type": "object",
+        "properties": {
+          "lessons": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "key"
+              ],
+              "properties": {
+                "key": {
+                  "type": "string"
+                },
+                "mainCourseOutcome": {
+                  "type": "string"
+                },
+                "sourceSections": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "sourceId",
+                      "chunkId",
+                      "chapter",
+                      "chapterTitle",
+                      "heading",
+                      "pages"
+                    ],
+                    "properties": {
+                      "sourceId": {
+                        "type": "string"
+                      },
+                      "chunkId": {
+                        "type": "string"
+                      },
+                      "chapter": {},
+                      "chapterTitle": {
+                        "type": "string"
+                      },
+                      "heading": {
+                        "type": "string"
+                      },
+                      "pages": {
+                        "type": "string"
+                      }
+                    }
+                  }
+                },
+                "title": {
+                  "type": "string"
+                },
+                "topic": {
+                  "type": "string"
+                },
+                "description": {
+                  "type": "string"
+                },
+                "outcomes": {
+                  "type": "array",
+                  "description": "Lesson outcomes (set in the map, A6.1 amendment).",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "id",
+                      "text"
+                    ],
+                    "properties": {
+                      "id": {
+                        "type": "string"
+                      },
+                      "text": {
+                        "type": "string"
+                      },
+                      "serves": {
+                        "type": "string",
+                        "description": "the course outcome id it serves"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "progression": {
+            "type": "string",
+            "description": "Cross-lesson progression statement."
+          }
+        },
+        "additionalProperties": false
+      },
+      "prosePointer": {
+        "doc": "docs/authoring/gate-redesign-2026-10-06.md",
+        "ref": "A-round"
+      },
+      "sequence": 13
+    },
+    {
+      "id": "crs-05_course-spec",
+      "name": "Course spec",
+      "phase": "CRS",
+      "kind": "agent+human",
+      "hardness": "advisory",
+      "defaultType": "ai-proposal-stands",
+      "dependsOn": [
+        {
+          "gate": "crs-04_lesson-map",
+          "dependencyClass": "constitutive",
+          "note": "The spec is a rollup once the map is set."
+        }
+      ],
+      "generation": {
+        "trigger": "crs-04 closed",
+        "produces": "the course spec / user-facing course pack (render-doc)",
+        "sources": [
+          "all closed ONB+CRS records"
+        ],
+        "parameters": {
+          "autoStands": true
+        }
+      },
+      "consequenceNote": "Auto-stands rollup of ONB+CRS -> user-facing course pack (tools/doc-templates/course-pack.template.json). Order: Identity -> Context shell -> Thematic scope -> Thematic strands -> Course outcomes -> per-outcome -> Lesson map. No new decisions.",
+      "prosePointer": {
+        "doc": "docs/authoring/gate-redesign-2026-10-06.md",
+        "ref": "A-round"
+      },
+      "sequence": 14
+    },
+    {
+      "id": "les-01_lesson-proposal",
+      "name": "Lesson proposal",
+      "phase": "LES",
+      "kind": "agent+human",
+      "hardness": "soft",
+      "defaultType": "ai-proposal-stands",
+      "repeatsPer": "lesson",
+      "procedureFlags": {
+        "varietyView": true,
+        "candidates": true
+      },
+      "dependsOn": [
+        {
+          "gate": "crs-04_lesson-map",
+          "dependencyClass": "constitutive",
+          "note": "Builds on the map's title/topic/description/outcomes for this lesson."
+        },
+        {
+          "gate": "crs-02_thematic-scope",
+          "dependencyClass": "substantive",
+          "note": "Tier band constrains interior + activity complexity."
+        }
+      ],
+      "sourceConsultation": {
+        "triggeringFacets": [
+          "activity"
+        ],
+        "authorityLevels": [
+          "institutional"
+        ]
+      },
+      "response": {
+        "mode": "confirm",
+        "prompt": "Confirm/amend the lesson's interior design and activities (regenerate+steer available).",
+        "destination": "decidedValue"
+      },
+      "generation": {
+        "trigger": "crs-04 closed (per lesson)",
+        "produces": "the lesson's interior design + activities",
+        "sources": [
+          "pathway core A10 templates + Part C process",
+          "crs-01 source set"
+        ],
+        "parameters": {
+          "interactivityProposals": "3 different non-question components from activity-patterns + palette"
+        }
+      },
+      "consequenceNote": "One consolidated per-lesson gate (A6.2): interior design (knowledge/interactivity, worked example, pacing, visuals) + activities (formative check, reflective prompt, 3 interactivity proposals) + per-slot coupling marking. NO confidence (course-level, C-PRE/C-POST fed by crs-03). Outcomes are set at crs-04, not here. Merges old B2-B7 and crs-06 lessonOutcomeBanks.",
+      "decidedValueShape": {
+        "type": "object",
+        "properties": {
+          "conceptTitle": {
+            "type": "string",
+            "description": "B2: the concept's own wording."
+          },
+          "interiorPattern": {
+            "type": "string",
+            "description": "B2: chosen interior teaching pattern (or null for plain prose)."
+          },
+          "workedExample": {
+            "type": "string",
+            "description": "B3: worked-example design."
+          },
+          "pacing": {
+            "type": "string",
+            "description": "B6: trickle & pacing (raise-only)."
+          },
+          "visualAssets": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "placeholder": {
+                  "type": "string"
+                }
+              }
+            },
+            "description": "B7: visual-asset placeholders (raise-only)."
+          },
+          "check": {
+            "type": "object",
+            "description": "B4: formative check, three items (one per lesson outcome): item 1 general/shell-coupled (tests o1); item 2 context-coupled (tests o2); item 3 token-substitution (tests o3, shell body carrying {{context}}).",
+            "properties": {
+              "items": {
+                "type": "array",
+                "minItems": 3,
+                "maxItems": 3,
+                "items": {
+                  "type": "object",
+                  "required": [
+                    "coupling",
+                    "tests"
+                  ],
+                  "properties": {
+                    "coupling": {
+                      "type": "string"
+                    },
+                    "tests": {
+                      "type": "string"
+                    },
+                    "tokenMode": {
+                      "enum": [
+                        "generic",
+                        "cxp-fillable"
+                      ],
+                      "description": "For a token-substitution item: generic -> {{context}} fixed to 'your subject'; cxp-fillable -> pack fills context.label, floor 'your subject'. Optional; meaningful only for token-substitution coupling."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "reflectivePrompt": {
+            "type": "string",
+            "description": "B5: reflective prompt (palette/opentext)."
+          },
+          "generalMcqSet": {
+            "type": "object",
+            "required": [
+              "coupling",
+              "feedbackOnEveryAnswer",
+              "status"
+            ],
+            "properties": {
+              "coupling": {
+                "type": "string"
+              },
+              "feedbackOnEveryAnswer": {
+                "type": "boolean"
+              },
+              "status": {
+                "type": "string",
+                "enum": [
+                  "drafted",
+                  "confirmed"
+                ]
+              }
+            }
+          },
+          "contextQuestionSlot": {
+            "type": "object",
+            "required": [
+              "specification"
+            ],
+            "properties": {
+              "specification": {
+                "type": "string"
+              }
+            }
+          },
+          "activityProposals": {
+            "type": "array",
+            "minItems": 3,
+            "maxItems": 3,
+            "items": {
+              "type": "object",
+              "required": [
+                "component",
+                "status"
+              ],
+              "properties": {
+                "component": {
+                  "type": "string"
+                },
+                "status": {
+                  "type": "string",
+                  "enum": [
+                    "drafted",
+                    "confirmed"
+                  ]
+                }
+              }
+            }
+          },
+          "coupledSlots": {
+            "type": "array",
+            "description": "Per-slot coupling marking: coupled + variationType (shell-coupled | token-substitution | structured-fields | whole-prose).",
+            "items": {
+              "type": "object",
+              "required": [
+                "slot",
+                "variationType"
+              ],
+              "properties": {
+                "slot": {
+                  "type": "string"
+                },
+                "variationType": {
+                  "enum": [
+                    "shell-coupled",
+                    "token-substitution",
+                    "structured-fields",
+                    "whole-prose"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "prosePointer": {
+        "doc": "docs/authoring/gate-redesign-2026-10-06.md",
+        "ref": "A-round"
+      },
+      "sequence": 15
+    },
+    {
+      "id": "wra-01_wrapper-open",
+      "name": "Wrapper open",
+      "phase": "WRA",
+      "kind": "agent+human",
+      "hardness": "soft",
+      "defaultType": "ai-proposal-stands",
+      "procedureFlags": {
+        "candidates": true
+      },
+      "dependsOn": [
+        {
+          "gate": "crs-03_course-outcomes",
+          "dependencyClass": "constitutive",
+          "note": "W-OPEN states the course outcomes."
+        },
+        {
+          "gate": "crs-04_lesson-map",
+          "dependencyClass": "constitutive",
+          "note": "Signpost presents the lesson map."
+        }
+      ],
+      "response": {
+        "mode": "confirm",
+        "prompt": "Confirm/amend wrapper-open content.",
+        "destination": "decidedValue"
+      },
+      "generation": {
+        "trigger": "CRS closed",
+        "produces": "wrapper-open content",
+        "sources": [
+          "crs-01 source set",
+          "pathway core A10 professional equivalences"
+        ],
+        "parameters": {
+          "practiceConnection": "academic/professional framing, human-set extent, each section optionally removable",
+          "signpost": "visual-overview component, once per pathway"
+        }
+      },
+      "consequenceNote": "Overview, learning-outcomes, practice-connection (academic/professional framing; human sets the academic<->professional extent; academic + professional sections each optionally removable), signpost component (old les-02 visual-overview), course-instructions, course-conventions. Wrapper-page coupling degree set here (A6.3).",
+      "decidedValueShape": {
+        "type": "object",
+        "properties": {
+          "signpostComponent": {
+            "type": "string"
+          },
+          "practiceConnection": {
+            "type": "object",
+            "properties": {
+              "academic": {
+                "type": "string"
+              },
+              "professional": {
+                "type": "string"
+              },
+              "extent": {
+                "type": "string"
+              },
+              "coupling": {
+                "enum": [
+                  "shell-coupled",
+                  "token-substitution",
+                  "structured-fields",
+                  "whole-prose"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "prosePointer": {
+        "doc": "docs/authoring/gate-redesign-2026-10-06.md",
+        "ref": "A-round"
+      },
+      "sequence": 16
+    },
+    {
+      "id": "wra-02_wrapper-close",
+      "name": "Wrapper close",
+      "phase": "WRA",
+      "kind": "agent+human",
+      "hardness": "soft",
+      "defaultType": "ai-proposal-stands",
+      "procedureFlags": {
+        "candidates": true
+      },
+      "dependsOn": [
+        {
+          "gate": "crs-03_course-outcomes",
+          "dependencyClass": "constitutive",
+          "note": "W-CLOSE summarises outcome by outcome."
+        },
+        {
+          "gate": "crs-04_lesson-map",
+          "dependencyClass": "substantive",
+          "note": "Summary reflects the lesson journey."
+        }
+      ],
+      "response": {
+        "mode": "confirm",
+        "prompt": "Confirm/amend wrapper-close content.",
+        "destination": "decidedValue"
+      },
+      "generation": {
+        "trigger": "CRS closed",
+        "produces": "wrapper-close content",
+        "sources": [
+          "crs-01 source set",
+          "pathway core A9 Relations + adapt-integration overlap",
+          "catalogue/pathways.json (tier ladder)"
+        ],
+        "parameters": {
+          "whereNext": "vertical (tier ladder up/down) + horizontal (related pathways/themes/subjects)"
+        }
+      },
+      "consequenceNote": "Summary, practice-connection, where-next (vertical = tier ladder; horizontal = related pathways/themes/subjects; agent proposes + confirm), course-references. Wrapper-page coupling degree set here (A6.3).",
+      "decidedValueShape": {
+        "type": "object",
+        "properties": {
+          "whereNext": {
+            "type": "object",
+            "properties": {
+              "vertical": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "horizontal": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "practiceConnection": {
+            "type": "object",
+            "properties": {
+              "academic": {
+                "type": "string"
+              },
+              "professional": {
+                "type": "string"
+              },
+              "extent": {
+                "type": "string"
+              },
+              "coupling": {
+                "enum": [
+                  "shell-coupled",
+                  "token-substitution",
+                  "structured-fields",
+                  "whole-prose"
+                ]
+              }
+            }
+          }
+        }
+      },
+      "prosePointer": {
+        "doc": "docs/authoring/gate-redesign-2026-10-06.md",
+        "ref": "A-round"
+      },
+      "sequence": 17
+    },
+    {
+      "id": "wra-03_summative",
+      "name": "Summative assessment",
+      "phase": "WRA",
+      "kind": "agent+human",
+      "hardness": "soft",
+      "defaultType": "ai-proposal-stands",
+      "procedureFlags": {
+        "candidates": true
+      },
+      "dependsOn": [
+        {
+          "gate": "crs-03_course-outcomes",
+          "dependencyClass": "constitutive",
+          "note": "Authors SUMM items from crs-03's per-outcome mcqSets specs."
+        },
+        {
+          "gate": "crs-04_lesson-map",
+          "dependencyClass": "substantive",
+          "note": "Cross-lesson MCQ sets span the mapped lessons."
+        }
+      ],
+      "response": {
+        "mode": "confirm",
+        "prompt": "Confirm/amend the summative question stems drafted from crs-03's MCQ-set specs.",
+        "destination": "decidedValue"
+      },
+      "generation": {
+        "trigger": "crs-03 + crs-04 closed, scaffold run (SUMM page exists)",
+        "produces": "SUMM assessment-items (real MCQ/sortable question stems)",
+        "sources": [
+          "crs-03 courseOutcomeBanks (the 3 mcqSet specs per outcome)",
+          "crs-01 source set",
+          "pathway core"
+        ],
+        "parameters": {
+          "perOutcome": "exactly two summative questions per course outcome (AL-3), each naming via tests the outcome it tests (AL-6)"
+        }
+      },
+      "consequenceNote": "Post-scaffold authoring of SUMM's assessment-items: crs-03's 3 mcqSet specs per outcome become real question stems (palette/mcq or palette/sortable, SM-2 split). AL-3: each course outcome tested by exactly two summative questions; AL-6 tests. A set whose crs-03 coupling is not shell-coupled is left as a marked slot for cxp-04 to fill per subject. Added 8 October 2026 (Abbott: post-scaffold summative/confidence authoring, two gates in WRA).",
+      "decidedValueShape": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "tests",
+                "palette",
+                "stem"
+              ],
+              "properties": {
+                "tests": {
+                  "type": "string",
+                  "description": "AL-6: the course outcome id (from crs-03) this item tests."
+                },
+                "palette": {
+                  "enum": [
+                    "palette/mcq",
+                    "palette/sortable"
+                  ]
+                },
+                "stem": {
+                  "type": "string"
+                },
+                "coupling": {
+                  "enum": [
+                    "shell-coupled",
+                    "token-substitution",
+                    "structured-fields",
+                    "whole-prose"
+                  ]
+                }
+              }
+            }
+          }
+        }
+      },
+      "prosePointer": {
+        "doc": "docs/authoring/gate-redesign-2026-10-06.md",
+        "ref": "A-round"
+      },
+      "sequence": 18
+    },
+    {
+      "id": "wra-04_confidence",
+      "name": "Confidence statements",
+      "phase": "WRA",
+      "kind": "agent+human",
+      "hardness": "soft",
+      "defaultType": "ai-proposal-stands",
+      "dependsOn": [
+        {
+          "gate": "crs-03_course-outcomes",
+          "dependencyClass": "constitutive",
+          "note": "Places crs-03's per-outcome confidence statements into C-PRE/C-POST."
+        }
+      ],
+      "response": {
+        "mode": "confirm",
+        "prompt": "Confirm/amend the confidence statements placed into the C-PRE and C-POST pages.",
+        "destination": "decidedValue"
+      },
+      "generation": {
+        "trigger": "crs-03 closed, scaffold run (C-PRE/C-POST pages exist)",
+        "produces": "C-PRE confidence-pre + C-POST confidence-post components",
+        "sources": [
+          "crs-03 courseOutcomeBanks (confidenceStatement per outcome)"
+        ],
+        "parameters": {
+          "perOutcome": "every course outcome carries at least one confidence statement (AL-4), each naming via rates the outcome it rates"
+        }
+      },
+      "consequenceNote": "Post-scaffold placement of crs-03's per-outcome confidence statements into the C-PRE confidence-pre and C-POST confidence-post components (palette/confidence). AL-4: each statement rates its course outcome; every course outcome carries at least one. The same statement set brackets the course (C-PRE before lessons, C-POST at close). Added 8 October 2026 (Abbott: two gates in WRA).",
+      "decidedValueShape": {
+        "type": "object",
+        "properties": {
+          "statements": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "rates",
+                "text"
+              ],
+              "properties": {
+                "rates": {
+                  "type": "string",
+                  "description": "AL-4: the course outcome id (from crs-03) this statement rates."
+                },
+                "text": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "prosePointer": {
+        "doc": "docs/authoring/gate-redesign-2026-10-06.md",
+        "ref": "A-round"
+      },
+      "sequence": 19
+    },
+    {
+      "id": "cxp-01_subject",
+      "name": "Subject",
+      "phase": "CXP",
+      "kind": "human",
+      "hardness": "hard-stop",
+      "defaultType": "none",
+      "response": {
+        "mode": "answer",
+        "prompt": "Set the subject for this context pack (CAH/HECOS).",
+        "destination": "decidedValue.subject"
+      },
+      "consequenceNote": "Per-pack subject. PRIMARY agent lookup = that subject's interpreted benchmark statements (standing corpus), never the copyrighted originals.",
+      "decidedValueShape": {
+        "type": "object",
+        "required": [
+          "subject"
+        ],
+        "properties": {
+          "subject": {
+            "type": "object",
+            "required": [
+              "code",
+              "label"
+            ],
+            "properties": {
+              "code": {
+                "type": "string"
+              },
+              "label": {
+                "type": "string"
+              },
+              "scheme": {
+                "type": "string"
+              }
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "prosePointer": {
+        "doc": "docs/authoring/gate-redesign-2026-10-06.md",
+        "ref": "A-round"
+      },
+      "sequence": 20,
+      "repeatsPer": "context-pack"
+    },
+    {
+      "id": "cxp-02_qualifiers",
+      "name": "Qualifiers",
+      "phase": "CXP",
+      "kind": "human",
+      "hardness": "hard-stop",
+      "defaultType": "none",
+      "response": {
+        "mode": "answer",
+        "prompt": "Set up to three qualifiers for this pack (default none).",
+        "destination": "decidedValue.qualifiers"
+      },
+      "consequenceNote": "Per-pack qualifiers (<=3 across categories, default none) from docs/authoring/qualifier-list-2026-10-04.md.",
+      "decidedValueShape": {
+        "type": "object",
+        "properties": {
+          "qualifiers": {
+            "type": "array",
+            "maxItems": 3,
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "additionalProperties": false
+      },
+      "prosePointer": {
+        "doc": "docs/authoring/gate-redesign-2026-10-06.md",
+        "ref": "A-round"
+      },
+      "sequence": 21,
+      "repeatsPer": "context-pack"
+    },
+    {
+      "id": "cxp-03_exemplar-programmes",
+      "name": "Exemplar programmes",
+      "phase": "CXP",
+      "kind": "auto",
+      "reserved": true,
+      "hardness": "advisory",
+      "defaultType": "none",
+      "consequenceNote": "RESERVED / auto-none, come back to (A8). Optional, special-circumstances, likely one exemplar (not the old mandatory three). Demoted from the old hard-stop gates/EXM; carries its shape for when defined. SHAPE NOTE (8 Oct 2026): `programmes` is no longer `required`, so the reserved auto-pass record ({value:\"none\", reserved:true}, written by cxp-open.js) validates. The `programmes` array still carries minItems/maxItems 3 from the old mandatory-three model, which CONTRADICTS this gate's own \"likely one exemplar, not the old mandatory three\": that range is left untouched here (it only bites once cxp-03 is un-reserved and actually defined) and is flagged for that future ruling.",
+      "decidedValueShape": {
+        "type": "object",
+        "properties": {
+          "programmes": {
+            "type": "array",
+            "minItems": 3,
+            "maxItems": 3,
+            "items": {
+              "type": "object",
+              "required": [
+                "name"
+              ],
+              "properties": {
+                "name": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "prosePointer": {
+        "doc": "docs/authoring/gate-redesign-2026-10-06.md",
+        "ref": "A-round"
+      },
+      "sequence": 22
+    },
+    {
+      "id": "cxp-04_context-generation",
+      "name": "Context generation",
+      "phase": "CXP",
+      "kind": "agent+human",
+      "hardness": "soft",
+      "defaultType": "ai-proposal-stands",
+      "dependsOn": [
+        {
+          "gate": "cxp-01_subject",
+          "dependencyClass": "constitutive",
+          "note": "Generated against the chosen subject."
+        },
+        {
+          "gate": "les-01_lesson-proposal",
+          "dependencyClass": "constitutive",
+          "note": "Fills the lessons' coupled slots."
+        },
+        {
+          "gate": "wra-01_wrapper-open",
+          "dependencyClass": "constitutive",
+          "note": "Writes wrapper-open coupled prose."
+        },
+        {
+          "gate": "wra-02_wrapper-close",
+          "dependencyClass": "constitutive",
+          "note": "Writes wrapper-close coupled prose."
+        },
+        {
+          "gate": "wra-03_summative",
+          "dependencyClass": "constitutive",
+          "note": "Writes context-coupled summative items per subject."
+        }
+      ],
+      "sourceConsultation": {
+        "triggeringFacets": [
+          "level",
+          "institution",
+          "faculty",
+          "activity"
+        ],
+        "authorityLevels": [
+          "sector",
+          "institutional"
+        ]
+      },
+      "response": {
+        "mode": "confirm",
+        "prompt": "Confirm/amend the generated context-slot content.",
+        "destination": "decidedValue"
+      },
+      "generation": {
+        "trigger": "shell closed + cxp-01/02 set",
+        "produces": "all coupled-slot content (lessons + wrappers) at each slot's variationType",
+        "sources": [
+          "subject benchmark corpus (adapt-integration benchmark search patterns)",
+          "standing standards registry",
+          "cxs-04 referencing",
+          "crs-01 source set"
+        ],
+        "parameters": {
+          "neverOriginals": "use interpreted benchmark docs, never copyrighted originals"
+        }
+      },
+      "consequenceNote": "Old D1. Generates all coupled-slot content per subject: lesson context-specific checks, coupled worked examples, wrapper practice-connection prose. Referencing inherited from cxs-04 (not a gate here). Widest sourceConsultation set.",
+      "prosePointer": {
+        "doc": "docs/authoring/gate-redesign-2026-10-06.md",
+        "ref": "A-round"
+      },
+      "sequence": 23,
+      "repeatsPer": "context-pack"
+    }
+  ]
+}

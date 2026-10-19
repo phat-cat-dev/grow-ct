@@ -1,0 +1,139 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://excelling.cardiffmet/schemas/catalogue.cross-cutting.schema.json",
+  "title": "catalogue: shared cross-cutting store",
+  "description": "catalogue/context/shared/cross-cutting.json: the generic, pathway- and subject-independent scaffolding that the per-subject and per-pathway tier readings specialise. Concept-ordered: tierModel (the tier<->level spine with the overlap formula and the full row grid), genericLadder (the practitioner F->L8 practice/knowledge/identity readings), frameworks (FHEQ/CQFW/FQHEIS/QF-EHEA level alignment), crossCuttingThemes (enterprise/employability/ESD/Ofqual mapped onto the rows), developmentModels (Barnett, SOLO, Dreyfus, Lave & Wenger, ... placed against the rows). Built by tools/build-cross-cutting-store.py from the wide/ YAML. Every reading is our own words; theme/framework id cells are traceability pointers into the standards runs. Deep nested content is intentionally permissive so nothing useful is lost.",
+  "type": "object",
+  "required": ["crossCuttingVersion", "tierModel", "genericLadder", "frameworks", "crossCuttingThemes", "developmentModels"],
+  "properties": {
+    "crossCuttingVersion": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "tierModel": {
+      "type": "object",
+      "description": "The tier<->level spine. Both axes are first-class: tiers carry a loose fheqRange (the overlap formula) and every row carries its single indicative fheqLevel.",
+      "required": ["tiers", "rows"],
+      "properties": {
+        "note": { "type": "string" },
+        "tiers": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["tier", "rows", "fheqRange"],
+            "properties": {
+              "tier": { "enum": ["introductory", "intermediate", "advanced"] },
+              "rows": { "type": "array", "items": { "type": "string" } },
+              "fheqRange": {
+                "type": "object",
+                "required": ["min", "max"],
+                "properties": {
+                  "min": { "type": "integer" },
+                  "max": { "type": "integer" }
+                },
+                "additionalProperties": true
+              },
+              "note": { "type": "string" }
+            },
+            "additionalProperties": true
+          }
+        },
+        "edgeRows": { "type": "array", "items": { "type": "object" } },
+        "rows": {
+          "type": "array",
+          "description": "The full F->L8 row grid, each row with its tier and indicative FHEQ level.",
+          "items": {
+            "type": "object",
+            "required": ["rowId", "tier", "fheqLevel"],
+            "properties": {
+              "rowId": { "type": "string" },
+              "tier": { "type": "string" },
+              "fheqLevel": { "type": "integer" }
+            },
+            "additionalProperties": true
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "genericLadder": {
+      "type": "object",
+      "description": "The practitioner readings the subject/pathway tier readings specialise.",
+      "required": ["rows"],
+      "properties": {
+        "heads": { "type": "array" },
+        "rows": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["rowId", "tier", "fheqLevel"],
+            "properties": {
+              "rowId": { "type": "string" },
+              "tier": { "type": "string" },
+              "fheqLevel": { "type": "integer" },
+              "practice": { "type": ["string", "null"] },
+              "knowledge": { "type": ["string", "null"] },
+              "identity": { "type": ["string", "null"] }
+            },
+            "additionalProperties": true
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "frameworks": {
+      "type": "array",
+      "description": "Qualification frameworks: per-row level alignment (not readings; issuer text stays in the runs).",
+      "items": {
+        "type": "object",
+        "required": ["key", "name"],
+        "properties": {
+          "key": { "type": "string" },
+          "name": { "type": "string" },
+          "scheme": { "type": "string" },
+          "dims": { "type": "array" },
+          "rowLevel": { "type": "object" }
+        },
+        "additionalProperties": true
+      }
+    },
+    "crossCuttingThemes": {
+      "type": "array",
+      "description": "Cross-cutting practice themes (enterprise/employability/ESD/Ofqual) mapped onto the row grid; the qualifier-level view of the same themes lives in the cross-cutting-practice store.",
+      "items": {
+        "type": "object",
+        "required": ["key", "name"],
+        "properties": {
+          "key": { "type": "string" },
+          "name": { "type": "string" },
+          "run": { "type": "string" },
+          "note": { "type": "string" },
+          "rows": { "type": "array", "items": { "type": "object" } },
+          "byLevel": { "type": "boolean" },
+          "levels": { "type": "object" },
+          "rowLevel": { "type": "object" }
+        },
+        "additionalProperties": true
+      }
+    },
+    "developmentModels": {
+      "type": "array",
+      "description": "Models of development placed against the rows (reference only).",
+      "items": {
+        "type": "object",
+        "required": ["key", "name", "rows"],
+        "properties": {
+          "key": { "type": "string" },
+          "name": { "type": "string" },
+          "ref": { "type": "string" },
+          "note": { "type": "string" },
+          "subs": { "type": "array" },
+          "rows": { "type": "array", "items": { "type": "object" } }
+        },
+        "additionalProperties": true
+      }
+    },
+    "source": { "type": "object" }
+  },
+  "additionalProperties": false
+}

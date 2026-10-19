@@ -1,0 +1,152 @@
+{
+  "kbVersion": "0.1.0",
+  "shapes": [
+    {
+      "id": "content-shapes/fact",
+      "name": "Fact",
+      "definition": "A single piece of information to be known, stated without argument.",
+      "recognition": "Stand-alone assertions: a date, a name, a figure, a rule of the institution, stated once and not argued.",
+      "anchor": { "framework": "horn-information-mapping", "type": "fact" }
+    },
+    {
+      "id": "content-shapes/concept",
+      "name": "Concept",
+      "definition": "A term with a definition, its critical features and examples.",
+      "recognition": "A defined term: \"X is\", \"X refers to\", a named idea followed by what it means and instances of it.",
+      "anchor": { "framework": "horn-information-mapping", "type": "concept" }
+    },
+    {
+      "id": "content-shapes/structure",
+      "name": "Structure",
+      "definition": "The parts of a thing and how they fit together, where the arrangement itself carries meaning.",
+      "recognition": "An anatomy, template or format: labelled elements, a fixed order of parts, a layout whose positions matter.",
+      "anchor": { "framework": "horn-information-mapping", "type": "structure" },
+      "examples": [
+        {
+          "source": "reference/excelling-at-university.md",
+          "ref": "How do you format references?",
+          "note": "Sets out the fixed, labelled element order for a books, journal-article and web-page reference, each under its own bolded sub-label."
+        }
+      ]
+    },
+    {
+      "id": "content-shapes/classification",
+      "name": "Classification",
+      "definition": "Items that sort into categories by stated criteria.",
+      "recognition": "\"Types of\", \"kinds of\", \"can be grouped into\": categories named with their members or the criterion that separates them.",
+      "anchor": { "framework": "horn-information-mapping", "type": "classification" }
+    },
+    {
+      "id": "content-shapes/procedure",
+      "name": "Procedure",
+      "definition": "Steps a learner performs, in order, to complete a task.",
+      "recognition": "Imperative steps, numbered how-to, sequencing words such as first, then, next and finally, addressed to the learner.",
+      "anchor": { "framework": "horn-information-mapping", "type": "procedure" }
+    },
+    {
+      "id": "content-shapes/process",
+      "name": "Process",
+      "definition": "How something works or unfolds over time, described rather than performed by the learner.",
+      "recognition": "Stages, phases or a cycle that happen, often in the third person: how a system, cycle or practice unfolds.",
+      "anchor": { "framework": "horn-information-mapping", "type": "process" }
+    },
+    {
+      "id": "content-shapes/principle",
+      "name": "Principle",
+      "definition": "A rule, guideline or value, with its reasons, about what should or should not be done.",
+      "recognition": "\"Should\", \"always\", \"avoid\", \"never\", values or standards stated with the reason for them.",
+      "anchor": { "framework": "horn-information-mapping", "type": "principle" },
+      "examples": [
+        {
+          "source": "reference/excelling-at-university.md",
+          "ref": "Defining academic integrity",
+          "note": "Names the ICAI's six fundamental values of academic integrity (Honesty, Trust, Fairness, Respect, Responsibility, Courage) with the significance of each."
+        }
+      ]
+    },
+    {
+      "id": "content-shapes/contrast",
+      "name": "Contrast",
+      "definition": "Two versions of the same thing, one stronger than the other.",
+      "recognition": "Weak and strong, before and after, draft and revision, or one approach stated to be better than another.",
+      "anchor": { "framework": "academic-skills-extension" },
+      "examples": [
+        {
+          "source": "reference/excelling-at-university.md",
+          "ref": "Quotation and paraphrase",
+          "note": "Sets quotation against paraphrase and states that paraphrasing is \"clearly far more skilful\"."
+        }
+      ]
+    },
+    {
+      "id": "content-shapes/parallel-options",
+      "name": "Parallel options",
+      "definition": "Alternatives, each valid in its own situation, none better overall.",
+      "recognition": "Options tied to contexts: disciplines, genres or purposes, \"depending on\", with no ranking between them.",
+      "anchor": { "framework": "academic-skills-extension" },
+      "examples": [
+        {
+          "source": "reference/excelling-at-university.md",
+          "ref": "Referencing styles",
+          "note": "Lists seven referencing styles (author-date/Harvard, MHRA, Chicago, APA, Vancouver, IEEE, OSCOLA), each tied to the disciplines that use it, with none ranked above another."
+        }
+      ]
+    },
+    {
+      "id": "content-shapes/pairs",
+      "name": "Pairs",
+      "definition": "Items that belong together one to one.",
+      "recognition": "Two forms of the same thing, or items with a partner: a citation and its reference-list entry, a term and its definition, a cause and its effect.",
+      "anchor": { "framework": "academic-skills-extension" }
+    },
+    {
+      "id": "content-shapes/error",
+      "name": "Error",
+      "definition": "Something that contains a mistake or an omission to be found.",
+      "recognition": "Warnings about common mistakes, inaccuracies or missing elements; \"avoid\"; flawed examples.",
+      "anchor": { "framework": "academic-skills-extension" }
+    },
+    {
+      "id": "content-shapes/assembly",
+      "name": "Assembly",
+      "definition": "A whole built from given parts in a required form.",
+      "recognition": "Formatting rules and templates to fill: \"set out as\", required elements in required order, to be produced by the learner.",
+      "anchor": { "framework": "academic-skills-extension" },
+      "examples": [
+        {
+          "source": "reference/excelling-at-university.md",
+          "ref": "How do you format references?",
+          "note": "Gives the required elements and order for a learner to produce a books, journal-article or web-page reference themselves."
+        }
+      ]
+    },
+    {
+      "id": "content-shapes/judgement",
+      "name": "Judgement",
+      "definition": "A decision with trade-offs, where reasonable choices differ.",
+      "recognition": "\"When to\", \"choose\", \"decide\", dilemmas, options whose worth depends on circumstances and weighing.",
+      "anchor": { "framework": "academic-skills-extension" }
+    },
+    {
+      "id": "content-shapes/criteria",
+      "name": "Criteria",
+      "definition": "Concrete checks to apply to one's own work.",
+      "recognition": "Checklists, \"before you submit\", \"make sure\", yes-or-no tests of a piece of work.",
+      "anchor": { "framework": "academic-skills-extension" }
+    },
+    {
+      "id": "content-shapes/reflection",
+      "name": "Reflection",
+      "definition": "A prompt for the learner's own thinking, practice or experience.",
+      "recognition": "\"Consider\", \"think about\", \"in your own\", questions with no single right answer that address the learner.",
+      "anchor": { "framework": "academic-skills-extension" },
+      "examples": [
+        {
+          "source": "reference/excelling-at-university.md",
+          "ref": "Defining academic integrity",
+          "note": "The task box asks the learner to define each of the six fundamental values first, before reading on, with no single right answer."
+        }
+      ]
+    }
+  ]
+}
