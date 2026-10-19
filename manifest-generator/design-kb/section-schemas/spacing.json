@@ -1,0 +1,37 @@
+{
+  "section": "spacing",
+  "schemaVersion": "0.1.0",
+  "note": "Layout + spacing. Grounded in theme.less (--cm-page-max, --cm-gutter, --cm-pad-y) + cm-base (--cm-measure-max) + the component item-spacing the proto-adapter (cm-vanilla-compat.less) currently provides as @item-padding/@item-margin. The fluid SPACE SCALE (--ab-base-space-1..n) is design intent per ab-system-architecture 'AB base — the fluid engine'; the current code has only the named layout tokens below, so the scale is marked toBuild.",
+
+  "seeds": {
+    "measure-max":  { "kind": "length",  "default": "98.75rem", "themeable": true,  "template": { "label": "Max content width", "input": "length", "presets": ["full"] } },
+    "pad-item":     { "kind": "length",  "default": "1rem",     "themeable": false, "template": null, "note": "component inner padding (was vanilla @item-padding)" },
+    "gap-item":     { "kind": "length",  "default": "1rem",     "themeable": false, "template": null, "note": "component stack gap (was vanilla @item-margin)" }
+  },
+
+  "tokens": {
+    "page-max":    { "pivot": "--ab-base-page-max",    "kind": "literal", "value": "clamp(17.5rem, 94vw, 98.75rem)", "themeable": false, "template": null },
+    "gutter":      { "pivot": "--ab-base-gutter",      "kind": "ref",     "ref": "page-gutter-x", "themeable": false, "template": null },
+    "pad-y":       { "pivot": "--ab-base-pad-y",       "kind": "literal", "value": "clamp(0.75rem, calc(0.5rem + 1.5vh), 1.75rem)", "themeable": false, "template": null },
+    "measure-max": { "pivot": "--ab-base-measure-max", "kind": "ref-seed","ref": "measure-max", "themeable": false, "template": null },
+    "space-pad":   { "pivot": "--ab-base-space-pad",   "kind": "ref-seed","ref": "pad-item", "themeable": false, "template": null },
+    "space-gap":   { "pivot": "--ab-base-space-gap",   "kind": "ref-seed","ref": "gap-item", "themeable": false, "template": null },
+
+    "space-025": { "pivot": "--ab-base-space-025", "kind": "literal", "value": "clamp(0.25rem, calc(0.235rem + 0.0752vi), 0.3125rem)",  "themeable": false, "template": null },
+    "space-050": { "pivot": "--ab-base-space-050", "kind": "literal", "value": "clamp(0.5rem, calc(0.4699rem + 0.1504vi), 0.625rem)",   "themeable": false, "template": null },
+    "space-075": { "pivot": "--ab-base-space-075", "kind": "literal", "value": "clamp(0.75rem, calc(0.7049rem + 0.2256vi), 0.9375rem)",  "themeable": false, "template": null },
+    "space-100": { "pivot": "--ab-base-space-100", "kind": "literal", "value": "clamp(1rem, calc(0.9398rem + 0.3008vi), 1.25rem)",      "themeable": false, "template": null },
+    "space-125": { "pivot": "--ab-base-space-125", "kind": "literal", "value": "clamp(1.25rem, calc(1.1748rem + 0.3759vi), 1.5625rem)",  "themeable": false, "template": null },
+    "space-150": { "pivot": "--ab-base-space-150", "kind": "literal", "value": "clamp(1.5rem, calc(1.4098rem + 0.4511vi), 1.875rem)",    "themeable": false, "template": null },
+    "space-175": { "pivot": "--ab-base-space-175", "kind": "literal", "value": "clamp(1.75rem, calc(1.6447rem + 0.5263vi), 2.1875rem)",  "themeable": false, "template": null },
+    "space-200": { "pivot": "--ab-base-space-200", "kind": "literal", "value": "clamp(2rem, calc(1.8797rem + 0.6015vi), 2.5rem)",       "themeable": false, "template": null },
+    "space-300": { "pivot": "--ab-base-space-300", "kind": "literal", "value": "clamp(3rem, calc(2.8195rem + 0.9023vi), 3.75rem)",      "themeable": false, "template": null },
+    "space-400": { "pivot": "--ab-base-space-400", "kind": "literal", "value": "clamp(4rem, calc(3.7594rem + 1.203vi), 5rem)",          "themeable": false, "template": null },
+    "space-500": { "pivot": "--ab-base-space-500", "kind": "literal", "value": "clamp(5rem, calc(4.6992rem + 1.5038vi), 6.25rem)",      "themeable": false, "template": null },
+    "space-600": { "pivot": "--ab-base-space-600", "kind": "literal", "value": "clamp(6rem, calc(5.6391rem + 1.8045vi), 7.5rem)",       "themeable": false, "template": null }
+  },
+
+  "toBuild": {
+    "fluidScale": "The fluid space ladder --ab-base-space-025..600 is now PRESENT (literal clamp steps, promoted from ab-breakpoints.less into L4 defaults --ab-base-pf-default-space-* + L3 pivots --ab-base-space-*, 12 Oct 2026). The eventual refinement is to DERIVE these steps from seeds (a base unit + ratio + the shared vw range) like the type ladder, rather than carrying pre-computed clamps; author those seeds when the fluid engine is generalised. Open: borders fixed vs fluid (see box-model)."
+  }
+}

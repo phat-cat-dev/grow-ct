@@ -1,0 +1,120 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://excelling.cardiffmet/schemas/catalogue.pathway-reference.schema.json",
+  "title": "catalogue: per-pathway authoring reference",
+  "description": "catalogue/context/pathway/<slug>.json: the self-contained, concept-ordered authoring reference for one academic-practice pathway, aggregating the pathway core, card plan, per-row readings, FHEQ readings and card vocabulary into one place. Distinct from catalogue/pathways/<slug>.json (the bare tier registry read at gates) and catalogue/pathways.json (the index). Concept-ordered: identity, capabilities, tierProgression, theorySpine, crossCutting, gaps. Every tiered item carries both axes (tier + fheqLevel) per the shared cross-cutting store. Deep nested content is intentionally permissive so nothing useful is lost. adaptIntegration and bookGrounding are v2 and may be null.",
+  "type": "object",
+  "required": ["pathwayReferenceId", "identity", "capabilities", "tierProgression", "theorySpine", "crossCutting"],
+  "properties": {
+    "pathwayReferenceId": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+    "identity": {
+      "type": "object",
+      "required": ["slug", "title"],
+      "properties": {
+        "id": { "type": "string" },
+        "slug": { "type": "string" },
+        "title": { "type": "string" },
+        "aliases": { "type": "array" },
+        "practices": { "type": "array" },
+        "pathwayNumber": { "type": ["integer", "string", "null"] },
+        "chapters": { "type": ["array", "null"] },
+        "practiceNoun": { "type": ["string", "null"] },
+        "agentDefinition": { "type": ["string", "null"] },
+        "summary": { "type": ["string", "null"] },
+        "status": { "type": ["string", "null"] },
+        "catalogueEntry": { "type": ["object", "null"] }
+      },
+      "additionalProperties": true
+    },
+    "capabilities": {
+      "type": "array",
+      "description": "The nine cards (3 tiers x 3), each merging card plan + core A10 competency + vocabulary.",
+      "items": {
+        "type": "object",
+        "required": ["rowId", "capabilityId", "tier", "fheqLevel"],
+        "properties": {
+          "rowId": { "type": "string" },
+          "capabilityId": {
+            "type": ["string", "null"],
+            "description": "The core A10 capability id (card plan 'old'); null where a card slot has no stable id yet (new or Track-B capabilities)."
+          },
+          "tier": { "enum": ["introductory", "intermediate", "advanced"] },
+          "fheqLevel": { "type": ["integer", "null"] },
+          "statement": { "type": ["string", "null"] },
+          "knowledgeKind": { "type": ["string", "null"] },
+          "qf": { "type": "array" },
+          "book": { "type": "array" },
+          "competency": {
+            "type": ["object", "null"],
+            "properties": {
+              "academicStatement": { "type": ["string", "null"] },
+              "professional": { "type": "array" },
+              "theory": { "type": "array" }
+            },
+            "additionalProperties": true
+          },
+          "vocabulary": { "type": ["object", "null"] }
+        },
+        "additionalProperties": true
+      }
+    },
+    "tierProgression": {
+      "type": "object",
+      "description": "All tier content together: core A11 levels, the plan's tier statements + mastery, the per-row readings, and the FHEQ descriptor readings.",
+      "properties": {
+        "levels": { "type": "array" },
+        "tierStatements": { "type": "array" },
+        "masteryNote": { "type": ["string", "null"] },
+        "ladderReadings": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["rowId", "tier", "fheqLevel"],
+            "properties": {
+              "rowId": { "type": "string" },
+              "tier": { "type": "string" },
+              "fheqLevel": { "type": "integer" },
+              "practice": { "type": ["string", "null"] },
+              "knowledge": { "type": ["string", "null"] },
+              "identity": { "type": ["string", "null"] }
+            },
+            "additionalProperties": true
+          }
+        },
+        "frameworkReadings": { "type": "array" }
+      },
+      "additionalProperties": true
+    },
+    "theorySpine": {
+      "type": "object",
+      "properties": {
+        "overview": { "type": ["string", "null"] },
+        "corePrinciples": { "type": ["string", "null"] },
+        "selection": { "type": ["string", "null"] },
+        "theories": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": true
+    },
+    "crossCutting": {
+      "type": "object",
+      "properties": {
+        "analysis": { "type": "array" },
+        "benchmarkReadings": { "type": "array" },
+        "benchmarkReadingsSummary": { "type": ["string", "null"] },
+        "frameworkReadings": { "type": "object" }
+      },
+      "additionalProperties": true
+    },
+    "gaps": { "type": ["object", "null"] },
+    "adaptIntegration": {
+      "type": ["object", "null"],
+      "description": "v2: ADAPT consumer integration - voice band, catalogue placement, scope/signpost cross-pathway routing. null until folded in."
+    },
+    "bookGrounding": {
+      "type": ["object", "null"],
+      "description": "v2: per-capability book pages/teaching/worked-examples/gaps from the book->pathway source map. null until folded in."
+    },
+    "source": { "type": "object" }
+  },
+  "additionalProperties": false
+}

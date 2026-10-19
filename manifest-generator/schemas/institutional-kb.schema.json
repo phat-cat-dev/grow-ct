@@ -1,0 +1,61 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://excelling.cardiffmet/schemas/institutional-kb.schema.json",
+  "title": "institutional-kb: institution-supplied sources",
+  "description": "Index of institution-supplied sources (faculty/school guidance, module documents, programme lists) - multi-institution; entries carry an institution identifier. Cardiff Met is the first tenant, not the definition (S1-D8). Sensitivity is first-class: module documents are not public. Entries index and characterise sources; they never duplicate source text (F9). New edition = new entry + supersededBy on the old. Designed away-week Session 4 (S4-D1-D6).",
+  "type": "object",
+  "required": ["kbVersion", "entries"],
+  "properties": {
+    "kbVersion": { "$ref": "common.schema.json#/$defs/kbVersion" },
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "issuer", "institution", "sensitivity", "authorityLevel", "locator", "characterisation", "basis"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9-]+/[a-z0-9][a-z0-9.-]*$",
+            "description": "Institution-prefixed by convention (cardiff-met/programme-list-2026). Prefix is legibility only; matching uses the institution field, never id parsing (S4-D2)."
+          },
+          "title": { "type": "string" },
+          "issuer": { "type": "string", "description": "Issuing office, faculty, or school within the institution." },
+          "institution": { "type": "string", "description": "Institution identifier slug, matched against facetSet.institution (S4-D5: ninth facet confirmed as string identifier; provisional lifted). E.g. cardiff-met." },
+          "sensitivity": {
+            "enum": ["public", "internal", "restricted"],
+            "description": "Required on every entry - forces the sensitivity question (S1-D8's sensitivity line). Module documents are internal or restricted."
+          },
+          "issuerVersion": { "type": "string", "description": "The document's own version where the institution versions it. Presence requires retrieved." },
+          "retrieved": { "type": "string", "format": "date" },
+          "sourceType": { "type": "string", "description": "DELIBERATELY open pre-sourcing (S4-D3). Expected values: guidance, module-document, programme-list." },
+          "authorityLevel": {
+            "enum": ["institutional", "module"],
+            "description": "institutional-kb's half of the four-level vocabulary (S1-D8 per store; S4-D4). authorityLevel=module requires scope.module (if/then below)."
+          },
+          "scope": {
+            "type": "object",
+            "description": "Institutional grain the entry is issued at. Matching is most-specific-first: module beats school beats faculty (same walk-up spirit as S1-D9's subject axis).",
+            "properties": {
+              "faculty": { "type": "string" },
+              "school": { "type": "string" },
+              "module": { "type": "string" }
+            },
+            "additionalProperties": false
+          },
+          "locator": { "$ref": "common.schema.json#/$defs/sourceLocator" },
+          "characterisation": { "type": "string" },
+          "anchors": { "$ref": "common.schema.json#/$defs/sourceAnchors" },
+          "basis": { "$ref": "common.schema.json#/$defs/sourceBasis" },
+          "facets": { "$ref": "common.schema.json#/$defs/sourceFacets" },
+          "supersededBy": { "type": "string" },
+          "note": { "type": "string" }
+        },
+        "dependencies": { "issuerVersion": ["retrieved"] },
+        "if": { "properties": { "authorityLevel": { "const": "module" } }, "required": ["authorityLevel"] },
+        "then": { "required": ["scope"], "properties": { "scope": { "required": ["module"] } } },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

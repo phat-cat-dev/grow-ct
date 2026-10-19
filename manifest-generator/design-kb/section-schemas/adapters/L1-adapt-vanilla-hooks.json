@@ -1,0 +1,379 @@
+{
+  "adapter": "adapt",
+  "tier": "per-project",
+  "layers": "L1-L2",
+  "schemaVersion": "0.1.0",
+  "renderer": "adapt-vanilla (adapt-contrib-vanilla + core)",
+  "note": "FULL enumeration (not condensed) of every L1 (renderer) hook the L2 adapter repoints, selector-by-selector, as compiled into vanilla's own CSS. This is the exhaustive sibling of adapters/adapt.json's condensed aliasMap/sweepSelectors: that file names the FAMILIES; this file names every individual selector in each family, with its exact property and literal. Source of truth: src/extensions/adapt-ab-theme/less/ab-vanilla-overrides.less (the 8 numbered sections) — regenerate this file by hand if that file's selector lists change. Mechanism recap: vanilla compiles LAST (grunt/config/less.js globs components/* then extensions/* then theme/* ), so equal-specificity ties go to vanilla; every rule below is therefore gated under 'html.ab-theme' AND carries !important to out-specify it. Gate absent -> none of this fires -> pure vanilla.",
+
+  "gate": {
+    "class": "ab-theme",
+    "source": "config.json _htmlClasses",
+    "behaviour": "Every selector in sections 1-8 is prefixed 'html.ab-theme ' (or 'html.ab-theme:not(...)' where the selector already began 'html:not(...)'). Absent gate = zero matches = vanilla's own compiled literals render verbatim."
+  },
+
+  "aliasMapFull": {
+    "note": "SEAM 1, the :root block at the top of ab-vanilla-overrides.less (and mirrored render-neutral in adapt-ab-theme/layers/L2-adapter.css). Every --ab-base-if-adapt-* token used by sections 1-8 below, and what L3 pivot it currently resolves to.",
+    "--ab-base-if-adapt-item-color":          "var(--ab-base-accent)",
+    "--ab-base-if-adapt-item-color-hover":    "var(--ab-base-accent-hover)",
+    "--ab-base-if-adapt-item-color-visited":  "var(--ab-base-accent-active)",
+    "--ab-base-if-adapt-item-color-selected": "var(--ab-base-accent-deep)",
+    "--ab-base-if-adapt-item-color-inverted": "var(--ab-white)",
+    "--ab-base-if-adapt-font-color":          "var(--ab-dark-grey)",
+    "--ab-base-if-adapt-font-color-strong":   "var(--ab-base-ink)",
+    "--ab-base-if-adapt-font-color-muted":    "var(--ab-base-ink-muted)",
+    "--ab-base-if-adapt-greyDark":            "var(--ab-primary)",
+    "--ab-base-if-adapt-greyDark-hover":      "var(--ab-primary-hover)",
+    "--ab-base-if-adapt-greyLight":           "var(--ab-base-surface-sunken)",
+    "--ab-base-if-adapt-disabled":            "var(--ab-light)",
+    "--ab-base-if-adapt-hairline":            "var(--ab-base-hairline)",
+    "--ab-base-if-adapt-validation-success":  "var(--ab-success)",
+    "--ab-base-if-adapt-validation-error":    "var(--ab-danger)",
+    "caveat": "greyDark / greyDark-hover / disabled / font-color currently alias to the live semantic + palette tokens the sweep actually used, NOT yet the design-target pivot names (e.g. @greyDark -> --ab-base-ink-muted per adapt.json's condensed aliasMap). The re-point waits on deferred semantic-family reconciliation; see ab-vanilla-overrides.less header."
+  },
+
+  "sections": [
+    {
+      "id": 1,
+      "title": "Accent base",
+      "l1Literal": "@item-color / @heading-color (#117F93)",
+      "groups": [
+        {
+          "property": "color",
+          "token": "--ab-base-if-adapt-item-color",
+          "selectors": [".boxmenu__title", ".boxmenu__subtitle", ".page__title", ".page__subtitle"]
+        },
+        {
+          "property": "border-color",
+          "token": "--ab-base-if-adapt-item-color",
+          "selectors": [".boxmenu-item__inner", ".aside-pull-quote"]
+        },
+        {
+          "property": "background-color",
+          "token": "--ab-base-if-adapt-item-color",
+          "selectors": [
+            ".accordion-item__btn", ".boxmenu-item__button",
+            ".confidenceslider .slider__item-input-fill-linked",
+            ".gmcq-item__option", ".hotgraphic__pin:not(.has-pin-image)",
+            ".mcq-item__label", ".media__transcript-btn", ".narrative__controls",
+            ".narrative__progress", ".narrative__strapline-btn",
+            ".slider__number-selection", ".slider__number-model-answer",
+            ".slider__item-input-fill", ".trickle__btn"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Accent hover + focus-visible",
+      "l1Literal": "darken(@item-color, 10%) (#0c5865 / #0e6b7c)",
+      "groups": [
+        {
+          "property": "background-color",
+          "token": "--ab-base-if-adapt-item-color-hover",
+          "selectors": [
+            ".no-touch .accordion-item__btn:not(.is-selected):hover",
+            ":not(.a11y-disable-focusoutline) .accordion-item__btn:focus-visible",
+            ".no-touch .boxmenu-item__button:not(.is-disabled):not(.is-locked):hover",
+            ":not(.a11y-disable-focusoutline) .boxmenu-item__button:focus-visible",
+            ".no-touch .gmcq-item__label:not(.is-disabled):not(.is-selected):hover .gmcq-item__option",
+            ":not(.a11y-disable-focusoutline) .gmcq-item__input:focus-visible + .gmcq-item__label .gmcq-item__option",
+            ".no-touch .hotgraphic__pin:not(.has-pin-image):not(.is-disabled):not(.is-locked):hover",
+            ":not(.a11y-disable-focusoutline) .hotgraphic__pin:not(.has-pin-image):focus-visible",
+            ".no-touch .mcq-item__label:not(.is-disabled):not(.is-selected):hover",
+            ":not(.a11y-disable-focusoutline) .mcq-item__input:focus-visible + .mcq-item__label",
+            ".no-touch .media__transcript-btn:not([aria-expanded='true']):hover",
+            ":not(.a11y-disable-focusoutline) .media__transcript-btn:not([aria-expanded='true']):focus-visible",
+            ".no-touch .narrative__controls:not(.is-disabled):not(.is-locked):hover",
+            ":not(.a11y-disable-focusoutline) .narrative__controls:focus-visible",
+            ".no-touch .narrative__strapline-btn:not(.is-disabled):not(.is-locked):hover",
+            ":not(.a11y-disable-focusoutline) .narrative__strapline-btn:focus-visible",
+            ".no-touch .trickle__btn:not(.is-disabled):not(.is-locked):hover",
+            ":not(.a11y-disable-focusoutline) .trickle__btn:focus-visible"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Accent visited",
+      "l1Literal": "darken(@item-color, 15%) / @visited (#09444e)",
+      "groups": [
+        {
+          "property": "background-color",
+          "token": "--ab-base-if-adapt-item-color-visited",
+          "selectors": [
+            ".accordion-item__btn.is-visited",
+            ".hotgraphic__pin:not(.has-pin-image).is-visited",
+            ".hotgraphic__pin.has-pin-image .hotgraphic__pin-number",
+            ".hotgraphic__pin.has-pin-image.is-visited .icon",
+            ".hotgraphic__tile.is-visited .icon",
+            ".media.is-complete .media__transcript-btn",
+            ".narrative__progress.is-visited",
+            ".narrative__strapline-btn.is-visited"
+          ]
+        }
+      ],
+      "note": "narrative__progress keeps its own white border-color at this step in vanilla's compiled CSS (the 'visited ring') — not repointed here; contrast section 4 where the border DOES turn teal."
+    },
+    {
+      "id": 4,
+      "title": "Accent selected / open",
+      "l1Literal": "darken(@item-color, 20%) / @item-color-selected (#063038)",
+      "groups": [
+        {
+          "property": "background-color",
+          "token": "--ab-base-if-adapt-item-color-selected",
+          "selectors": [
+            ".accordion-item__btn.is-selected",
+            ".gmcq-item__label.is-selected .gmcq-item__option",
+            ".mcq-item__label.is-selected",
+            ".media__transcript-btn[aria-expanded='true']",
+            ".narrative__progress.is-selected"
+          ]
+        },
+        {
+          "property": "border-color",
+          "token": "--ab-base-if-adapt-item-color-selected",
+          "selectors": [".narrative__progress.is-selected"],
+          "note": "the one selector where vanilla's own border-color ALSO turns teal at this step (#063038, not white), confirmed in compiled CSS — gets the extra declaration."
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Grey-button family",
+      "l1Literal": "@greyDark (#4D4D4D) base / darken(@greyDark,10%) (#333) hover / @disabled (#DDDDDD)",
+      "note": "Refines theme.less's own blanket button !important (which flattens vanilla's hover/focus/disabled states); this file loads after theme.less so it wins the tie and restores them.",
+      "groups": [
+        {
+          "property": "background-color, border-color",
+          "token": "--ab-base-if-adapt-greyDark-hover",
+          "selectors": [
+            ".no-touch .btn-text:not(.is-disabled):not(.is-locked):hover",
+            ":not(.a11y-disable-focusoutline) .btn-text:focus-visible",
+            ".no-touch .btn-icon:not(.is-disabled):not(.is-locked):hover",
+            ":not(.a11y-disable-focusoutline) .btn-icon:focus-visible",
+            ".no-touch .btn__action:not(.is-disabled):not(.is-locked):hover",
+            ".no-touch .btn__feedback:not(.is-disabled):not(.is-locked):hover",
+            ":not(.a11y-disable-focusoutline) .btn__action:focus-visible",
+            ":not(.a11y-disable-focusoutline) .btn__feedback:focus-visible",
+            ".no-touch .nav__btn:not(.is-disabled):not(.is-locked):hover",
+            ":not(.a11y-disable-focusoutline) .nav__btn:focus-visible",
+            ".no-touch .drawer__btn:not(.is-disabled):not(.is-locked):hover",
+            ":not(.a11y-disable-focusoutline) .drawer__btn:focus-visible",
+            ".no-touch .notify__btn:not(.is-disabled):not(.is-locked):hover",
+            ":not(.a11y-disable-focusoutline) .notify__btn:focus-visible",
+            ".no-touch .notify__btn-icon:not(.is-disabled):not(.is-locked):hover",
+            ":not(.a11y-disable-focusoutline) .notify__btn-icon:focus-visible",
+            ".no-touch .notify-push__close-btn:not(.is-disabled):not(.is-locked):hover",
+            ":not(.a11y-disable-focusoutline) .notify-push__close-btn:focus-visible",
+            ".no-touch .assessmentresults__retry-btn:not(.is-disabled):not(.is-locked):hover",
+            ":not(.a11y-disable-focusoutline) .assessmentresults__retry-btn:focus-visible",
+            ".no-touch .hotgraphic-popup__controls:not(.is-disabled):not(.is-locked):hover",
+            ".no-touch .hotgraphic-popup__close:not(.is-disabled):not(.is-locked):hover",
+            ":not(.a11y-disable-focusoutline) .hotgraphic-popup__controls:focus-visible",
+            ":not(.a11y-disable-focusoutline) .hotgraphic-popup__close:focus-visible",
+            ".no-touch .languagepicker__language-btn:not(.is-disabled):not(.is-locked):hover",
+            ":not(.a11y-disable-focusoutline) .languagepicker__language-btn:focus-visible",
+            ".no-touch .tutor__btn-icon:not(.is-disabled):not(.is-locked):hover",
+            ":not(.a11y-disable-focusoutline) .tutor__btn-icon:focus-visible",
+            ".no-touch .tutor-type-overlay .tutor__btn:hover",
+            ":not(.a11y-disable-focusoutline) .tutor-type-overlay .tutor__btn:focus-visible",
+            ".no-touch .tutor-type-overlay .tutor__btn-icon:hover",
+            ":not(.a11y-disable-focusoutline) .tutor-type-overlay .tutor__btn-icon:focus-visible"
+          ]
+        },
+        {
+          "property": "background-color, border-color, color",
+          "tokens": {
+            "background-color": "--ab-base-if-adapt-disabled",
+            "border-color": "--ab-base-if-adapt-disabled",
+            "color": "--ab-base-if-adapt-font-color"
+          },
+          "selectors": [
+            ".btn-text.is-disabled", ".btn-text.is-locked",
+            ".btn-icon.is-disabled", ".btn-icon.is-locked",
+            ".btn__action.is-disabled", ".btn__feedback.is-disabled",
+            ".drawer__item-btn.is-locked", ".drawer__item-btn.is-disabled",
+            ".notify__btn.is-disabled", ".assessmentresults__retry-btn.is-disabled",
+            ".boxmenu-item__button.is-locked",
+            ".gmcq-item__label.is-disabled .gmcq-item__option",
+            ".hotgraphic-popup__controls.is-disabled", ".hotgraphic-popup__close.is-disabled",
+            ".languagepicker__language-btn.is-disabled", ".dropdown__btn.is-disabled",
+            ".mcq-item__label.is-disabled", ".narrative__controls.is-disabled",
+            ".textinput__widget.is-disabled .textinput-item__textbox",
+            ".trickle__btn.is-disabled", ".trickle__btn.is-locked"
+          ]
+        },
+        {
+          "property": "background-color, border-color, color",
+          "tokens": {
+            "background-color": "--ab-base-if-adapt-greyDark",
+            "border-color": "--ab-base-if-adapt-greyDark",
+            "color": "--ab-base-if-adapt-item-color-inverted"
+          },
+          "note": "non-button chrome that shares the @greyDark / darken(10%) family",
+          "selectors": [
+            ".drawer", ".drawer__btn", ".drawer__item-btn",
+            ".notify__popup", ".notify__title", ".notify__btn", ".notify__btn-icon",
+            ".notify-push", ".notify-push__close-btn", ".boxmenu-item__inner",
+            ".resources__filter-btn", ".tutor__btn-icon",
+            ".tutor-type-overlay .tutor__inner", ".tutor-type-overlay .tutor__btn",
+            ".tutor-type-overlay .tutor__btn-icon"
+          ]
+        },
+        {
+          "property": "background-color, border-color",
+          "token": "--ab-base-if-adapt-item-color-selected",
+          "selectors": [
+            ".drawer__item-btn[aria-current='true']",
+            ".drawer__item-btn.is-selected",
+            ".resources__filter-btn.is-selected"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "title": "Ink + muted text",
+      "l1Literal": "@font-color / @greyDark (#4D4D4D) running text; lighten(@font-color,25%) (#8d8d8d) muted text",
+      "note": "Links are NOT handled here — theme.less's own 'a, a:visited' rule covers them, fixed alongside this file so it now wins its own specificity fight.",
+      "groups": [
+        {
+          "property": "color",
+          "token": "--ab-base-if-adapt-font-color",
+          "deliberateException": "LITERAL swap, not role-split: #4D4D4D -> var(--ab-dark-grey) (#6d6d6d), not the near-black --ab-base-ink (#1a1a1a) used elsewhere. Contrast on white drops from 4.69:1 to 3.54:1, below WCAG AA for normal-size text — accepted knowingly (Abbott, 10 Oct 2026), not an oversight.",
+          "selectors": [
+            "body", ".page__body", ".page__instruction",
+            ".boxmenu__body", ".boxmenu__instruction",
+            ".boxmenu-group__body", ".boxmenu-group__instruction",
+            ".hotgraphic-popup__controls", ".hotgraphic-popup__close",
+            ".glossary__checkbox-label", ".glossary__index-link", ".glossary__item-not-found"
+          ]
+        },
+        {
+          "property": "color",
+          "token": "--ab-base-if-adapt-font-color-muted",
+          "selectors": [".glossary__item-description", ".glossary__items-group-header"]
+        },
+        {
+          "property": "background-color",
+          "token": "--ab-base-if-adapt-item-color",
+          "note": "progress indicator fill, @greyDark family reused as accent per the shipped render",
+          "selectors": [
+            ".pagelevelprogress__indicator", ".pagelevelprogress__indicator-bar",
+            ".menu-item__progress .pagelevelprogress__indicator",
+            ".menu-item__progress .pagelevelprogress__indicator-bar",
+            ".pagelevelprogress__nav-btn .pagelevelprogress__indicator-inner",
+            ".pagelevelprogress__item-btn:not(.is-disabled) .pagelevelprogress__indicator",
+            ".pagelevelprogress__item-btn:not(.is-disabled) .pagelevelprogress__indicator-bar",
+            ".header-color.transparent-light.menu .menu__header .pagelevelprogress__indicator",
+            ".header-color.header-transparent-light.menu .menu__header .pagelevelprogress__indicator",
+            ".header-color.transparent-light.menu .menu__header .pagelevelprogress__indicator-bar",
+            ".header-color.header-transparent-light.menu .menu__header .pagelevelprogress__indicator-bar",
+            ".comp-header-bg-color.transparent-light .pagelevelprogress__indicator",
+            ".comp-header-bg-color.transparent-light .pagelevelprogress__indicator-bar"
+          ]
+        },
+        {
+          "property": "background-color",
+          "token": "--ab-base-if-adapt-item-color-hover",
+          "selectors": [
+            ".no-touch .pagelevelprogress__nav-btn:hover .pagelevelprogress__indicator-inner",
+            ".no-touch .pagelevelprogress__item-btn:not(.is-disabled):hover .pagelevelprogress__indicator",
+            ".no-touch .pagelevelprogress__item-btn:not(.is-disabled):hover .pagelevelprogress__indicator-bar"
+          ]
+        },
+        {
+          "property": "background-color",
+          "token": "--ab-base-if-adapt-disabled",
+          "selectors": [".pagelevelprogress__item-btn.is-disabled .pagelevelprogress__indicator-inner"]
+        },
+        {
+          "property": "color",
+          "token": "--ab-base-if-adapt-font-color-strong",
+          "selectors": [
+            ".header-color.transparent-light.menu .menu__title",
+            ".header-color.header-transparent-light.menu .menu__title",
+            ".comp-header-bg-color.transparent-light .component__header",
+            ".comp-header-bg-color.transparent-light .component__title",
+            ".comp-header-bg-color.transparent-light .component__body a",
+            ".comp-header-bg-color.transparent-light .component__instruction a"
+          ]
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "title": "Surfaces + hairlines",
+      "l1Literal": "@greyLight (#f9f9f9), darken(@grey,5%) (#e6e6e6), @grey/@disabled (#DDDDDD)",
+      "note": "No 'surface-subtle' (#f9f9f9) bucket for first-party adapt-abbott-* components — those are fixed at source (own BEM selector, no vendor rule competes, no !important needed).",
+      "groups": [
+        {
+          "property": "background-color",
+          "token": "--ab-base-if-adapt-greyLight",
+          "selectors": [
+            ".drawer__toolbar", ".resources__header-inner",
+            ".glossary__search-container", ".glossary__index-container",
+            ".glossary__items-group-header", ".glossary__item-description",
+            ".glossary__item-not-found"
+          ]
+        },
+        {
+          "property": "border-color",
+          "token": "--ab-base-if-adapt-hairline",
+          "selectors": [".drawer__item-btn.is-locked", ".drawer__item-btn.is-disabled"]
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "title": "Validation",
+      "l1Literal": "@validation-success (#065f28) / @validation-error (#dd0000)",
+      "note": "Reuses theme.less's existing semantic tokens (authoritative cm-global.css map); no new tokens needed.",
+      "groups": [
+        {
+          "property": "color, border-color",
+          "token": "--ab-base-if-adapt-validation-success",
+          "selectors": [
+            ".btn__marking.is-correct",
+            ".slider__widget.show-user-answer.is-correct .slider__number-selection",
+            ".slider__widget.show-user-answer.is-correct .slider__item-input-fill",
+            ".slider__widget.show-correct-answer.is-correct .slider__item-input-fill",
+            ".slider__widget.show-correct-answer.is-correct .slider__number-model-answer"
+          ]
+        },
+        {
+          "property": "color, border-color",
+          "token": "--ab-base-if-adapt-validation-error",
+          "selectors": [
+            ".btn__marking.is-incorrect",
+            ".narrative__instruction.has-error",
+            ".matching__widget:not(.is-complete) .matching-item__select-container.has-error .dropdown__btn",
+            ".slider__widget.show-user-answer.is-incorrect .slider__number-selection",
+            ".slider__widget.show-user-answer.is-incorrect .slider__item-input-fill",
+            ".slider__widget.show-correct-answer.is-incorrect .slider__item-input-fill",
+            ".slider__widget.show-correct-answer.is-incorrect .slider__number-model-answer"
+          ]
+        }
+      ]
+    }
+  ],
+
+  "excludedByDesign": {
+    "note": "Explicitly NOT swept (ab-vanilla-overrides.less header) — either intentional literals or already fixed elsewhere.",
+    "items": [
+      ".bg-color.* utilities", ".header-color.* utilities", ".comp-header-bg-color.* utilities",
+      "black-white a11y utilities", "high-contrast blocks", "#a11y-focuser",
+      "MediaElement (.mejs__*) chrome", "anything already a plain --ab-primary via theme.less"
+    ]
+  },
+
+  "sources": [
+    "src/extensions/adapt-ab-theme/less/ab-vanilla-overrides.less",
+    "adapt-ab-theme/layers/L2-adapter.css",
+    "design-kb/section-schemas/adapters/adapt.json (condensed sibling)",
+    "docs/authoring/theming-layers-map.md (table B2 / section A3)"
+  ]
+}

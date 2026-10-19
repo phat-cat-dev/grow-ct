@@ -1,0 +1,93 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://excelling.cardiffmet/schemas/design-kb.pathways.schema.json",
+  "title": "design-kb: consolidated pathways (Layer-1 grounding)",
+  "description": "One resolved record per pathway, merging the catalogue registry, per-tier framing (focus + voice band), and the book-map chunk ids tagged to the pathway. Chunk references are ids only; the book map remains the source of truth for chunk text. Read at the generic gates (crs-02, crs-03, crs-04, les-01, wra-*).",
+  "type": "object",
+  "required": ["pathwaysVersion", "machinery", "pathways"],
+  "additionalProperties": false,
+  "properties": {
+    "pathwaysVersion": { "type": "string" },
+    "generated": { "type": "string", "description": "ISO date the store was generated." },
+    "description": { "type": "string" },
+    "machinery": {
+      "type": "object",
+      "description": "Pointers to the shared stores the gates also read. Same for every pathway; referenced here, never duplicated.",
+      "additionalProperties": { "type": "string" }
+    },
+    "pathways": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "number", "name", "chapters", "bookChunks", "tiers"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+          "number": { "type": "integer", "minimum": 1 },
+          "name": { "type": "string" },
+          "chapters": {
+            "type": ["array", "null"],
+            "items": { "type": "integer", "minimum": 1 },
+            "description": "Book chapters this pathway spans. null for Track B pathways whose chapters are still to be confirmed."
+          },
+          "routes": {
+            "type": ["object", "null"],
+            "properties": {
+              "feeds": { "type": ["string", "array", "null"] },
+              "drawsOn": { "type": ["string", "array", "null"] }
+            }
+          },
+          "bookChunks": {
+            "type": "object",
+            "required": ["primary", "shared"],
+            "additionalProperties": false,
+            "description": "Book-map chunk ids tagged to this pathway. primary = this pathway is the sole tag; shared = co-tagged with other pathways.",
+            "properties": {
+              "primary": {
+                "type": "array",
+                "items": { "type": "string" }
+              },
+              "shared": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["chunk", "with"],
+                  "additionalProperties": false,
+                  "properties": {
+                    "chunk": { "type": "string" },
+                    "with": {
+                      "type": "array",
+                      "minItems": 1,
+                      "items": { "type": "string", "pattern": "^[a-z0-9-]+$" }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "tiers": {
+            "type": "object",
+            "description": "Per-tier framing. Keyed by tier id.",
+            "minProperties": 1,
+            "additionalProperties": false,
+            "patternProperties": {
+              "^(introductory|intermediate|advanced)$": {
+                "type": "object",
+                "additionalProperties": false,
+                "properties": {
+                  "displayName": { "type": ["string", "null"] },
+                  "focus": { "type": ["string", "null"] },
+                  "voiceBand": { "type": ["string", "null"] },
+                  "assumesFromPrevious": { "type": ["string", "array", "null"] },
+                  "status": { "type": ["string", "null"] },
+                  "courseSlug": { "type": ["string", "null"] }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

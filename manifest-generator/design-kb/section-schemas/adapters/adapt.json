@@ -1,0 +1,46 @@
+{
+  "adapter": "adapt",
+  "tier": "per-project",
+  "layers": "L1-L2",
+  "schemaVersion": "0.1.0",
+  "renderer": "adapt-vanilla (adapt-contrib-vanilla + core)",
+  "note": "The PER-PROJECT adapter schema for the Adapt renderer: it names the renderer's own vocabulary (L1) and declares how the L2 adapter plugs into the generic L3 pivot (the seam-1 alias map). Grounded in vanilla-overrides.less (the sweep) + cm-vanilla-compat.less (the box-model/breakpoint vars the adapter provides). A different renderer (JSX) is a sibling file here; the generic section schemas do not change.",
+
+  "providesVars": {
+    "note": "Renderer (L1) LESS @vars the adapter guarantees are defined so components compile regardless of whether current vanilla still ships them. DEAD ones take the value; LIVE ones are overridden by vanilla (compiled last). Currently realised by cm-vanilla-compat.less; folds into --ab-base-if-adapt-* at the rename.",
+    "box-model": { "@item-border-radius": "0.32rem", "@btn-border-radius": "0.32rem" },
+    "spacing":   { "@item-padding": "1rem", "@item-margin": "1rem", "@btn-padding": "1rem", "@btn-margin": "1rem" },
+    "breakpoint":{ "@device-width-small": "32.5rem", "@device-width-medium": "60rem" }
+  },
+
+  "aliasMap": {
+    "note": "SEAM 1: renderer var / literal -> generic L3 pivot token. The adapter rule paints the renderer's selector with var(<pivot>). Source: theming-layers-map.md B2.",
+    "@item-color / @heading-color (#117F93)": "--ab-base-accent",
+    "darken(@item-color,10%) hover":          "--ab-base-accent-hover",
+    "darken(@item-color,15%) / @visited":     "--ab-base-accent-active",
+    "darken(@item-color,20%) / @item-color-selected open": "--ab-base-accent-deep",
+    "@greyDark (#4D4D4D) buttons/chrome":     "--ab-base-ink-muted",
+    "@font-color running text":               "--ab-base-ink",
+    "@greyLight (#f9f9f9 / #e6e6e6) surfaces": "--ab-base-surface-sunken",
+    "@disabled (#DDDDDD)":                    "--ab-base-hairline",
+    "@validation-success (#065f28)":          "--ab-base-success",
+    "@validation-error (#dd0000)":            "--ab-base-danger",
+    "@item-color-inverted (white contrast)":  "--ab-base-on-accent / --ab-base-surface (per use)"
+  },
+
+  "sweepSelectors": {
+    "note": "Vanilla selectors the adapter repoints (vanilla-overrides.less sections 1-8). Each is painted with the aliased pivot token, out-specifying vanilla via the gate + !important.",
+    "accent": [".mcq-item__label", ".btn", "links", "nav accents", "progress"],
+    "ink": ["running text", "headings via --ab-base-h*-color"],
+    "surface": ["panels", "wells", "hairlines/dividers"],
+    "validation": [".is-correct / .is-incorrect", "feedback"]
+  },
+
+  "deadVarsAbsorbed": {
+    "note": "Removed vanilla vars the adapter/migration has had to convert or shim (build-test findings, 11 Oct 2026). Recorded so the real adapter formalises them.",
+    "@item-color-inverted": "removed; components converted to var(--cm-on-accent/--cm-surface)",
+    "@body-size": "removed; components converted to var(--cm-body-font-size)",
+    "@item-border-radius": "removed; provided by cm-vanilla-compat.less (0.32rem)",
+    "@duration": "never defined (component bug); tabs converted to 0.2s literal"
+  }
+}

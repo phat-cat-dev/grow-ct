@@ -1,0 +1,35 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://excelling.cardiffmet/schemas/design-kb.tier-bands.schema.json",
+  "title": "design-kb: tier bands",
+  "description": "Structured index of the tier specification for gate A2 proposals. Anchors and rationale stay in tier-specification.md; this file points and parameterises.",
+  "type": "object",
+  "required": ["kbVersion", "tiers"],
+  "properties": {
+    "kbVersion": { "$ref": "common.schema.json#/$defs/kbVersion" },
+    "tiers": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "tier", "anchorPointer", "assessmentCalibrationPointer"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^tier-bands/[a-z-]+$" },
+          "tier": { "enum": ["introductory", "intermediate", "advanced"] },
+          "anchorPointer": { "$ref": "common.schema.json#/$defs/citation", "description": "Experience-anchored definition (tier-spec §, decision #6)." },
+          "verbBandPointer": { "$ref": "common.schema.json#/$defs/citation", "description": "Outcome-verb band (§16 via §6)." },
+          "assessmentCalibrationPointer": { "$ref": "common.schema.json#/$defs/citation", "description": "Parity standard row (tier-spec §7)." },
+          "indicativeLevels": {
+            "type": "array",
+            "items": { "$ref": "common.schema.json#/$defs/level" },
+            "description": "Loose tier→level mapping for facet-gate proposals. INDICATIVE, NOT PROGRESSION: self-judged beginners arrive from many levels; an introductory tier may indicate {L3,L4,L7}."
+          },
+          "notes": { "type": "string" }
+        },
+        "additionalProperties": false
+      },
+      "minItems": 3,
+      "maxItems": 3
+    }
+  },
+  "additionalProperties": false
+}

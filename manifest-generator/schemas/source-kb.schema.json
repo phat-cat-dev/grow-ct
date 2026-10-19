@@ -1,0 +1,44 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://excelling.cardiffmet/schemas/source-kb.schema.json",
+  "title": "source-kb: external published sources",
+  "description": "Index of externally published sources (FHEQ/CQFW sector frameworks, QAA subject benchmarks, subject literature) - public, versioned by their issuers (S1-D8). Entries index and characterise sources; they never duplicate source text (pointer discipline, F9). A new issuer edition is a NEW entry; the old entry gains supersededBy (ordinary supersession, S3-D3; absence of supersededBy means current). Designed away-week Session 4 (S4-D1-D6).",
+  "type": "object",
+  "required": ["kbVersion", "entries"],
+  "properties": {
+    "kbVersion": { "$ref": "common.schema.json#/$defs/kbVersion" },
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "issuer", "authorityLevel", "locator", "characterisation", "basis"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9-]+/[a-z0-9][a-z0-9.-]*$",
+            "description": "Issuer-prefixed by convention (qaa/criminology-2022, fheq/2024, lit/<slug>). The prefix is legibility only; mechanical matching uses fields, never id parsing (S4-D2)."
+          },
+          "title": { "type": "string" },
+          "issuer": { "type": "string", "description": "Publishing body (QAA, HEFCW, publisher)." },
+          "issuerVersion": { "type": "string", "description": "The source's own edition/version as published. Omit where the issuer does not version. Presence requires retrieved (draft-07 dependency)." },
+          "retrieved": { "type": "string", "format": "date", "description": "Date the source was retrieved/inspected." },
+          "sourceType": { "type": "string", "description": "DELIBERATELY open pre-sourcing (S4-D3); tighten to an enum at population once real material is in hand. Expected values: framework, benchmark, literature." },
+          "authorityLevel": {
+            "enum": ["sector", "subject"],
+            "description": "source-kb's half of the four-level vocabulary (S1-D8 restated per store, validated here); union across both stores matches gates' sourceConsultation.authorityLevels exactly, so gate-to-entry resolution is mechanical (S4-D4)."
+          },
+          "locator": { "$ref": "common.schema.json#/$defs/sourceLocator" },
+          "characterisation": { "type": "string", "description": "Short prose: what the source contains and what it can ground. Index-and-characterise, never duplicate." },
+          "anchors": { "$ref": "common.schema.json#/$defs/sourceAnchors" },
+          "basis": { "$ref": "common.schema.json#/$defs/sourceBasis" },
+          "facets": { "$ref": "common.schema.json#/$defs/sourceFacets" },
+          "supersededBy": { "type": "string", "description": "Entry id of the superseding entry (new issuer edition). Absence = current." },
+          "note": { "type": "string" }
+        },
+        "dependencies": { "issuerVersion": ["retrieved"] },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

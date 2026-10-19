@@ -1,0 +1,71 @@
+{
+  "onb-01_theme-preset": {
+    "state": "closed",
+    "provenance": "human-confirmed",
+    "decidedValue": {
+      "preset": "academic-practice-pathways"
+    },
+    "grounding": [
+      {
+        "doc": "catalogue/pathways.json",
+        "ref": "pathways[].id = understanding-learning-assessment-feedback",
+        "note": "one of the 13 academic-practice pathways offered by the preset"
+      }
+    ],
+    "confirmedAt": "gate",
+    "sessionRef": {
+      "venue": "claude-code-plan",
+      "description": "understanding-learning-assessment-feedback-introductory onb-01_theme-preset 2026-10-08"
+    }
+  },
+  "onb-02_course-theme": {
+    "state": "closed",
+    "provenance": "human-confirmed",
+    "decidedValue": {
+      "theme": "understanding-learning-assessment-feedback",
+      "themeSource": "preset"
+    },
+    "grounding": [
+      {
+        "doc": "catalogue/pathways.json",
+        "ref": "pathways[].id = understanding-learning-assessment-feedback",
+        "note": "pathway 2 of 13, selected from the academic-practice-pathways preset dropdown"
+      }
+    ],
+    "confirmedAt": "gate",
+    "sessionRef": {
+      "venue": "claude-code-plan",
+      "description": "understanding-learning-assessment-feedback-introductory onb-02_course-theme 2026-10-08"
+    }
+  },
+  "onb-03_pitch": {
+    "state": "closed",
+    "provenance": "human-confirmed",
+    "decidedValue": {
+      "pitch": "introductory"
+    },
+    "grounding": [
+      {
+        "doc": "docs/curriculum/tier-specification.md",
+        "ref": "The three tiers across the defining dimensions",
+        "note": "introductory tier (~ FHEQ L3-low L5)"
+      }
+    ],
+    "confirmedAt": "gate",
+    "sessionRef": {
+      "venue": "claude-code-plan",
+      "description": "understanding-learning-assessment-feedback-introductory onb-03_pitch 2026-10-08"
+    }
+  },
+  "onb-04_naming": {
+    "state": "closed",
+    "provenance": "human-specified",
+    "decidedValue": {
+      "pathwayName": "Understanding Learning, Assessment & Feedback",
+      "tierName": "Introductory",
+      "slug": "example-course",
+      "shortSlug": "undlaf-intro"
+    },
+    "supersedes": 1
+  }
+}

@@ -1,0 +1,146 @@
+{
+  "kbVersion": "0.1.0",
+  "conventions": [
+    {
+      "id": "content-conventions/concept-group-heading",
+      "action": "A12",
+      "status": "ruled, implementation open",
+      "scope": { "kind": "role", "role": "concept" },
+      "name": "Concept-group heading convention",
+      "rulings": [
+        "(1) Concept groups carry a visible heading. Not because of the equality rule but because A55's scheme depends on titled tiers; 18 of 20 currently carry no displayTitle and would be unreachable by heading navigation.",
+        "(2) The test is substantive non-restatement, not literal identity. AWA L05's \"What is the critical edge?\" against lesson title \"The critical edge\" passes literal equality and restates the title in all but punctuation \u2014 the one case in the programme the rule exists to catch.",
+        "(3) The check inspects displayTitle, not title. title is boilerplate in 18 of 20 and would never fire."
+      ],
+      "calibratingCase": {
+        "description": "AWA L05, concept-group block displayTitle \"What is the critical edge?\" against the lesson's own article title \"The critical edge\": passes literal-identity equality (the strings differ) but substantively restates the lesson title in all but punctuation. This is the one live case in the programme distinguishing 'must not equal the lesson title' (the superseded L02-sheet rule, passes here) from 'must not substantively restate it' (this ruling, fails here) \u2014 without this case in view, 'must not substantively restate' has nothing to calibrate against.",
+        "sourcePointer": {
+          "doc": "courses/academic-writing-advanced/en/components.json",
+          "ref": "displayTitle \"What is the critical edge?\" (concept-group block, L05)",
+          "note": "Lesson/article title \"The critical edge\" recorded in the sibling file courses/academic-writing-advanced/en/articles.json."
+        }
+      },
+      "amends": [
+        {
+          "doc": "docs/authoring/lesson-structure-template.md",
+          "ref": "concept-intro block: displayTitle (empty)",
+          "note": "AMENDED, not added to, by this ruling: concept groups now carry a visible, non-restating displayTitle. The doc is not edited this sitting; this entry records the supersession, per the precedent in design-kb.skeletons.json's wrapper-close archetype notes for recording supersession without editing the superseded doc in the same sitting."
+        }
+      ],
+      "leftOpen": [
+        "Grammatical-shape consistency across a course (a different kind of check, sibling-to-sibling) is not ruled here.",
+        "Which structural unit \"concept group\" names is not settled generally; today's narrow Concept introduction block is not AUD-AWI-L02-1's proposed four-element merge. This entry governs the Concept introduction block as it exists today (skeletons/lesson's concept-intro key), not the proposed merge."
+      ],
+      "sourcePointer": { "doc": "docs/project/audit-2026-09/audit-actions-arising.md", "ref": "A12" }
+    },
+    {
+      "id": "content-conventions/concept-block",
+      "action": "A37",
+      "status": "ruled, implementation open",
+      "scope": { "kind": "role", "role": "concept" },
+      "name": "Concept block specification",
+      "namedPattern": "diagnostic-concept",
+      "rulings": [
+        "(1) The seven-move shape is recorded as a NAMED PATTERN, diagnostic-concept, sourced to AWM L04. It is not the concept-block specification. AWM L05, AWA L03, AWA L04 are framework expositions with no flawed artefact, and all five PRI concept blocks are definitional \u2014 those are not failures to hit seven moves.",
+        "(2) The concept role's requirement is stated as a job, not a shape: a concept block makes the concept usable before the learner meets it in practice. diagnostic-concept is one way; definitional and taxonomic concepts need their own patterns, which have instances but no specification.",
+        "(3) Move 4's crossing into the sibling worked-example component is PERMITTED, not a defect. The section completes the pattern, not the block."
+      ],
+      "leftOpen": [
+        "Definitional and taxonomic concept patterns have instances across the four courses but no written specification of their own moves; only diagnostic-concept (AWM L04) has been specified this sitting."
+      ],
+      "sourcePointer": { "doc": "docs/project/audit-2026-09/audit-actions-arising.md", "ref": "A37" }
+    },
+    {
+      "id": "content-conventions/worked-example-analysis-placement",
+      "action": "A30",
+      "status": "ruled, implementation open",
+      "scope": { "kind": "role", "role": "worked-example", "unit": "section" },
+      "name": "Worked-example analysis placement",
+      "rulings": [
+        "Follows from A37(3) and A55. No pattern is chosen. The rule attaches to the SECTION: the section must complete the pattern it starts. The four observed patterns (separate analysis block, embedded per accordion item, one-line framing, and AWA's fully-inline fourth) are recorded as permitted realisations within a section, not as competitors. AWM L03's reverse case (analysis front-loaded before the worked example) is likewise permitted."
+      ],
+      "dependsOn": ["A37", "A55"],
+      "sourcePointer": { "doc": "docs/project/audit-2026-09/audit-actions-arising.md", "ref": "A30" }
+    },
+    {
+      "id": "content-conventions/concept-definition-requirement",
+      "action": "A32",
+      "status": "ruled, implementation open",
+      "scope": { "kind": "role", "role": "concept" },
+      "name": "Concept definition requirement",
+      "rulings": [
+        "ALWAYS REQUIRED. Option 1. Every concept block states explicitly what the thing being taught is, quality or procedure. No lesson-type branching, no _contentType field, no classification tag. Reason, and it inverts the action's own premise: every procedure-type lesson in all four courses already defines its procedure (AWI L02/L04/L06, AWM L03/L04, AWA L03, PRI L06); it is the quality-type lessons that are inconsistent. \"Always define\" is closer to existing practice than the conditional rule. The check is a presence check on a definitional statement."
+      ],
+      "records": [
+        "A32's own row text in audit-actions-arising.md says \"eight-role taxonomy\". The live taxonomy is twelve roles (design-kb.skeletons.json / schemas/design-kb.skeletons.schema.json role enum). Reference corrected here; the row's own pre-ruling text is not rewritten this sitting."
+      ],
+      "sourcePointer": { "doc": "docs/project/audit-2026-09/audit-actions-arising.md", "ref": "A32" }
+    },
+    {
+      "id": "content-conventions/practical-guidance-format",
+      "action": "A31",
+      "status": "ruled, implementation open",
+      "scope": { "kind": "role", "role": "practical-guidance" },
+      "name": "Practical guidance internal format",
+      "rulings": [
+        "Rule the requirements, not the form. Form follows content: a sequence of steps wants a list, a diagnostic habit wants prose. That is a per-block authoring judgement, not a lesson-type branch. REQUIRED and checkable: a lead-in sentence stating what the guidance is for; items that are actionable rather than descriptive; no trailing prose introducing new instruction after the list. AWI already complies throughout. The shape itself is guidance, with worked examples of both forms."
+      ],
+      "sourcePointer": { "doc": "docs/project/audit-2026-09/audit-actions-arising.md", "ref": "A31" }
+    },
+    {
+      "id": "content-conventions/lesson-summary",
+      "action": "A13",
+      "status": "ruled, implementation open",
+      "scope": { "kind": "role", "role": "summary" },
+      "name": "Lesson summary convention",
+      "rulings": [
+        "(1) PRI's pattern is the model, NOT AWI L07. PRI meets three of four criteria in all five lessons, uniformly, at three sentences, without reference to L07. AWI L07 is an outlier inside its own course.",
+        "(2) \"Reach past the course\" is REPLACED by \"hand on to something specific\", satisfied differently by position: a mid-course lesson hands on to the next lesson naming its content not its title; a last lesson hands on to the next tier where one exists, to a cross-linked pathway where docs/curriculum/pathway-tier-mapping.md records one, or to independent practice where neither applies. Confirmed against that mapping: three tiers, advanced is top, so AWA has no next tier \u2014 but the mapping records cross-pathway bridges (Critical Thinking's advanced tier bridges into Academic Writing), so a top tier can hand on sideways. PRI L06's \"practising it out loud\" is a legitimate instance, not a shortfall. The other three criteria stand: consolidate rather than restate, forward with substance, stay short. Short is three sentences as a target from PRI's practice, not a hard limit; AWA L05's eight sentences across three paragraphs is the outlier to avoid."
+      ],
+      "records": [
+        "AWM has zero forward moves in all five summaries \u2014 nothing to codify from it, authoring required not revision."
+      ],
+      "sourcePointer": { "doc": "docs/project/audit-2026-09/audit-actions-arising.md", "ref": "A13" }
+    },
+    {
+      "id": "content-conventions/knowledge-check-feedback",
+      "action": "A20",
+      "status": "ruled, implementation open",
+      "scope": { "kind": "role", "role": "knowledge-check" },
+      "name": "Knowledge-check feedback two-stage convention",
+      "rulings": [
+        "Not-final-attempt feedback: soften the verdict rather than stating a bare judgement; restate in general terms what the item is testing; end on a guiding question that orients the learner toward the answer without naming it.",
+        "Final-attempt feedback: state the correct answer; explain why it is correct and why each incorrect alternative is not, in terms of the underlying technique rather than a generic reaction to 'that option'."
+      ],
+      "records": [
+        "Move-by-move check against all 10 AWM strings (5 notFinal + 5 final) that the four-move shape (AUD-AWM-SUMM-2) was meant to describe: no single string carries all four moves. notFinal carries moves 1 (soften), 2 (restate what's tested) and 4 (end on a guiding question without naming the answer) in 5/5 instances. final carries a loose version of move 3 (react to the distractor) in 5/5, but DIRECTLY CONTRADICTS moves 1 and 4 in 5/5 \u2014 final strings never soften and always state the answer flatly. AWI and AWA corroborate the same split.",
+        "This two-stage ruling DISSOLVES the apparent conflict between the four-move shape and the landed completionRules requirement that final-attempt feedback state the answer with explanation (namedDependencies, knowledge-check role): move 4's 'without stating it flatly' describes notFinal, not final. The two were never describing the same attempt; there was no incompatibility to rule on, only an imprecise citation.",
+        "14 Sep 2026 correction (Phase 4 cluster 6, Paper 3, /tmp/cluster6/07-feedback.md): the first records entry's claim 'AWI and AWA corroborate the same split' does not hold, recounted directly against all served strings on both courses. AWI carries no split at all \u2014 the same generic 'Not quite right.' string serves both notFinal and final on all six SUMM mcq items. AWA's notFinal string is empty and structurally unreachable under AWA's own per-question _attempts: 1, which differs from AWM's two-stage split but is not a second corroborating instance of it. PRI is identical to AWI: generic verdict only, no split. Only AWM shows the two-stage split the rulings above describe. The rulings themselves (notFinal/final content) are unaffected; only the 'AWI and AWA corroborate' claim in the first records entry is corrected, not rewritten in place, per this store's own precedent (see content-conventions/concept-definition-requirement's records entry)."
+      ],
+      "leftOpen": [
+        "PRI's per-option feedback mechanism (_items[].feedback, no notFinal/final split) is the one mechanism where move 3 is literally true \u2014 it reacts to the specific chosen option, not a generic distractor reaction. It still has no move-1 softening phrase and states the answer flatly regardless of attempt. This is recorded as a genuine specificity-vs-staging trade-off against the two-stage convention ruled here, not settled by it. Left for a later gate conversation.",
+        "14 Sep 2026 correction (Phase 4 cluster 6, Paper 3): the entry above is corrected on one point. No PRI SUMM component carries an _items[].feedback field \u2014 PRI's SUMM feedback is the same generic verdict-only string as AWI's (see the records correction above), not the per-option mechanism this note describes. The genuine _items[].feedback per-option mechanism does exist on PRI, but only on four lesson-level knowledge-check components (presenting-introductory-L02-c-30, L03-c-30, L05-c-30, L06-c-30), not on any SUMM component. The specificity-vs-staging trade-off this note raises is real and is restated as an open question in cluster 6 Paper 3, but the illustration above does not describe anything currently on PRI's summative \u2014 it describes PRI's formative knowledge checks. This is that later gate conversation for the summative half; it does not resolve the trade-off, only relocates the evidence."
+      ],
+      "sourcePointer": { "doc": "docs/project/audit-2026-09/audit-actions-arising.md", "ref": "A20" }
+    },
+    {
+      "id": "content-conventions/summative-feedback",
+      "action": "A21",
+      "status": "ruled, implementation open",
+      "scope": { "kind": "role", "role": "summative" },
+      "name": "Summative feedback two-stage-extended convention",
+      "rulings": [
+        "15 Sep 2026 (Phase 4 cluster 6 Paper 3, question 4a): Option A. The two-stage convention (content-conventions/knowledge-check-feedback, A20) extends to the summative rather than a single-stage or verdict-only convention. Option C (verdict-only, AWI's and PRI's current summative feedback) was already excluded by a landed rule, not one this ruling creates: docs/authoring/component-specs/mcq.md §4 maps _feedback.correct and _feedback._incorrect.notFinal/.final to Voice Spec §15.5 for 'each field that carries learner-facing copy', with no formative/summative branch; §15.5 itself requires brief confirmation plus the reason and forbids a bare verdict. Option B (stating the answer and reasoning on the first wrong submission) is excluded by this cluster's attempts ruling (A21, Paper 2, Option 3): under unlimited per-item attempts, giving the answer away on the first wrong try leaves nothing to retry for, defeating the retry mechanism that ruling preserved as the teaching device. Option A follows from the teaching-instrument purpose (A21, 14 Sep 2026 ruling): a guiding question on a wrong attempt is a teaching move, not a retry prompt.",
+        "Stage pairing: NOT notFinal+final. A20's convention pairs notFinal with final. Under the summative's _attempts: -1, src/core/js/models/questionModel.js's updateAttempts() (lines 139-143) sets _attemptsLeft to _attempts on first call and decrements it on every submission (-1, -2, -3..., moving away from zero, never reaching it); getFeedback() (line 266) sets isFinal = (_attemptsLeft === 0), which is therefore never true. Confirmed live on AWM's SUMM-c-10 (courses/academic-writing-intermediate/en/components.json:1097-1156), built and served via grunt server-scorm, entry point scorm_test_harness.html: three wrong submissions each rendered the authored notFinal string verbatim; the authored final string never rendered; the correct submission rendered _feedback.correct verbatim. The summative's convention is notFinal plus correct: the answer and the technique-based reasoning arrive on the correct submission, which is also what §15.5 requires of a correct-answer string. A convention is not written here for a field (final) that cannot render under the attempts model this cluster has ruled."
+      ],
+      "records": [
+        "This ruling does not rest on A20's 'AWI and AWA corroborate the same split' claim, which A20's own 14 Sep 2026 correction already found did not hold. It rests on the teaching-instrument purpose, the attempts ruling, and the landed §15.5 rule, independently of corroboration on other courses.",
+        "Consequence for A20 and cluster 3, recorded against A99 (decision-versus-implementation check) as a further instance: A20 read all 10 of AWM's authored notFinal/final strings as its evidence base, a correct reading of the content. This ruling establishes that the final half of that pair never executes under AWM's own attempts config \u2014 a decision correctly read off authored content, standing on an implementation question (whether that content ever renders) that was never checked. A20 is NOT reopened by this finding: the notFinal-side moves (soften, restate, guiding question) are independently verified as rendering. Only the final-side evidence needs a second look, and cluster 3's evidence base needs that look before PRI's or AWI's own knowledge-check strings are treated as settled against the two-stage split, since the same _attempts: -1 pattern is not unique to the summative."
+      ],
+      "leftOpen": [
+        "Paper 4 of cluster 6 is not yet ruled and may bear on this entry."
+      ],
+      "sourcePointer": { "doc": "docs/project/audit-2026-09/audit-actions-arising.md", "ref": "A21" }
+    }
+  ]
+}

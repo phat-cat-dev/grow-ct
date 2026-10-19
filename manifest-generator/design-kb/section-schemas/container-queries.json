@@ -1,0 +1,15 @@
+{
+  "section": "container-queries",
+  "schemaVersion": "0.1.0",
+  "note": "Component-level responsiveness — Tier 2 of the two-tier responsive model (Tier 1 = viewport breakpoints + fluid-within-breakpoint, see breakpoints.json). A component wrapped in .ab-cq becomes a query container (container-type: inline-size); its descendants respond to the COMPONENT's inline size via @container, not the viewport, so the same component adapts in a full page, a half column, or a card — 100% viewport-independent. OPT-IN (Abbott, 12 Oct 2026): nothing is a container until .ab-cq is applied, so this changes no render until used, and a component stays viewport-fluid (Tier 1) unless deliberately made independent. @container length conditions, like @media, cannot read custom properties, so the @ab-cq-* LESS vars are authoritative for the conditions and --ab-base-cq-* mirror them. Component-internal fluid uses cqi (container-inline %) via the .ab-cq-fluid() mixin, interpolating across the compile-time cq-min (20rem) .. cq-max (60rem) band. Bands (inline-size, mobile-first): narrow = base, medium >= 30rem, wide >= 45rem. Worked impl: ab-container-queries.less.",
+
+  "seeds": {
+    "cq-medium": { "kind": "length", "default": "30rem", "themeable": true, "template": { "label": "Container band: medium (component leaves narrow)", "input": "length", "presets": ["full"] } },
+    "cq-wide":   { "kind": "length", "default": "45rem", "themeable": true, "template": { "label": "Container band: wide (component reaches wide)",     "input": "length", "presets": ["full"] } }
+  },
+
+  "tokens": {
+    "cq-medium": { "pivot": "--ab-base-cq-medium", "kind": "ref-seed", "ref": "cq-medium", "themeable": false, "template": null },
+    "cq-wide":   { "pivot": "--ab-base-cq-wide",   "kind": "ref-seed", "ref": "cq-wide",   "themeable": false, "template": null }
+  }
+}

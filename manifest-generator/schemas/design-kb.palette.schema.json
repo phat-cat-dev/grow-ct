@@ -1,0 +1,57 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://excelling.cardiffmet/schemas/design-kb.palette.schema.json",
+  "title": "design-kb: component palette",
+  "description": "Suitability metadata per component/extension: enough that 'which component fits this lesson' is answerable from the file. Points to specs; never duplicates them.",
+  "type": "object",
+  "required": ["kbVersion", "entries"],
+  "properties": {
+    "kbVersion": { "$ref": "common.schema.json#/$defs/kbVersion" },
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "kind", "origin", "contentFit", "specPointer"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^palette/[a-z0-9-]+$" },
+          "name": { "type": "string", "description": "Registered component name, e.g. flipcard." },
+          "kind": { "enum": ["component", "extension"] },
+          "origin": { "enum": ["core", "community", "abbott"] },
+          "build": { "enum": ["available", "pending", "deprecated"], "description": "Build state of the underlying component. Omitted = available (built/usable). 'pending' = designed into the model but the component is not currently built (keep the design; do not author with it yet). 'deprecated' = superseded; retained for provenance, not for new authoring." },
+          "contentFit": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": ["shape", "register"],
+              "properties": {
+                "shape": { "type": "string", "description": "Teaching shape it suits, e.g. sequential-reveal, two-versions-comparison, retrieval-practice, paired-disclosure." },
+                "register": { "type": "string", "description": "Pedagogical register in that use; where register lives in instruction text not config (FC-2 pattern), say so." }
+              },
+              "additionalProperties": false
+            }
+          },
+          "tierSuitability": {
+            "type": "array",
+            "items": { "enum": ["introductory", "intermediate", "advanced"] },
+            "description": "Omit when tier-neutral."
+          },
+          "accessibility": { "type": "string", "description": "One-line a11y character (keyboard/SR model); spec holds detail." },
+          "configNotes": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Quirks a proposal must know, e.g. passreveal _assessmentIds[] vs resultsdebrief _assessmentId inconsistency; flipcard index-keyed _items reorder hazard."
+          },
+          "specPointer": { "$ref": "common.schema.json#/$defs/citation" },
+          "decisionPointers": {
+            "type": "array",
+            "items": { "$ref": "common.schema.json#/$defs/citation" }
+          },
+          "version": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

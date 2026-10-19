@@ -1,0 +1,291 @@
+{
+  "section": "icons",
+  "schemaVersion": "0.2.0",
+  "note": "Icon-set packs + per-glyph tokens. A pack = a named group of Google Material Symbol ligatures, self-hosted as an offline subset (SCORM ships offline, never runtime-linked to Google). Pack token: --ab-base-<pack>-iconset (the member list). Per-glyph token (Abbott 12 Oct 2026, option c): --ab-base-icon-<name>-<scheme>-<style>, LIGATURE-keyed (value = the Material Symbol ligature the font renders via content:), NOT codepoint \u2014 the repo carries no codepoint data and the CSS already renders by ligature; <style> is the self-hosted cut (outlined = FILL 0). Themeable: a user theme may swap a glyph's ligature. These are the L3 templates + L4 default packs; worked impl ab-icons.less (the .ab.icon-<name> font/SVG rules) is wired to consume them as a follow-on. The SVG-mask variants stay as inline data-URIs (not ligature-expressible).",
+  "seeds": {
+    "academic-practice-iconset": {
+      "kind": "symbol-list",
+      "default": [
+        "starting",
+        "progressing",
+        "graduating",
+        "wellbeing",
+        "learning",
+        "assessment",
+        "feedback",
+        "integrity",
+        "finding",
+        "studying",
+        "referencing",
+        "researching",
+        "writing",
+        "presenting",
+        "reflecting",
+        "revising-exams",
+        "criticality",
+        "creativity",
+        "international",
+        "ai-technology",
+        "signpost"
+      ],
+      "themeable": true,
+      "template": {
+        "label": "Academic-practice icon pack",
+        "input": "iconset",
+        "presets": [
+          "standard",
+          "full"
+        ]
+      }
+    },
+    "cite-source-iconset": {
+      "kind": "symbol-list",
+      "default": [
+        "book",
+        "article",
+        "language_us",
+        "web",
+        "movie",
+        "podcast"
+      ],
+      "themeable": true,
+      "template": {
+        "label": "Cite-source icon pack",
+        "input": "iconset",
+        "presets": [
+          "standard",
+          "full"
+        ]
+      }
+    },
+    "elearn-ui-iconset": {
+      "kind": "symbol-list",
+      "default": [
+        "quiz"
+      ],
+      "themeable": true,
+      "template": {
+        "label": "Elearn-UI icon pack",
+        "input": "iconset",
+        "presets": [
+          "standard"
+        ]
+      }
+    }
+  },
+  "tokens": {
+    "academic-practice-iconset": {
+      "pivot": "--ab-base-academic-practice-iconset",
+      "kind": "ref-seed",
+      "ref": "academic-practice-iconset",
+      "themeable": false,
+      "template": null
+    },
+    "cite-source-iconset": {
+      "pivot": "--ab-base-cite-source-iconset",
+      "kind": "ref-seed",
+      "ref": "cite-source-iconset",
+      "themeable": false,
+      "template": null
+    },
+    "elearn-ui-iconset": {
+      "pivot": "--ab-base-elearn-ui-iconset",
+      "kind": "ref-seed",
+      "ref": "elearn-ui-iconset",
+      "themeable": false,
+      "template": null
+    },
+    "icon-starting-academic-practice-outlined": {
+      "pivot": "--ab-base-icon-starting-academic-practice-outlined",
+      "kind": "literal",
+      "value": "\"rocket_launch\"",
+      "themeable": true,
+      "template": null
+    },
+    "icon-progressing-academic-practice-outlined": {
+      "pivot": "--ab-base-icon-progressing-academic-practice-outlined",
+      "kind": "literal",
+      "value": "\"stairs_2\"",
+      "themeable": true,
+      "template": null
+    },
+    "icon-graduating-academic-practice-outlined": {
+      "pivot": "--ab-base-icon-graduating-academic-practice-outlined",
+      "kind": "literal",
+      "value": "\"school\"",
+      "themeable": true,
+      "template": null
+    },
+    "icon-wellbeing-academic-practice-outlined": {
+      "pivot": "--ab-base-icon-wellbeing-academic-practice-outlined",
+      "kind": "literal",
+      "value": "\"spa\"",
+      "themeable": true,
+      "template": null
+    },
+    "icon-learning-academic-practice-outlined": {
+      "pivot": "--ab-base-icon-learning-academic-practice-outlined",
+      "kind": "literal",
+      "value": "\"bolt\"",
+      "themeable": true,
+      "template": null
+    },
+    "icon-assessment-academic-practice-outlined": {
+      "pivot": "--ab-base-icon-assessment-academic-practice-outlined",
+      "kind": "literal",
+      "value": "\"target\"",
+      "themeable": true,
+      "template": null
+    },
+    "icon-feedback-academic-practice-outlined": {
+      "pivot": "--ab-base-icon-feedback-academic-practice-outlined",
+      "kind": "literal",
+      "value": "\"feedback\"",
+      "themeable": true,
+      "template": null
+    },
+    "icon-integrity-academic-practice-outlined": {
+      "pivot": "--ab-base-icon-integrity-academic-practice-outlined",
+      "kind": "literal",
+      "value": "\"policy\"",
+      "themeable": true,
+      "template": null
+    },
+    "icon-finding-academic-practice-outlined": {
+      "pivot": "--ab-base-icon-finding-academic-practice-outlined",
+      "kind": "literal",
+      "value": "\"feature_search\"",
+      "themeable": true,
+      "template": null
+    },
+    "icon-studying-academic-practice-outlined": {
+      "pivot": "--ab-base-icon-studying-academic-practice-outlined",
+      "kind": "literal",
+      "value": "\"local_library\"",
+      "themeable": true,
+      "template": null
+    },
+    "icon-referencing-academic-practice-outlined": {
+      "pivot": "--ab-base-icon-referencing-academic-practice-outlined",
+      "kind": "literal",
+      "value": "\"collections_bookmark\"",
+      "themeable": true,
+      "template": null
+    },
+    "icon-researching-academic-practice-outlined": {
+      "pivot": "--ab-base-icon-researching-academic-practice-outlined",
+      "kind": "literal",
+      "value": "\"frame_inspect\"",
+      "themeable": true,
+      "template": null
+    },
+    "icon-writing-academic-practice-outlined": {
+      "pivot": "--ab-base-icon-writing-academic-practice-outlined",
+      "kind": "literal",
+      "value": "\"article\"",
+      "themeable": true,
+      "template": null
+    },
+    "icon-presenting-academic-practice-outlined": {
+      "pivot": "--ab-base-icon-presenting-academic-practice-outlined",
+      "kind": "literal",
+      "value": "\"co_present\"",
+      "themeable": true,
+      "template": null
+    },
+    "icon-reflecting-academic-practice-outlined": {
+      "pivot": "--ab-base-icon-reflecting-academic-practice-outlined",
+      "kind": "literal",
+      "value": "\"sync\"",
+      "themeable": true,
+      "template": null
+    },
+    "icon-revising-exams-academic-practice-outlined": {
+      "pivot": "--ab-base-icon-revising-exams-academic-practice-outlined",
+      "kind": "literal",
+      "value": "\"timer\"",
+      "themeable": true,
+      "template": null
+    },
+    "icon-criticality-academic-practice-outlined": {
+      "pivot": "--ab-base-icon-criticality-academic-practice-outlined",
+      "kind": "literal",
+      "value": "\"lightbulb\"",
+      "themeable": true,
+      "template": null
+    },
+    "icon-creativity-academic-practice-outlined": {
+      "pivot": "--ab-base-icon-creativity-academic-practice-outlined",
+      "kind": "literal",
+      "value": "\"palette\"",
+      "themeable": true,
+      "template": null
+    },
+    "icon-international-academic-practice-outlined": {
+      "pivot": "--ab-base-icon-international-academic-practice-outlined",
+      "kind": "literal",
+      "value": "\"globe_asia\"",
+      "themeable": true,
+      "template": null
+    },
+    "icon-ai-technology-academic-practice-outlined": {
+      "pivot": "--ab-base-icon-ai-technology-academic-practice-outlined",
+      "kind": "literal",
+      "value": "\"memory\"",
+      "themeable": true,
+      "template": null
+    },
+    "icon-signpost-academic-practice-outlined": {
+      "pivot": "--ab-base-icon-signpost-academic-practice-outlined",
+      "kind": "literal",
+      "value": "\"signpost\"",
+      "themeable": true,
+      "template": null
+    },
+    "icon-book-cite-source-outlined": {
+      "pivot": "--ab-base-icon-book-cite-source-outlined",
+      "kind": "literal",
+      "value": "\"book\"",
+      "themeable": true,
+      "template": null
+    },
+    "icon-article-cite-source-outlined": {
+      "pivot": "--ab-base-icon-article-cite-source-outlined",
+      "kind": "literal",
+      "value": "\"article\"",
+      "themeable": true,
+      "template": null
+    },
+    "icon-language_us-cite-source-outlined": {
+      "pivot": "--ab-base-icon-language_us-cite-source-outlined",
+      "kind": "literal",
+      "value": "\"language_us\"",
+      "themeable": true,
+      "template": null
+    },
+    "icon-web-cite-source-outlined": {
+      "pivot": "--ab-base-icon-web-cite-source-outlined",
+      "kind": "literal",
+      "value": "\"web\"",
+      "themeable": true,
+      "template": null
+    },
+    "icon-movie-cite-source-outlined": {
+      "pivot": "--ab-base-icon-movie-cite-source-outlined",
+      "kind": "literal",
+      "value": "\"movie\"",
+      "themeable": true,
+      "template": null
+    },
+    "icon-podcast-cite-source-outlined": {
+      "pivot": "--ab-base-icon-podcast-cite-source-outlined",
+      "kind": "literal",
+      "value": "\"podcast\"",
+      "themeable": true,
+      "template": null
+    }
+  },
+  "build": {
+    "note": "Each pack's member list drives the self-hosted subset font + SVGs (ab-icon-extract / ab-font-fetch). Per-glyph tokens expose each symbol's ligature for content:-based rendering and theme override; ligature is the stable key (codepoints are not carried in-repo)."
+  }
+}

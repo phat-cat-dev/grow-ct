@@ -1,0 +1,39 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://excelling.cardiffmet/schemas/catalogue.subject-benchmarks.schema.json",
+  "title": "catalogue: subject benchmarks collection",
+  "description": "catalogue/context/subject/benchmarks.json indexes the subject benchmarks, parallel to catalogue/pathways.json. Each entry points at one subject's benchmark file under catalogue/context/subject/benchmarks/<id>.json. The benchmarks are the CXP-phase reference: a subject context resolves (by HECoS/CAH code or name) to its benchmark, which tells the authoring agent how this subject's standards bear on each pathway.",
+  "type": "object",
+  "required": ["subjectBenchmarksVersion", "benchmarks"],
+  "properties": {
+    "subjectBenchmarksVersion": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "benchmarks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "subject", "issuer", "edition", "file"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9-]+$",
+            "description": "Matches subjectBenchmarkId in the entry file."
+          },
+          "subject": { "type": "string" },
+          "issuer": { "type": "string" },
+          "edition": { "type": "string" },
+          "codes": {
+            "type": "array",
+            "description": "Headline HECoS/CAH codes for quick subject resolution; the full set is in the entry file.",
+            "items": { "type": "object" }
+          },
+          "file": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

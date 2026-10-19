@@ -1,0 +1,62 @@
+{
+  "section": "colour",
+  "schemaVersion": "0.1.0",
+  "note": "Grounded in cm-base.less (dials) + cm-schemes.less (role derivations) as of 11 Oct 2026. `pivot` names the TARGET L3 token (post-rename). SEEDS are the authorable dials (→ L4 base-profile defaults, exposed in templates); TOKENS are the roles derived from seeds (→ the L3 pivot, mostly not directly authored). Light/dark = a second value set for the lightness SEEDS only (modes.dark); tokens re-derive from whichever mode's seeds are active.",
+
+  "seeds": {
+    "user-h":   { "kind": "number",  "default": 202,   "themeable": true,  "template": { "label": "Theme hue",        "input": "number", "min": 0, "max": 360, "presets": ["basic", "standard", "full"] } },
+    "user-s":   { "kind": "percent", "default": "72%", "themeable": true,  "template": { "label": "Theme saturation", "input": "percent", "presets": ["standard", "full"] } },
+    "user-l":   { "kind": "percent", "default": "14%", "themeable": true,  "template": { "label": "Theme lightness",  "input": "percent", "presets": ["standard", "full"] } },
+    "neutral-h": { "kind": "number",  "default": 202,   "themeable": true,  "template": { "label": "Neutral hue (grey tint)", "input": "number", "min": 0, "max": 360, "presets": ["full"] } },
+    "neutral-s": { "kind": "percent", "default": "0%",  "themeable": true,  "template": { "label": "Neutral saturation", "input": "percent", "presets": ["full"] } },
+
+    "accent-l":  { "kind": "percent", "default": "var(user-l)", "modes": { "dark": "62%" }, "themeable": true, "template": null },
+    "l-surface":        { "kind": "percent", "default": "100%", "modes": { "dark": "14%" }, "themeable": true, "template": { "label": "Page background lightness", "input": "percent", "presets": ["full"] } },
+    "l-surface-subtle": { "kind": "percent", "default": "98%",  "modes": { "dark": "18%" }, "themeable": false, "template": null },
+    "l-surface-sunken": { "kind": "percent", "default": "95%",  "modes": { "dark": "9%"  }, "themeable": false, "template": null },
+    "l-hairline":       { "kind": "percent", "default": "88%",  "modes": { "dark": "32%" }, "themeable": false, "template": null },
+    "l-ink-muted":      { "kind": "percent", "default": "43%",  "modes": { "dark": "62%" }, "themeable": false, "template": null },
+    "l-ink":            { "kind": "percent", "default": "10%",  "modes": { "dark": "92%" }, "themeable": false, "template": null },
+    "l-on-accent":      { "kind": "percent", "default": "100%", "themeable": false, "template": null },
+
+    "success-h": { "kind": "number",  "default": 146,  "themeable": false, "template": null },
+    "success-s": { "kind": "percent", "default": "88%", "themeable": false, "template": null },
+    "success-l": { "kind": "percent", "default": "20%", "themeable": false, "template": null },
+    "danger-h":  { "kind": "number",  "default": 0,    "themeable": false, "template": null },
+    "danger-s":  { "kind": "percent", "default": "100%", "themeable": false, "template": null },
+    "danger-l":  { "kind": "percent", "default": "43%", "themeable": false, "template": null },
+    "warning-h": { "kind": "number",  "default": 28,   "themeable": false, "template": null },
+    "warning-s": { "kind": "percent", "default": "92%", "themeable": false, "template": null },
+    "warning-l": { "kind": "percent", "default": "45%", "themeable": false, "template": null }
+  },
+
+  "tokens": {
+    "surface":        { "pivot": "--ab-base-surface",        "kind": "hsl", "channels": ["neutral-h", "neutral-s", "l-surface"],        "themeable": true,  "template": { "label": "Page background", "input": "color", "presets": ["standard", "full"] } },
+    "surface-subtle": { "pivot": "--ab-base-surface-subtle", "kind": "hsl", "channels": ["neutral-h", "neutral-s", "l-surface-subtle"], "themeable": false, "template": null },
+    "surface-sunken": { "pivot": "--ab-base-surface-sunken", "kind": "hsl", "channels": ["neutral-h", "neutral-s", "l-surface-sunken"], "themeable": false, "template": null },
+    "ink":            { "pivot": "--ab-base-ink",            "kind": "hsl", "channels": ["neutral-h", "neutral-s", "l-ink"],            "themeable": true,  "template": { "label": "Body text", "input": "color", "presets": ["standard", "full"] } },
+    "ink-muted":      { "pivot": "--ab-base-ink-muted",      "kind": "hsl", "channels": ["neutral-h", "neutral-s", "l-ink-muted"],      "themeable": false, "template": null },
+    "hairline":       { "pivot": "--ab-base-hairline",       "kind": "hsl", "channels": ["neutral-h", "neutral-s", "l-hairline"],       "themeable": false, "template": null },
+    "on-accent":      { "pivot": "--ab-base-on-accent",      "kind": "hsl", "channels": ["neutral-h", "neutral-s", "l-on-accent"],      "themeable": false, "template": null },
+
+    "accent":         { "pivot": "--ab-base-accent",         "kind": "hsl",    "channels": ["user-h", "user-s", "accent-l"], "themeable": true, "template": { "label": "Accent colour", "input": "color", "presets": ["basic", "standard", "full"] } },
+    "accent-hover":   { "pivot": "--ab-base-accent-hover",   "kind": "derive", "expr": "hsl(user-h user-s calc(accent-l - 2%))", "themeable": false, "template": null },
+    "accent-active":  { "pivot": "--ab-base-accent-active",  "kind": "derive", "expr": "hsl(user-h user-s calc(accent-l - 4%))", "themeable": false, "template": null },
+    "accent-deep":    { "pivot": "--ab-base-accent-deep",    "kind": "derive", "expr": "hsl(user-h user-s calc(accent-l - 6%))", "themeable": false, "template": null },
+    "accent-tint":    { "pivot": "--ab-base-accent-tint",    "kind": "derive", "expr": "hsl(user-h calc(user-s * 0.5) 95%)", "themeable": false, "template": null },
+    "accent-line":    { "pivot": "--ab-base-accent-line",    "kind": "derive", "expr": "hsl(user-h user-s accent-l / 0.2)", "themeable": false, "template": null },
+    "accent-ring":    { "pivot": "--ab-base-accent-ring",    "kind": "derive", "expr": "hsl(user-h user-s 55%)", "themeable": false, "template": null },
+
+    "success":        { "pivot": "--ab-base-success", "kind": "hsl", "channels": ["success-h", "success-s", "success-l"], "themeable": false, "template": null },
+    "danger":         { "pivot": "--ab-base-danger",  "kind": "hsl", "channels": ["danger-h", "danger-s", "danger-l"],   "themeable": false, "template": null },
+    "warning":        { "pivot": "--ab-base-warning", "kind": "hsl", "channels": ["warning-h", "warning-s", "warning-l"], "themeable": false, "template": null },
+    "info":           { "pivot": "--ab-base-info",    "kind": "ref", "ref": "accent", "themeable": false, "template": null },
+
+    "h1-color":       { "pivot": "--ab-base-h1-color", "kind": "ref", "ref": "accent",    "themeable": true, "template": { "label": "Heading 1 colour", "input": "color", "presets": ["full"] } },
+    "h2-color":       { "pivot": "--ab-base-h2-color", "kind": "ref", "ref": "ink-muted", "themeable": true, "template": { "label": "Heading 2 colour", "input": "color", "presets": ["full"] } },
+    "h3-color":       { "pivot": "--ab-base-h3-color", "kind": "ref", "ref": "ink", "themeable": false, "template": null },
+    "h4-color":       { "pivot": "--ab-base-h4-color", "kind": "ref", "ref": "ink", "themeable": false, "template": null },
+    "h5-color":       { "pivot": "--ab-base-h5-color", "kind": "ref", "ref": "ink", "themeable": false, "template": null },
+    "h6-color":       { "pivot": "--ab-base-h6-color", "kind": "ref", "ref": "ink", "themeable": false, "template": null }
+  }
+}

@@ -1,0 +1,598 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://excelling.cardiffmet/schemas/design-kb.skeletons.schema.json",
+  "title": "design-kb: page-type archetypes (skeletons)",
+  "description": "Block-sequence archetypes per page type. ONE ARTEFACT, TWO CONSUMERS: these are simultaneously the gate conversation's proposal source and the 5.13 build-time lint manifests — template truth lives once. SUMM archetype content must derive from the backlog's 14 Aug records, not summative-template.md (F7).",
+  "type": "object",
+  "required": ["kbVersion", "archetypes", "completionRules", "iconRules", "headingRules", "pageSet", "articleSections", "courseConfigBaseline", "blockIdRule", "assessmentDefaults", "confidenceDefaults", "fixedTextTokens"],
+  "properties": {
+    "kbVersion": { "$ref": "common.schema.json#/$defs/kbVersion" },
+    "courseConfigBaseline": {
+      "type": "object",
+      "description": "Adapt's build config.json content, generated verbatim by generate-course-shell.js. A literal Adapt-framework template, not a per-course design decision; moved here from archive/ per DR-1 so the generator stops depending on the archive directory for a live build input.",
+      "required": ["description", "sourcePointer", "config"],
+      "properties": {
+        "description": { "type": "string" },
+        "sourcePointer": { "$ref": "common.schema.json#/$defs/citation" },
+        "config": { "type": "object" }
+      }
+    },
+    "pageSet": {
+      "type": "object",
+      "description": "The fixed course shape (Prompt 81, 18 Sep 2026): which pages exist in every course, their order, and which archetype each instantiates. Previously asserted only in commit-message prose (see design-kb.skeletons.json notes and docs/project/open-decisions.md CC-1a); now data a generator reads, so changing a course's shape is a store edit, not a code edit. Lesson pages (pageType: lesson) are variable-count per course and are NOT part of this fixed set; lessonInsertionPoint states where they go.",
+      "required": ["fixedPages", "lessonInsertionPoint", "sourcePointer"],
+      "properties": {
+        "fixedPages": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 5,
+          "description": "The five pages present in every course, in order. baseKey is the unprefixed page key (PK-1 amendment, Prompt 81, prefixes every page including these five with the course slug at instantiation).",
+          "items": {
+            "type": "object",
+            "required": ["baseKey", "order", "archetype"],
+            "properties": {
+              "baseKey": { "type": "string", "pattern": "^[A-Z0-9-]+$", "description": "e.g. W-OPEN, C-PRE, SUMM, C-POST, W-CLOSE." },
+              "order": { "type": "integer", "minimum": 1, "maximum": 5 },
+              "archetype": { "type": "string", "pattern": "^skeletons/[a-z0-9-]+$", "description": "The archetype id (design-kb.skeletons.json archetypes[].id) this page instantiates." },
+              "displayTitle": { "type": ["string", "null"], "description": "The page's learner-facing menu/page title, distinct from baseKey (CPG-1, 20 September 2026: C-PRE and C-POST's menu titles). Absent means not yet decided." }
+            },
+            "additionalProperties": false
+          }
+        },
+        "lessonInsertionPoint": {
+          "type": "object",
+          "description": "Where the variable-count lesson pages go, relative to the fixed set.",
+          "required": ["afterBaseKey", "beforeBaseKey", "archetype"],
+          "properties": {
+            "afterBaseKey": { "type": "string" },
+            "beforeBaseKey": { "type": "string" },
+            "archetype": { "type": "string", "pattern": "^skeletons/[a-z0-9-]+$" },
+            "note": { "type": "string" }
+          },
+          "additionalProperties": false
+        },
+        "sourcePointer": { "$ref": "common.schema.json#/$defs/citation" }
+      },
+      "additionalProperties": false
+    },
+    "articleSections": {
+      "type": "object",
+      "description": "Which article a block's own role groups into, per pageType (v3, 9 Oct 2026, docs/authoring/lesson-page-model-v3.md; supersedes the opening/main/closing model of AG-1, Prompt 88). A lesson page carries five titled articles (per sectionOrder); every other pageType carries one article holding all its blocks. Data a generator reads, not logic it embeds: role is already schema-validated per block (blockSequence[].role), and this table is the single place that derives a section from it.",
+      "required": ["multiArticlePageTypes", "singleArticlePageTypes", "sectionOrder", "roleToSection", "sectionMeta", "sourcePointer"],
+      "properties": {
+        "multiArticlePageTypes": {
+          "type": "array",
+          "items": { "enum": ["wrapper-open", "c-pre", "lesson", "summative", "c-post", "wrapper-close"] },
+          "minItems": 1,
+          "maxItems": 1,
+          "description": "pageTypes whose page splits into the ordered sections named in sectionOrder, one article per section. Currently just lesson."
+        },
+        "singleArticlePageTypes": {
+          "type": "array",
+          "items": { "enum": ["wrapper-open", "c-pre", "lesson", "summative", "c-post", "wrapper-close"] },
+          "minItems": 5,
+          "maxItems": 5,
+          "description": "pageTypes whose page carries a single article holding every block, regardless of role. Wrapper, confidence and summative pages are single-purpose, so a three-part split would be artificial (AG-1d)."
+        },
+        "sectionOrder": {
+          "type": "array",
+          "items": { "enum": ["lesson-open", "lesson-concept", "lesson-formative", "lesson-reflection", "lesson-close"] },
+          "minItems": 5,
+          "maxItems": 5,
+          "description": "Article order on a multiArticlePageTypes page (v3 five-section model)."
+        },
+        "roleToSection": {
+          "type": "object",
+          "description": "Which section each role's blocks belong to, on a multi-article page. summative and furniture are deliberately absent: neither role appears on the lesson pageType (AG-1b).",
+          "required": ["orientation", "orientation-tier", "learning-outcomes", "concept", "worked-example", "practical-guidance", "knowledge-check", "reflective", "reflective-task", "summary", "references"],
+          "properties": {
+            "orientation": { "enum": ["lesson-open", "lesson-concept", "lesson-formative", "lesson-reflection", "lesson-close"] },
+            "orientation-tier": { "enum": ["lesson-open", "lesson-concept", "lesson-formative", "lesson-reflection", "lesson-close"] },
+            "learning-outcomes": { "enum": ["lesson-open", "lesson-concept", "lesson-formative", "lesson-reflection", "lesson-close"] },
+            "concept": { "enum": ["lesson-open", "lesson-concept", "lesson-formative", "lesson-reflection", "lesson-close"] },
+            "worked-example": { "enum": ["lesson-open", "lesson-concept", "lesson-formative", "lesson-reflection", "lesson-close"] },
+            "practical-guidance": { "enum": ["lesson-open", "lesson-concept", "lesson-formative", "lesson-reflection", "lesson-close"] },
+            "knowledge-check": { "enum": ["lesson-open", "lesson-concept", "lesson-formative", "lesson-reflection", "lesson-close"] },
+            "reflective": { "enum": ["lesson-open", "lesson-concept", "lesson-formative", "lesson-reflection", "lesson-close"] },
+            "reflective-task": { "enum": ["lesson-open", "lesson-concept", "lesson-formative", "lesson-reflection", "lesson-close"] },
+            "summary": { "enum": ["lesson-open", "lesson-concept", "lesson-formative", "lesson-reflection", "lesson-close"] },
+            "references": { "enum": ["lesson-open", "lesson-concept", "lesson-formative", "lesson-reflection", "lesson-close"] }
+          },
+          "additionalProperties": false
+        },
+        "sectionMeta": {
+          "type": "object",
+          "description": "Per-section render metadata the generator writes onto each article: metaName (stable key), displayTitle (the section header shown) OR titleFrom (naming a per-lesson manifest field, e.g. conceptTitle, to read the title from), and classes (CSS class).",
+          "additionalProperties": {
+            "type": "object",
+            "required": ["metaName", "classes"],
+            "properties": {
+              "metaName": { "type": "string" },
+              "displayTitle": { "type": "string" },
+              "titleFrom": { "type": "string" },
+              "classes": { "type": "string" }
+            },
+            "additionalProperties": false
+          }
+        },
+        "sourcePointer": { "$ref": "common.schema.json#/$defs/citation" }
+      },
+      "additionalProperties": false
+    },
+    "archetypes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "pageType", "version", "blockSequence", "sourcePointer"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^skeletons/[a-z0-9-]+$" },
+          "pageType": { "enum": ["wrapper-open", "c-pre", "lesson", "summative", "c-post", "wrapper-close"] },
+          "version": { "type": "string" },
+          "sourcePointer": { "$ref": "common.schema.json#/$defs/citation", "description": "The authoritative prose template (or, for SUMM, the backlog record per F7)." },
+          "blockSequence": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": ["key", "title", "kind", "required", "role"],
+              "properties": {
+                "key": { "type": "string", "description": "Stable block key, e.g. learning-outcomes. Gapped-5s numbering is an instantiation concern, not archetype data." },
+                "title": { "type": "string" },
+                "kind": { "enum": ["fixed", "variable"], "description": "fixed = same everywhere; variable = a slot (L02 flexible-interior principle)." },
+                "required": { "type": "boolean", "description": "Lint semantics: must this block exist in a conforming page?" },
+                "role": {
+                  "enum": ["orientation", "orientation-tier", "learning-outcomes", "concept", "worked-example", "practical-guidance", "knowledge-check", "reflective", "reflective-task", "summary", "references", "summative", "furniture"],
+                  "description": "The block's teaching or furniture role, per the role taxonomy (eight settled 9 Sep 2026, plus summative and furniture; reflective-task added 14 Sep 2026; welcome-overview split into orientation and learning-outcomes, also 14 Sep 2026; orientation-tier added 9 Oct 2026, lesson-page-model-v3.md — a reading role that situates the lesson topic at the course tier, completing on view like orientation). orientation and learning-outcomes are both reading roles that complete on view, but are distinct: orientation frames why the page matters and what lies ahead (prose, no enumerable content to check against); learning-outcomes is the concrete Bloom-verb list the rest of the page's content is validated against. reflective-task is distinct from reflective: reflective is a private, unmarked, voluntary prompt that must never block progress; reflective-task produces something assessed against a standard and is mandatory. Rules for styling, icons and completion attach to role, not to key or component; an unroled block is invisible to those systems while still validating clean. Spans all six archetypes, not lessons only."
+                },
+                "interactionMode": {
+                  "enum": ["interactive", "passive"],
+                  "description": "States this block instance's own completion behaviour directly. Required when role=furniture; forbidden otherwise (enforced below). Explicit per-block, not inferred from component identity, so a future furniture block using a different component still declares its own behaviour rather than silently defaulting, and a non-furniture block cannot declare it and be read by nothing."
+                },
+                "orderFixed": { "type": "boolean", "default": true, "description": "Lint semantics: may this block move relative to the sequence?" },
+                "component": {
+                  "type": "string",
+                  "pattern": "^palette/[a-z0-9-]+$",
+                  "description": "The definitive component of a fixed block (kind=fixed). Variable blocks use slot.componentOptions instead. Required for lint: a fixed block without this field cannot be verified."
+                },
+                "fixedBody": {
+                  "type": "string",
+                  "description": "The block's literal shell text, for a fixed block (kind=fixed) whose content is identical in every course and written by the shell generator with no gate involved. Optional: most fixed blocks (e.g. B1's learning-outcomes, summary) carry gate-decided or hand-authored content instead and have no fixedBody (LF-1, CV-1, 20 September 2026)."
+                },
+                "slot": {
+                  "type": "object",
+                  "description": "Present only when kind=variable.",
+                  "required": ["slotType"],
+                  "properties": {
+                    "slotType": { "type": "string", "description": "e.g. worked-example, check, interior-content." },
+                    "componentOptions": {
+                      "type": "array",
+                      "items": { "type": "string", "pattern": "^palette/[a-z0-9-]+$" },
+                      "description": "Palette ids proposable here. Empty/omitted = unconstrained, chosen at the B-interaction gate."
+                    },
+                    "selectionModel": {
+                      "type": "string",
+                      "description": "How componentOptions are selected. Pattern-derived slots: identify the content shape, match a pattern's recognition field, take its realisation. The options list is the union of all patterns naming this slotType, not a pick-list."
+                    },
+                    "contextCoupling": {
+                      "type": "array",
+                      "items": { "enum": ["shell-coupled", "token-substitution", "structured-fields", "whole-prose"] },
+                      "description": "Variation types permitted in this slot (workflow Step 2.3 vocabulary)."
+                    },
+                    "band": {
+                      "type": "object",
+                      "description": "Cardinality band for repeated slots. Counts BLOCKS (one block, one component, one question), following the summative one-block-per-question precedent. 4+ questions requires an explicit schema amendment, not a store edit. Draft-07 limitation: min <= max is not enforced by the schema.",
+                      "required": ["min", "max"],
+                      "properties": {
+                        "min": { "type": "integer", "minimum": 1, "maximum": 3 },
+                        "max": { "type": "integer", "minimum": 1, "maximum": 3 },
+                        "unit": { "enum": ["blocks"], "default": "blocks" }
+                      },
+                      "additionalProperties": false
+                    },
+                    "bandRationale": {
+                      "type": "array",
+                      "items": { "type": "string" },
+                      "description": "Citable rationale items for the band bounds. Scoped to the band definition only."
+                    },
+                    "authoringVenueNote": {
+                      "type": "string",
+                      "description": "Plain-prose rule for where content is authored, derived from contextCoupling. Not a structured object because validation cannot be enforced at merge-context."
+                    },
+                    "standingContextPrompt": {
+                      "type": "string",
+                      "description": "Standing, layout-level instruction the context-pack agent applies to fill this coupled slot (v2 lesson-page model, 8 Oct 2026). General to the slot, not to the lesson topic, e.g. concept-context: 'what does this look like in practice within the given context?'. Present only where contextCoupling includes a coupled value."
+                    },
+                    "authoringPrompt": {
+                      "type": "string",
+                      "description": "Standing agent-direction for the WRITTEN-AUTHOR agent when it authors this slot's content at its gate (les-01 / wra-03), distinct from standingContextPrompt (which directs the context-pack/CXP agent). Source-side metadata only: read by the authoring agent at its gate, and available to be surfaced in the course-export agent-directions output; never rendered into the learner HTML. Use for cross-cutting authoring rules a slot should always obey, e.g. the question slots pointing at docs/authoring/mcq-authoring-guidance.md. Added 10 Oct 2026 (agent-direction pattern, open task #2)."
+                    },
+                    "positionRules": {
+                      "type": "array",
+                      "description": "Optional. States which contextCoupling values are permitted at specific positions within this slot's band, for slots where position bears on coupling (PSR-1, 20 September 2026). Absent = every position may use any of the slot's own contextCoupling values, as before. This field states shape only; the sequencing invariants (no repeated position, 'rest' at most once and last only, no position exceeding band.max, full coverage to band.max, every coupling value a subset of the slot's own contextCoupling) are enforced by tools/validate-design-schemas.py's skeletons mode, not by this schema.",
+                      "items": {
+                        "type": "object",
+                        "required": ["position", "contextCoupling"],
+                        "properties": {
+                          "position": {
+                            "oneOf": [
+                              { "type": "integer", "minimum": 1 },
+                              { "const": "rest" }
+                            ],
+                            "description": "An integer position within the band (1-based), or the literal string 'rest' meaning every remaining position."
+                          },
+                          "contextCoupling": {
+                            "type": "array",
+                            "minItems": 1,
+                            "items": { "enum": ["shell-coupled", "token-substitution", "structured-fields", "whole-prose"] },
+                            "description": "The coupling values permitted at this position. Each value must also appear in the slot's own contextCoupling (enforced by the validator, not this schema)."
+                          },
+                          "note": { "type": "string" }
+                        },
+                        "additionalProperties": false
+                      }
+                    }
+                  },
+                  "dependencies": {
+                    "componentOptions": ["selectionModel"]
+                  },
+                  "additionalProperties": false
+                },
+                "extensions": {
+                  "type": "array",
+                  "items": { "type": "string", "pattern": "^palette/[a-z0-9-]+$" },
+                  "description": "Standard furniture attached at this block, e.g. SUMM: resultsdebrief, passreveal."
+                },
+                "displayTitle": {
+                  "type": ["string", "null"],
+                  "description": "The block's learner-facing title, distinct from the internal `title` authoring label above. null means the block renders with no visible title (e.g. orientation, per LPG-1 and WOS-1's overview block). Absent means not yet decided (CPG-1, LPG-1, SVP-1, WOS-1, 20 September 2026)."
+                },
+                "gateAfter": {
+                  "type": "boolean",
+                  "default": false,
+                  "description": "Whether an Adapt trickle gate sits immediately after this block, holding subsequent blocks until it completes (LPG-1, 20 September 2026: moves the lesson page's Trickle Gating Map from lesson-structure-template.md prose into store data). A pattern needing its own internal pacing handles that inside its own component, not via this field."
+                },
+                "agentAuthor": {
+                  "description": "Layered agent-direction for this block's content (docs/authoring/agent-author-metadata.md, docs/authoring/tier-context.md). BASELINE fields content/relation/warnings/bestPractice apply always. `context` is the agent's TARGETING LAYER: a set of named steers - little prompt-formulas that narrow the output - holding `all` (base), `byTier` (per-tier, selected first; a tier with applies=false omits the block) and, reserved, `byQualifier` (per CXP/CSP qualifier), `bySubject` (per highest CAH grouping, from CXS) and `byInstitution` (per institution: framing + link-up). The active mode's sibling block (agentAuthorWritten / agentAuthorDialogue) layers on top. Resolution: context.byTier[tier] (then byQualifier) over context.all over the baseline, then mode notes; warnings accumulate (union), directive fields override. A bare string is shorthand for { content: <string> }. Shapes inlined (no $ref) so it validates offline. Added 10 Oct 2026; unified (task 2) and steers moved under context 10 Oct 2026.",
+                  "oneOf": [
+                    { "type": "string", "description": "Shorthand for { \"content\": <string> }." },
+                    {
+                      "type": "object",
+                      "minProperties": 1,
+                      "properties": {
+                        "content": { "type": "string", "description": "What this slot must contain, and the reason it exists in the flow." },
+                        "context": {
+                          "description": "The agent's targeting layer: how the course context shapes this slot, as a set of named steers (little prompt-formulas that keep the agent on-target). A plain string is shorthand for { all: <string> }. Otherwise an object of steers; new steer kinds are added here through a schema bump.",
+                          "oneOf": [
+                            { "type": "string" },
+                            {
+                              "type": "object",
+                              "minProperties": 1,
+                              "properties": {
+                                "all": { "type": "string", "description": "Base steer: tier- and qualifier-neutral statement of how the course context (CXP subject/pack, the slot.standingContextPrompt axis) shapes this slot." },
+                                "byTier": {
+                                  "type": "object",
+                                  "description": "Per-tier steer, selected first. Each entry is a string prompt-formula, or an object when the tier also needs structural control (applies=false omits the block at that tier; displayTitle / sideways / forwardBack; or an override of a baseline field).",
+                                  "minProperties": 1,
+                                  "propertyNames": { "enum": ["introductory", "intermediate", "advanced"] },
+                                  "additionalProperties": {
+                                    "oneOf": [
+                                      { "type": "string" },
+                                      {
+                                        "type": "object",
+                                        "minProperties": 1,
+                                        "properties": {
+                                          "applies": { "type": "boolean", "default": true, "description": "false = omit this block entirely at this tier (e.g. advanced where-next)." },
+                                          "displayTitle": { "type": "string", "description": "The block heading to use at this tier." },
+                                          "content": { "type": "string", "description": "Tier override of the baseline content brief." },
+                                          "context": { "type": "string", "description": "Tier-specific context steer." },
+                                          "relation": { "type": "string" },
+                                          "warnings": { "type": "array", "items": { "type": "string" } },
+                                          "bestPractice": { "type": "array", "items": { "type": "string" } },
+                                          "sideways": { "type": "string", "description": "Rule for the horizontal pathway->pathway mapping ('put it into practice') at this tier." },
+                                          "forwardBack": { "type": "string", "description": "Rule for the vertical tier->tier mapping ('go deeper / look back') at this tier." },
+                                          "note": { "type": "string" }
+                                        },
+                                        "additionalProperties": false
+                                      }
+                                    ]
+                                  }
+                                },
+                                "byQualifier": {
+                                  "type": "object",
+                                  "description": "RESERVED (not yet populated): per-qualifier steer, keyed by the CXP cxp-02 qualifier id (and later the CSP). Same entry shape as byTier - a string prompt-formula or a structural object - so a qualifier defined in the context pack narrows the agent's output the way a tier does.",
+                                  "additionalProperties": {
+                                    "oneOf": [
+                                      { "type": "string" },
+                                      {
+                                        "type": "object",
+                                        "minProperties": 1,
+                                        "properties": {
+                                          "applies": { "type": "boolean", "default": true },
+                                          "displayTitle": { "type": "string" },
+                                          "content": { "type": "string" },
+                                          "context": { "type": "string" },
+                                          "relation": { "type": "string" },
+                                          "warnings": { "type": "array", "items": { "type": "string" } },
+                                          "bestPractice": { "type": "array", "items": { "type": "string" } },
+                                          "note": { "type": "string" }
+                                        },
+                                        "additionalProperties": false
+                                      }
+                                    ]
+                                  }
+                                },
+                                "bySubject": {
+                                  "type": "object",
+                                  "description": "RESERVED (not yet populated): per-subject-grouping steer, keyed by the relevant highest CAH grouping, populated once CXS lands. Same entry shape as byTier/byQualifier - a string prompt-formula or a structural object - carrying the subject-grouping context that shapes how the agent discusses the content (disciplinary framing, conventions, what counts as evidence in that grouping).",
+                                  "additionalProperties": {
+                                    "oneOf": [
+                                      { "type": "string" },
+                                      {
+                                        "type": "object",
+                                        "minProperties": 1,
+                                        "properties": {
+                                          "applies": { "type": "boolean", "default": true },
+                                          "displayTitle": { "type": "string" },
+                                          "content": { "type": "string" },
+                                          "context": { "type": "string" },
+                                          "relation": { "type": "string" },
+                                          "warnings": { "type": "array", "items": { "type": "string" } },
+                                          "bestPractice": { "type": "array", "items": { "type": "string" } },
+                                          "note": { "type": "string" }
+                                        },
+                                        "additionalProperties": false
+                                      }
+                                    ]
+                                  }
+                                },
+                                "byInstitution": {
+                                  "type": "object",
+                                  "description": "RESERVED (not yet populated): per-institution steer, keyed by institution id. Same entry shape as byTier/byQualifier/bySubject - a string prompt-formula or a structural object - carrying institutional framing and link-up: local conventions, referencing style overrides, and links to that institution's own modules/resources, so content can be targeted to an institution when institutional modules exist.",
+                                  "additionalProperties": {
+                                    "oneOf": [
+                                      { "type": "string" },
+                                      {
+                                        "type": "object",
+                                        "minProperties": 1,
+                                        "properties": {
+                                          "applies": { "type": "boolean", "default": true },
+                                          "displayTitle": { "type": "string" },
+                                          "content": { "type": "string" },
+                                          "context": { "type": "string" },
+                                          "relation": { "type": "string" },
+                                          "warnings": { "type": "array", "items": { "type": "string" } },
+                                          "bestPractice": { "type": "array", "items": { "type": "string" } },
+                                          "note": { "type": "string" }
+                                        },
+                                        "additionalProperties": false
+                                      }
+                                    ]
+                                  }
+                                }
+                              },
+                              "additionalProperties": false
+                            }
+                          ]
+                        },
+                        "relation": { "type": "string", "description": "How it sits against the slots around it (follows X, feeds Y, do not repeat Z)." },
+                        "warnings": { "type": "array", "items": { "type": "string" }, "description": "Common mistakes / failure modes to avoid. Accumulate (union) across baseline, tier and mode levels." },
+                        "bestPractice": { "type": "array", "items": { "type": "string" }, "description": "Positive directives." }
+                      },
+                      "additionalProperties": false
+                    }
+                  ]
+                },
+                "agentAuthorWritten": {
+                  "type": "object",
+                  "description": "Written-mode (course-copy generation, this project) nuances layered on agentAuthor's baseline. Points at the relevant Voice Spec checks rather than restating them.",
+                  "properties": { "notes": { "type": "array", "items": { "type": "string" } } },
+                  "additionalProperties": false
+                },
+                "agentAuthorDialogue": {
+                  "type": "object",
+                  "description": "Dialogue-mode (live conversational delivery to a learner) nuances layered on agentAuthor's baseline. Populated when a conversational delivery agent exists (agent-author-metadata.md open question 1).",
+                  "properties": { "notes": { "type": "array", "items": { "type": "string" } } },
+                  "additionalProperties": false
+                }
+              },
+              "if": {
+                "properties": { "role": { "const": "furniture" } },
+                "required": ["role"]
+              },
+              "then": { "required": ["interactionMode"] },
+              "else": { "not": { "required": ["interactionMode"] } },
+              "additionalProperties": false
+            }
+          },
+          "notes": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "completionRules": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["role", "completionTrigger", "mandatory", "rationale", "sourcePointer"],
+        "properties": {
+          "role": {
+            "enum": ["orientation", "orientation-tier", "learning-outcomes", "concept", "worked-example", "practical-guidance", "knowledge-check", "reflective", "reflective-task", "summary", "references", "summative", "furniture"]
+          },
+          "interactionMode": {
+            "enum": ["interactive", "passive"],
+            "description": "Selects between two completion behaviours sharing one role. Present only when completion depends on a per-block property, not on role alone (currently: furniture only). Matched against the blockSequence entry's own interactionMode field \u2014 never inferred from component identity."
+          },
+          "completionTrigger": {
+            "enum": ["view", "submit", "submit-resolved", "component-defined"],
+            "description": "view = inview/scroll completion (setupInviewCompletion); submit = fires on the block's own submit action; submit-resolved = fires the first time either _isCorrect becomes true (correct at any attempt) or the attempt that exhausts _attemptsLeft (independent of correctness), whichever comes first (questionModel.js checkQuestionCompletion); component-defined = the role realises via components whose own natural completion behaviour differs from one another (e.g. worked-example's six plugins), so the rule defers to each component's own trigger rather than fixing one, with any configuration constraint stated separately as a named dependency."
+          },
+          "mandatory": { "type": "boolean" },
+          "attemptsRule": {
+            "type": "object",
+            "description": "Present only when completionTrigger is submit-resolved.",
+            "required": ["formula"],
+            "properties": {
+              "formula": {
+                "type": "string",
+                "description": "Plain-text statement of how _attempts is derived, e.g. 'option count minus 1'."
+              },
+              "exclusions": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "required": ["component", "reason", "status"],
+                  "properties": {
+                    "component": { "type": "string", "pattern": "^palette/[a-z0-9-]+$" },
+                    "reason": { "type": "string" },
+                    "status": { "enum": ["open", "ruled"] }
+                  },
+                  "additionalProperties": false
+                }
+              }
+            },
+            "additionalProperties": false
+          },
+          "namedDependencies": {
+            "type": "array",
+            "items": { "type": "string" },
+            "description": "Plain-text prerequisites this rule assumes hold true elsewhere (e.g. feedback-text quality). Not schema-enforced; a named dependency, not an optional extra."
+          },
+          "rationale": { "type": "string" },
+          "sourcePointer": { "$ref": "common.schema.json#/$defs/citation" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "iconRules": {
+      "type": "array",
+      "description": "Which roles carry a decorative icon, per the icon-treatment ruling in force since 29 Jul 2026 (see design-kb.skeletons.json notes for the finding that the mechanism has never rendered a visible glyph programme-wide). Exactly six roles, drawn from the twelve-role taxonomy: learning-outcomes, worked-example, knowledge-check, reflective, reflective-task, references. Every icon here is aria-hidden: it is decorative, and the role's meaning is carried by the block's own text, not by the icon. The glyph itself (which icon-font character represents each role) is a theme-build decision, not authored in this store; a rule entry with no resolved glyph is a complete record of an icon-carrying role, not absent data. Draft-07 limitation: the schema enforces the item count (six) and restricts role to the six named values, but cannot enforce that all six are present with no duplicates; that is a review-time check, not a schema one.",
+      "minItems": 6,
+      "maxItems": 6,
+      "items": {
+        "type": "object",
+        "required": ["role", "ariaHidden", "glyphStatus", "rationale", "sourcePointer"],
+        "properties": {
+          "role": {
+            "enum": ["learning-outcomes", "worked-example", "knowledge-check", "reflective", "reflective-task", "references"],
+            "description": "The icon-carrying role. Restricted to these six; not the full twelve-role enum used elsewhere in this schema."
+          },
+          "ariaHidden": {
+            "const": true,
+            "description": "Always true. The icon adds no information a screen reader user needs beyond the block's own text; stated explicitly per entry rather than assumed, following this schema's existing per-block-explicit convention (see interactionMode)."
+          },
+          "glyphStatus": {
+            "enum": ["deferred-to-theme"],
+            "description": "The specific glyph is decided at the theme build, not in design-kb or content authoring. This value being set is the complete record for this role: it does not mean the glyph is missing, unresolved, or that this entry is unfinished."
+          },
+          "rationale": { "type": "string" },
+          "sourcePointer": { "$ref": "common.schema.json#/$defs/citation" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "headingRules": {
+      "type": "array",
+      "description": "Heading level per structural tier, per the 14 Sep 2026 A55 ruling. Keyed by Adapt's own structural-tier vocabulary (article/block/componentItem, matching _accessibility._ariaLevels config keys in config.schema.json), not the twelve-role content taxonomy: no role represents 'article', and a role-keyed array would carry twelve identical block-tier entries for no gain. Exactly three tiers.",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "required": ["tier", "label", "configKey", "levelBasis", "rationale", "sourcePointer"],
+        "properties": {
+          "tier": {
+            "enum": ["article", "block", "componentItem"],
+            "description": "The structural tier this rule governs, matching _accessibility._ariaLevels' own keys (_article, _block, _componentItem)."
+          },
+          "label": { "type": "string", "description": "Plain-language name for the tier in authoring/lint messages, e.g. section, part, component-internal item." },
+          "configKey": { "type": "string", "pattern": "^_accessibility\\._ariaLevels\\._[a-zA-Z]+$", "description": "The live config path this rule states the intended value for, e.g. _accessibility._ariaLevels._article." },
+          "levelBasis": {
+            "enum": ["fixed", "relative-to-parent"],
+            "description": "fixed = an absolute aria-level number (ariaLevel required); relative-to-parent = an offset from the block's own parent's resolved level (relativeOffset required), matching how componentItem items derive their level from whichever component contains them."
+          },
+          "ariaLevel": { "type": "integer", "minimum": 1, "description": "Required when levelBasis=fixed." },
+          "relativeOffset": { "type": "integer", "description": "Required when levelBasis=relative-to-parent, e.g. 1 for componentItem (one level below its parent component)." },
+          "rationale": { "type": "string" },
+          "sourcePointer": { "$ref": "common.schema.json#/$defs/citation" }
+        },
+        "if": {
+          "properties": { "levelBasis": { "const": "fixed" } },
+          "required": ["levelBasis"]
+        },
+        "then": { "required": ["ariaLevel"] },
+        "else": { "required": ["relativeOffset"] },
+        "additionalProperties": false
+      }
+    },
+    "blockIdRule": {
+      "type": "object",
+      "description": "How the shell generator assigns every block's Adapt _id (ID-1, 20 September 2026). Not decided at any gate; no role in the twelve-role taxonomy represents it. Templates state block keys, not ids; illustrative ids shown in a template are not the built id.",
+      "required": ["step", "order", "prefixPattern", "sourcePointer"],
+      "properties": {
+        "step": { "type": "integer", "minimum": 1, "description": "The numeric increment between consecutive block ids on one page, before zero-padding." },
+        "order": { "enum": ["render-order"], "description": "Ids are assigned in the page's render order, i.e. each archetype's own blockSequence array order, first block first." },
+        "prefixPattern": { "type": "string", "description": "Plain-text statement of the id's literal shape: <pageKey>-b-<NN>, where pageKey is that page's own key (already course-slug-prefixed per PK-1) and NN is the running block count on that page, incremented by step and zero-padded to two digits." },
+        "sourcePointer": { "$ref": "common.schema.json#/$defs/citation" }
+      },
+      "additionalProperties": false
+    },
+    "assessmentDefaults": {
+      "type": "object",
+      "description": "Programme-default settings for a course's summative assessment (CSTR-1, SVP-1, 20 September 2026): the pass mark and the attempts rule, held once so the generator writes both the course-level and the assessment-level settings from one source (CSTR-1). S1 may record a different passMark for a course; that per-course override is a gate decision, not a store edit.",
+      "required": ["passMark", "attempts", "sourcePointer"],
+      "properties": {
+        "passMark": { "type": "integer", "minimum": 0, "maximum": 100, "description": "Percentage score required to pass, written to both course.json and the assessment's own _scoreToPass (CSTR-1)." },
+        "attempts": {
+          "type": "object",
+          "description": "SVP-1's assessment-level attempts rule, settling PR-6-2's open number. Per-item attempts are unchanged by this rule.",
+          "required": ["count", "reshuffleOnAttempt"],
+          "properties": {
+            "count": { "type": "integer", "minimum": 1, "description": "Attempts at the whole test (SVP-1: three)." },
+            "reshuffleOnAttempt": { "type": "boolean", "description": "Whether questions are reshuffled on each attempt (SVP-1: true)." }
+          },
+          "additionalProperties": false
+        },
+        "sourcePointer": { "$ref": "common.schema.json#/$defs/citation" }
+      },
+      "additionalProperties": false
+    },
+    "confidenceDefaults": {
+      "type": "object",
+      "description": "Fixed shell text for the confidence pre/post pair, written by the generator onto both confidence components (CF-1, 24 September 2026): the five-point scale labels, the pre-confirmation text, and the per-page framing text CPG-1 assigns to the component's instruction field.",
+      "required": ["scaleLabels", "preConfirmation", "framing", "sourcePointer"],
+      "properties": {
+        "scaleLabels": {
+          "type": "array",
+          "description": "The five _scale._labels values, 1 to 5, written verbatim onto both confidence components (CF-1).",
+          "items": { "type": "string" },
+          "minItems": 5,
+          "maxItems": 5
+        },
+        "preConfirmation": {
+          "type": "string",
+          "description": "The _preConfirmation text, written verbatim onto both confidence components (CF-1)."
+        },
+        "framing": {
+          "type": "object",
+          "description": "The per-page instruction text CPG-1 assigns to the generator, written verbatim by CF-1.",
+          "required": ["cPre", "cPost"],
+          "properties": {
+            "cPre": { "type": "string", "description": "instruction text written on the c-pre archetype's confidence-pre component." },
+            "cPost": { "type": "string", "description": "instruction text written on the c-post archetype's confidence-post component." }
+          },
+          "additionalProperties": false
+        },
+        "sourcePointer": { "$ref": "common.schema.json#/$defs/citation" }
+      },
+      "additionalProperties": false
+    },
+    "fixedTextTokens": {
+      "type": "array",
+      "description": "The full list of substitution tokens a fixedBody may contain (WOS-1, 20 September 2026). The generator substitutes only these; an unknown token in a fixedBody is a build error, not silently ignored.",
+      "items": { "enum": ["passMark"] },
+      "minItems": 1,
+      "maxItems": 1
+    }
+  },
+  "additionalProperties": false
+}

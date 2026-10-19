@@ -1,0 +1,75 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://excelling.cardiffmet/schemas/catalogue.pathway.schema.json",
+  "title": "catalogue: single pathway",
+  "description": "catalogue/pathways/<pathway>.json holds one pathway's tiers (CAT-1 AMENDMENT, Prompt 140 Unit 1): tier id, display name and focus (TN-1), course slug, status, contexts built, what the tier assumes from the one before, and its voice band. Teaching prose stays in docs/curriculum/pathway-tier-mapping.md; each tier entry points at it, no prose is copied in.",
+  "type": "object",
+  "required": ["pathwayId", "tiers"],
+  "properties": {
+    "pathwayId": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$",
+      "description": "Matches this pathway's id in catalogue/pathways.json."
+    },
+    "tiers": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "required": [
+          "tierId",
+          "displayName",
+          "focus",
+          "courseSlug",
+          "status",
+          "contextsBuilt",
+          "assumesFromPrevious",
+          "voiceBand",
+          "teachingProsePointer"
+        ],
+        "properties": {
+          "tierId": {
+            "enum": ["introductory", "intermediate", "advanced"],
+            "description": "TN-1: lowercase tier id."
+          },
+          "displayName": {
+            "type": "string",
+            "description": "TN-1: capitalised display name. 'Beginner' retired as a tier name."
+          },
+          "focus": {
+            "type": ["string", "null"],
+            "description": "This tier's focus per its header line in the mapping doc (e.g. 'Starting')."
+          },
+          "courseSlug": {
+            "type": ["string", "null"],
+            "description": "PK-1 course slug (<pathway-slug>-<tier>), where a course exists. null where no course has been built or scaffolded for this tier."
+          },
+          "status": {
+            "enum": ["planned", "in-design", "built"],
+            "description": "Not a literally sourced vocabulary; constructed for this catalogue (see report). 'in-design' for referencing-introductory per the ruling. 'built' means a course folder under courses/ that has been built, and nothing else; a folder under archive/ never counts (RBD-1 AMENDMENT). 'planned' otherwise, the ruling's stated default."
+          },
+          "contextsBuilt": {
+            "type": ["array", "null"],
+            "items": { "type": "string" },
+            "description": "Context-pack ids under content/context-packs/ that have a subfolder for this tier's courseSlug. null where courseSlug is null."
+          },
+          "assumesFromPrevious": {
+            "type": ["string", "null"],
+            "description": "What this tier assumes from the one before. No source states this per-tier (the mapping doc's Progression logic lines are whole-pathway, not per-tier); recorded null throughout (see report)."
+          },
+          "voiceBand": {
+            "$ref": "common.schema.json#/$defs/citation",
+            "description": "doc/ref citation to this pathway's Voice-band anchor line in the mapping doc. note carries the tier-specific band descriptor quoted from that line."
+          },
+          "teachingProsePointer": {
+            "$ref": "common.schema.json#/$defs/citation",
+            "description": "doc/ref citation to this tier's own section in docs/curriculum/pathway-tier-mapping.md. No teaching prose is copied into the catalogue."
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

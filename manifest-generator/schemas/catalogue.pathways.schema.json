@@ -1,0 +1,58 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://excelling.cardiffmet/schemas/catalogue.pathways.schema.json",
+  "title": "catalogue: pathways collection",
+  "description": "catalogue/pathways.json holds the 13 pathways (CAT-1 AMENDMENT, Prompt 140 Unit 1). Each entry: id, number, name, book chapters, routes (which pathways it feeds and draws on), and the file holding its tiers.",
+  "type": "object",
+  "required": ["pathwaysVersion", "pathways"],
+  "properties": {
+    "pathwaysVersion": { "$ref": "common.schema.json#/$defs/kbVersion" },
+    "pathways": {
+      "type": "array",
+      "minItems": 13,
+      "maxItems": 13,
+      "items": {
+        "type": "object",
+        "required": ["id", "number", "name", "chapters", "routes", "file"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z0-9-]+$",
+            "description": "Short id. Mechanically slugified from name where no source states a human-chosen short id (see report)."
+          },
+          "number": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 13,
+            "description": "Pathway number per docs/curriculum/pathway-tier-mapping.md."
+          },
+          "name": {
+            "type": "string",
+            "description": "Full pathway name as given in the mapping doc."
+          },
+          "chapters": {
+            "type": ["array", "null"],
+            "items": { "type": "integer" },
+            "description": "Excelling at University chapter numbers this pathway draws on. null where the mapping doc states the book is silent (e.g. Track B authored pathways)."
+          },
+          "routes": {
+            "type": "object",
+            "description": "Which pathways this one feeds and draws on. Not stated per-pathway by any source inspected for Prompt 140 Unit 1; recorded null throughout per the ruling against inferring routes from prose.",
+            "required": ["feeds", "drawsOn"],
+            "properties": {
+              "feeds": { "type": ["array", "null"], "items": { "type": "string" } },
+              "drawsOn": { "type": ["array", "null"], "items": { "type": "string" } }
+            },
+            "additionalProperties": false
+          },
+          "file": {
+            "type": "string",
+            "description": "Repo-relative path to catalogue/pathways/<pathway>.json holding this pathway's tiers."
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,15 @@
+{
+  "section": "box-model",
+  "schemaVersion": "0.1.0",
+  "note": "Corner radius + border width. Grounded in cm-base.less (--cm-radius 0.32rem, --cm-border-width 0.1rem). border-width's default is the RESOLVED value 0.2rem (Abbott, 11 Oct 2026: cm-global wins over the current 0.1rem) — see ab-system-architecture 'border-width RESOLVED'. OPEN (flagged there): is border-width FIXED (recommended — a fluid hairline reads heavy) or on a tight fluid clamp? The value 0.2rem holds either way.",
+
+  "seeds": {
+    "radius":       { "kind": "length", "default": "0.32rem", "themeable": true,  "template": { "label": "Corner radius", "input": "length", "presets": ["standard", "full"] } },
+    "border-width": { "kind": "length", "default": "0.2rem",  "themeable": true,  "template": { "label": "Border width", "input": "length", "presets": ["full"] }, "note": "RESOLVED 0.2rem (was 0.1rem); fixed vs fluid still open" }
+  },
+
+  "tokens": {
+    "radius":       { "pivot": "--ab-base-radius",       "kind": "ref-seed", "ref": "radius",       "themeable": false, "template": null },
+    "border-width": { "pivot": "--ab-base-border-width", "kind": "ref-seed", "ref": "border-width", "themeable": false, "template": null }
+  }
+}

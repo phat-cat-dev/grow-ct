@@ -1,0 +1,37 @@
+{
+  "section": "typography",
+  "schemaVersion": "0.1.0",
+  "note": "Grounded in cm-type.less (fluid ladder) + cm-base.less (font + ratio dials). Type tokens are clamp() steps: each is base-size x ratio^power, fluid between vw-min and vw-max (Utopia interpolation). SEEDS hold the ratio, base size, vw range and font faces; TOKENS are the derived steps. Faces/weights are user-theme concerns (authored); the SCALE (ratio + clamp) is a base default, rarely changed.",
+
+  "seeds": {
+    "type-ratio":    { "kind": "number", "default": 1.2,       "themeable": true,  "template": { "label": "Type scale ratio", "input": "number", "presets": ["full"] } },
+    "type-base-min": { "kind": "length", "default": "1rem",    "themeable": false, "template": null },
+    "type-base-max": { "kind": "length", "default": "1.125rem","themeable": false, "template": null },
+    "vw-min":        { "kind": "length", "default": "20rem",   "themeable": false, "template": null, "note": "320px — smallest phone" },
+    "vw-max":        { "kind": "length", "default": "90rem",   "themeable": false, "template": null, "note": "1440px — where growth caps" },
+
+    "font-sans":    { "kind": "fontstack", "default": "system-ui, -apple-system, \"Segoe UI\", Roboto, sans-serif", "themeable": true, "template": { "label": "Sans family", "input": "font", "presets": ["standard", "full"] } },
+    "font-display": { "kind": "fontstack", "default": "var(font-sans)", "themeable": true, "template": { "label": "Display/heading family", "input": "font", "presets": ["standard", "full"] } },
+    "font-mono":    { "kind": "fontstack", "default": "ui-monospace, \"SF Mono\", Menlo, Consolas, monospace", "themeable": true, "template": { "label": "Mono family", "input": "font", "presets": ["full"] } },
+
+    "font-heading": { "kind": "ref-seed", "default": "font-display", "themeable": true, "template": { "label": "Heading font role", "input": "select", "options": ["font-display", "font-sans", "font-mono"], "presets": ["basic", "standard", "full"] } },
+    "font-body":    { "kind": "ref-seed", "default": "font-sans",    "themeable": true, "template": { "label": "Body font role", "input": "select", "options": ["font-sans", "font-display", "font-mono"], "presets": ["basic", "standard", "full"] } },
+    "weight-heading": { "kind": "number", "default": 600, "themeable": true, "template": { "label": "Heading weight", "input": "number", "presets": ["full"] } },
+    "weight-body":    { "kind": "number", "default": 400, "themeable": true, "template": { "label": "Body weight", "input": "number", "presets": ["full"] } }
+  },
+
+  "tokens": {
+    "step-small":     { "pivot": "--ab-base-step-small",     "kind": "clamp", "power": -1, "themeable": false, "template": null, "note": "captions / fine print" },
+    "body-font-size": { "pivot": "--ab-base-body-font-size", "kind": "clamp", "power": 0,  "themeable": false, "template": null, "note": "body / running text" },
+    "h6-font-size":   { "pivot": "--ab-base-h6-font-size",   "kind": "clamp", "power": 1,  "themeable": false, "template": null },
+    "h5-font-size":   { "pivot": "--ab-base-h5-font-size",   "kind": "clamp", "power": 2,  "themeable": false, "template": null },
+    "h4-font-size":   { "pivot": "--ab-base-h4-font-size",   "kind": "clamp", "power": 3,  "themeable": false, "template": null },
+    "h3-font-size":   { "pivot": "--ab-base-h3-font-size",   "kind": "clamp", "power": 4,  "themeable": false, "template": null },
+    "h2-font-size":   { "pivot": "--ab-base-h2-font-size",   "kind": "clamp", "power": 5,  "themeable": false, "template": null },
+    "h1-font-size":   { "pivot": "--ab-base-h1-font-size",   "kind": "clamp", "power": 6,  "themeable": false, "template": null }
+  },
+
+  "clampRule": {
+    "note": "For a token of power p: min = type-base-min * ratio^p, max = type-base-max * ratio^p, interpolated fluidly between vw-min and vw-max (Utopia). Emitted as clamp(min, <slope>vw + <intercept>, max) by the .ab-fluid() mixin in ab-type.less. Per-band 'fluid within the breakpoints' (Abbott, 12 Oct 2026, A-segmented): .ab-fluid-seg() emits the band-local slice of the SAME global line for a token, used inside @media (min-width: @ab-bp-X) (viewport) or @container (component, via cqi) — render-neutral within the band until retuned, a FALLBACK layer over the global clamp. Applies identically to the spacing/layout tokens (ab-breakpoints.less); rolled subsystem by subsystem."
+  }
+}

@@ -1,0 +1,74 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://excelling.cardiffmet/schemas/design-kb.content-shapes.schema.json",
+  "title": "design-kb: content shapes",
+  "description": "Names the shapes that book content takes, so the design process can identify a content's shape before proposing an activity pattern for it, and the book scan can tag content against it (CS-1). Seven shapes anchor on Horn's Information Mapping types (fact, concept, structure, classification, procedure, process, principle); eight are extensions for academic-skills content (contrast, parallel options, pairs, error, assembly, judgement, criteria, reflection). Sibling to design-kb.activity-patterns.json and design-kb.content-conventions.json in shape (kbVersion + a flat array of typed entries, additionalProperties false throughout); distinct job from content-conventions, which records conventions of built courses.",
+  "type": "object",
+  "required": ["kbVersion", "shapes"],
+  "properties": {
+    "kbVersion": { "$ref": "common.schema.json#/$defs/kbVersion" },
+    "shapes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "definition", "recognition", "anchor"],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^content-shapes/[a-z0-9-]+$"
+          },
+          "name": {
+            "type": "string",
+            "description": "Short title, e.g. Concept, Contrast, Parallel options."
+          },
+          "definition": {
+            "type": "string",
+            "description": "What the shape is."
+          },
+          "recognition": {
+            "type": "string",
+            "description": "How a designer or the book scan identifies this shape in source material."
+          },
+          "anchor": {
+            "type": "object",
+            "description": "Where the shape comes from: one of Horn's seven Information Mapping types, or an academic-skills extension.",
+            "required": ["framework"],
+            "properties": {
+              "framework": {
+                "enum": ["horn-information-mapping", "academic-skills-extension"]
+              },
+              "type": {
+                "enum": ["fact", "concept", "structure", "classification", "procedure", "process", "principle"],
+                "description": "Required when framework is horn-information-mapping; forbidden otherwise."
+              }
+            },
+            "if": {
+              "properties": { "framework": { "const": "horn-information-mapping" } },
+              "required": ["framework"]
+            },
+            "then": { "required": ["type"] },
+            "else": { "not": { "required": ["type"] } },
+            "additionalProperties": false
+          },
+          "examples": {
+            "type": "array",
+            "description": "Optional. Each example is a verified sighting of the shape in source material.",
+            "items": {
+              "type": "object",
+              "required": ["source", "ref"],
+              "properties": {
+                "source": { "type": "string", "description": "Repo-relative path of the source." },
+                "ref": { "type": "string", "description": "Stable anchor: the section heading, quoted exactly. Never a line number." },
+                "note": { "type": "string" }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}
