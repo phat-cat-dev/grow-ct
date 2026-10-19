@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "id": "peer-reviewing",
+  "title": "Peer Reviewing",
+  "uri": "https://grow.local/process/peer-reviewing",
+  "broader": "communication-reflection",
+  "process": "communication-reflection",
+  "pattern": "sequential-process",
+  "intent": "formative · Communication & Reflection (Applying) · click through the process",
+  "statement": "Apply your critical thinking to someone else’s work and return feedback that is honest, specific and usable.",
+  "advance": "click",
+  "stage": {
+    "type": "process"
+  },
+  "steps": [
+    {
+      "title": "Read for the writer’s intent",
+      "text": "Understand what the piece is trying to do before you judge how well it does it."
+    },
+    {
+      "title": "Name genuine strengths",
+      "text": "Say what works and why — precise praise tells the writer what to keep."
+    },
+    {
+      "title": "Locate the key weakness",
+      "text": "Find the one change that would most improve the work, not a list of small ones."
+    },
+    {
+      "title": "Give actionable feed-forward",
+      "text": "Offer a next step the writer can act on, not just a verdict on this draft."
+    },
+    {
+      "title": "Keep it constructive",
+      "text": "Comment on the work, not the person, and a question often beats a correction."
+    }
+  ],
+  "feedForward": {
+    "badge": "Try it",
+    "text": "Review a peer’s paragraph: one specific strength, one key weakness, one concrete next step. See the Marking & feedback activity for how an expert does it."
+  },
+  "related": [
+    "critical-analysis",
+    "marking-feedback"
+  ]
+}

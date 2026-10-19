@@ -1,0 +1,39 @@
+{
+  "version": 1,
+  "id": "craap",
+  "title": "Evaluating a source (CRAAP)",
+  "process": "source-evaluation",
+  "pattern": "spot-the-error",
+  "intent": "formative · pattern <code>spot-the-error</code> / source-evaluation · judge one lens at a time",
+  "statement": "You are deciding whether to cite this. Work the CRAAP test — Currency, Relevance, Authority, Accuracy, Purpose — one lens at a time, and stamp a verdict on each.",
+  "advance": "click",
+  "stage": {
+    "type": "checklist",
+    "source": {
+      "kicker": "Source under review",
+      "title": "“Why Solar Will Power Everything by 2027”",
+      "meta": "greenfuturenow.blog · no author listed · posted 2019 · no citations"
+    },
+    "items": [
+      { "letter": "C", "label": "Currency", "question": "recent enough?", "verdict": "A 2019 post whose 2027 forecast is already overtaken.", "mark": { "kind": "exclaim", "color": "neutral" }, "step": 1 },
+      { "letter": "R", "label": "Relevance", "question": "the right depth?", "verdict": "On topic, but a shallow overview — relevant yet thin.", "mark": { "kind": "question", "color": "comment" }, "step": 2 },
+      { "letter": "A", "label": "Authority", "question": "who says so?", "verdict": "No named author; a self-published blog. Authority fails.", "mark": { "kind": "cross", "color": "negative" }, "step": 3 },
+      { "letter": "A", "label": "Accuracy", "question": "can you check it?", "verdict": "No citations and sweeping claims — nothing is verifiable.", "mark": { "kind": "cross", "color": "negative" }, "step": 4 },
+      { "letter": "P", "label": "Purpose", "question": "why was it made?", "verdict": "To persuade and win clicks, not to inform — read the bias.", "mark": { "kind": "exclaim", "color": "neutral" }, "step": 5 }
+    ]
+  },
+  "steps": [
+    { "title": "Meet the source", "text": "Before judging, see what you are dealing with. Work the five CRAAP lenses in order." },
+    { "title": "C — Currency", "text": "How recent is it, and does recency matter here? For a fast-moving topic, an overtaken forecast is a warning." },
+    { "title": "R — Relevance", "text": "Does it address your question at the right depth? A source can be on topic yet too shallow to use." },
+    { "title": "A — Authority", "text": "Who wrote it, and what makes them credible? No named author on a self-published blog is a serious problem." },
+    { "title": "A — Accuracy", "text": "Is it supported and verifiable? No citations means you cannot check a single claim." },
+    { "title": "P — Purpose", "text": "Why was it made — to inform, or to persuade and sell? Spot the bias before you trust it." },
+    { "title": "Reach a verdict", "text": "Weigh the five lenses together. Relevant is not the same as reliable: this one fails where it matters most." }
+  ],
+  "feedForward": {
+    "step": 6,
+    "badge": "Verdict",
+    "text": "Relevant but not reliable — it fails Authority and Accuracy. Use it only to illustrate hype, and corroborate every claim with peer-reviewed or official data."
+  }
+}

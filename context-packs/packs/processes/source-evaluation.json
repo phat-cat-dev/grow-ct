@@ -1,0 +1,48 @@
+{
+  "version": 1,
+  "id": "source-evaluation",
+  "title": "Source Evaluation",
+  "uri": "https://grow.local/process/source-evaluation",
+  "broader": "research-retrieval",
+  "process": "research-retrieval",
+  "pattern": "sequential-process",
+  "intent": "formative · Research & Retrieval (Doing) · click through the process",
+  "statement": "Apply a framework to decide whether a source is trustworthy enough to cite — before you rely on it.",
+  "advance": "click",
+  "stage": {
+    "type": "process"
+  },
+  "steps": [
+    {
+      "title": "Identify the source",
+      "text": "See what you are dealing with: who, where, when, and what kind of thing it is."
+    },
+    {
+      "title": "Check currency and authority",
+      "text": "Is it recent enough for the topic, and does the author have credible standing?"
+    },
+    {
+      "title": "Test accuracy and evidence",
+      "text": "Can the claims be checked? Look for citations, data and corroboration."
+    },
+    {
+      "title": "Read the purpose and bias",
+      "text": "Ask why it was made — to inform, or to persuade and sell. Motive shapes content."
+    },
+    {
+      "title": "Reach a verdict",
+      "text": "Weigh the lenses together: relevant is not the same as reliable."
+    }
+  ],
+  "feedForward": {
+    "badge": "Try it",
+    "text": "Pick one source and run it through a full framework — try the worked CRAAP, RADAR and ROBOT activities to see the same source three ways."
+  },
+  "altLabel": "Source Criticism",
+  "related": [
+    "craap",
+    "radar",
+    "robot",
+    "critical-analysis"
+  ]
+}

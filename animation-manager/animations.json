@@ -1,0 +1,888 @@
+{
+  "generated": "Derived from animation-catalog.js",
+  "colorRoles": [
+    {
+      "id": "accent",
+      "label": "Accent / brand"
+    },
+    {
+      "id": "positive",
+      "label": "Positive (green)"
+    },
+    {
+      "id": "negative",
+      "label": "Negative (red)"
+    },
+    {
+      "id": "neutral",
+      "label": "Neutral (amber)"
+    },
+    {
+      "id": "comment",
+      "label": "Comment (violet)"
+    },
+    {
+      "id": "pen",
+      "label": "Teacher's pen"
+    },
+    {
+      "id": "ink",
+      "label": "Ink (text colour)"
+    }
+  ],
+  "animations": [
+    {
+      "id": "underline",
+      "name": "Underline",
+      "category": "emphasis",
+      "kind": "wrap",
+      "defaultColor": "accent",
+      "needsText": true,
+      "animation": "draw",
+      "keywords": [
+        "underline",
+        "underscore",
+        "emphasise",
+        "emphasize"
+      ]
+    },
+    {
+      "id": "double-underline",
+      "name": "Double underline",
+      "category": "emphasis",
+      "kind": "wrap",
+      "defaultColor": "accent",
+      "needsText": true,
+      "animation": "draw",
+      "keywords": [
+        "double underline",
+        "strong emphasis"
+      ]
+    },
+    {
+      "id": "wavy-underline",
+      "name": "Wavy underline",
+      "category": "emphasis",
+      "kind": "wrap",
+      "defaultColor": "accent",
+      "needsText": true,
+      "animation": "draw",
+      "keywords": [
+        "wavy",
+        "squiggle",
+        "squiggly",
+        "spelling"
+      ]
+    },
+    {
+      "id": "circle",
+      "name": "Circle it",
+      "category": "emphasis",
+      "kind": "wrap",
+      "defaultColor": "accent",
+      "needsText": true,
+      "animation": "draw",
+      "keywords": [
+        "circle",
+        "oval",
+        "ring",
+        "encircle"
+      ]
+    },
+    {
+      "id": "box",
+      "name": "Box it",
+      "category": "emphasis",
+      "kind": "wrap",
+      "defaultColor": "accent",
+      "needsText": true,
+      "animation": "draw",
+      "keywords": [
+        "box",
+        "boxed",
+        "frame",
+        "enclose"
+      ]
+    },
+    {
+      "id": "brackets",
+      "name": "Brackets",
+      "category": "emphasis",
+      "kind": "wrap",
+      "defaultColor": "accent",
+      "needsText": true,
+      "animation": "draw",
+      "keywords": [
+        "brackets",
+        "enclose",
+        "group"
+      ]
+    },
+    {
+      "id": "strike",
+      "name": "Strike through",
+      "category": "emphasis",
+      "kind": "wrap",
+      "defaultColor": "negative",
+      "needsText": true,
+      "animation": "draw",
+      "keywords": [
+        "strike",
+        "strikethrough",
+        "cross out",
+        "delete",
+        "remove"
+      ]
+    },
+    {
+      "id": "scribble",
+      "name": "Scribble out",
+      "category": "emphasis",
+      "kind": "wrap",
+      "defaultColor": "negative",
+      "needsText": true,
+      "animation": "draw",
+      "keywords": [
+        "scribble",
+        "scratch out",
+        "delete",
+        "reject"
+      ]
+    },
+    {
+      "id": "highlight",
+      "name": "Highlighter",
+      "category": "highlighter",
+      "kind": "hl",
+      "defaultColor": "accent",
+      "needsText": true,
+      "animation": "hlsweep",
+      "keywords": [
+        "highlight",
+        "highlighter",
+        "marker",
+        "mark",
+        "sweep",
+        "key"
+      ]
+    },
+    {
+      "id": "tick",
+      "name": "Tick / check",
+      "category": "standalone",
+      "kind": "glyph",
+      "defaultColor": "positive",
+      "needsText": false,
+      "animation": "draw",
+      "keywords": [
+        "tick",
+        "check",
+        "correct",
+        "right",
+        "done",
+        "yes",
+        "ok"
+      ]
+    },
+    {
+      "id": "cross",
+      "name": "Cross",
+      "category": "standalone",
+      "kind": "glyph",
+      "defaultColor": "negative",
+      "needsText": false,
+      "animation": "draw",
+      "keywords": [
+        "cross",
+        "wrong",
+        "incorrect",
+        "no",
+        "x",
+        "error"
+      ]
+    },
+    {
+      "id": "star",
+      "name": "Star",
+      "category": "standalone",
+      "kind": "glyph",
+      "defaultColor": "neutral",
+      "needsText": false,
+      "animation": "draw",
+      "keywords": [
+        "star",
+        "favourite",
+        "favorite",
+        "important",
+        "rating"
+      ]
+    },
+    {
+      "id": "caret",
+      "name": "Caret / insert",
+      "category": "standalone",
+      "kind": "glyph",
+      "defaultColor": "comment",
+      "needsText": false,
+      "animation": "draw",
+      "keywords": [
+        "caret",
+        "insert",
+        "add here",
+        "up"
+      ]
+    },
+    {
+      "id": "big-tick",
+      "name": "Big tick",
+      "category": "standalone",
+      "kind": "glyph",
+      "defaultColor": "positive",
+      "needsText": false,
+      "animation": "draw",
+      "keywords": [
+        "big tick",
+        "great",
+        "approved",
+        "excellent"
+      ]
+    },
+    {
+      "id": "arrow-sweep",
+      "name": "Sweep arrow",
+      "category": "shapes",
+      "kind": "glyph",
+      "defaultColor": "accent",
+      "needsText": false,
+      "animation": "draw",
+      "keywords": [
+        "arrow",
+        "sweep arrow",
+        "point"
+      ]
+    },
+    {
+      "id": "arrow-right",
+      "name": "Arrow right",
+      "category": "shapes",
+      "kind": "glyph",
+      "defaultColor": "accent",
+      "needsText": false,
+      "animation": "draw",
+      "keywords": [
+        "arrow right",
+        "next",
+        "leads to",
+        "therefore"
+      ]
+    },
+    {
+      "id": "arrow-left",
+      "name": "Arrow left",
+      "category": "shapes",
+      "kind": "glyph",
+      "defaultColor": "accent",
+      "needsText": false,
+      "animation": "draw",
+      "keywords": [
+        "arrow left",
+        "back",
+        "previous"
+      ]
+    },
+    {
+      "id": "arrow-up",
+      "name": "Arrow up",
+      "category": "shapes",
+      "kind": "glyph",
+      "defaultColor": "accent",
+      "needsText": false,
+      "animation": "draw",
+      "keywords": [
+        "arrow up",
+        "increase",
+        "rise"
+      ]
+    },
+    {
+      "id": "arrow-down",
+      "name": "Arrow down",
+      "category": "shapes",
+      "kind": "glyph",
+      "defaultColor": "accent",
+      "needsText": false,
+      "animation": "draw",
+      "keywords": [
+        "arrow down",
+        "decrease",
+        "fall"
+      ]
+    },
+    {
+      "id": "arrow-curved",
+      "name": "Curved arrow",
+      "category": "shapes",
+      "kind": "glyph",
+      "defaultColor": "accent",
+      "needsText": false,
+      "animation": "draw",
+      "keywords": [
+        "curved arrow",
+        "curve",
+        "point to"
+      ]
+    },
+    {
+      "id": "arrow-double",
+      "name": "Double-headed arrow",
+      "category": "shapes",
+      "kind": "glyph",
+      "defaultColor": "accent",
+      "needsText": false,
+      "animation": "draw",
+      "keywords": [
+        "double arrow",
+        "both ways",
+        "relates to",
+        "two way"
+      ]
+    },
+    {
+      "id": "arrow-return",
+      "name": "Return arrow",
+      "category": "shapes",
+      "kind": "glyph",
+      "defaultColor": "accent",
+      "needsText": false,
+      "animation": "draw",
+      "keywords": [
+        "return arrow",
+        "loop back",
+        "redo"
+      ]
+    },
+    {
+      "id": "arrow-zigzag",
+      "name": "Zigzag arrow",
+      "category": "shapes",
+      "kind": "glyph",
+      "defaultColor": "accent",
+      "needsText": false,
+      "animation": "draw",
+      "keywords": [
+        "zigzag arrow",
+        "volatile",
+        "back and forth"
+      ]
+    },
+    {
+      "id": "arrow-hook",
+      "name": "Hook arrow",
+      "category": "shapes",
+      "kind": "glyph",
+      "defaultColor": "accent",
+      "needsText": false,
+      "animation": "draw",
+      "keywords": [
+        "hook arrow",
+        "branch",
+        "drop down"
+      ]
+    },
+    {
+      "id": "arrow-bold",
+      "name": "Bold sweep arrow",
+      "category": "shapes",
+      "kind": "glyph",
+      "defaultColor": "accent",
+      "needsText": false,
+      "animation": "draw",
+      "keywords": [
+        "bold arrow",
+        "strong",
+        "emphatic arrow"
+      ]
+    },
+    {
+      "id": "arrow-thin",
+      "name": "Long thin arrow",
+      "category": "shapes",
+      "kind": "glyph",
+      "defaultColor": "accent",
+      "needsText": false,
+      "animation": "draw",
+      "keywords": [
+        "thin arrow",
+        "fine arrow",
+        "subtle"
+      ]
+    },
+    {
+      "id": "arrow-dotted",
+      "name": "Dotted arrow",
+      "category": "shapes",
+      "kind": "glyph",
+      "defaultColor": "accent",
+      "needsText": false,
+      "animation": "draw",
+      "keywords": [
+        "dotted arrow",
+        "implied",
+        "weak link"
+      ]
+    },
+    {
+      "id": "circle-shape",
+      "name": "Circle",
+      "category": "shapes",
+      "kind": "glyph",
+      "defaultColor": "accent",
+      "needsText": false,
+      "animation": "draw",
+      "keywords": [
+        "circle shape",
+        "ring",
+        "node"
+      ]
+    },
+    {
+      "id": "dot",
+      "name": "Dot",
+      "category": "shapes",
+      "kind": "glyph",
+      "defaultColor": "accent",
+      "needsText": false,
+      "animation": "none",
+      "keywords": [
+        "dot",
+        "bullet",
+        "point",
+        "marker"
+      ]
+    },
+    {
+      "id": "target",
+      "name": "Target",
+      "category": "shapes",
+      "kind": "glyph",
+      "defaultColor": "accent",
+      "needsText": false,
+      "animation": "draw",
+      "keywords": [
+        "target",
+        "bullseye",
+        "focus",
+        "goal"
+      ]
+    },
+    {
+      "id": "square",
+      "name": "Square",
+      "category": "shapes",
+      "kind": "glyph",
+      "defaultColor": "accent",
+      "needsText": false,
+      "animation": "draw",
+      "keywords": [
+        "square",
+        "box shape",
+        "node"
+      ]
+    },
+    {
+      "id": "rounded",
+      "name": "Rounded square",
+      "category": "shapes",
+      "kind": "glyph",
+      "defaultColor": "accent",
+      "needsText": false,
+      "animation": "draw",
+      "keywords": [
+        "rounded square",
+        "card",
+        "tag"
+      ]
+    },
+    {
+      "id": "check-box",
+      "name": "Checked box",
+      "category": "shapes",
+      "kind": "glyph",
+      "defaultColor": "positive",
+      "needsText": false,
+      "animation": "draw",
+      "keywords": [
+        "checkbox",
+        "checked",
+        "ticked box",
+        "complete",
+        "done"
+      ]
+    },
+    {
+      "id": "exclaim",
+      "name": "Exclamation",
+      "category": "shapes",
+      "kind": "glyph",
+      "defaultColor": "neutral",
+      "needsText": false,
+      "animation": "draw",
+      "keywords": [
+        "exclamation",
+        "important",
+        "warning",
+        "note"
+      ]
+    },
+    {
+      "id": "exclaim-circled",
+      "name": "Exclamation circled",
+      "category": "shapes",
+      "kind": "glyph",
+      "defaultColor": "neutral",
+      "needsText": false,
+      "animation": "draw",
+      "keywords": [
+        "exclamation circled",
+        "alert",
+        "caution"
+      ]
+    },
+    {
+      "id": "question",
+      "name": "Question mark",
+      "category": "shapes",
+      "kind": "glyph",
+      "defaultColor": "accent",
+      "needsText": false,
+      "animation": "draw",
+      "keywords": [
+        "question",
+        "unclear",
+        "query",
+        "why"
+      ]
+    },
+    {
+      "id": "question-circled",
+      "name": "Question circled",
+      "category": "shapes",
+      "kind": "glyph",
+      "defaultColor": "accent",
+      "needsText": false,
+      "animation": "draw",
+      "keywords": [
+        "question circled",
+        "queried",
+        "needs clarification"
+      ]
+    },
+    {
+      "id": "line-dotted",
+      "name": "Dotted line",
+      "category": "shapes",
+      "kind": "wide",
+      "defaultColor": "accent",
+      "needsText": false,
+      "animation": "wipe",
+      "keywords": [
+        "dotted line",
+        "divider",
+        "rule",
+        "separator"
+      ]
+    },
+    {
+      "id": "line-dashed",
+      "name": "Dashed line",
+      "category": "shapes",
+      "kind": "wide",
+      "defaultColor": "accent",
+      "needsText": false,
+      "animation": "wipe",
+      "keywords": [
+        "dashed line",
+        "divider",
+        "cut here"
+      ]
+    },
+    {
+      "id": "line-dotted-arrow",
+      "name": "Dotted line + arrow",
+      "category": "shapes",
+      "kind": "wide",
+      "defaultColor": "accent",
+      "needsText": false,
+      "animation": "wipe",
+      "keywords": [
+        "dotted line arrow",
+        "leads to",
+        "connector"
+      ]
+    },
+    {
+      "id": "oval-phrase",
+      "name": "Oval around a phrase",
+      "category": "ovals",
+      "kind": "wrap",
+      "defaultColor": "accent",
+      "needsText": true,
+      "animation": "draw",
+      "keywords": [
+        "oval phrase",
+        "circle phrase",
+        "ring idea",
+        "whole idea"
+      ]
+    },
+    {
+      "id": "oval-long",
+      "name": "Long oval",
+      "category": "ovals",
+      "kind": "wrap",
+      "defaultColor": "accent",
+      "needsText": true,
+      "animation": "draw",
+      "keywords": [
+        "long oval",
+        "circle long phrase",
+        "whole sentence"
+      ]
+    },
+    {
+      "id": "oval-double-ring",
+      "name": "Double-ringed oval",
+      "category": "ovals",
+      "kind": "wrap",
+      "defaultColor": "accent",
+      "needsText": true,
+      "animation": "draw",
+      "keywords": [
+        "double oval",
+        "double ring",
+        "emphatic circle"
+      ]
+    },
+    {
+      "id": "oval-left",
+      "name": "Oval (lean left)",
+      "category": "ovals",
+      "kind": "wrap",
+      "defaultColor": "comment",
+      "needsText": true,
+      "animation": "draw",
+      "keywords": [
+        "oval left",
+        "circle other way",
+        "alt circle"
+      ]
+    },
+    {
+      "id": "oval-triple",
+      "name": "Triple oval",
+      "category": "ovals",
+      "kind": "wrap",
+      "defaultColor": "accent",
+      "needsText": true,
+      "animation": "draw",
+      "keywords": [
+        "triple oval",
+        "scribbled circle",
+        "very emphatic"
+      ]
+    },
+    {
+      "id": "rectangle",
+      "name": "Rectangle",
+      "category": "ovals",
+      "kind": "wide",
+      "defaultColor": "accent",
+      "needsText": false,
+      "animation": "draw",
+      "keywords": [
+        "rectangle",
+        "hand drawn box",
+        "frame"
+      ]
+    },
+    {
+      "id": "rectangle-stacked",
+      "name": "Stacked rectangles",
+      "category": "ovals",
+      "kind": "wide",
+      "defaultColor": "accent",
+      "needsText": false,
+      "animation": "draw",
+      "keywords": [
+        "stacked boxes",
+        "two boxes",
+        "list frame"
+      ]
+    },
+    {
+      "id": "boxes-row",
+      "name": "Boxes → bar",
+      "category": "ovals",
+      "kind": "wide",
+      "defaultColor": "accent",
+      "needsText": false,
+      "animation": "draw",
+      "keywords": [
+        "boxes row",
+        "segments",
+        "timeline",
+        "steps"
+      ]
+    },
+    {
+      "id": "bar-stretch",
+      "name": "Stretch bar",
+      "category": "ovals",
+      "kind": "wide",
+      "defaultColor": "accent",
+      "needsText": false,
+      "animation": "stretch",
+      "keywords": [
+        "stretch bar",
+        "grow bar",
+        "progress",
+        "reveal"
+      ]
+    },
+    {
+      "id": "circles-row",
+      "name": "Circles in a row",
+      "category": "ovals",
+      "kind": "wide",
+      "defaultColor": "accent",
+      "needsText": false,
+      "animation": "draw",
+      "keywords": [
+        "circles row",
+        "steps",
+        "dots row",
+        "sequence"
+      ]
+    },
+    {
+      "id": "rules",
+      "name": "Horizontal rules",
+      "category": "ovals",
+      "kind": "wide",
+      "defaultColor": "accent",
+      "needsText": false,
+      "animation": "draw",
+      "keywords": [
+        "rules",
+        "horizontal rule",
+        "dividers",
+        "underlines row"
+      ]
+    },
+    {
+      "id": "hand",
+      "name": "Handwriting",
+      "category": "notes",
+      "kind": "note",
+      "defaultColor": "accent",
+      "needsText": true,
+      "animation": "none",
+      "keywords": [
+        "handwriting",
+        "hand",
+        "note",
+        "scrawl"
+      ]
+    },
+    {
+      "id": "hnote",
+      "name": "Soft note",
+      "category": "notes",
+      "kind": "note",
+      "defaultColor": "ink",
+      "needsText": true,
+      "animation": "none",
+      "keywords": [
+        "soft note",
+        "aside",
+        "kalam",
+        "margin aside"
+      ]
+    },
+    {
+      "id": "margin-note",
+      "name": "Margin note",
+      "category": "notes",
+      "kind": "note",
+      "defaultColor": "pen",
+      "needsText": true,
+      "animation": "none",
+      "keywords": [
+        "margin note",
+        "remember",
+        "reminder",
+        "aside"
+      ]
+    },
+    {
+      "id": "teacher-mark",
+      "name": "Teacher mark",
+      "category": "notes",
+      "kind": "note",
+      "defaultColor": "pen",
+      "needsText": true,
+      "animation": "draw",
+      "keywords": [
+        "teacher mark",
+        "marked",
+        "feedback",
+        "grade"
+      ]
+    },
+    {
+      "id": "correction",
+      "name": "Correction",
+      "category": "notes",
+      "kind": "note",
+      "defaultColor": "negative",
+      "needsText": true,
+      "animation": "draw",
+      "keywords": [
+        "correction",
+        "replace",
+        "edit",
+        "fix word"
+      ]
+    },
+    {
+      "id": "sticky",
+      "name": "Sticky note",
+      "category": "notes",
+      "kind": "note",
+      "defaultColor": "ink",
+      "needsText": true,
+      "animation": "none",
+      "keywords": [
+        "sticky",
+        "post-it",
+        "note card",
+        "reminder card"
+      ]
+    },
+    {
+      "id": "checklist-item",
+      "name": "Checklist item",
+      "category": "notes",
+      "kind": "note",
+      "defaultColor": "positive",
+      "needsText": true,
+      "animation": "draw",
+      "keywords": [
+        "checklist",
+        "checklist item",
+        "todo",
+        "task"
+      ]
+    }
+  ]
+}

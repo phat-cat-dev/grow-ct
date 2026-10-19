@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hand-drawn marks | Animation manager workshop</title>
+  <style>
+    /* Abbott-style theme tokens so the semantic colour roles resolve against a
+       real theme. Swap the hue or any --c-* token and every mark follows. */
+    :root {
+      --h: 202; --s: 72%;
+      --page-bg: hsl(var(--h) 30% 96%); --surface-1: hsl(var(--h) 24% 99%); --surface-2: hsl(var(--h) 20% 94%);
+      --ink: hsl(var(--h) 25% 16%); --line: hsl(var(--h) 18% 86%);
+      --accent: hsl(var(--h) var(--s) 42%);
+      --c-positive: hsl(150 55% 40%); --c-neutral: hsl(40 70% 46%);
+      --c-comment: hsl(270 45% 54%); --c-negative: hsl(5 65% 52%); --pen: hsl(5 72% 54%);
+      --font-ui: system-ui, sans-serif;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --page-bg: hsl(var(--h) 32% 10%); --surface-1: hsl(var(--h) 26% 14%); --surface-2: hsl(var(--h) 24% 18%);
+        --ink: hsl(var(--h) 20% 92%); --line: hsl(var(--h) 22% 24%); --accent: hsl(var(--h) var(--s) 64%); --pen: hsl(5 80% 64%);
+      }
+    }
+    :root[data-theme="dark"] {
+      --page-bg: hsl(var(--h) 32% 10%); --surface-1: hsl(var(--h) 26% 14%); --surface-2: hsl(var(--h) 24% 18%);
+      --ink: hsl(var(--h) 20% 92%); --line: hsl(var(--h) 22% 24%); --accent: hsl(var(--h) var(--s) 64%); --pen: hsl(5 80% 64%);
+    }
+    body { margin: 0; background: var(--page-bg); color: var(--ink); font: 1.05rem/1.7 var(--font-ui); }
+    main { max-width: 52rem; margin: auto; padding: 5.5rem 1rem 12rem; }
+    h1 { font-size: clamp(2rem, 5vw, 3.2rem); line-height: 1.1; }
+    .sheet { background: var(--surface-1); border: 1px solid var(--line); border-radius: 12px; padding: clamp(18px, 3vw, 30px); margin-block: 1.5rem; }
+    .hint { color: color-mix(in srgb, var(--ink) 65%, transparent); font-size: .95rem; }
+    code { background: var(--surface-2); padding: .1em .35em; border-radius: .3rem; font-size: .9em; }
+  </style>
+</head>
+<body>
+  <main data-animation-manager-target>
+    <p class="hint">GROW / reusable overlay tools</p>
+    <h1>Mark up the page by hand.</h1>
+    <p>Open the <strong>Gallery</strong> in the top bar to browse every note-taking mark extracted from the marks gallery. Pick one, set its speed, size, rotation and semantic colour under <strong>Adjust</strong>, then <strong>Insert</strong> it into this page.</p>
+
+    <div class="sheet">
+      <p>A landscape is built from a foreground, a middle ground, and a backdrop.
+      Depth is a choice, not an accident. Select the word <strong>backdrop</strong>
+      above and try the strike-through, or mark every <strong>horizon</strong> with the keyword tool.</p>
+      <p class="hint">Tip: the colour role follows the page theme — switch this page to dark
+      (via your OS) and the marks re-tint automatically.</p>
+    </div>
+
+    <p>Settings are saved locally for this page. Export JSON for your settings, or export a
+    self-contained HTML snippet (filter + stylesheet + mark) for any other page.</p>
+    <p class="hint">Agents can drive the same marks: <code>ABAnimationManager.wrapKeyword('horizon', { id: 'underline' })</code>.</p>
+  </main>
+  <noscript>This manager requires JavaScript.</noscript>
+  <script src="./animation-manager.bundle.js" defer></script>
+</body>
+</html>

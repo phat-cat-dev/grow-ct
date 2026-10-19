@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "id": "research-design",
+  "title": "Research Design",
+  "uri": "https://grow.local/process/research-design",
+  "broader": "research-retrieval",
+  "process": "research-retrieval",
+  "pattern": "sequential-process",
+  "intent": "formative · Research & Retrieval (Doing) · click through the process",
+  "statement": "Move from a vague question to an actionable, testable plan — structured before any data is collected.",
+  "advance": "click",
+  "stage": {
+    "type": "process"
+  },
+  "steps": [
+    {
+      "title": "Define the gap and question",
+      "text": "Turn the gap in the literature into one precise, answerable research question."
+    },
+    {
+      "title": "Set the scope",
+      "text": "Decide what can be studied and what must be deliberately left out."
+    },
+    {
+      "title": "Choose the methodology",
+      "text": "Pick qualitative, quantitative or mixed methods — justified by the question, not habit."
+    },
+    {
+      "title": "Define variables and hypotheses",
+      "text": "Name what you will measure and state your null and alternative hypotheses."
+    },
+    {
+      "title": "Design the instruments",
+      "text": "Build the surveys, interviews or experiments that will actually collect the data."
+    }
+  ],
+  "feedForward": {
+    "badge": "Try it",
+    "text": "Draft your study in five lines: question, scope, method, variables, instrument. If any line is vague, the design is not ready."
+  },
+  "related": [
+    "hypothesis-generation",
+    "problem-decomposition"
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "id": "literature-reviewing",
+  "title": "Literature Reviewing",
+  "uri": "https://grow.local/process/literature-reviewing",
+  "broader": "research-retrieval",
+  "process": "research-retrieval",
+  "pattern": "sequential-process",
+  "intent": "formative · Research & Retrieval (Doing) · click through the process",
+  "statement": "Go beyond listing sources: synthesise them, map what is known, and find the gap your work will fill.",
+  "advance": "click",
+  "stage": {
+    "type": "process"
+  },
+  "steps": [
+    {
+      "title": "Gather the key works",
+      "text": "Collect the sources that actually shape the conversation, not everything you can find."
+    },
+    {
+      "title": "Group by theme or position",
+      "text": "Cluster sources by what they argue or find, so the field has a shape."
+    },
+    {
+      "title": "Synthesise across them",
+      "text": "Write about the debate, not source-by-source — where they agree, clash and build."
+    },
+    {
+      "title": "Find the gap",
+      "text": "Name the question the literature has not yet answered. That gap is your opening."
+    },
+    {
+      "title": "Place your work in the lineage",
+      "text": "Show how your study follows from, and adds to, what came before."
+    }
+  ],
+  "feedForward": {
+    "badge": "Try it",
+    "text": "For five sources on your topic, write one sentence that groups three of them and names the gap the other two leave."
+  },
+  "related": [
+    "literature-search",
+    "synthesis",
+    "source-evaluation"
+  ]
+}

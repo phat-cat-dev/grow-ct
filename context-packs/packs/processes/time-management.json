@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "id": "time-management",
+  "title": "Time Management & Project Sequencing",
+  "uri": "https://grow.local/process/time-management",
+  "broader": "communication-reflection",
+  "process": "communication-reflection",
+  "pattern": "sequential-process",
+  "intent": "formative · Communication & Reflection (Applying) · click through the process",
+  "statement": "Turn a large module into timed, sequential milestones — with slack for when things go wrong.",
+  "advance": "click",
+  "stage": {
+    "type": "process"
+  },
+  "steps": [
+    {
+      "title": "Break into milestones",
+      "text": "Split the work into deliverable chunks with clear done conditions."
+    },
+    {
+      "title": "Estimate each honestly",
+      "text": "Guess the time each will really take, then be honest about your optimism."
+    },
+    {
+      "title": "Sequence by dependency",
+      "text": "Order milestones so nothing waits on work that has not started."
+    },
+    {
+      "title": "Add contingency",
+      "text": "Build in slack for the step that will slip — because one always does."
+    },
+    {
+      "title": "Review and adjust",
+      "text": "Check progress against the plan regularly and re-sequence as reality bites."
+    }
+  ],
+  "feedForward": {
+    "badge": "Try it",
+    "text": "List your next three milestones with a date each, and mark which one everything else depends on."
+  },
+  "related": [
+    "problem-decomposition",
+    "self-directed-learning"
+  ]
+}

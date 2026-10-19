@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "id": "ethical-reasoning",
+  "title": "Ethical Reasoning & Integrity",
+  "uri": "https://grow.local/process/ethical-reasoning",
+  "broader": "communication-reflection",
+  "process": "communication-reflection",
+  "pattern": "sequential-process",
+  "intent": "formative · Communication & Reflection (Applying) · click through the process",
+  "statement": "Recognise the moral stakes in how knowledge is produced and used — plagiarism, bias, authorship, consent.",
+  "advance": "click",
+  "stage": {
+    "type": "process"
+  },
+  "steps": [
+    {
+      "title": "Spot the ethical stake",
+      "text": "Notice where a choice has a moral dimension, not just a technical one."
+    },
+    {
+      "title": "Name who is affected",
+      "text": "Identify the people and groups your decision touches, including the unseen ones."
+    },
+    {
+      "title": "Weigh the principles",
+      "text": "Balance honesty, fairness, harm and respect — say which pull against each other here."
+    },
+    {
+      "title": "Check your integrity",
+      "text": "Attribute every source, declare bias and funding, and never present others’ work as your own."
+    },
+    {
+      "title": "Decide and justify",
+      "text": "Make the call and be able to defend it openly — transparency is the test."
+    }
+  ],
+  "feedForward": {
+    "badge": "Try it",
+    "text": "Take one decision in your work (a source, a method, an authorship) and write the one-line justification you could defend in public."
+  },
+  "altLabel": "Academic integrity",
+  "related": [
+    "source-evaluation",
+    "reflective-practice"
+  ]
+}

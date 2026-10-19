@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "id": "active-listening",
+  "title": "Active Listening (in lectures)",
+  "uri": "https://grow.local/process/active-listening",
+  "broader": "communication-reflection",
+  "process": "communication-reflection",
+  "pattern": "sequential-process",
+  "intent": "formative · Communication & Reflection (Applying) · click through the process",
+  "statement": "Stop transcribing and start listening for structure: catch the lecturer’s shape, emphasis and open questions.",
+  "advance": "click",
+  "stage": {
+    "type": "process"
+  },
+  "steps": [
+    {
+      "title": "Catch the structure",
+      "text": "Listen for how the talk is organised — the argument, not the sentences."
+    },
+    {
+      "title": "Mark the emphasis",
+      "text": "Note what the lecturer stresses, repeats or signposts as important."
+    },
+    {
+      "title": "Note the open questions",
+      "text": "Write down what is left unresolved — those are your prompts to follow up."
+    },
+    {
+      "title": "Capture meaning, not words",
+      "text": "Record ideas and links in your own words; verbatim notes crowd out thinking."
+    },
+    {
+      "title": "Review and fill gaps",
+      "text": "Soon after, revisit the notes and close the gaps while the talk is fresh."
+    }
+  ],
+  "feedForward": {
+    "badge": "Try it",
+    "text": "In your next lecture, write only the structure and three emphasis points — then one question the lecturer left open."
+  },
+  "related": [
+    "critical-analysis",
+    "self-directed-learning"
+  ]
+}

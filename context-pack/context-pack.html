@@ -1,0 +1,36 @@
+<!-- context-pack — minimal embed. The host page supplies the theme tokens
+     (--accent, --c-*, --ink, --surface-1, --line …) and the handwriting fonts
+     (Caveat / Kalam); the component inherits them. -->
+<link rel="stylesheet" href="./context-pack.css">
+
+<!-- Pack three ways: inline JSON (below, offline-friendly),
+     a src="…json" attribute, or the .pack property (set from script / Adapt). -->
+<context-pack launch="inline">
+  <script type="application/json">
+  {
+    "version": 1,
+    "id": "mini-overclaim",
+    "title": "Spot the overclaim",
+    "statement": "A one-line claim — watch the tutor mark it up, one move at a time.",
+    "intent": "FORMATIVE · PATTERN <code>inline-commentary</code>",
+    "stage": {
+      "type": "annotated-prose",
+      "segments": [
+        { "text": "Solar power is " },
+        { "id": "claim", "text": "the best solution", "step": 1, "mark": { "kind": "underline", "color": "accent" }, "note": "Says who? Add a source." },
+        { "text": " to " },
+        { "id": "over", "text": "every energy problem", "step": 2, "mark": { "kind": "oval", "color": "neutral" }, "note": "Overclaim — narrow it." },
+        { "text": "." }
+      ]
+    },
+    "steps": [
+      { "title": "Read it", "text": "Read the whole claim before marking anything." },
+      { "title": "The claim", "text": "Underline exactly what is being asserted." },
+      { "title": "The overclaim", "text": "Ring the sweeping scope — this is what to narrow." }
+    ],
+    "feedForward": { "text": "Name the strength, then narrow the claim to one you can defend." }
+  }
+  </script>
+</context-pack>
+
+<script src="./context-pack.js"></script>

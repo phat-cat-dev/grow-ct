@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "id": "self-directed-learning",
+  "title": "Self-Directed Learning",
+  "uri": "https://grow.local/process/self-directed-learning",
+  "broader": "communication-reflection",
+  "process": "communication-reflection",
+  "pattern": "sequential-process",
+  "intent": "formative · Communication & Reflection (Applying) · click through the process",
+  "statement": "Diagnose your own knowledge gaps, find resources independently, and structure your own plan to close them.",
+  "advance": "click",
+  "stage": {
+    "type": "process"
+  },
+  "steps": [
+    {
+      "title": "Map what you know",
+      "text": "Lay out your current understanding honestly, including the fuzzy edges."
+    },
+    {
+      "title": "Name the gap",
+      "text": "Pinpoint what you need to learn and why it matters for the task ahead."
+    },
+    {
+      "title": "Find the right resources",
+      "text": "Choose credible, suitable sources — and judge them (see Source Evaluation)."
+    },
+    {
+      "title": "Make a learning plan",
+      "text": "Set concrete goals and a realistic sequence, not just an intention to study."
+    },
+    {
+      "title": "Check your progress",
+      "text": "Test yourself against the goal and adjust the plan as you learn."
+    }
+  ],
+  "feedForward": {
+    "badge": "Try it",
+    "text": "Write one gap you need to close this week, the resource you will use, and how you will know you have closed it."
+  },
+  "related": [
+    "reflective-practice",
+    "time-management"
+  ]
+}

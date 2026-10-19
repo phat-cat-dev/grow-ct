@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "id": "marking-feedback",
+  "title": "Marking & feedback",
+  "process": "marking-feedback",
+  "pattern": "inline-commentary",
+  "intent": "formative · pattern <code>inline-commentary</code> (palette/annotated) · serves <em>prose-with-inline-commentary</em>",
+  "statement": "A tutor marks a student paragraph. Watch the order an expert works in — read first, then the claim, the unsupported assertion, a light correction, the overclaim, the genuine strength, and finally feed-forward.",
+  "advance": "click",
+  "stage": {
+    "type": "annotated-prose",
+    "segments": [
+      { "text": "Solar power is " },
+      { "id": "claim", "text": "the best solution", "step": 1, "mark": { "kind": "underline", "color": "accent" } },
+      { "text": " to climate change. " },
+      { "id": "assert", "text": "Everyone knows", "step": 2, "mark": { "kind": "oval", "color": "neutral" }, "note": "Says who? Add a source." },
+      { "text": " fossil fuels are bad, and solar panels keep getting " },
+      { "id": "strength", "text": "cheaper", "step": 5, "mark": { "kind": "tick", "color": "positive" }, "note": "Good — concrete, relevant evidence." },
+      { "text": ". In 2010 solar was costly, but now " },
+      { "id": "its", "text": "its", "step": 3, "mark": { "kind": "strike", "color": "negative" }, "correction": "it’s" },
+      { "text": " far more affordable — which proves it will soon " },
+      { "id": "over", "text": "replace everything", "step": 4, "mark": { "kind": "oval", "color": "neutral" }, "note": "Overclaim — cheaper ≠ replaces everything." },
+      { "text": "." }
+    ]
+  },
+  "steps": [
+    { "title": "Read it through first", "text": "Before a single mark, read the whole piece for the writer’s intent. Marking is a response to meaning — not a spellcheck." },
+    { "title": "Find the claim", "text": "Underline the central claim so you both know what is being argued. Nothing is “wrong” yet — you are orienting attention." },
+    { "title": "Question unsupported assertions", "text": "Ring a claim that rests on nobody in particular and ask for a source in the margin. A question invites evidence rather than scolding." },
+    { "title": "Correct slips lightly", "text": "Show the fix for a mechanical error — strike it, write the correction above. Do not rewrite their work for them." },
+    { "title": "Challenge the leap in reasoning", "text": "Ring the overclaim and name the gap in logic. Push on the argument, not the person." },
+    { "title": "Credit what works", "text": "Tick the genuine strength and say why. Specific praise tells the writer what to keep — feedback is not only correction." },
+    { "title": "End with feed-forward", "text": "Close with the strength, then one or two specific, actionable next steps. Feed-forward is the part that changes the next draft." }
+  ],
+  "feedForward": {
+    "step": 6,
+    "badge": "Feed-forward",
+    "text": "You have a real strength in the cost trend. Two next steps: (1) replace “everyone knows” with a cited source; (2) soften “the best solution … replace everything” to a claim you can defend."
+  }
+}

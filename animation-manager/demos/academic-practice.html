@@ -1,0 +1,329 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Academic practice, step by step</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Kalam:wght@400;700&display=swap">
+<style>
+  :root {
+    --h: 202; --bg: hsl(var(--h) 30% 96%); --surface: hsl(var(--h) 24% 99%); --raised: hsl(var(--h) 20% 94%);
+    --ink: hsl(var(--h) 25% 16%); --soft: hsl(var(--h) 14% 40%); --line: hsl(var(--h) 18% 84%);
+    --accent: hsl(var(--h) 72% 42%); --c-positive: hsl(150 55% 38%); --c-neutral: hsl(40 75% 44%);
+    --c-comment: hsl(270 45% 52%); --c-negative: hsl(5 68% 50%); --pen: hsl(5 72% 52%);
+    --font-ui: system-ui, -apple-system, "Segoe UI", sans-serif;
+    --font-hand: "Caveat", "Segoe Script", cursive; --font-note: "Kalam", var(--font-ui);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: hsl(var(--h) 30% 9%); --surface: hsl(var(--h) 26% 13%); --raised: hsl(var(--h) 24% 17%);
+      --ink: hsl(var(--h) 20% 92%); --soft: hsl(var(--h) 14% 66%); --line: hsl(var(--h) 22% 24%);
+      --accent: hsl(var(--h) 70% 64%); --c-positive: hsl(150 55% 55%); --c-neutral: hsl(40 80% 58%);
+      --c-comment: hsl(270 55% 70%); --c-negative: hsl(5 75% 66%); --pen: hsl(5 80% 66%); }
+  }
+  /* semantic colour tokens the marks read, so every mark follows the theme */
+  .am-item { --am-c-accent: var(--accent); --am-c-positive: var(--c-positive); --am-c-neutral: var(--c-neutral);
+    --am-c-comment: var(--c-comment); --am-c-negative: var(--c-negative); --am-c-pen: var(--pen); }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 1.05rem/1.7 var(--font-ui); }
+  .wrap { max-width: 56rem; margin: auto; padding: 2rem 1.1rem 5rem; }
+  h1 { font-size: clamp(1.6rem, 4vw, 2.3rem); line-height: 1.15; margin: 0 0 .3rem; }
+  .lede { color: var(--soft); max-width: 44rem; }
+  .tabs { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1.4rem 0 .4rem; }
+  .tab { font: inherit; cursor: pointer; padding: .5rem .9rem; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); color: var(--ink); }
+  .tab[aria-selected="true"] { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
+  .intent { font: 600 .72rem/1.5 ui-monospace, monospace; letter-spacing: .05em; color: var(--soft); text-transform: uppercase; margin: .2rem 0 1rem; }
+  .intent code { background: var(--raised); padding: .1em .4em; border-radius: .3rem; text-transform: none; }
+
+  .stage { position: relative; background: var(--surface); border: 1px solid var(--line); border-radius: 1rem; padding: clamp(1.2rem, 3.5vw, 2.3rem); box-shadow: 0 24px 60px -48px #0009; min-height: 15rem; }
+  .markgrid { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) 13.5rem; gap: 1.4rem; align-items: start; }
+  .paper .prose { font-size: 1.18rem; line-height: 2.5; margin: 0; }
+  .paper .prose b { font-weight: 700; }
+  .rail { display: flex; flex-direction: column; gap: .8rem; padding-top: .3rem; }
+  .conn { position: absolute; inset: 0; pointer-events: none; overflow: visible; z-index: 3; }
+
+  /* reveal behaviours */
+  .fade { opacity: 0; transform: translateY(7px); transition: opacity .5s ease, transform .5s ease; }
+  .fade.vis { opacity: 1; transform: none; }
+  .ovl svg { opacity: 0; transition: opacity .4s ease; }
+  .ovl.vis svg { opacity: 1; }
+  .crow .stamp svg { opacity: 0; transition: opacity .4s ease; }
+  .crow.vis .stamp svg { opacity: 1; }
+  [data-step].draw .am-ink { animation: am-draw .8s ease both; }
+
+  /* ---- hand-drawn mark engine (from the animation-manager) ---- */
+  .am-ink { fill: none; stroke: currentColor; stroke-width: 3.5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 0; filter: url(#am-ink); }
+  @keyframes am-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+  .am-dot { fill: currentColor; transform-box: fill-box; transform-origin: center; filter: url(#am-ink); }
+  @keyframes am-dotpop { 0% { transform: scale(0); opacity: 0; } 70% { transform: scale(1.18); } 100% { transform: scale(1); opacity: 1; } }
+  [data-step].draw .am-dot { animation: am-dotpop .4s cubic-bezier(.3, 1.4, .5, 1) .42s both; }
+  .am-mk { position: relative; display: inline-block; white-space: nowrap; }
+  .am-mk svg { position: absolute; overflow: visible; pointer-events: none; color: inherit; }
+  .am-mk.pos-u svg { left: -4%; bottom: -.28em; width: 108%; height: .5em; }
+  .am-mk.pos-str svg { left: -4%; top: 42%; width: 108%; height: .4em; }
+  .am-mk.pos-ov svg { left: -12%; top: -32%; width: 124%; height: 168%; }
+  .am-glyph { color: var(--am-c-accent); }
+  .am-glyph svg, .stamp svg { width: 100%; height: 100%; display: block; overflow: visible; }
+  .corrw { position: relative; display: inline-block; }
+  .corr-over { position: absolute; left: 50%; bottom: 112%; transform: translateX(-50%) rotate(-4deg); font-family: var(--font-hand); font-size: 1.25rem; color: var(--pen); white-space: nowrap; }
+
+  /* margin notes */
+  .note { font-family: var(--font-hand); font-size: 1.3rem; line-height: 1.15; color: var(--pen); background: color-mix(in srgb, var(--pen) 7%, var(--surface)); border: 1px solid color-mix(in srgb, var(--pen) 28%, var(--line)); border-radius: .5rem; padding: .4rem .6rem; transform: rotate(-1deg); }
+  .ff { margin-top: 1.4rem; padding: .9rem 1.1rem; background: color-mix(in srgb, var(--accent) 8%, var(--surface)); border-left: 4px solid var(--accent); border-radius: .5rem; font-size: 1rem; line-height: 1.6; }
+  .ff-badge { display: inline-block; font: 700 .68rem/1 ui-monospace, monospace; letter-spacing: .07em; text-transform: uppercase; color: var(--accent); margin-right: .5rem; }
+
+  /* CRAAP */
+  .srccard { background: var(--raised); border: 1px solid var(--line); border-radius: .7rem; padding: 1rem 1.2rem; margin-bottom: 1.2rem; }
+  .src-k { font: 700 .68rem/1 ui-monospace, monospace; letter-spacing: .06em; text-transform: uppercase; color: var(--soft); }
+  .src-t { font-size: 1.25rem; font-weight: 700; margin: .3rem 0; }
+  .src-m { color: var(--soft); font-size: .92rem; font-family: ui-monospace, monospace; }
+  .craap { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: .6rem; }
+  .crow { display: grid; grid-template-columns: 2.4rem 1fr 2.6rem; gap: .8rem; align-items: center; padding: .7rem .9rem; background: var(--surface); border: 1px solid var(--line); border-radius: .6rem; }
+  .cl { font: 800 1.5rem/1 var(--font-ui); color: var(--accent); text-align: center; }
+  .cbody b { font-weight: 700; }
+  .cv { color: var(--soft); font-size: .95rem; line-height: 1.5; }
+  .stamp { inline-size: 2.4rem; block-size: 2.6rem; }
+
+  /* referencing */
+  .rulebox { background: var(--raised); border-radius: .6rem; padding: .8rem 1rem; color: var(--soft); margin-bottom: 1.3rem; }
+  .cite { font-size: clamp(1.2rem, 3.2vw, 1.7rem); line-height: 2.1; }
+  .cite .part { border-radius: .35rem; padding: 0 .05em; transition: background .3s ease; }
+  .cite .part.cur { background: color-mix(in srgb, var(--accent) 20%, transparent); }
+  .cite .url { font-family: ui-monospace, monospace; font-size: .85em; word-break: break-all; }
+
+  /* caption + controls */
+  .caption { margin: 1.2rem 0 .3rem; min-height: 4.2rem; }
+  .caption h2 { font-size: 1.15rem; margin: 0 0 .25rem; }
+  .caption p { margin: 0; color: var(--soft); max-width: 48rem; }
+  .controls { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; margin-top: .6rem; }
+  button.ctl { font: inherit; cursor: pointer; padding: .5rem .9rem; border: 1px solid var(--line); border-radius: .5rem; background: var(--surface); color: var(--ink); }
+  button.ctl.primary { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
+  button.ctl:hover:not(:disabled) { border-color: var(--accent); } button.ctl:disabled { opacity: .45; cursor: default; }
+  .dots { display: flex; gap: .4rem; margin-left: auto; }
+  .dot { inline-size: .7rem; block-size: .7rem; border-radius: 50%; border: 0; padding: 0; background: var(--line); cursor: pointer; }
+  .dot[aria-current="true"] { background: var(--accent); transform: scale(1.25); }
+  :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+  footer { margin-top: 2rem; color: var(--soft); font-size: .9rem; border-top: 1px solid var(--line); padding-top: 1rem; }
+  footer code { background: var(--raised); padding: .1em .4em; border-radius: .3rem; }
+  @media (max-width: 640px) { .markgrid { grid-template-columns: 1fr; } .conn { display: none; } .note { transform: none; } }
+  @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="am-ink" x="-20%" y="-20%" width="140%" height="140%"><feTurbulence type="fractalNoise" baseFrequency="0.016" numOctaves="2" seed="4" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="2"/></filter></svg>
+
+<div class="wrap">
+  <h1>Academic practice, one move at a time</h1>
+  <p class="lede">The same three ideas run through each walkthrough: <b>steps</b> enforce the order a process depends on, a <b>fade</b> hands your attention to what changed, and a mark that <b>draws itself on</b> is a tutor's hand showing you where to look. Together they make an expert's invisible process visible — and repeatable.</p>
+
+  <div class="tabs" role="tablist" aria-label="Walkthroughs">
+    <button class="tab" role="tab" data-walk="marking" aria-selected="true">Marking &amp; feedback</button>
+    <button class="tab" role="tab" data-walk="craap" aria-selected="false">Evaluating a source (CRAAP)</button>
+    <button class="tab" role="tab" data-walk="referencing" aria-selected="false">Building a reference</button>
+  </div>
+  <p class="intent" data-intent></p>
+
+  <div class="stage" id="stage" aria-live="polite"></div>
+
+  <div class="caption"><h2 data-cap-title></h2><p data-cap-text></p></div>
+  <div class="controls">
+    <button class="ctl" data-act="back">‹ Back</button>
+    <button class="ctl primary" data-act="next">Next ›</button>
+    <button class="ctl" data-act="play">▶ Auto-play</button>
+    <button class="ctl" data-act="replay">↻ Replay</button>
+    <div class="dots" data-dots role="group" aria-label="Steps"></div>
+  </div>
+
+  <footer>
+    In the palette this is the <code>palette/annotated</code> component realising <code>inline-commentary</code> /
+    <code>evaluate-versions</code> (serving <em>prose-with-inline-commentary</em> and <em>exemplar-analysis</em>).
+    The fades and the step sequence <em>are</em> the teaching — they show the process, not just the result. Marks reuse the
+    animation-manager's draw-on engine and its semantic colour roles, so every mark follows the page theme (try dark mode).
+  </footer>
+</div>
+
+<script>
+(function () {
+  const $ = s => document.querySelector(s);
+  const stage = $('#stage');
+  const oval = 'M152 14 C 60 2,10 20,18 44 C 26 68,140 70,182 52 C 214 40,204 15,150 11';
+  const tick = '<svg viewBox="0 0 48 48"><path class="am-ink" pathLength="1" style="stroke-width:6" d="M9 26 C 13 31,17 35,20 38 C 28 26,36 17,43 9"/></svg>';
+  const cross = '<svg viewBox="0 0 48 48"><path class="am-ink" pathLength="1" style="--am-d:0s;stroke-width:6" d="M12 12 C 20 20,28 28,37 37"/><path class="am-ink" pathLength="1" style="--am-d:.2s;stroke-width:6" d="M37 12 C 28 20,20 28,12 37"/></svg>';
+  const bang = '<svg viewBox="0 0 52 58"><path class="am-ink" pathLength="1" style="stroke-width:7" d="M27 10 C 26 19,26 28,25 37"/><circle class="am-dot" cx="25" cy="47" r="4.4"/></svg>';
+  const query = '<svg viewBox="0 0 52 58"><path class="am-ink" pathLength="1" style="stroke-width:6" d="M13 19 C 12 7,40 6,40 19 C 40 29,26 28,26 38"/><circle class="am-dot" cx="26" cy="48" r="4.2"/></svg>';
+  const u = '<svg viewBox="0 0 200 12" preserveAspectRatio="none"><path class="am-ink" pathLength="1" d="M4 7 C 60 1,120 11,196 6"/></svg>';
+  const strike = '<svg viewBox="0 0 200 14" preserveAspectRatio="none"><path class="am-ink" pathLength="1" d="M4 8 C 60 3,120 12,196 7"/></svg>';
+  const ovalSvg = '<svg viewBox="0 0 200 70" preserveAspectRatio="none"><path class="am-ink" pathLength="1" style="stroke-width:3" d="' + oval + '"/></svg>';
+  const stamp = (role, svg) => '<span class="stamp am-item" style="color:var(--am-c-' + role + ')">' + svg + '</span>';
+  const glyph = (role, svg, em) => '<span class="am-item am-glyph ovl" data-step="REPL" style="color:var(--am-c-' + role + ');display:inline-block;width:' + em + ';height:' + em + ';vertical-align:-.22em">' + svg + '</span>';
+
+  const WALKS = {
+    marking: {
+      intent: 'intent: formative · pattern <code>inline-commentary</code> · a tutor marks a student paragraph',
+      stage:
+        '<div class="markgrid">' +
+          '<div class="paper"><p class="prose">' +
+            'Solar power is <span class="am-item am-mk pos-u ovl" data-step="1" style="color:var(--am-c-accent)">the best solution' + u + '</span> to climate change. ' +
+            '<span class="am-item am-mk pos-ov ovl" id="aAssert" data-step="2" style="color:var(--am-c-neutral)">Everyone knows' + ovalSvg + '</span> ' +
+            'fossil fuels are bad, and solar panels keep getting <b id="aStrength">cheaper</b>' +
+            '<span class="am-item am-glyph ovl" data-step="5" style="color:var(--am-c-positive);display:inline-block;width:1.15em;height:1.15em;vertical-align:-.22em">' + tick + '</span>. ' +
+            'In 2010 solar was costly, but now ' +
+            '<span class="corrw"><span class="am-item am-mk pos-str ovl" data-step="3" style="color:var(--am-c-negative)">its' + strike + '</span><span class="corr-over am-item fade" data-step="3">it’s</span></span> ' +
+            'far more affordable — which proves it will soon ' +
+            '<span class="am-item am-mk pos-ov ovl" id="aOver" data-step="4" style="color:var(--am-c-neutral)">replace everything' + ovalSvg + '</span>.' +
+          '</p>' +
+          '<div class="ff fade" data-step="6"><span class="ff-badge">Feed-forward</span>You have a real strength in the cost trend. Two next steps: (1) replace “everyone knows” with a cited source; (2) soften “the best solution … replace everything” to a claim you can defend.</div>' +
+          '</div>' +
+          '<div class="rail">' +
+            '<div class="note fade" data-step="2" data-anchor="#aAssert">Says who? Add a source.</div>' +
+            '<div class="note fade" data-step="4" data-anchor="#aOver">Overclaim — cheaper ≠ replaces everything.</div>' +
+            '<div class="note fade" data-step="5" data-anchor="#aStrength">Good — concrete, relevant evidence.</div>' +
+          '</div>' +
+          '<svg class="conn" aria-hidden="true"></svg>' +
+        '</div>',
+      steps: [
+        ['Read it through first', 'Before a single mark, read the whole piece for the writer’s intent. Marking is a response to meaning — not a spellcheck.'],
+        ['Find the claim', 'Underline the central claim so you both know what is being argued. Nothing is “wrong” yet — you are orienting attention.'],
+        ['Question unsupported assertions', 'Ring a claim that rests on nobody in particular and ask for a source in the margin. A question invites evidence rather than scolding.'],
+        ['Correct slips lightly', 'Show the fix for a mechanical error — strike it, write the correction above. Do not rewrite their work for them.'],
+        ['Challenge the leap in reasoning', 'Ring the overclaim and name the gap in logic. Push on the argument, not the person.'],
+        ['Credit what works', 'Tick the genuine strength and say why. Specific praise tells the writer what to keep — feedback is not only correction.'],
+        ['End with feed-forward', 'Close with the strength, then one or two specific, actionable next steps. Feed-forward — what to do next — is the part that changes the next draft.'],
+      ],
+    },
+
+    craap: {
+      intent: 'intent: formative · pattern <code>spot-the-error</code> / source-evaluation · judge one lens at a time',
+      stage:
+        '<div class="srccard fade" data-step="0">' +
+          '<div class="src-k">Source under review</div>' +
+          '<div class="src-t">“Why Solar Will Power Everything by 2027”</div>' +
+          '<div class="src-m">greenfuturenow.blog · no author listed · posted 2019 · no citations</div>' +
+        '</div>' +
+        '<ul class="craap">' +
+          crow(1, 'C', 'Currency', 'recent enough?', 'A 2019 post whose 2027 forecast is already overtaken.', 'neutral', bang) +
+          crow(2, 'R', 'Relevance', 'the right depth?', 'On topic, but a shallow overview — relevant yet thin.', 'comment', query) +
+          crow(3, 'A', 'Authority', 'who says so?', 'No named author; a self-published blog. Authority fails.', 'negative', cross) +
+          crow(4, 'A', 'Accuracy', 'can you check it?', 'No citations and sweeping claims — nothing is verifiable.', 'negative', cross) +
+          crow(5, 'P', 'Purpose', 'why was it made?', 'To persuade and win clicks, not to inform — read the bias.', 'neutral', bang) +
+        '</ul>' +
+        '<div class="ff fade" data-step="6"><span class="ff-badge">Verdict</span>Relevant but not reliable — it fails Authority and Accuracy. Use it only to illustrate hype, and corroborate every claim with peer-reviewed or official data.</div>',
+      steps: [
+        ['Meet the source', 'You are deciding whether to cite this. Work the CRAAP test — Currency, Relevance, Authority, Accuracy, Purpose — one lens at a time.'],
+        ['C — Currency', 'How recent is it, and does recency matter here? For a fast-moving topic, a dated, already-overtaken forecast is a warning.'],
+        ['R — Relevance', 'Does it address your question at the right depth? A source can be on topic yet too shallow to use.'],
+        ['A — Authority', 'Who wrote it, and what makes them credible? No named author on a self-published blog is a serious problem.'],
+        ['A — Accuracy', 'Is it supported and verifiable? No citations means you cannot check a single claim.'],
+        ['P — Purpose', 'Why was it made — to inform, or to persuade and sell? Spot the bias before you trust it.'],
+        ['Reach a verdict', 'Weigh the five lenses together. Relevant is not the same as reliable: this one fails where it matters most.'],
+      ],
+    },
+
+    referencing: {
+      intent: 'intent: formative · pattern <code>sequential-process</code> · a Harvard web reference, built in order',
+      stage:
+        '<div class="rulebox fade" data-step="0">A reference has five jobs: <b>who</b> (author), <b>when</b> (year), <b>what</b> (title), <b>where</b> (source) and, for the web, <b>when you read it</b> (access date).</div>' +
+        '<div class="cite">' +
+          '<span class="part fade" data-step="1">Smith, J.</span>' +
+          '<span class="part fade" data-step="2"> (2021)</span>' +
+          '<span class="part fade" data-step="3"> <i>Renewable futures.</i></span>' +
+          '<span class="part fade" data-step="4"> Available at: <span class="url">https://example.org/renewables</span></span>' +
+          '<span class="part fade" data-step="5"> (Accessed: 3 October 2025).</span>' +
+          '<span class="am-item am-glyph ovl" data-step="6" style="color:var(--am-c-positive);display:inline-block;width:1.4em;height:1.4em;vertical-align:-.28em;margin-left:.4em">' + tick + '</span>' +
+        '</div>',
+      steps: [
+        ['What a reference must do', 'A reference lets a reader find your exact source. Build it in order, each element doing one job — here, a website in Harvard style.'],
+        ['Author — who', 'Surname, then initial: “Smith, J.” With no author, you would use the organisation instead.'],
+        ['Year — when', 'The date of publication, in round brackets: “(2021)”. With no date, you would write “(no date)”.'],
+        ['Title — what', 'The title of the work, italicised for a standalone source: “Renewable futures.”'],
+        ['Source — where', 'For a website, the full address after “Available at:” so the reader can go straight to it.'],
+        ['Access date — when you read it', 'Web pages change, so record the date you saw it: “(Accessed: 3 October 2025).”'],
+        ['A complete reference', 'Every element, in order, punctuated consistently — a reader can now trace the source exactly. The same discipline underlies every citation style.'],
+      ],
+    },
+  };
+
+  function crow(n, letter, name, q, verdict, role, svg) {
+    return '<li class="crow fade" data-step="' + n + '"><span class="cl">' + letter + '</span>' +
+      '<div class="cbody"><b>' + name + '</b> — ' + q + '<div class="cv">' + verdict + '</div></div>' +
+      stamp(role, svg) + '</li>';
+  }
+
+  let walk = 'marking', i = 0, playing = null, els = [];
+
+  function mount(name) {
+    walk = name; i = 0;
+    document.querySelectorAll('.tab').forEach(t => t.setAttribute('aria-selected', String(t.dataset.walk === name)));
+    $('[data-intent]').innerHTML = WALKS[name].intent;
+    stage.innerHTML = WALKS[name].stage;
+    els = [...stage.querySelectorAll('[data-step]')];
+    buildDots();
+    goTo(0);
+  }
+  function maxStep() { return WALKS[walk].steps.length - 1; }
+
+  function goTo(n) {
+    i = Math.max(0, Math.min(maxStep(), n));
+    els.forEach(el => {
+      const d = Number(el.dataset.step);
+      el.classList.toggle('vis', d <= i);
+      el.classList.toggle('draw', d === i);
+      if (el.classList.contains('part')) el.classList.toggle('cur', d === i);
+    });
+    const [title, txt] = WALKS[walk].steps[i];
+    $('[data-cap-title]').textContent = title;
+    $('[data-cap-text]').textContent = txt;
+    document.querySelectorAll('.dot').forEach((dot, k) => dot.setAttribute('aria-current', String(k === i)));
+    $('[data-act="back"]').disabled = i === 0;
+    $('[data-act="next"]').disabled = i === maxStep();
+    layoutConn();
+  }
+
+  function layoutConn() {
+    const grid = stage.querySelector('.markgrid'); if (!grid) return;
+    const conn = grid.querySelector('.conn'); if (!conn) return;
+    const gb = grid.getBoundingClientRect();
+    let paths = '';
+    grid.querySelectorAll('.note[data-anchor]').forEach(note => {
+      if (!note.classList.contains('vis')) return;
+      const a = grid.querySelector(note.dataset.anchor); if (!a) return;
+      const ar = a.getBoundingClientRect(), nr = note.getBoundingClientRect();
+      const x1 = ar.right - gb.left, y1 = ar.top + ar.height / 2 - gb.top;
+      const x2 = nr.left - gb.left + 2, y2 = nr.top + nr.height / 2 - gb.top;
+      const mx = (x1 + x2) / 2;
+      paths += '<path d="M' + x1 + ' ' + y1 + ' C ' + mx + ' ' + y1 + ', ' + mx + ' ' + y2 + ', ' + x2 + ' ' + y2 + '" fill="none" stroke="var(--pen)" stroke-opacity=".5" stroke-width="1.5" stroke-dasharray="2 5"/>';
+    });
+    conn.setAttribute('viewBox', '0 0 ' + gb.width + ' ' + gb.height);
+    conn.setAttribute('width', gb.width); conn.setAttribute('height', gb.height);
+    conn.innerHTML = paths;
+  }
+
+  function buildDots() {
+    $('[data-dots]').innerHTML = WALKS[walk].steps.map((_, k) => '<button class="dot" data-dot="' + k + '" aria-label="Step ' + (k + 1) + '"></button>').join('');
+  }
+  function stopPlay() { if (playing) { clearInterval(playing); playing = null; $('[data-act="play"]').textContent = '▶ Auto-play'; } }
+  function togglePlay() {
+    if (playing) return stopPlay();
+    if (i === maxStep()) goTo(0);
+    $('[data-act="play"]').textContent = '❙❙ Pause';
+    playing = setInterval(() => { if (i >= maxStep()) return stopPlay(); goTo(i + 1); }, 2800);
+  }
+
+  document.querySelector('.tabs').addEventListener('click', e => { const t = e.target.closest('[data-walk]'); if (t) { stopPlay(); mount(t.dataset.walk); } });
+  document.querySelector('.controls').addEventListener('click', e => {
+    const b = e.target.closest('button'); if (!b) return;
+    if (b.dataset.dot != null) { stopPlay(); return goTo(Number(b.dataset.dot)); }
+    switch (b.dataset.act) {
+      case 'back': stopPlay(); goTo(i - 1); break;
+      case 'next': stopPlay(); goTo(i + 1); break;
+      case 'replay': stopPlay(); goTo(0); break;
+      case 'play': togglePlay(); break;
+    }
+  });
+  document.addEventListener('keydown', e => { if (e.key === 'ArrowRight') { stopPlay(); goTo(i + 1); } else if (e.key === 'ArrowLeft') { stopPlay(); goTo(i - 1); } });
+  window.addEventListener('resize', layoutConn);
+
+  mount('marking');
+})();
+</script>
+</body>
+</html>

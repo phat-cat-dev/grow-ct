@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "id": "literature-search",
+  "title": "Literature Search Strategy",
+  "uri": "https://grow.local/process/literature-search",
+  "broader": "research-retrieval",
+  "process": "research-retrieval",
+  "pattern": "sequential-process",
+  "intent": "formative · Research & Retrieval (Doing) · click through the process",
+  "statement": "Find the right sources efficiently and ethically — by searching deliberately, not by scrolling.",
+  "advance": "click",
+  "stage": {
+    "type": "process"
+  },
+  "steps": [
+    {
+      "title": "Break the question into concepts",
+      "text": "Pull out the two or three core ideas your search must combine."
+    },
+    {
+      "title": "Build search strings",
+      "text": "Combine synonyms with OR, concepts with AND, and exclude noise with NOT."
+    },
+    {
+      "title": "Search the right databases",
+      "text": "Choose subject databases and scholarly indexes, not just a general web search."
+    },
+    {
+      "title": "Screen and refine",
+      "text": "Scan titles and abstracts, then tighten keywords and filters based on what you find."
+    },
+    {
+      "title": "Track and cite what you keep",
+      "text": "Record the searches and save references as you go, so the work is reproducible."
+    }
+  ],
+  "feedForward": {
+    "badge": "Try it",
+    "text": "Write one Boolean string for your topic using AND, OR and NOT, then name the database you would run it in."
+  },
+  "altLabel": "Boolean search mastery",
+  "related": [
+    "literature-reviewing",
+    "source-evaluation"
+  ]
+}

@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Academic process activities</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Kalam:wght@400;700&display=swap">
+<link rel="stylesheet" href="../../assets/components/context-pack/context-pack.css">
+<style>
+  :root {
+    --h: 202; --page-bg: hsl(var(--h) 30% 96%); --surface-1: hsl(var(--h) 24% 99%); --surface-2: hsl(var(--h) 20% 94%);
+    --ink: hsl(var(--h) 25% 16%); --ink-soft: hsl(var(--h) 14% 42%); --line: hsl(var(--h) 18% 84%);
+    --accent: hsl(var(--h) 72% 42%); --c-positive: hsl(150 55% 38%); --c-neutral: hsl(40 75% 44%);
+    --c-comment: hsl(270 45% 52%); --c-negative: hsl(5 68% 50%); --pen: hsl(5 72% 52%);
+    --font-ui: system-ui, -apple-system, "Segoe UI", sans-serif; --font-hand: "Caveat", cursive;
+  }
+  @media (prefers-color-scheme: dark) { :root {
+    --page-bg: hsl(var(--h) 30% 9%); --surface-1: hsl(var(--h) 26% 13%); --surface-2: hsl(var(--h) 24% 17%);
+    --ink: hsl(var(--h) 20% 92%); --ink-soft: hsl(var(--h) 14% 66%); --line: hsl(var(--h) 22% 24%);
+    --accent: hsl(var(--h) 70% 64%); --c-positive: hsl(150 55% 55%); --c-neutral: hsl(40 80% 58%);
+    --c-comment: hsl(270 55% 70%); --c-negative: hsl(5 75% 66%); --pen: hsl(5 80% 66%); } }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--page-bg); color: var(--ink); font: 1.05rem/1.6 var(--font-ui); }
+  .wrap { max-width: 64rem; margin: auto; padding: 2rem 1.1rem 5rem; }
+  h1 { font-size: clamp(1.6rem, 4vw, 2.3rem); margin: 0 0 .3rem; }
+  .lede { color: var(--ink-soft); max-width: 48rem; }
+  h2.sec { font-size: 1.15rem; margin: 2.2rem 0 .2rem; }
+  .sub { color: var(--ink-soft); font-size: .9rem; margin: 0 0 .8rem; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr)); gap: .9rem; }
+  .card { background: var(--surface-1); border: 1px solid var(--line); border-radius: .7rem; padding: 1rem 1.1rem; display: flex; flex-direction: column; gap: .3rem; }
+  .card h3 { margin: 0; font-size: 1.08rem; }
+  .card .alt { color: var(--ink-soft); font-size: .85rem; min-height: 1.1rem; }
+  .card context-pack { margin-top: .5rem; }
+  .err { color: var(--c-negative); }
+  footer { margin-top: 2.5rem; color: var(--ink-soft); font-size: .9rem; border-top: 1px solid var(--line); padding-top: 1rem; }
+  code { background: var(--surface-2); padding: .1em .4em; border-radius: .3rem; font-size: .9em; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Academic process activities</h1>
+  <p class="lede">The 20 Universal Undergraduate Academic Processes, each built as a <b>stepped activity</b> —
+    a goal, then the expert's moves revealed one click at a time. Model and documentation in
+    <code>.dev/docs/academic-processes.md</code>.</p>
+
+  <div id="groups"></div>
+
+  <h2 class="sec">Worked examples — the process on a real artefact</h2>
+  <p class="sub">Source Evaluation three ways on one flawed source, plus marking and referencing.</p>
+  <div class="cards" id="worked"></div>
+
+  <footer>
+    Each card launches a <code>&lt;context-pack&gt;</code> custom element in a modal. Served over <code>http://</code>
+    the packs load by fetch (<code>python -m http.server</code> from the repo root).
+  </footer>
+</div>
+
+<script src="../../assets/components/context-pack/context-pack.js"></script>
+<script>
+(async function () {
+  const GROUP_LABEL = {
+    'intellectual-depth': 'A · Intellectual Depth (Thinking)',
+    'research-retrieval': 'B · Research & Retrieval (Doing)',
+    'communication-reflection': 'C · Communication & Reflection (Applying)',
+  };
+  function card(title, alt, src, heading) {
+    const el = document.createElement('div');
+    el.className = 'card';
+    el.innerHTML = '<h3></h3><div class="alt"></div>';
+    el.querySelector('h3').textContent = title;
+    el.querySelector('.alt').textContent = alt || '';
+    const cp = document.createElement('context-pack');
+    cp.setAttribute('launch', 'modal');
+    cp.setAttribute('src', src);
+    cp.setAttribute('heading', heading || title);
+    cp.setAttribute('trigger-label', 'Launch ▶');
+    el.appendChild(cp);
+    return el;
+  }
+  try {
+    const man = await (await fetch('./packs/processes/manifest.json')).json();
+    const groups = document.getElementById('groups');
+    const byGroup = {};
+    man.processes.forEach(p => { (byGroup[p.group] = byGroup[p.group] || []).push(p); });
+    for (const g of Object.keys(GROUP_LABEL)) {
+      const h = document.createElement('h2'); h.className = 'sec'; h.textContent = GROUP_LABEL[g]; groups.appendChild(h);
+      const cards = document.createElement('div'); cards.className = 'cards';
+      (byGroup[g] || []).forEach(p => cards.appendChild(card(p.title, p.altLabel, './packs/processes/' + p.id + '.json')));
+      groups.appendChild(cards);
+    }
+  } catch (e) {
+    document.getElementById('groups').innerHTML = '<p class="err">Could not load the manifest — serve over http:// from the repo root.</p>';
+  }
+  const worked = document.getElementById('worked');
+  [
+    ['Evaluating a source (CRAAP)', 'Currency · Relevance · Authority · Accuracy · Purpose', './packs/craap.json'],
+    ['Evaluating a source (RADAR)', 'Relevance · Authority · Date · Appearance · Reason', './packs/radar.json'],
+    ['Evaluating a source (ROBOT)', 'Reliability · Objective · Bias · Ownership · Type', './packs/robot.json'],
+    ['Marking & feedback', 'inline annotation of a student paragraph', './packs/marking-feedback.json'],
+    ['Building a reference', 'assembling a citation element by element', './packs/referencing.json'],
+  ].forEach(([t, a, s]) => worked.appendChild(card(t, a, s)));
+})();
+</script>
+</body>
+</html>

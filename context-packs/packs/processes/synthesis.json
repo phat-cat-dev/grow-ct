@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "id": "synthesis",
+  "title": "Synthesis of Diverse Fields",
+  "uri": "https://grow.local/process/synthesis",
+  "broader": "communication-reflection",
+  "process": "communication-reflection",
+  "pattern": "sequential-process",
+  "intent": "formative · Communication & Reflection (Applying) · click through the process",
+  "statement": "Connect concepts from different fields to build a novel understanding or solution neither field reaches alone.",
+  "advance": "click",
+  "stage": {
+    "type": "process"
+  },
+  "steps": [
+    {
+      "title": "Identify two domains",
+      "text": "Name the two distinct fields you are bringing together (Domain A and Domain B)."
+    },
+    {
+      "title": "Find the bridge variable",
+      "text": "Locate the common factor they share — optimisation, feedback, selection, scarcity."
+    },
+    {
+      "title": "Map A onto B",
+      "text": "Carry the core concepts of one domain into the framework of the other through that bridge."
+    },
+    {
+      "title": "Generate novel hypotheses",
+      "text": "Ask what the cross-over predicts that neither field alone would suggest."
+    },
+    {
+      "title": "Test the fit",
+      "text": "Check where the analogy holds and where it breaks — the break is often the insight."
+    }
+  ],
+  "feedForward": {
+    "badge": "Try it",
+    "text": "Name two fields relevant to your topic and the one bridge variable between them, then one question the pairing raises."
+  },
+  "altLabel": "Interdisciplinary synthesis",
+  "related": [
+    "literature-reviewing",
+    "critical-analysis"
+  ]
+}

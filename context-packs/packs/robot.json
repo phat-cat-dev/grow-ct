@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "id": "robot",
+  "title": "Evaluating a source (ROBOT)",
+  "process": "source-evaluation",
+  "pattern": "spot-the-error",
+  "uri": "https://grow.local/process/source-evaluation#robot",
+  "altLabel": "Reliability · Objective · Bias · Ownership · Type",
+  "related": ["craap", "radar"],
+  "intent": "formative · pattern <code>spot-the-error</code> / source-evaluation · a media-literacy lens",
+  "statement": "The same source through a misinformation lens. Work ROBOT — Reliability, Objective, Bias, Ownership, Type — one check at a time, and stamp a verdict on each.",
+  "advance": "click",
+  "stage": {
+    "type": "checklist",
+    "source": {
+      "kicker": "Source under review",
+      "title": "“Why Solar Will Power Everything by 2027”",
+      "meta": "greenfuturenow.blog · no author listed · posted 2019 · no citations"
+    },
+    "items": [
+      { "letter": "R", "label": "Reliability", "question": "evidence you can check?", "verdict": "Sweeping claims, no citations — nothing here is verifiable.", "mark": { "kind": "cross", "color": "negative" }, "step": 1 },
+      { "letter": "O", "label": "Objective", "question": "what is it trying to do?", "verdict": "To convince you solar wins by 2027 — a persuasive goal, not a neutral one.", "mark": { "kind": "exclaim", "color": "neutral" }, "step": 2 },
+      { "letter": "B", "label": "Bias", "question": "whose side is it on?", "verdict": "One-sided boosterism — no trade-offs, costs or counter-evidence.", "mark": { "kind": "exclaim", "color": "neutral" }, "step": 3 },
+      { "letter": "O", "label": "Ownership", "question": "who publishes / funds it?", "verdict": "A self-published advocacy blog — no institution or editor stands behind it.", "mark": { "kind": "cross", "color": "negative" }, "step": 4 },
+      { "letter": "T", "label": "Type", "question": "what kind of source?", "verdict": "Opinion and advocacy dressed as analysis — not reporting or scholarship.", "mark": { "kind": "question", "color": "comment" }, "step": 5 }
+    ]
+  },
+  "steps": [
+    { "title": "Meet the source", "text": "Before judging, see what you are dealing with. Work the five ROBOT lenses in order." },
+    { "title": "R — Reliability", "text": "Can the claims be checked against evidence? No citations means you are taking it on faith." },
+    { "title": "O — Objective", "text": "What is the piece trying to achieve? A persuasive objective colours everything it selects." },
+    { "title": "B — Bias", "text": "Whose interests does it serve, and what does it leave out? One-sided framing is the tell." },
+    { "title": "O — Ownership", "text": "Who owns, funds or publishes it? An anonymous advocacy site has no accountability." },
+    { "title": "T — Type", "text": "Is it news, scholarship, opinion, advertising or satire? Mistaking the type misreads its authority." },
+    { "title": "Reach a verdict", "text": "Weigh the five together. ROBOT is built for spotting persuasion and bias — and this source is full of both." }
+  ],
+  "feedForward": {
+    "step": 6,
+    "badge": "Verdict",
+    "text": "Unreliable and non-neutral — advocacy, not analysis. Treat it as evidence of hype, not of fact, and replace it with accountable, citable sources."
+  }
+}

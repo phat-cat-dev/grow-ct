@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "id": "academic-writing",
+  "title": "Academic Writing",
+  "uri": "https://grow.local/process/academic-writing",
+  "broader": "communication-reflection",
+  "process": "communication-reflection",
+  "pattern": "sequential-process",
+  "intent": "formative · Communication & Reflection (Applying) · click through the process",
+  "statement": "Build a persuasive paper as a whole — from a clear thesis through a structured argument to a defensible conclusion.",
+  "advance": "click",
+  "stage": {
+    "type": "process"
+  },
+  "steps": [
+    {
+      "title": "Frame the question",
+      "text": "Open with the problem and why it matters, so the reader knows the stakes."
+    },
+    {
+      "title": "State your thesis",
+      "text": "Put your central claim up front — the one line the whole paper defends."
+    },
+    {
+      "title": "Structure the argument",
+      "text": "Order your points so each paragraph earns the next; one idea per paragraph."
+    },
+    {
+      "title": "Draft with evidence",
+      "text": "Support every claim, and make the link between evidence and point explicit."
+    },
+    {
+      "title": "Revise for the reader",
+      "text": "Cut what does not serve the thesis; fix the joins so the argument flows."
+    }
+  ],
+  "feedForward": {
+    "badge": "Try it",
+    "text": "Write your thesis in one sentence, then list the paragraph topics in the order that best builds to it."
+  },
+  "altLabel": "Structuring an Argument",
+  "related": [
+    "argument-mapping",
+    "critical-analysis"
+  ]
+}

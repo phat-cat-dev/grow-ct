@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Context packs</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Kalam:wght@400;700&display=swap">
+<link rel="stylesheet" href="./context-pack.css">
+<style>
+  :root {
+    --h: 202; --page-bg: hsl(var(--h) 30% 96%); --surface-1: hsl(var(--h) 24% 99%); --surface-2: hsl(var(--h) 20% 94%);
+    --ink: hsl(var(--h) 25% 16%); --ink-soft: hsl(var(--h) 14% 42%); --line: hsl(var(--h) 18% 84%);
+    --accent: hsl(var(--h) 72% 42%); --c-positive: hsl(150 55% 38%); --c-neutral: hsl(40 75% 44%);
+    --c-comment: hsl(270 45% 52%); --c-negative: hsl(5 68% 50%); --pen: hsl(5 72% 52%);
+    --font-ui: system-ui, -apple-system, "Segoe UI", sans-serif; --font-hand: "Caveat", cursive;
+  }
+  @media (prefers-color-scheme: dark) { :root {
+    --page-bg: hsl(var(--h) 30% 9%); --surface-1: hsl(var(--h) 26% 13%); --surface-2: hsl(var(--h) 24% 17%);
+    --ink: hsl(var(--h) 20% 92%); --ink-soft: hsl(var(--h) 14% 66%); --line: hsl(var(--h) 22% 24%);
+    --accent: hsl(var(--h) 70% 64%); --c-positive: hsl(150 55% 55%); --c-neutral: hsl(40 80% 58%);
+    --c-comment: hsl(270 55% 70%); --c-negative: hsl(5 75% 66%); --pen: hsl(5 80% 66%); } }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--page-bg); color: var(--ink); font: 1.05rem/1.65 var(--font-ui); }
+  .wrap { max-width: 60rem; margin: auto; padding: 2rem 1.1rem 5rem; }
+  h1 { font-size: clamp(1.6rem, 4vw, 2.3rem); margin: 0 0 .3rem; }
+  .lede { color: var(--ink-soft); max-width: 46rem; }
+  h2.sec { font-size: 1.2rem; margin: 2rem 0 .6rem; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr)); gap: 1rem; }
+  .card { background: var(--surface-1); border: 1px solid var(--line); border-radius: .8rem; padding: 1.1rem 1.2rem; }
+  .card h3 { margin: 0 0 .25rem; font-size: 1.15rem; }
+  .card .meta { color: var(--ink-soft); font-size: .9rem; min-height: 2.6rem; }
+  .card .actions { display: flex; gap: .5rem; margin-top: .8rem; flex-wrap: wrap; }
+  button.go { font: inherit; cursor: pointer; padding: .5rem .85rem; border: 1px solid var(--line); border-radius: .5rem; background: var(--surface-1); color: var(--ink); }
+  button.go.primary { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; }
+  button.go:hover { border-color: var(--accent); }
+  .template-box { background: var(--surface-1); border: 1px dashed var(--line); border-radius: .8rem; padding: 1.2rem; }
+  .err { color: var(--c-negative); font-size: .9rem; }
+  footer { margin-top: 2.5rem; color: var(--ink-soft); font-size: .9rem; border-top: 1px solid var(--line); padding-top: 1rem; }
+  footer code { background: var(--surface-2); padding: .1em .4em; border-radius: .3rem; }
+  #accordion-mount { margin-top: .6rem; }
+  :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Context packs</h1>
+  <p class="lede">Each pack writes a <b>statement</b>, then <b>marks it up step by step</b> — a fade hands you the change, a mark draws itself on like a tutor’s hand, and the steps hold the order the process depends on. Click to advance. Launch one as a <b>modal</b>, drop it in an <b>accordion</b>, or embed it inline.</p>
+
+  <p class="lede" style="margin-top:.8rem">New: <a href="./processes.html">the 20 Academic Process activities</a> (a <code>process</code> stage type),
+    plus source-evaluation three ways — CRAAP, <b>RADAR</b> and <b>ROBOT</b>. Model and docs in
+    <code>.dev/docs/academic-processes.md</code>.</p>
+
+  <h2 class="sec">Launch a pack</h2>
+  <div class="cards" id="cards"></div>
+
+  <h2 class="sec">In an accordion</h2>
+  <div id="accordion-mount"></div>
+
+  <h2 class="sec">The empty template <span style="font-weight:400;color:var(--ink-soft);font-size:.9rem">— the data-tag slots, animating so you can see the shape</span></h2>
+  <div class="template-box"><div id="template-mount"></div></div>
+
+  <footer>
+    A pack is data — see <code>packs/*.json</code> and the schema in <code>context-pack-schema.json</code>.
+    Stage types: <code>annotated-prose</code> (inline-commentary), <code>checklist</code> (spot-the-error),
+    <code>assembly</code> (sequential-process). Marks reuse the animation-manager draw-on engine and its
+    semantic colour roles. To author new packs, see <code>prompts/author-context-pack.md</code>.
+    <br>Served over <code>http://</code> the packs load by fetch; opening the file directly needs a local server
+    (<code>python -m http.server</code>).
+  </footer>
+</div>
+
+<script src="./context-pack.js"></script>
+<script>
+(async function () {
+  const PACKS = ['marking-feedback', 'craap', 'referencing'];
+  const cards = document.getElementById('cards');
+  const loaded = {};
+
+  async function load(id) {
+    if (loaded[id]) return loaded[id];
+    const res = await fetch('./packs/' + id + '.json');
+    if (!res.ok) throw new Error(res.status);
+    return (loaded[id] = await res.json());
+  }
+
+  for (const id of PACKS) {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = '<h3></h3><div class="meta"></div><div class="actions"><button class="go primary" data-launch>Launch (modal)</button></div>';
+    cards.append(card);
+    try {
+      const pack = await load(id);
+      card.querySelector('h3').textContent = pack.title;
+      card.querySelector('.meta').innerHTML = pack.intent || '';
+      card.querySelector('[data-launch]').addEventListener('click', () => ContextPack.launchModal(pack));
+    } catch (e) {
+      card.querySelector('h3').textContent = id;
+      card.querySelector('.meta').innerHTML = '<span class="err">Could not load (serve over http://).</span>';
+    }
+  }
+
+  // accordion: the marking pack
+  try { ContextPack.renderAccordion(document.getElementById('accordion-mount'), await load('marking-feedback')); }
+  catch (e) {}
+
+  // template: render inline, auto-playing, so the slot names animate through
+  try {
+    const res = await fetch('./packs/_template.json');
+    const tpl = await res.json();
+    ContextPack.render(document.getElementById('template-mount'), tpl, { advance: 'auto', autoMs: 2200 });
+  } catch (e) {
+    document.getElementById('template-mount').innerHTML = '<span class="err">Template preview needs a local server.</span>';
+  }
+})();
+</script>
+</body>
+</html>

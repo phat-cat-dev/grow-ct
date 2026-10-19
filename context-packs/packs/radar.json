@@ -1,0 +1,42 @@
+{
+  "version": 1,
+  "id": "radar",
+  "title": "Evaluating a source (RADAR)",
+  "process": "source-evaluation",
+  "pattern": "spot-the-error",
+  "uri": "https://grow.local/process/source-evaluation#radar",
+  "altLabel": "Relevance · Authority · Date · Appearance · Reason",
+  "related": ["craap", "robot"],
+  "intent": "formative · pattern <code>spot-the-error</code> / source-evaluation · judge one lens at a time",
+  "statement": "Same source, a different lens. Work RADAR — Relevance, Authority, Date, Appearance, Reason — one check at a time, and stamp a verdict on each.",
+  "advance": "click",
+  "stage": {
+    "type": "checklist",
+    "source": {
+      "kicker": "Source under review",
+      "title": "“Why Solar Will Power Everything by 2027”",
+      "meta": "greenfuturenow.blog · no author listed · posted 2019 · no citations"
+    },
+    "items": [
+      { "letter": "R", "label": "Relevance", "question": "fits your need?", "verdict": "A popularising overview — on topic, but too shallow for a literature review.", "mark": { "kind": "question", "color": "comment" }, "step": 1 },
+      { "letter": "A", "label": "Authority", "question": "who made it?", "verdict": "No named author on a self-published blog — no credentials to trust.", "mark": { "kind": "cross", "color": "negative" }, "step": 2 },
+      { "letter": "D", "label": "Date", "question": "current enough?", "verdict": "Posted 2019; its 2027 forecast is already overtaken — stale for a fast-moving field.", "mark": { "kind": "exclaim", "color": "neutral" }, "step": 3 },
+      { "letter": "A", "label": "Appearance", "question": "well-produced, referenced?", "verdict": "Readable but unreferenced — no data, no sources to follow up.", "mark": { "kind": "cross", "color": "negative" }, "step": 4 },
+      { "letter": "R", "label": "Reason", "question": "why was it made?", "verdict": "To persuade and win clicks, not to inform — read the slant.", "mark": { "kind": "exclaim", "color": "neutral" }, "step": 5 }
+    ]
+  },
+  "steps": [
+    { "title": "Meet the source", "text": "Before judging, see what you are dealing with. Work the five RADAR lenses in order." },
+    { "title": "R — Relevance", "text": "Does it fit your actual need, at the right depth? On topic is not the same as useful." },
+    { "title": "A — Authority", "text": "Who made it, and what makes them credible? An anonymous blog has none to offer." },
+    { "title": "D — Date", "text": "When was it written or updated, and does recency matter here? An overtaken forecast is a warning." },
+    { "title": "A — Appearance", "text": "Is it well-produced and referenced — data, citations, structure? Polish is not proof; references are." },
+    { "title": "R — Reason", "text": "Why was it made — to inform, or to persuade and sell? Name the motive before you trust it." },
+    { "title": "Reach a verdict", "text": "Weigh the five together. RADAR and CRAAP reach the same place by different routes: relevant, but not reliable." }
+  ],
+  "feedForward": {
+    "step": 6,
+    "badge": "Verdict",
+    "text": "Relevant but not reliable — it fails Authority and Appearance and is out of Date. Use it only to illustrate hype, and corroborate every claim with peer-reviewed or official data."
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "id": "hypothesis-generation",
+  "title": "Hypothesis Generation",
+  "uri": "https://grow.local/process/hypothesis-generation",
+  "broader": "intellectual-depth",
+  "process": "intellectual-depth",
+  "pattern": "sequential-process",
+  "intent": "formative · Intellectual Depth (Thinking) · click through the process",
+  "statement": "Turn an observation or theory into a specific, testable prediction — one that could be shown to be wrong.",
+  "advance": "click",
+  "stage": {
+    "type": "process"
+  },
+  "steps": [
+    {
+      "title": "Observe closely",
+      "text": "Start from a concrete observation or a pattern in existing theory, not a hunch."
+    },
+    {
+      "title": "State the pattern",
+      "text": "Put the relationship into words: when X happens, Y seems to follow."
+    },
+    {
+      "title": "Make it a prediction",
+      "text": "Turn the pattern into an if–then statement you could actually test."
+    },
+    {
+      "title": "Make it falsifiable",
+      "text": "Ensure some possible result would prove it false — unfalsifiable claims are not hypotheses."
+    },
+    {
+      "title": "Define the disproof",
+      "text": "Say in advance what observation would make you abandon it. That is what makes it science."
+    }
+  ],
+  "feedForward": {
+    "badge": "Try it",
+    "text": "Write one hypothesis for your topic as an if–then sentence, and state the result that would disprove it."
+  },
+  "related": [
+    "research-design",
+    "critical-analysis"
+  ]
+}

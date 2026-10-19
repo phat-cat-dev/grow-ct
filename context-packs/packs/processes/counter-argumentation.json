@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "id": "counter-argumentation",
+  "title": "Counter-argumentation",
+  "uri": "https://grow.local/process/counter-argumentation",
+  "broader": "intellectual-depth",
+  "process": "intellectual-depth",
+  "pattern": "sequential-process",
+  "intent": "formative · Intellectual Depth (Thinking) · click through the process",
+  "statement": "Strengthen your own position by seeking out and answering the best case against it — not the weakest.",
+  "advance": "click",
+  "stage": {
+    "type": "process"
+  },
+  "steps": [
+    {
+      "title": "State your thesis",
+      "text": "Write the claim you are defending clearly enough to attack."
+    },
+    {
+      "title": "Build the strongest opposing case",
+      "text": "Steel-man it: make the objection as convincing as its best advocate would."
+    },
+    {
+      "title": "Find its best evidence",
+      "text": "Give the counter-case real support, not a straw version you can knock down."
+    },
+    {
+      "title": "Answer it honestly",
+      "text": "Concede what is right in it, then show why your thesis still holds — or adjust it."
+    },
+    {
+      "title": "Strengthen or revise",
+      "text": "A thesis that survives its best objection is stronger; one that does not should change."
+    }
+  ],
+  "feedForward": {
+    "badge": "Try it",
+    "text": "Write the single best objection to your argument, then a two-sentence reply that concedes something real."
+  },
+  "related": [
+    "argument-mapping",
+    "critical-analysis"
+  ]
+}

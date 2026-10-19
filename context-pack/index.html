@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>context-pack element</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Kalam:wght@400;700&display=swap">
+<link rel="stylesheet" href="./context-pack.css">
+<style>
+  :root {
+    --h: 202; --page-bg: hsl(var(--h) 30% 96%); --surface-1: hsl(var(--h) 24% 99%); --surface-2: hsl(var(--h) 20% 94%);
+    --ink: hsl(var(--h) 25% 16%); --ink-soft: hsl(var(--h) 14% 42%); --line: hsl(var(--h) 18% 84%);
+    --accent: hsl(var(--h) 72% 42%); --c-positive: hsl(150 55% 38%); --c-neutral: hsl(40 75% 44%);
+    --c-comment: hsl(270 45% 52%); --c-negative: hsl(5 68% 50%); --pen: hsl(5 72% 52%);
+    --font-ui: system-ui, -apple-system, "Segoe UI", sans-serif; --font-hand: "Caveat", cursive;
+  }
+  @media (prefers-color-scheme: dark) { :root {
+    --page-bg: hsl(var(--h) 30% 9%); --surface-1: hsl(var(--h) 26% 13%); --surface-2: hsl(var(--h) 24% 17%);
+    --ink: hsl(var(--h) 20% 92%); --ink-soft: hsl(var(--h) 14% 66%); --line: hsl(var(--h) 22% 24%);
+    --accent: hsl(var(--h) 70% 64%); --c-positive: hsl(150 55% 55%); --c-neutral: hsl(40 80% 58%);
+    --c-comment: hsl(270 55% 70%); --c-negative: hsl(5 75% 66%); --pen: hsl(5 80% 66%); } }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--page-bg); color: var(--ink); font: 1.05rem/1.65 var(--font-ui); }
+  .wrap { max-width: 60rem; margin: auto; padding: 2rem 1.1rem 5rem; }
+  h1 { font-size: clamp(1.6rem, 4vw, 2.3rem); margin: 0 0 .3rem; }
+  .lede { color: var(--ink-soft); max-width: 46rem; }
+  h2.sec { font-size: 1.2rem; margin: 2.2rem 0 .3rem; }
+  p.hint { color: var(--ink-soft); font-size: .92rem; margin: .1rem 0 .8rem; }
+  code { background: var(--surface-2); padding: .1em .4em; border-radius: .3rem; font-size: .92em; }
+  pre { background: var(--surface-1); border: 1px solid var(--line); border-radius: .6rem; padding: .9rem 1.1rem; overflow: auto; font-size: .86rem; }
+  .status { font: 600 .82rem/1.4 ui-monospace, monospace; color: var(--ink-soft); min-height: 1.4rem; margin: .4rem 0 0; }
+  .status b { color: var(--c-positive); }
+  footer { margin-top: 2.5rem; color: var(--ink-soft); font-size: .9rem; border-top: 1px solid var(--line); padding-top: 1rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>&lt;context-pack&gt;</h1>
+  <p class="lede">A self-registering custom element around the context-pack renderer. Give it a pack via
+    <code>src</code>, an inline JSON <code>&lt;script&gt;</code>, or the <code>.pack</code> property, and pick how it
+    launches. It emits <code>context-pack:ready</code>, <code>:step</code> and <code>:complete</code>, and adds the
+    <code>is-complete</code> class — the hooks an Adapt component will use to set completion.</p>
+
+  <h2 class="sec">Inline — from a <code>src</code> URL</h2>
+  <p class="hint"><code>&lt;context-pack src="…/marking-feedback.json"&gt;&lt;/context-pack&gt;</code></p>
+  <context-pack id="demo-inline" src="/tools/context-packs/packs/marking-feedback.json"></context-pack>
+  <p class="status" id="status-inline">loading…</p>
+
+  <h2 class="sec">Modal — click to launch full-width</h2>
+  <p class="hint"><code>&lt;context-pack launch="modal" src="…/craap.json"&gt;&lt;/context-pack&gt;</code></p>
+  <context-pack launch="modal" src="/tools/context-packs/packs/craap.json"></context-pack>
+
+  <h2 class="sec">Accordion</h2>
+  <p class="hint"><code>&lt;context-pack launch="accordion" src="…/referencing.json"&gt;&lt;/context-pack&gt;</code></p>
+  <context-pack launch="accordion" src="/tools/context-packs/packs/referencing.json"></context-pack>
+
+  <h2 class="sec">Inline JSON — no fetch, works offline</h2>
+  <p class="hint">A pack can live inside the element as a <code>&lt;script type="application/json"&gt;</code>.</p>
+  <context-pack launch="inline">
+    <script type="application/json">
+    {
+      "version": 1, "id": "mini-overclaim", "title": "Spot the overclaim",
+      "statement": "A one-line claim — watch the tutor mark it up, one move at a time.",
+      "stage": { "type": "annotated-prose", "segments": [
+        { "text": "Solar power is " },
+        { "id": "claim", "text": "the best solution", "step": 1, "mark": { "kind": "underline", "color": "accent" }, "note": "Says who? Add a source." },
+        { "text": " to " },
+        { "id": "over", "text": "every energy problem", "step": 2, "mark": { "kind": "oval", "color": "neutral" }, "note": "Overclaim — narrow it." },
+        { "text": "." }
+      ] },
+      "steps": [
+        { "title": "Read it", "text": "Read the whole claim before marking anything." },
+        { "title": "The claim", "text": "Underline exactly what is being asserted." },
+        { "title": "The overclaim", "text": "Ring the sweeping scope — this is what to narrow." }
+      ],
+      "feedForward": { "text": "Name the strength, then narrow the claim to one you can defend." }
+    }
+    </script>
+  </context-pack>
+
+  <footer>
+    Served over <code>http://</code> from the repo root so the <code>src</code> packs resolve
+    (<code>python -m http.server</code>). The engine mirrors <code>tools/context-packs</code> (the authoring sandbox);
+    this is the embeddable component. Next step: an Adapt component that sets <code>.pack</code> in
+    <code>postRender</code> and marks completion on <code>context-pack:complete</code>.
+  </footer>
+</div>
+
+<script src="./context-pack.js"></script>
+<script>
+  const inline = document.getElementById('demo-inline');
+  const status = document.getElementById('status-inline');
+  inline.addEventListener('context-pack:ready', e => { status.textContent = 'ready · ' + e.detail.stepCount + ' steps'; });
+  inline.addEventListener('context-pack:step', e => { status.textContent = 'step ' + (e.detail.step + 1) + ' / ' + e.detail.stepCount; });
+  inline.addEventListener('context-pack:complete', () => { status.innerHTML = '<b>complete ✓</b> — an Adapt view would set completion here'; });
+</script>
+</body>
+</html>

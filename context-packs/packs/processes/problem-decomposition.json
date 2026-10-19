@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "id": "problem-decomposition",
+  "title": "Problem Decomposition",
+  "uri": "https://grow.local/process/problem-decomposition",
+  "broader": "intellectual-depth",
+  "process": "intellectual-depth",
+  "pattern": "sequential-process",
+  "intent": "formative · Intellectual Depth (Thinking) · click through the process",
+  "statement": "Take a huge, ill-defined problem and break it into manageable, testable sub-components you can actually work on.",
+  "advance": "click",
+  "stage": {
+    "type": "process"
+  },
+  "steps": [
+    {
+      "title": "Name the whole problem",
+      "text": "State the big problem plainly, in one sentence, before you cut it up."
+    },
+    {
+      "title": "Split into sub-problems",
+      "text": "Break it into parts that are smaller, clearer and separable from each other."
+    },
+    {
+      "title": "Make each piece testable",
+      "text": "Rewrite each part so progress on it can be checked — vague parts hide the real work."
+    },
+    {
+      "title": "Order by dependency",
+      "text": "Find which pieces must be solved before others, and sequence them accordingly."
+    },
+    {
+      "title": "Pick the first tractable piece",
+      "text": "Choose the smallest part that moves the whole forward, and start there."
+    }
+  ],
+  "feedForward": {
+    "badge": "Try it",
+    "text": "Take your assignment topic and write three sub-questions, each narrow enough to answer in a paragraph."
+  },
+  "related": [
+    "research-design",
+    "time-management"
+  ]
+}

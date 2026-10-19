@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "id": "referencing",
+  "title": "Building a reference",
+  "process": "referencing",
+  "pattern": "sequential-process",
+  "intent": "formative · pattern <code>sequential-process</code> · a Harvard web reference, built in order",
+  "statement": "Build a Harvard reference for a website, one element at a time — each element doing one job, so a reader can trace your exact source.",
+  "advance": "click",
+  "stage": {
+    "type": "assembly",
+    "intro": "A reference has five jobs: <b>who</b> (author), <b>when</b> (year), <b>what</b> (title), <b>where</b> (source) and, for the web, <b>when you read it</b> (access date).",
+    "parts": [
+      { "text": "Smith, J.", "step": 1 },
+      { "html": " (2021)", "step": 2 },
+      { "html": " <i>Renewable futures.</i>", "step": 3 },
+      { "html": " Available at: <span style=\"font-family:ui-monospace,monospace;font-size:.82em;word-break:break-all\">https://example.org/renewables</span>", "step": 4 },
+      { "html": " (Accessed: 3 October 2025).", "step": 5 },
+      { "mark": { "kind": "tick", "color": "positive" }, "step": 6 }
+    ]
+  },
+  "steps": [
+    { "title": "What a reference must do", "text": "A reference lets a reader find your exact source. Build it in order, each element doing one job." },
+    { "title": "Author — who", "text": "Surname, then initial: “Smith, J.” With no author, you would use the organisation instead." },
+    { "title": "Year — when", "text": "The date of publication, in round brackets: “(2021)”. With no date, you would write “(no date)”." },
+    { "title": "Title — what", "text": "The title of the work, italicised for a standalone source: “Renewable futures.”" },
+    { "title": "Source — where", "text": "For a website, the full address after “Available at:” so the reader can go straight to it." },
+    { "title": "Access date — when you read it", "text": "Web pages change, so record the date you saw it: “(Accessed: 3 October 2025).”" },
+    { "title": "A complete reference", "text": "Every element, in order, punctuated consistently — a reader can now trace the source exactly. The same discipline underlies every citation style." }
+  ]
+}

@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "id": "data-interpretation",
+  "title": "Data Interpretation & Visualisation",
+  "uri": "https://grow.local/process/data-interpretation",
+  "broader": "research-retrieval",
+  "process": "research-retrieval",
+  "pattern": "sequential-process",
+  "intent": "formative · Research & Retrieval (Doing) · click through the process",
+  "statement": "Convert raw numbers or qualitative material into a meaningful, honest narrative — with the right picture.",
+  "advance": "click",
+  "stage": {
+    "type": "process"
+  },
+  "steps": [
+    {
+      "title": "Clean and check the data",
+      "text": "Fix errors, note what is missing, and understand how the data was produced."
+    },
+    {
+      "title": "Choose the right summary or visual",
+      "text": "Match the chart to the question — the picture should reveal the pattern, not decorate it."
+    },
+    {
+      "title": "Read the pattern",
+      "text": "Say what the data shows plainly, distinguishing the signal from the noise."
+    },
+    {
+      "title": "State the uncertainty",
+      "text": "Report the limits — variation, sample size, what the data cannot tell you."
+    },
+    {
+      "title": "Turn it into a narrative",
+      "text": "Explain what it means for the question, not just what the numbers are."
+    }
+  ],
+  "feedForward": {
+    "badge": "Try it",
+    "text": "For one result, write the single sentence it supports — and one sentence on what it does NOT prove."
+  },
+  "related": [
+    "research-design",
+    "presentation-storytelling"
+  ]
+}

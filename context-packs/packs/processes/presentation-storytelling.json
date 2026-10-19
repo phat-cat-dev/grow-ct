@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "id": "presentation-storytelling",
+  "title": "Presentation Storytelling",
+  "uri": "https://grow.local/process/presentation-storytelling",
+  "broader": "communication-reflection",
+  "process": "communication-reflection",
+  "pattern": "sequential-process",
+  "intent": "formative · Communication & Reflection (Applying) · click through the process",
+  "statement": "Structure data as an unfolding narrative — beginning, tension, and resolution — not a list of facts.",
+  "advance": "click",
+  "stage": {
+    "type": "process"
+  },
+  "steps": [
+    {
+      "title": "Set the scene",
+      "text": "Open with the situation and why the audience should care about it."
+    },
+    {
+      "title": "Introduce the tension",
+      "text": "Name the problem or surprise — the gap that creates the need to know."
+    },
+    {
+      "title": "Build through the data",
+      "text": "Reveal the evidence as a rising path toward the answer, one step at a time."
+    },
+    {
+      "title": "Reach the resolution",
+      "text": "Deliver the finding as the pay-off the tension has been building to."
+    },
+    {
+      "title": "Land the so-what",
+      "text": "Close on what it means and what should change — the reason it mattered."
+    }
+  ],
+  "feedForward": {
+    "badge": "Try it",
+    "text": "Reshape one result as a three-beat story: situation, problem, finding. If there is no tension, there is no story."
+  },
+  "related": [
+    "oral-presentation",
+    "data-interpretation"
+  ]
+}

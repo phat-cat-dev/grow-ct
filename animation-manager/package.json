@@ -1,0 +1,12 @@
+{
+  "name": "@grow/animation-manager",
+  "private": true,
+  "type": "module",
+  "description": "Reusable hand-drawn mark overlay: gallery, per-mark speed/size/rotation/colour, and live page injection.",
+  "main": "animation-manager.js",
+  "exports": {
+    ".": "./animation-manager.js",
+    "./engine": "./animation-manager-engine.js",
+    "./catalog": "./animation-catalog.js"
+  }
+}

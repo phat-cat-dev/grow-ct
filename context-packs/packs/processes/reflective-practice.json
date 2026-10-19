@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "id": "reflective-practice",
+  "title": "Reflective Practice",
+  "uri": "https://grow.local/process/reflective-practice",
+  "broader": "communication-reflection",
+  "process": "communication-reflection",
+  "pattern": "sequential-process",
+  "intent": "formative · Communication & Reflection (Applying) · click through the process",
+  "statement": "Pause after a task to turn raw experience into formalised, reusable learning — what worked, what failed, and why.",
+  "advance": "click",
+  "stage": {
+    "type": "process"
+  },
+  "steps": [
+    {
+      "title": "Describe what happened",
+      "text": "Set down the events plainly, without judging them yet."
+    },
+    {
+      "title": "Examine what worked and failed",
+      "text": "Separate the parts that went well from the parts that did not."
+    },
+    {
+      "title": "Ask why",
+      "text": "Dig past the symptom to the cause — reflection is diagnosis, not a diary."
+    },
+    {
+      "title": "Extract the lesson",
+      "text": "State the general principle you will carry to the next, different task."
+    },
+    {
+      "title": "Plan the change",
+      "text": "Commit to one concrete thing you will do differently, and when."
+    }
+  ],
+  "feedForward": {
+    "badge": "Try it",
+    "text": "Write one thing that worked, one that did not, the reason behind the second, and the single change you will make next time."
+  },
+  "related": [
+    "self-directed-learning",
+    "peer-reviewing"
+  ]
+}

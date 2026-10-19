@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "id": "argument-mapping",
+  "title": "Argument Mapping",
+  "uri": "https://grow.local/process/argument-mapping",
+  "broader": "intellectual-depth",
+  "process": "intellectual-depth",
+  "pattern": "sequential-process",
+  "intent": "formative · Intellectual Depth (Thinking) · click through the process",
+  "statement": "Make the shape of an argument visible: separate the thesis, the support beneath it, and the objections that push back.",
+  "advance": "click",
+  "stage": {
+    "type": "process"
+  },
+  "steps": [
+    {
+      "title": "Find the thesis (the root)",
+      "text": "Pin down the one conclusion the whole argument exists to establish."
+    },
+    {
+      "title": "Map the supporting premises",
+      "text": "Branch each reason and piece of evidence beneath the thesis it serves."
+    },
+    {
+      "title": "Add the counter-arguments",
+      "text": "Place the strongest objections as conflict nodes against the lines they attack."
+    },
+    {
+      "title": "Trace the dependencies",
+      "text": "Draw which premises must hold for the next step to follow — expose the load-bearing links."
+    },
+    {
+      "title": "Spot the gaps",
+      "text": "Look for a conclusion with no support, or support with no link. Gaps are where arguments fail."
+    }
+  ],
+  "feedForward": {
+    "badge": "Try it",
+    "text": "Map a paragraph from your own draft: one root, its branches, one counter-node. If a branch has no evidence, that is your next job."
+  },
+  "related": [
+    "critical-analysis",
+    "counter-argumentation"
+  ]
+}

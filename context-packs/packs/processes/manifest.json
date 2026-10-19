@@ -1,0 +1,212 @@
+{
+  "groups": {
+    "intellectual-depth": "Intellectual Depth (Thinking)",
+    "research-retrieval": "Research & Retrieval (Doing)",
+    "communication-reflection": "Communication & Reflection (Applying)"
+  },
+  "processes": [
+    {
+      "id": "critical-analysis",
+      "title": "Critical Analysis",
+      "group": "intellectual-depth",
+      "altLabel": "Evaluation of Arguments",
+      "related": [
+        "argument-mapping",
+        "source-evaluation"
+      ]
+    },
+    {
+      "id": "argument-mapping",
+      "title": "Argument Mapping",
+      "group": "intellectual-depth",
+      "altLabel": null,
+      "related": [
+        "critical-analysis",
+        "counter-argumentation"
+      ]
+    },
+    {
+      "id": "problem-decomposition",
+      "title": "Problem Decomposition",
+      "group": "intellectual-depth",
+      "altLabel": null,
+      "related": [
+        "research-design",
+        "time-management"
+      ]
+    },
+    {
+      "id": "hypothesis-generation",
+      "title": "Hypothesis Generation",
+      "group": "intellectual-depth",
+      "altLabel": null,
+      "related": [
+        "research-design",
+        "critical-analysis"
+      ]
+    },
+    {
+      "id": "counter-argumentation",
+      "title": "Counter-argumentation",
+      "group": "intellectual-depth",
+      "altLabel": null,
+      "related": [
+        "argument-mapping",
+        "critical-analysis"
+      ]
+    },
+    {
+      "id": "literature-reviewing",
+      "title": "Literature Reviewing",
+      "group": "research-retrieval",
+      "altLabel": null,
+      "related": [
+        "literature-search",
+        "synthesis",
+        "source-evaluation"
+      ]
+    },
+    {
+      "id": "source-evaluation",
+      "title": "Source Evaluation",
+      "group": "research-retrieval",
+      "altLabel": "Source Criticism",
+      "related": [
+        "craap",
+        "radar",
+        "robot",
+        "critical-analysis"
+      ]
+    },
+    {
+      "id": "research-design",
+      "title": "Research Design",
+      "group": "research-retrieval",
+      "altLabel": null,
+      "related": [
+        "hypothesis-generation",
+        "problem-decomposition"
+      ]
+    },
+    {
+      "id": "data-interpretation",
+      "title": "Data Interpretation & Visualisation",
+      "group": "research-retrieval",
+      "altLabel": null,
+      "related": [
+        "research-design",
+        "presentation-storytelling"
+      ]
+    },
+    {
+      "id": "literature-search",
+      "title": "Literature Search Strategy",
+      "group": "research-retrieval",
+      "altLabel": "Boolean search mastery",
+      "related": [
+        "literature-reviewing",
+        "source-evaluation"
+      ]
+    },
+    {
+      "id": "academic-writing",
+      "title": "Academic Writing",
+      "group": "communication-reflection",
+      "altLabel": "Structuring an Argument",
+      "related": [
+        "argument-mapping",
+        "critical-analysis"
+      ]
+    },
+    {
+      "id": "peer-reviewing",
+      "title": "Peer Reviewing",
+      "group": "communication-reflection",
+      "altLabel": null,
+      "related": [
+        "critical-analysis",
+        "marking-feedback"
+      ]
+    },
+    {
+      "id": "oral-presentation",
+      "title": "Oral Presentation & Communication",
+      "group": "communication-reflection",
+      "altLabel": null,
+      "related": [
+        "presentation-storytelling",
+        "academic-writing"
+      ]
+    },
+    {
+      "id": "synthesis",
+      "title": "Synthesis of Diverse Fields",
+      "group": "communication-reflection",
+      "altLabel": "Interdisciplinary synthesis",
+      "related": [
+        "literature-reviewing",
+        "critical-analysis"
+      ]
+    },
+    {
+      "id": "self-directed-learning",
+      "title": "Self-Directed Learning",
+      "group": "communication-reflection",
+      "altLabel": null,
+      "related": [
+        "reflective-practice",
+        "time-management"
+      ]
+    },
+    {
+      "id": "ethical-reasoning",
+      "title": "Ethical Reasoning & Integrity",
+      "group": "communication-reflection",
+      "altLabel": "Academic integrity",
+      "related": [
+        "source-evaluation",
+        "reflective-practice"
+      ]
+    },
+    {
+      "id": "time-management",
+      "title": "Time Management & Project Sequencing",
+      "group": "communication-reflection",
+      "altLabel": null,
+      "related": [
+        "problem-decomposition",
+        "self-directed-learning"
+      ]
+    },
+    {
+      "id": "reflective-practice",
+      "title": "Reflective Practice",
+      "group": "communication-reflection",
+      "altLabel": null,
+      "related": [
+        "self-directed-learning",
+        "peer-reviewing"
+      ]
+    },
+    {
+      "id": "active-listening",
+      "title": "Active Listening (in lectures)",
+      "group": "communication-reflection",
+      "altLabel": null,
+      "related": [
+        "critical-analysis",
+        "self-directed-learning"
+      ]
+    },
+    {
+      "id": "presentation-storytelling",
+      "title": "Presentation Storytelling",
+      "group": "communication-reflection",
+      "altLabel": null,
+      "related": [
+        "oral-presentation",
+        "data-interpretation"
+      ]
+    }
+  ]
+}

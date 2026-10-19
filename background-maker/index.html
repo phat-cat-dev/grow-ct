@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Background maker / Patterns and animated headers</title>
+  <style>
+    body { margin: 0; color: #172e3a; background: #f6f8fa; font: 1rem/1.6 system-ui,sans-serif; }
+    * { box-sizing: border-box; }
+    .toolbar, .exports { padding: 1rem clamp(1rem,4vw,3rem); }
+    h1 { font-size: 1.4rem; margin: 0; }
+    .controls { display: flex; flex-wrap: wrap; align-items: end; gap: 1rem; }
+    label { display: grid; gap: .3rem; }
+    input { max-width: 100%; }
+    button, select { font: inherit; padding: .5rem; }
+    button { cursor: pointer; }
+    .preview { min-height: 28rem; padding: clamp(2rem,8vw,6rem); }
+    .preview h2 { font-size: clamp(2.5rem,7vw,5rem); line-height: 1.1; max-width: 14ch; margin-block: 1rem; }
+    textarea { width: 100%; min-height: 14rem; font: .8rem/1.5 monospace; padding: 1rem; }
+    :focus-visible { outline: 3px solid #376d87; outline-offset: 3px; }
+    a { color: #376d87; }
+  </style>
+  <style data-preview-css></style>
+</head>
+<body>
+  <header class="toolbar">
+    <h1>Background maker</h1>
+    <p>Original CSS patterns and gently animated headers. No images, libraries or external services.</p>
+    <form class="controls">
+      <label>Pattern <select name="preset">
+        <option value="dots">Dots</option><option value="grid">Grid</option><option value="stripes">Stripes</option><option value="crosshatch">Crosshatch</option><option value="checker">Checker</option><option value="rings">Rings</option><option value="aurora">Aurora drift</option><option value="orbits">Floating lights</option>
+      </select></label>
+      <label>Pattern colour <input name="ink" type="color" value="#376d87"></label>
+      <label>Background <input name="paper" type="color" value="#edf4f7"></label>
+      <label>Spacing <input name="size" type="range" min="8" max="120" value="32"><output data-value="size">32 px</output></label>
+      <label>Thickness <input name="thickness" type="range" min="1" max="8" value="2"><output data-value="thickness">2 px</output></label>
+      <label>Opacity <input name="opacity" type="range" min="0.05" max="1" step="0.05" value="0.3"><output data-value="opacity">30%</output></label>
+      <label>Cycle duration <input name="duration" type="range" min="3" max="60" value="18"><output data-value="duration">18 s</output></label>
+      <label><input name="animated" type="checkbox"> Animate background</label>
+      <label><input name="interaction" type="checkbox" checked> Clear pattern on interaction</label>
+      <label>Initial entrance <select name="entrance"><option value="fade">Fade</option><option value="rise">Fade + rise</option><option value="zoom">Fade + zoom</option><option value="blur">Fade + blur</option><option value="wipe">Wipe</option></select></label>
+      <label>Exit <select name="exit"><option value="fade">Fade</option><option value="rise">Fade + slide down</option><option value="zoom">Fade + zoom</option><option value="blur">Fade + blur</option><option value="wipe">Wipe</option></select></label>
+      <label>Entrance / return time <input name="enterMs" type="range" min="0" max="3000" step="50" value="700"><output data-value="enterMs">700 ms</output></label>
+      <label>Exit time <input name="exitMs" type="range" min="0" max="3000" step="50" value="450"><output data-value="exitMs">450 ms</output></label>
+    </form>
+    <p>Hover, tap or focus the preview to clear its pattern, leaving the chosen background and text. The pattern returns when pointer and focus leave. Entrance runs when the area first appears; return reverses the chosen exit effect. Check text contrast after changing colours.</p>
+  </header>
+  <main>
+    <section class="pattern-bg preview" tabindex="0" aria-label="Background preview">
+      <p>Reusable background / live preview</p>
+      <h2>Your next possibility.</h2>
+      <p>Keep your content as normal HTML. The pattern sits behind it.</p>
+      <button data-pause type="button" aria-pressed="false">Pause background</button>
+    </section>
+    <section class="exports" aria-label="Export background">
+      <p><button data-replay type="button">Replay entrance</button> <button data-copy type="button">Copy CSS</button> <button data-download type="button">Download HTML</button> <button data-json type="button">Export settings</button> <a href="README.md">Integration guide</a></p>
+      <p role="status" data-status>Ready. Motion is off by default.</p>
+      <label>Portable CSS<textarea readonly data-code spellcheck="false"></textarea></label>
+    </section>
+  </main>
+  <script src="engine.js"></script><script src="workshop.js"></script>
+</body></html>

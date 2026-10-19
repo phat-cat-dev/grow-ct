@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Button modifier tuner</title>
+  <link rel="stylesheet" href="button-tuner.css">
+</head>
+<body>
+<main>
+  <header><p>Standalone workshop / colour and interaction</p><h1>Button modifier tuner</h1><p>One hue, three colour families and a ladder of shades. Tune modifiers, inspect every state and export a portable button without the studio.</p></header>
+  <section class="panel" aria-labelledby="preview-title">
+    <h2 id="preview-title">Live preview</h2>
+    <p>Hover or focus a swatch to test its interaction. Click to select its family and shade. Forced preview states do not change exported behaviour.</p>
+    <div id="matrix" class="bt-scope"></div>
+    <div class="selected-stage bt-scope" id="selected-stage"><button type="button" class="bt-button" id="selected-button">Continue learning</button></div>
+    <p id="selection-status" role="status"></p>
+    <p id="contrast"></p>
+  </section>
+  <section class="panel" aria-labelledby="controls-title">
+    <h2 id="controls-title">Modifiers</h2>
+    <form id="controls"><div id="modifier-fields" class="fields"></div>
+      <div class="actions"><button type="reset">Reset modifiers</button></div>
+    </form>
+  </section>
+  <section class="panel" aria-labelledby="export-title">
+    <h2 id="export-title">Portable output</h2>
+    <label>Button HTML<textarea id="markup" rows="3" readonly spellcheck="false"></textarea></label>
+    <details><summary>Scoped CSS and tokens</summary><textarea id="css-output" rows="12" readonly spellcheck="false"></textarea></details>
+    <div class="actions"><button type="button" id="copy">Copy HTML + CSS</button><button type="button" id="download-html">Download standalone HTML</button><button type="button" id="download-json">Export settings JSON</button></div>
+    <p id="export-status" role="status">No settings are saved or sent. Downloads include the current configuration.</p>
+  </section>
+</main>
+<style id="button-styles"></style>
+<script src="button-tuner.js"></script>
+</body>
+</html>

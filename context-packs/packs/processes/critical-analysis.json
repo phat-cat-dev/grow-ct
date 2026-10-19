@@ -1,0 +1,46 @@
+{
+  "version": 1,
+  "id": "critical-analysis",
+  "title": "Critical Analysis",
+  "uri": "https://grow.local/process/critical-analysis",
+  "broader": "intellectual-depth",
+  "process": "intellectual-depth",
+  "pattern": "sequential-process",
+  "intent": "formative · Intellectual Depth (Thinking) · click through the process",
+  "statement": "Move past summarising to judging a source: test its central claim, its hidden assumptions, and whether the evidence actually holds.",
+  "advance": "click",
+  "stage": {
+    "type": "process"
+  },
+  "steps": [
+    {
+      "title": "Identify the core claim",
+      "text": "Find the single main point you are being asked to accept. Everything else is scaffolding around it."
+    },
+    {
+      "title": "Surface the assumptions",
+      "text": "Name the beliefs that must be true for the claim to stand — especially the ones left unstated."
+    },
+    {
+      "title": "Weigh the evidence",
+      "text": "Is the support sufficient, relevant and unbiased? Ask what data would contradict the claim."
+    },
+    {
+      "title": "Judge the reasoning",
+      "text": "Check the step from evidence to claim. A true premise can still carry a broken inference."
+    },
+    {
+      "title": "Form your verdict",
+      "text": "Decide how far the claim earns your acceptance, and say exactly where it is strong and where it is weak."
+    }
+  ],
+  "feedForward": {
+    "badge": "Try it",
+    "text": "Now do it on your own reading: quote the claim, list two assumptions, and name the single weakest link in the argument."
+  },
+  "altLabel": "Evaluation of Arguments",
+  "related": [
+    "argument-mapping",
+    "source-evaluation"
+  ]
+}

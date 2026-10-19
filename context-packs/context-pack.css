@@ -1,0 +1,164 @@
+/* Context packs: a statement + an annotated stage that animates step by step.
+   Chrome is cp-*, the hand-drawn marks reuse the animation-manager engine (am-*)
+   and its semantic colour roles, so marks follow the host theme. Load the host
+   theme tokens (--accent, --c-*, --ink, --surface, --line) or these fall back. */
+:root {
+  --cp-bg: var(--page-bg, var(--bg, hsl(202 30% 96%)));
+  --cp-surface: var(--surface-1, var(--surface, #fff));
+  --cp-raised: var(--surface-2, var(--raised, #eef2f6));
+  --cp-ink: var(--ink, #1d2730);
+  --cp-soft: var(--ink-soft, color-mix(in srgb, var(--cp-ink) 62%, transparent));
+  --cp-line: var(--line, #cdd6de);
+  --cp-accent: var(--accent, #2f6d8f);
+  --cp-font-ui: var(--font-ui, system-ui, -apple-system, "Segoe UI", sans-serif);
+  --cp-font-hand: var(--font-hand, "Caveat", "Segoe Script", cursive);
+}
+.am-item {
+  --am-c-accent: var(--accent, #2f6d8f); --am-c-positive: var(--c-positive, #2e8b57);
+  --am-c-neutral: var(--c-neutral, #b8860b); --am-c-comment: var(--c-comment, #7a4fb0);
+  --am-c-negative: var(--c-negative, #b23b3b); --am-c-pen: var(--pen, #b23b3b); --am-c-ink: var(--ink, #1d2730);
+}
+
+/* ---- hand-drawn mark engine (subset of animation-manager) ---- */
+.am-ink { fill: none; stroke: currentColor; stroke-width: 3.5; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 1; stroke-dashoffset: 0; filter: url(#am-ink); }
+@keyframes am-draw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+/* dots on ? and ! are filled blobs that pop in after the stroke draws, in currentColor */
+.am-dot { fill: currentColor; transform-box: fill-box; transform-origin: center; filter: url(#am-ink); }
+@keyframes am-dotpop { 0% { transform: scale(0); opacity: 0; } 70% { transform: scale(1.18); } 100% { transform: scale(1); opacity: 1; } }
+[data-step].cp-draw .am-dot { animation: am-dotpop .4s cubic-bezier(.3,1.4,.5,1) .42s both; }
+.am-mk { position: relative; display: inline-block; white-space: nowrap; }
+.am-mk svg { position: absolute; overflow: visible; pointer-events: none; color: inherit; }
+.am-mk.pos-u svg, .am-mk.pos-wav svg { left: -4%; bottom: -.28em; width: 108%; height: .5em; }
+.am-mk.pos-str svg { left: -4%; top: 42%; width: 108%; height: .4em; }
+.am-mk.pos-scr svg { left: -4%; bottom: -.3em; width: 108%; height: .9em; }
+.am-mk.pos-ov svg { left: -12%; top: -32%; width: 124%; height: 168%; }
+.am-mk.pos-box svg { left: -10%; top: -28%; width: 120%; height: 158%; }
+.am-glyph { color: var(--am-c-accent); }
+.am-glyph svg, .cp-stamp svg { width: 100%; height: 100%; display: block; overflow: visible; }
+.cp-corrw { position: relative; display: inline-block; }
+.cp-corr-over { position: absolute; left: 50%; bottom: 112%; transform: translateX(-50%) rotate(-4deg); font-family: var(--cp-font-hand); font-size: 1.25rem; color: var(--am-c-pen); white-space: nowrap; }
+
+/* ---- reveal behaviours ---- */
+.cp-fade { opacity: 0; transform: translateY(7px); transition: opacity .5s ease, transform .5s ease; }
+.cp-fade.cp-vis { opacity: 1; transform: none; }
+.cp-ovl svg { opacity: 0; transition: opacity .4s ease; }
+.cp-ovl.cp-vis svg { opacity: 1; }
+.cp-crow .cp-stamp svg { opacity: 0; transition: opacity .4s ease; }
+.cp-crow.cp-vis .cp-stamp svg { opacity: 1; }
+[data-step].cp-draw .am-ink { animation: am-draw .8s ease both; }
+@media (prefers-reduced-motion: reduce) { .cp-root *, .cp-root *::before, .cp-root *::after { animation: none !important; transition: none !important; } }
+
+/* ---- layout ---- */
+.cp-root { color: var(--cp-ink); font: 1.02rem/1.6 var(--cp-font-ui); }
+.cp-statement { font-size: 1.1rem; line-height: 1.6; margin: 0 0 1rem; color: var(--cp-ink); }
+.cp-intent { font: 600 .7rem/1.5 ui-monospace, monospace; letter-spacing: .05em; text-transform: uppercase; color: var(--cp-soft); margin: 0 0 1rem; }
+.cp-intent code { text-transform: none; background: var(--cp-raised); padding: .1em .4em; border-radius: .3rem; }
+.cp-stage { position: relative; background: var(--cp-surface); border: 1px solid var(--cp-line); border-radius: 1rem; padding: clamp(1.1rem, 3vw, 2rem); min-height: 12rem; }
+/* A full-width sheet on a "desk"; the margin notes lift OFF the paper as
+   post-its stuck into the right gutter, joined by dotted leader lines (placed
+   by JS so they track each anchor and never overlap). */
+.cp-grid { position: relative; }
+.cp-stage:has(.cp-grid) { background: var(--cp-raised); }
+.cp-paper { position: relative; z-index: 1; background: var(--cp-surface); color: var(--cp-ink);
+  margin-right: clamp(7rem, 12%, 11rem);
+  padding: clamp(1rem, 2.4vw, 1.7rem) clamp(1.1rem, 2.6vw, 1.9rem);
+  border-radius: .4rem; box-shadow: 0 1px 0 #0000000d, 0 12px 26px -16px #00000045; }
+.cp-prose { font-size: 1.16rem; line-height: 2.5; margin: 0; }
+.cp-prose b { font-weight: 700; }
+.cp-conn { position: absolute; inset: 0; pointer-events: none; overflow: visible; z-index: 2; }
+.cp-note { position: absolute; width: 12rem; z-index: 4;
+  font-family: var(--cp-font-hand); font-size: 1.22rem; line-height: 1.16;
+  color: var(--am-c-pen, #b23b3b);
+  background: color-mix(in srgb, var(--am-c-pen, #b23b3b) 9%, #fffdf3);
+  border: 1px solid color-mix(in srgb, var(--am-c-pen, #b23b3b) 22%, var(--cp-line));
+  border-radius: .3rem; padding: .5rem .7rem;
+  box-shadow: 0 5px 12px -4px #00000033, 0 1px 2px #00000022;
+  opacity: 0; transform: rotate(-1.5deg) translateY(6px);
+  transition: opacity .5s ease, transform .5s ease; }
+.cp-note.cp-vis { opacity: 1; transform: rotate(-1.5deg); }
+.cp-ff { margin-top: 1.3rem; padding: .9rem 1.1rem; background: color-mix(in srgb, var(--cp-accent) 8%, var(--cp-surface)); border-left: 4px solid var(--cp-accent); border-radius: .5rem; font-size: 1rem; line-height: 1.6; }
+.cp-ff-badge { display: inline-block; font: 700 .68rem/1 ui-monospace, monospace; letter-spacing: .07em; text-transform: uppercase; color: var(--cp-accent); margin-right: .5rem; }
+
+/* checklist (CRAAP / spot-the-error) */
+.cp-src { background: var(--cp-raised); border: 1px solid var(--cp-line); border-radius: .7rem; padding: .9rem 1.1rem; margin-bottom: 1.1rem; }
+.cp-src-k { font: 700 .68rem/1 ui-monospace, monospace; letter-spacing: .06em; text-transform: uppercase; color: var(--cp-soft); }
+.cp-src-t { font-size: 1.2rem; font-weight: 700; margin: .3rem 0; }
+.cp-src-m { color: var(--cp-soft); font-size: .9rem; font-family: ui-monospace, monospace; }
+.cp-checklist { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: .55rem; }
+.cp-crow { display: grid; grid-template-columns: 2.4rem 1fr 2.6rem; gap: .8rem; align-items: center; padding: .65rem .9rem; background: var(--cp-surface); border: 1px solid var(--cp-line); border-radius: .6rem; }
+.cp-letter { font: 800 1.45rem/1 var(--cp-font-ui); color: var(--cp-accent); text-align: center; }
+.cp-crow .cp-q { color: var(--cp-soft); font-size: .93rem; line-height: 1.45; }
+.cp-stamp { inline-size: 2.4rem; block-size: 2.6rem; }
+
+/* process (ordered moves / SKOS ProcessSteps) — dealt-in numbered cards,
+   reusing the gallery "Sequence reveals" .dcard deal-in (reveals.html);
+   the step engine drives which card is current (.cp-draw) / revealed (.cp-vis). */
+.cp-process { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: .6rem; }
+.cp-pstep { display: grid; grid-template-columns: 2.3rem 1fr; gap: .9rem; align-items: start; padding: .8rem 1.05rem; border-radius: .6rem;
+  background: color-mix(in srgb, var(--cp-accent) 7%, var(--cp-surface));
+  border: 1px solid color-mix(in srgb, var(--cp-accent) 32%, var(--cp-line)); opacity: 0; }
+.cp-pstep.cp-vis { opacity: 1; }
+.cp-pstep.cp-draw { border-color: var(--cp-accent); box-shadow: 0 6px 16px -7px color-mix(in srgb, var(--cp-accent) 55%, transparent), inset 0 0 0 1px var(--cp-accent); }
+.cp-pstep.cp-draw { animation: cp-dealin .5s cubic-bezier(.16, 1, .3, 1) both; }
+@keyframes cp-dealin { from { opacity: 0; transform: translateY(20px) rotate(-1.4deg) scale(.96); } to { opacity: 1; transform: none; } }
+.cp-pnum { inline-size: 2.3rem; block-size: 2.3rem; display: grid; place-items: center; border-radius: 50%; background: color-mix(in srgb, var(--cp-accent) 16%, var(--cp-surface)); color: var(--cp-accent); font: 800 1.15rem/1 var(--cp-font-ui); }
+.cp-pstep.cp-draw .cp-pnum { background: var(--cp-accent); color: #fff; }
+.cp-ptext { font-size: 1.08rem; line-height: 1.5; padding-top: .2rem; }
+@media (prefers-reduced-motion: reduce) { .cp-pstep.cp-draw { animation: none; } }
+
+/* assembly (building a reference / sequential-process) */
+.cp-rulebox { background: var(--cp-raised); border-radius: .6rem; padding: .8rem 1rem; color: var(--cp-soft); margin-bottom: 1.2rem; }
+.cp-assembly { font-size: clamp(1.15rem, 3vw, 1.6rem); line-height: 2.1; }
+.cp-assembly .cp-part { border-radius: .35rem; padding: 0 .05em; transition: background .3s ease; }
+.cp-assembly .cp-part.cp-cur { background: color-mix(in srgb, var(--cp-accent) 20%, transparent); }
+
+/* caption + controls */
+.cp-caption { margin: 1.1rem 0 .2rem; min-height: 3.8rem; }
+.cp-caption h3 { font-size: 1.1rem; margin: 0 0 .25rem; }
+.cp-caption p { margin: 0; color: var(--cp-soft); }
+.cp-controls { display: flex; flex-wrap: wrap; gap: .5rem; align-items: center; margin-top: .5rem; }
+.cp-btn { font: inherit; cursor: pointer; padding: .5rem .85rem; border: 1px solid var(--cp-line); border-radius: .5rem; background: var(--cp-surface); color: var(--cp-ink); }
+.cp-btn.cp-primary { background: var(--cp-accent); border-color: var(--cp-accent); color: #fff; font-weight: 600; }
+.cp-btn:hover:not(:disabled) { border-color: var(--cp-accent); } .cp-btn:disabled { opacity: .45; cursor: default; }
+.cp-dots { display: flex; gap: .4rem; margin-left: auto; }
+.cp-dot { inline-size: .68rem; block-size: .68rem; border-radius: 50%; border: 0; padding: 0; background: var(--cp-line); cursor: pointer; }
+.cp-dot[aria-current="true"] { background: var(--cp-accent); transform: scale(1.25); }
+.cp-root :focus-visible { outline: 3px solid var(--cp-accent); outline-offset: 2px; }
+
+/* modal launch — fills the screen width. The height is reserved up front and the
+   stage fills it with the caption + controls pinned to the foot, so revealing a
+   step never resizes the box: the layout holds still (no jump). */
+dialog.cp-modal {
+  inline-size: 96vw; max-inline-size: 96vw;
+  block-size: 92vh; max-block-size: 92vh;
+  border: 1px solid var(--cp-line); border-radius: 1rem;
+  background: var(--cp-surface); color: var(--cp-ink);
+  padding: 0; overflow: hidden; display: flex; flex-direction: column;
+}
+dialog.cp-modal::backdrop { background: #000a; backdrop-filter: blur(2px); }
+.cp-modal-head { flex: 0 0 auto; display: flex; align-items: center; gap: .8rem; padding: .9rem 1.2rem; border-bottom: 1px solid var(--cp-line); }
+.cp-modal-head h2 { margin: 0; font-size: 1.15rem; margin-right: auto; }
+.cp-modal-body { flex: 1 1 auto; min-height: 0; padding: 1.2rem; overflow: auto; display: flex; flex-direction: column; gap: .5rem; }
+.cp-modal .cp-stage { flex: 1 1 auto; min-height: 0; overflow: auto; }   /* stage fills the sheet, scrolls within if it must */
+.cp-modal .cp-statement, .cp-modal .cp-intent, .cp-modal .cp-caption, .cp-modal .cp-controls { flex: 0 0 auto; }
+.cp-close { font: inherit; cursor: pointer; border: 1px solid var(--cp-line); background: var(--cp-surface); color: var(--cp-ink); border-radius: .5rem; padding: .4rem .7rem; }
+
+/* accordion launch */
+.cp-acc { border: 1px solid var(--cp-line); border-radius: .7rem; margin: .6rem 0; background: var(--cp-surface); overflow: hidden; }
+.cp-acc > summary { cursor: pointer; padding: .9rem 1.1rem; font-weight: 600; list-style: none; }
+.cp-acc > summary::-webkit-details-marker { display: none; }
+.cp-acc > summary::before { content: "▸ "; color: var(--cp-accent); }
+.cp-acc[open] > summary::before { content: "▾ "; }
+.cp-acc .cp-acc-body { padding: 0 1.1rem 1.1rem; }
+
+@media (max-width: 640px) {
+  .cp-paper { margin-right: 0; }
+  .cp-conn { display: none; }
+  .cp-note { position: static; width: auto; margin: .5rem 0 0; transform: none; }
+  .cp-note.cp-vis { transform: none; }
+}
+
+/* ---- custom element host ---- */
+context-pack { display: block; }
+context-pack:not(:defined) { display: none; }   /* avoid a flash of the inline JSON before upgrade */
+context-pack .cp-cmp-error { color: var(--c-negative, #b23b3b); font: inherit; margin: 0; }

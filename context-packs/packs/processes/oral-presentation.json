@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "id": "oral-presentation",
+  "title": "Oral Presentation & Communication",
+  "uri": "https://grow.local/process/oral-presentation",
+  "broader": "communication-reflection",
+  "process": "communication-reflection",
+  "pattern": "sequential-process",
+  "intent": "formative · Communication & Reflection (Applying) · click through the process",
+  "statement": "Structure complex information so a specific audience can follow it — live, in the time you have.",
+  "advance": "click",
+  "stage": {
+    "type": "process"
+  },
+  "steps": [
+    {
+      "title": "Know your audience",
+      "text": "Decide what they already know, so you can pitch the detail and the jargon right."
+    },
+    {
+      "title": "Pick one core message",
+      "text": "Choose the single thing they must remember; shape everything around it."
+    },
+    {
+      "title": "Structure with signposts",
+      "text": "Give a clear path — tell them where you are going, and mark each turn."
+    },
+    {
+      "title": "Pitch the jargon level",
+      "text": "Translate specialist terms for a mixed audience without dumbing down the ideas."
+    },
+    {
+      "title": "Rehearse for time",
+      "text": "Practise aloud and cut to fit — overrunning is a design failure, not bad luck."
+    }
+  ],
+  "feedForward": {
+    "badge": "Try it",
+    "text": "State your talk’s one core message in a sentence, and the three signposts that get the audience there."
+  },
+  "related": [
+    "presentation-storytelling",
+    "academic-writing"
+  ]
+}

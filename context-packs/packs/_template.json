@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "id": "template",
+  "title": "«Pack title»",
+  "process": "«process name»",
+  "pattern": "«palette pattern»",
+  "intent": "«intent» · pattern <code>«pattern»</code>",
+  "statement": "«statement — the framing sentence shown before anything is marked»",
+  "advance": "click",
+  "stage": {
+    "type": "annotated-prose",
+    "segments": [
+      { "text": "«lead-in text» " },
+      { "id": "slot-1", "text": "«target 1 — underline»", "step": 1, "mark": { "kind": "underline", "color": "accent" }, "note": "«margin note for slot 1»" },
+      { "text": " «connecting text» " },
+      { "id": "slot-2", "text": "«target 2 — oval»", "step": 2, "mark": { "kind": "oval", "color": "neutral" }, "note": "«margin note for slot 2»" },
+      { "text": " «more text» " },
+      { "id": "slot-3", "text": "«target 3 — strike»", "step": 3, "mark": { "kind": "strike", "color": "negative" }, "correction": "«correction»" },
+      { "text": " «text» " },
+      { "id": "slot-4", "text": "«target 4 — tick»", "step": 4, "mark": { "kind": "tick", "color": "positive" }, "note": "«margin note for slot 4»" },
+      { "text": " «closing text»." }
+    ]
+  },
+  "steps": [
+    { "title": "«step 0 title — set up / read»", "text": "«what this opening step teaches; nothing is marked yet»" },
+    { "title": "«step 1 title»", "text": "«guidance for the mark revealed at step 1»" },
+    { "title": "«step 2 title»", "text": "«guidance for the mark revealed at step 2»" },
+    { "title": "«step 3 title»", "text": "«guidance for the mark revealed at step 3»" },
+    { "title": "«step 4 title»", "text": "«guidance for the mark revealed at step 4»" }
+  ],
+  "feedForward": {
+    "step": 4,
+    "badge": "«badge»",
+    "text": "«feed-forward — name the strength, then one or two specific next steps»"
+  }
+}
