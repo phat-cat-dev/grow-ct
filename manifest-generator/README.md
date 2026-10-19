@@ -106,4 +106,8 @@ lessons/wrappers are authored, `manifest.instantiations` (slot→component map).
 ## Provenance
 
 Extracted from `wkspc2614-adapt3` (`tools/`, `design-kb/`, `schemas/`,
-`source-kb/`) at commit 7cc387c. Keep in step with adapt3 if those stores change.
+`source-kb/`) at commit 7cc387c. To refresh when adapt3's tools/stores change,
+run `./sync-from-adapt3.sh [path-to-adapt3-checkout]` (default source
+`/home/user/wkspc2614-adapt3`) and review `git diff` before committing. The
+script re-copies only the manifest-path files — not `catalogue/`, the Adapt
+build side, or the interactive gate skills.
